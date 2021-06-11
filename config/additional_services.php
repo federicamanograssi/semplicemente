@@ -97,7 +97,7 @@
 
         ],
         [
-            'service_name' => "Accesso diretto alle piste da sci",
+            'service_name' => "Accesso piste da sci",
             'service_info' => "",
             'service_icon' => "skiing"
 
