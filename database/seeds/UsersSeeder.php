@@ -18,9 +18,10 @@ class UsersSeeder extends Seeder
             $newUser->name = $user['name'];
             $newUser->surname = $user['surname'];
             $newUser->email = $user['email'];
-            $newUser->email = $user['password'];
-            $newUser->email = $user['date_of_birth'];
+            $newUser->password = $user['password'];
+            $newUser->date_of_birth = $user['date_of_birth'];
             $newUser->save();
             };
     }
 }
+
