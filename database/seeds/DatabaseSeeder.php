@@ -11,8 +11,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< Updated upstream
         $this->call(ServicesSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(SponsorshipsSeeder::class);
+=======
+        
+        $this->call([
+            // UserSeeder::class,
+            SponsorshipSeeder::class,
+            ServiceSeeder::class,
+            // ApartmentSeeder::class,
+        ]);
+>>>>>>> Stashed changes
     }
 }

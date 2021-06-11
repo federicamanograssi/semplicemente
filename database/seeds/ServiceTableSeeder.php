@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Service;
 
-class ServicesSeeder extends Seeder
+class ServiceTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

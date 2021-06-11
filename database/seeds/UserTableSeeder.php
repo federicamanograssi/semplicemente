@@ -2,7 +2,13 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+<<<<<<< Updated upstream:database/seeds/UsersSeeder.php
 class UsersSeeder extends Seeder
+=======
+
+
+class UserTableSeeder extends Seeder
+>>>>>>> Stashed changes:database/seeds/UserTableSeeder.php
 {
     /**
      * Run the database seeds.
@@ -24,4 +30,3 @@ class UsersSeeder extends Seeder
             };
     }
 }
-
