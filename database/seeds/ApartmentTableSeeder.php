@@ -17,6 +17,7 @@ class ApartmentTableSeeder extends Seeder
         foreach($apartments as $apartment){ 
             $newApartment = new Apartment();
             $newApartment-> title = $apartment['title'];
+            $newApartment-> id_user = $apartment['id_user'];
             $newApartment-> rooms_n = $apartment['rooms_n'];
             $newApartment-> beds_n = $apartment['beds_n'];
             $newApartment-> bathroom_n = $apartment['bathroom_n'];
