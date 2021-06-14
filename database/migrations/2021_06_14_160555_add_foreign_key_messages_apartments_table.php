@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyViewsApartmentsTable extends Migration
+class AddForeignKeyMessagesApartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddForeignKeyViewsApartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('views', function (Blueprint $table)
+        Schema::table('messages', function (Blueprint $table)
 
             {
             $table->foreign('apartment_id')->references('id')->on('apartments');
@@ -27,8 +27,8 @@ class AddForeignKeyViewsApartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('views', function (Blueprint $table){
-            $table->dropForeign('views_apartment_id_foreign');
+        Schema::table('messages', function (Blueprint $table){
+            $table->dropForeign('messages_apartment_id_foreign');
 
             // dà errore nel reset perchè questa migration viene dopo la cancellazione della tabella, quindi non la trova
             // $table->dropColumn('apartment_id');
