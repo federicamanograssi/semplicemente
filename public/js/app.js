@@ -2130,6 +2130,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -6689,7 +6695,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n*[data-v-2e3eb2ae] {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\n}\n.container[data-v-2e3eb2ae] {\r\n    display: flex;\r\n    margin: 0 auto;\r\n    width: 70%;\r\n    height: 100vh;\n}\n.slider-wrapper[data-v-2e3eb2ae] {\r\n    position: relative;\r\n    margin: auto;\r\n    width: 100%;\n}\n.slider-wrapper .images[data-v-2e3eb2ae] {\r\n    height: 100%;\r\n    text-align: center;\n}\n.slider-wrapper .images img[data-v-2e3eb2ae] {\r\n    width: 100%;\n}\n.slider-wrapper .images img.active[data-v-2e3eb2ae] {\r\n    display: inline-block;\n}\n.prev[data-v-2e3eb2ae],\r\n.next[data-v-2e3eb2ae] {\r\n    position: absolute;\r\n    color: #565a5c;\r\n    top: 50%;\r\n    left: 0;\r\n    transform: translateY(-50%);\r\n    font-size: 40px;\r\n    cursor: pointer;\n}\n.next[data-v-2e3eb2ae] {\r\n    left: auto;\r\n    right: 0;\n}\n.nav[data-v-2e3eb2ae] {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: 20px;\r\n    transform: translateX(-50%);\r\n    padding: 20px;\r\n    border-radius: 999px;\r\n    background: rgba(0, 0, 0, .7);\r\n    color: rgb(204 204 204);\r\n    cursor: pointer;\n}\n.nav>i[data-v-2e3eb2ae] {\r\n    margin: 0 20px;\n}\n.nav>i.active[data-v-2e3eb2ae] {\r\n    color: #393939;\n}\n.button[data-v-2e3eb2ae] {\r\n    background-color: lime;\r\n    padding: 5px;\r\n    border-radius: 20px;\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\n}\n.button a[data-v-2e3eb2ae] {\r\n    text-decoration: none;\r\n    color: white;\n}\n.slider-wrapper.none[data-v-2e3eb2ae] {\r\n    display: none;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n*[data-v-2e3eb2ae] {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\n}\n.container[data-v-2e3eb2ae] {\r\n    display: flex;\r\n    margin: 0 auto;\r\n    width: 70%;\r\n    height: 100vh;\n}\n.slider-wrapper[data-v-2e3eb2ae] {\r\n    position: relative;\r\n    margin: auto;\r\n    width: 100%;\n}\n.slider-wrapper .images[data-v-2e3eb2ae] {\r\n    height: 100%;\r\n    text-align: center;\n}\n.slider-wrapper .images img[data-v-2e3eb2ae] {\r\n    width: 100%;\r\n    border-radius: 10px;\n}\n.slider-wrapper .images img.active[data-v-2e3eb2ae] {\r\n    display: inline-block;\n}\n.prev[data-v-2e3eb2ae],\r\n.next[data-v-2e3eb2ae] {\r\n    position: absolute;\r\n    color: #565a5c;\r\n    top: 50%;\r\n    left: 0;\r\n    transform: translateY(-50%);\r\n    font-size: 40px;\r\n    cursor: pointer;\n}\n.next[data-v-2e3eb2ae] {\r\n    left: auto;\r\n    right: 0;\n}\n.nav[data-v-2e3eb2ae] {\r\n    display: flex;\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: 20px;\r\n    transform: translateX(-50%);\r\n    padding: 20px;\r\n    border-radius: 30px;\r\n    background: rgba(0, 0, 0, .7);\r\n    color: rgb(204 204 204);\r\n    cursor: pointer;\n}\n.img_preview[data-v-2e3eb2ae] {\r\n    display: flex;\r\n    padding: 0 8px;\n}\n.img_preview.active img[data-v-2e3eb2ae]{\r\n    border:3px solid white;\n}\n.button[data-v-2e3eb2ae] {\r\n    background-color: lime;\r\n    padding: 5px;\r\n    border-radius: 20px;\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\n}\n.button a[data-v-2e3eb2ae] {\r\n    text-decoration: none;\r\n    color: white;\n}\n.slider-wrapper.none[data-v-2e3eb2ae] {\r\n    display: none;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -38838,15 +38844,19 @@ var render = function() {
             "div",
             { staticClass: "nav" },
             _vm._l(_vm.photos, function(photo, index) {
-              return _c("i", {
-                staticClass: "fas fa-circle",
-                class: index == _vm.counter ? _vm.active : null,
-                on: {
-                  click: function($event) {
-                    return _vm.circleClick(index)
+              return _c(
+                "div",
+                {
+                  staticClass: "img_preview",
+                  class: index == _vm.counter ? _vm.active : null,
+                  on: {
+                    click: function($event) {
+                      return _vm.circleClick(index)
+                    }
                   }
-                }
-              })
+                },
+                [_c("img", { attrs: { src: photo, alt: "" } })]
+              )
             }),
             0
           )

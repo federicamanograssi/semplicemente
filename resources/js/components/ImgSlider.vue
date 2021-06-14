@@ -12,7 +12,13 @@
                     <div class="images">
                         <img v-bind:src="photos[counter]" alt="">
                         <div class="nav">
-                            <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i>
+                        <div :class="(index==counter) ? active : null" class="img_preview" @click="circleClick(index)" v-for="(photo,index) in photos">
+                            <img v-bind:src="photo" alt="">
+                        </div>
+                        
+                            <!-- <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i> -->
+                        
+                        
                         </div>
                     </div>
                     <div @click="nextImage" class="next">
@@ -99,6 +105,7 @@
 
 .slider-wrapper .images img {
     width: 100%;
+    border-radius: 10px;
 }
 
 .slider-wrapper .images img.active {
@@ -122,23 +129,25 @@
 }
 
 .nav {
+    display: flex;
     position: absolute;
     left: 50%;
     bottom: 20px;
     transform: translateX(-50%);
     padding: 20px;
-    border-radius: 999px;
+    border-radius: 30px;
     background: rgba(0, 0, 0, .7);
     color: rgb(204 204 204);
     cursor: pointer;
 }
 
-.nav>i {
-    margin: 0 20px;
+.img_preview {
+    display: flex;
+    padding: 0 8px;
 }
 
-.nav>i.active {
-    color: #393939;
+.img_preview.active img{
+    border:3px solid white;
 }
 
 .button {
