@@ -15,7 +15,7 @@ class CreateApartmentViewsTable extends Migration
     {
         Schema::create('apartment_views', function (Blueprint $table) {
                 $table->id();
-                $table->integer('id_apartment');
+                $table->unsignedBigInteger('id_apartment');
                 $table->timestamps();
         });
     }

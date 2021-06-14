@@ -15,7 +15,7 @@ class CreateApartmentImagesTable extends Migration
     {
         Schema::create('apartment_images', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_apartment');
+            $table->unsignedBigInteger('id_apartment');
             $table->string('img_path');
             $table->string('img_description')->nullable();
             $table->boolean('is_cover')->default(0);
