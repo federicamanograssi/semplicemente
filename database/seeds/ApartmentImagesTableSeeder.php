@@ -12,7 +12,7 @@ class ApartmentImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $apartmentImages= [];
+        $apartmentImages= config('apartment_images');
 
         foreach ($apartmentImages as $apartmentImage ) {
             $newApartmentImage = new ApartmentImage();
