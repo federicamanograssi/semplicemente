@@ -53,10 +53,13 @@
         display: flex;
         flex-direction: row;
 
-        @include standard-shadow;
+        background-color: $white;
+
+        @include shadow-standard;
 
         &:hover {
-            outline: $color-primary solid 1px;
+
+        @include shadow-enhanced;
 
             .single-apartment__image {
                 transform: scale(1.1);

@@ -20,11 +20,13 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('search-section', require('./components/searchSection.vue').default);
+// Vue.component('search-section', require('./components/searchSection.vue').default);  <-- Deprecato
 Vue.component('home-jumbo', require('./components/HomeJumbo.vue').default);
 Vue.component('header-guest', require('./components/HeaderGuest.vue').default);
 Vue.component('apartment-card', require('./components/apartmentCard.vue').default);
 Vue.component('advanced-search-form', require('./components/AdvancedSearchForm.vue').default);
+Vue.component('apartments-list', require('./components/apartmentList.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

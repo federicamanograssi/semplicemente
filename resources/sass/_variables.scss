@@ -50,8 +50,12 @@ $animation-time-very-slow : 1s;
     line-height: 1.25;
 }
 
-@mixin standard-shadow {
+@mixin shadow-standard {
     box-shadow: 0 0 1rem rgba($black , .2);
+}
+
+@mixin shadow-enhanced {
+    box-shadow: 0 0 2rem rgba($color-primary-dark , .4);
 }
 
 @mixin clearfix {

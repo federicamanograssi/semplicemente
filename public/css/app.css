@@ -14,7 +14,7 @@
 
 body {
   box-sizing: border-box;
-  background-color: rgba(16, 83, 16, 0.1);
+  background-color: rgba(16, 83, 16, 0.05);
 }
 
 body {
@@ -23,6 +23,15 @@ body {
   letter-spacing: 1px;
   line-height: 1.25;
   color: #707070;
+}
+
+.heading-primary {
+  color: #105310;
+  font-size: 3rem;
+  line-height: 4rem;
+  text-transform: capitalize;
+  margin-bottom: 3rem;
+  letter-spacing: 1.5px;
 }
 
 .hidden {
@@ -190,6 +199,7 @@ body {
 
 .header__menu--mobile {
   position: fixed;
+  z-index: 5;
   height: 100vh;
   left: 0;
   bottom: 0;
@@ -208,5 +218,60 @@ body {
 
 .header__menu--mobile .header__menu-item:not(:last-child) {
   margin-bottom: 3rem;
+}
+
+.home-section {
+  max-width: 160rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding: 2rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.main--advanced-search {
+  background-color: rgba(255, 255, 255, 0.75);
+  max-width: 160rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: calc(100vh - 7rem );
+}
+
+.main--advanced-search .apartments-list {
+  flex: 0 0 50%;
+  height: calc(100vh - 2 * 7rem);
+  padding: 2rem;
+  overflow-x: auto;
+  overflow-y: scroll;
+}
+
+@media (max-width: 56.25em) {
+  .main--advanced-search .apartments-list {
+    flex: 0 0 100%;
+    padding-bottom: 23rem;
+  }
+}
+
+.main--advanced-search .chalet-map {
+  flex: 0 0 50%;
+  padding: 10px;
+  height: calc(100vh - 2 * 7rem);
+}
+
+@media (max-width: 56.25em) {
+  .main--advanced-search .chalet-map {
+    flex: 0 0 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20rem;
+    background-color: white;
+    max-width: 100%;
+  }
 }
 
