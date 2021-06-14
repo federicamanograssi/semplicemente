@@ -9,10 +9,22 @@
     width: 100%;
     letter-spacing: 1px;
 
+    @include responsive(tablet) {
+        position: static;
+    }
+
+    & + * {
+        margin-top: $height-section-medium;
+        
+        @include responsive(tablet) {
+            margin-top: 0;
+        }
+    }
+
 
     &__inner {
         max-width: $width-inner-content;
-        padding: $spacing-standard;
+        padding: $spacing-small $spacing-standard;
         margin: 0 auto;
         height: 100%;
     }

@@ -20,8 +20,13 @@ Route::get('/', function () {
 Route::get('/index', function () {
     return view('/guest/home');
 });
+
 Route::get('/single', function () {
-    return view('/guest/apartments/show');
+    return view('/guest/singleApartment');
+});
+
+Route::get('/search', function () {
+    return view('/guest/search');
 });
 
 Auth::routes();

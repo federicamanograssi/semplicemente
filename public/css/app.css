@@ -40,9 +40,25 @@ body {
   letter-spacing: 1px;
 }
 
+@media (max-width: 56.25em) {
+  .header {
+    position: static;
+  }
+}
+
+.header + * {
+  margin-top: 7rem;
+}
+
+@media (max-width: 56.25em) {
+  .header + * {
+    margin-top: 0;
+  }
+}
+
 .header__inner {
   max-width: 160rem;
-  padding: 1.5rem;
+  padding: 1rem 2rem;
   margin: 0 auto;
   height: 100%;
 }
@@ -68,7 +84,7 @@ body {
 
 .header__toggle-button {
   font-size: 1.8em;
-  line-height: calc(7rem - 2 * 1.5rem );
+  line-height: calc(7rem - 2 * 2rem );
   cursor: pointer;
   display: none;
   position: relative;
@@ -92,8 +108,8 @@ body {
 
 .header__menu-item {
   display: inline-block;
-  height: calc(7rem - 2 * 1.5rem );
-  line-height: calc(7rem - 2 * 1.5rem );
+  height: calc(7rem - 2 * 2rem );
+  line-height: calc(7rem - 2 * 2rem );
 }
 
 .header__menu-item--home {
