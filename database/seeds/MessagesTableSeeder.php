@@ -16,7 +16,7 @@ class MessagesTableSeeder extends Seeder
 
         foreach ($messages as $message) {
             $newMessage = new Message();
-            $newMessage->id_apartment = $message['id_apartment'];
+            $newMessage->apartment_id = $message['apartment_id'];
             $newMessage->email_sender = $message['email_sender'];
             $newMessage->message_text = $message['message_text'];
             $newMessage->save();

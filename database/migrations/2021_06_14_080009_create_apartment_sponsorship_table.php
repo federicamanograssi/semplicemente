@@ -15,10 +15,10 @@ class CreateApartmentSponsorshipTable extends Migration
     {
         Schema::create('apartment_sponsorship', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_apartment');
-            $table->foreign('id_apartment')->references('id')->on('apartments');
-            $table->unsignedBigInteger('id_sponsorship');
-            $table->foreign('id_sponsorship')->references('id')->on('sponsorships');
+            $table->unsignedBigInteger('apartment_id');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->unsignedBigInteger('sponsorship_id');
+            $table->foreign('sponsorship_id')->references('id')->on('sponsorships');
             $table->float('amount',5,2);
             $table->boolean('status');
             $table->dateTime('start_date');
