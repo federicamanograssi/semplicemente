@@ -23,15 +23,15 @@ class Apartment extends Model
     }
 
     public function views(){
-        return $this -> belongsTo('App\View');
+        return $this -> hasMany('App\View');
     }
 
     public function images(){
-        return $this -> belongsTo('App\Image');
+        return $this -> hasMany('App\Image');
     }
 
     public function messages(){
-        return $this -> belongsTo('App\Message');
+        return $this -> hasMany('App\Message');
     }
 
     

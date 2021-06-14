@@ -11,6 +11,6 @@ class View extends Model
     ];
 
     public function apartment(){
-        return $this -> hasMany('App\Apartment');
+        return $this -> belongsTo('App\Apartment');
     }
 }
