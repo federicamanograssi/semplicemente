@@ -3,6 +3,6 @@
 
 @section('main')
     <main>
-        Single Apartment 
+        <img-slider></img-slider>
     </main>
 @endsection
