@@ -1,19 +1,54 @@
-// Body
-$body-bg: #f8fafc;
+// Sizes
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$width-inner-content: 160rem;
+$height-section-medium: 7rem;
+
+// Spacing
+
+$spacing-standard : 1.5rem;
+$spacing-more : 3rem;
 
 // Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66d9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+
+$color-primary: rgb(16, 83, 16);
+$color-primary-light: lighten($color-primary , 20%);
+$color-primary-dark: darken($color-primary , 20%);
+$white: white;
+
+@mixin clearfix {
+    &::after{
+        content: '';
+        clear: both;
+        display: table;
+    }
+}
+
+// Media Queries
+
+@mixin responsive($breakpoint) {
+
+    @if $breakpoint == phone {
+        @media (max-width: 35.5em) {    // 600px
+            @content
+        };
+    }
+
+    @if $breakpoint == tablet {
+        @media (max-width: 56.25em) {    // 900px
+            @content
+        };
+    }
+
+    @if $breakpoint == desktop {
+        @media (max-width: 75em) {    // 1200px
+            @content
+        };
+    }
+
+    @if $breakpoint == big-desktop {
+        @media (min-width: 112.5em) {    // 1800px
+            @content
+        };
+    }
+
+}

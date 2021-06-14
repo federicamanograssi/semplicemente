@@ -1,0 +1,108 @@
+.header {
+    height: $height-section-medium;
+    background-color: rgba($white , .75);
+    color: $color-primary;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    letter-spacing: 1px;
+
+
+    &__inner {
+        max-width: $width-inner-content;
+        padding: $spacing-standard;
+        margin: 0 auto;
+        height: 100%;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+    }
+
+    &__logo-container {
+        flex-grow: 1;
+        height: 100%;
+    }
+
+    &__logo {
+        display: block;
+        max-height: 100%;
+    }
+
+    &__toggle-button {
+        font-size: 1.8em;
+        line-height: calc(#{$height-section-medium} - 2 * #{$spacing-standard} );
+        cursor: pointer;
+        display: none;
+        position: relative;
+        z-index: 10;
+
+        @include responsive(tablet) {
+            display: block;
+        }
+    }
+
+    &__close-menu {
+        color: $white;
+    }
+
+    &__menu {
+        list-style-type: none;
+        display: block;
+        
+        &-item {
+            display: inline-block;
+            height: calc(#{$height-section-medium} - 2 * #{$spacing-standard} );
+            line-height: calc(#{$height-section-medium} - 2 * #{$spacing-standard} );
+
+            &--home {
+                display: none;
+
+                @include responsive(tablet) {
+                    display: block;
+                }
+            }
+            
+            &:not(:last-child) {
+                margin-right: $spacing-more;
+            }
+        }
+        
+        // hidden on tablet and phones
+
+        @include responsive(tablet) {
+            display: none;
+        }
+
+        // mobile version
+
+        &--mobile {
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: $white;
+            background-image: linear-gradient(to bottom left , rgba($color-primary-dark , 1) , rgba($color-primary-light , .95));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .header__menu-item {                
+                font-size: 3rem;
+
+                &:not(:last-child) {
+                    margin-bottom: $spacing-more;
+                }
+            }
+        }
+    }
+}
