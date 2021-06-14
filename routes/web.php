@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+/*ROTTE SEZIONE ADMIN
+------------------------------------------------------
+------------------------------------------------------*/
+
+Route::prefix('admin')
+->namespace('Admin')
+->middleware('auth')
+->group(function () {
+    Route::get('/', 'HomeController@index')->name('admin_homepage');
+    Route::get('/profile', 'HomeController@profile')->name('admin_profile');
+    Route::post('/profile/generate-token', 'HomeController@generateToken')->name('admin_generate_token');
+    Route::resource('/apartments','ApartmentsController');
+});
