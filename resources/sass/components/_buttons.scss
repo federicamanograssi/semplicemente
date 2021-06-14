@@ -1,0 +1,20 @@
+.btn {
+    @include standard-tipography;
+
+    padding: $spacing-small $spacing-standard;
+    text-align: center;
+    border-radius: $border-radius-standard;
+    cursor: pointer;
+
+    transition: background-color $animation-time-standard;
+
+    &--primary {
+        background-color: $color-primary;
+        color: white;
+        border: 1px solid $color-primary;
+
+        &:hover {
+            background-color: $color-primary-light;
+        }
+    }
+}

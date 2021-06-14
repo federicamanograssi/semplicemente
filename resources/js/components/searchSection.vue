@@ -17,7 +17,8 @@
                  v-for="(apartment , index) in apartments" 
                 :key="index" 
                 :name="apartment.name" 
-                :imgSrc="apartment.imgSrc">
+                :imgSrc="apartment.imgSrc"
+                :rating="apartment.rating">
             </apartment-card>
 
         </div>
@@ -46,27 +47,32 @@
                 'apartments' : [
                     {
                         'name' : 'Mountain Chalet Milly' ,
-                        'imgSrc' : 'img/sampleApartments/01/94264560.jpg'
+                        'imgSrc' : 'img/sampleApartments/01/94264560.jpg' ,
+                        'rating' : '4'
                     } ,
 
                     {
                         'name' : 'La Baita Case Suite' ,
-                        'imgSrc' : 'img/sampleApartments/02/148581352.jpg'
+                        'imgSrc' : 'img/sampleApartments/02/148581352.jpg' ,
+                        'rating' : '4.5'
                     } ,
 
                     {
                         'name' : 'Loft Caterina' ,
-                        'imgSrc' : 'img/sampleApartments/03/192462101.jpg'
+                        'imgSrc' : 'img/sampleApartments/03/192462101.jpg' ,
+                        'rating' : '5'
                     } ,
 
                                         {
                         'name' : 'La Casa di Alice' ,
-                        'imgSrc' : 'img/sampleApartments/04/280745444.jpg'
+                        'imgSrc' : 'img/sampleApartments/04/280745444.jpg' ,
+                        'rating' : '4'
                     } ,
 
                                         {
                         'name' : 'Ledro Mountain Chalet' ,
-                        'imgSrc' : 'img/sampleApartments/05/294869423.jpg'
+                        'imgSrc' : 'img/sampleApartments/05/294869423.jpg' ,
+                        'rating' : '5'
                     } ,
 
                 ]
@@ -83,8 +89,9 @@
 @import "../../sass/variables";
 
 .advanced-search {
-    color: $color-primary;
-    background-color: $white;
+
+    background-color: $bg-transparent;
+
 
     max-width: $width-inner-content;
     margin: 0 auto;
@@ -96,6 +103,7 @@
 
     &__form {
         flex: 0 0 100%;
+        padding: $spacing-standard;
         height: $height-section-medium;
     }
 

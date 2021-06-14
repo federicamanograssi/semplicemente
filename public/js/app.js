@@ -2116,11 +2116,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   props: {
     name: String,
-    imgSrc: String
+    imgSrc: String,
+    rating: String
   }
 });
 
@@ -2173,25 +2179,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
     return {
       'apartments': [{
         'name': 'Mountain Chalet Milly',
-        'imgSrc': 'img/sampleApartments/01/94264560.jpg'
+        'imgSrc': 'img/sampleApartments/01/94264560.jpg',
+        'rating': '4'
       }, {
         'name': 'La Baita Case Suite',
-        'imgSrc': 'img/sampleApartments/02/148581352.jpg'
+        'imgSrc': 'img/sampleApartments/02/148581352.jpg',
+        'rating': '4.5'
       }, {
         'name': 'Loft Caterina',
-        'imgSrc': 'img/sampleApartments/03/192462101.jpg'
+        'imgSrc': 'img/sampleApartments/03/192462101.jpg',
+        'rating': '5'
       }, {
         'name': 'La Casa di Alice',
-        'imgSrc': 'img/sampleApartments/04/280745444.jpg'
+        'imgSrc': 'img/sampleApartments/04/280745444.jpg',
+        'rating': '4'
       }, {
         'name': 'Ledro Mountain Chalet',
-        'imgSrc': 'img/sampleApartments/05/294869423.jpg'
+        'imgSrc': 'img/sampleApartments/05/294869423.jpg',
+        'rating': '5'
       }]
     };
   }
@@ -6672,7 +6684,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  overflow: hidden;\n}\n.single-apartment__image-container {\n  height: 100%;\n  width: 50%;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}", ""]);
+exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  border-radius: 5px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-apartment:not(:last-child) {\n  margin-bottom: 3rem;\n}\n.single-apartment__image-container {\n  height: 100%;\n  flex: 0 0 50%;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.single-apartment__data {\n  flex: 0 0 50%;\n  padding: 1rem;\n  text-align: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n}\n.single-apartment__description {\n  font-size: 85%;\n}\n.single-apartment__name {\n  color: #ffb764;\n}\n.single-apartment__rating {\n  color: #ffb764;\n}\n.single-apartment__rating i {\n  margin-right: 0.5rem;\n  font-size: 90%;\n}", ""]);
 
 // exports
 
@@ -6691,7 +6703,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".advanced-search[data-v-77a7ed3c] {\n  color: #105310;\n  background-color: white;\n  max-width: 160rem;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  height: calc(100vh - 7rem );\n}\n.advanced-search__form[data-v-77a7ed3c] {\n  flex: 0 0 100%;\n  height: 7rem;\n}\n.advanced-search__results[data-v-77a7ed3c] {\n  flex: 0 0 50%;\n  height: calc(100vh - 2 * 7rem);\n  padding: 2rem;\n  overflow-x: auto;\n  overflow-y: scroll;\n}\n.advanced-search__map[data-v-77a7ed3c] {\n  flex: 0 0 50%;\n  padding: 10px;\n  height: calc(100vh - 2 * 7rem);\n}", ""]);
+exports.push([module.i, ".advanced-search[data-v-77a7ed3c] {\n  background-color: rgba(255, 255, 255, 0.75);\n  max-width: 160rem;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  height: calc(100vh - 7rem );\n}\n.advanced-search__form[data-v-77a7ed3c] {\n  flex: 0 0 100%;\n  padding: 2rem;\n  height: 7rem;\n}\n.advanced-search__results[data-v-77a7ed3c] {\n  flex: 0 0 50%;\n  height: calc(100vh - 2 * 7rem);\n  padding: 2rem;\n  overflow-x: auto;\n  overflow-y: scroll;\n}\n.advanced-search__map[data-v-77a7ed3c] {\n  flex: 0 0 50%;\n  padding: 10px;\n  height: calc(100vh - 2 * 7rem);\n}", ""]);
 
 // exports
 
@@ -38837,6 +38849,19 @@ var render = function() {
     _c("div", { staticClass: "single-apartment__data" }, [
       _c("h2", { staticClass: "single-apartment__name" }, [
         _vm._v(_vm._s(_vm.name))
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "single-apartment__description" }, [
+        _vm._v(
+          "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn--primary" }, [_vm._v("Dettagli")]),
+      _vm._v(" "),
+      _c("span", { staticClass: "single-apartment__rating" }, [
+        _c("i", { staticClass: "fas fa-star" }),
+        _vm._v(_vm._s(_vm.rating))
       ])
     ])
   ])
@@ -38874,7 +38899,11 @@ var render = function() {
       _vm._l(_vm.apartments, function(apartment, index) {
         return _c("apartment-card", {
           key: index,
-          attrs: { name: apartment.name, imgSrc: apartment.imgSrc }
+          attrs: {
+            name: apartment.name,
+            imgSrc: apartment.imgSrc,
+            rating: apartment.rating
+          }
         })
       }),
       1

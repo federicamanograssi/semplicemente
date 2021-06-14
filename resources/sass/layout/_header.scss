@@ -1,6 +1,6 @@
 .header {
     height: $height-section-medium;
-    background-color: rgba($white , .75);
+    background-color: $bg-transparent;
     color: $color-primary;
     position: fixed;
     z-index: 5;
