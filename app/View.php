@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApartmentImage extends Model
+class View extends Model
 {
     protected $fillable = [
-        'id_apartment','img_path','img_description','is_cover'
+        'id_apartment'
     ];
 }
