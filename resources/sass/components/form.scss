@@ -1,0 +1,23 @@
+.form {
+    padding: $spacing-standard;
+    height: $height-section-medium;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    &__filed {
+
+    }
+
+    &__label {
+        
+    }
+
+    &__input {
+
+    }
+
+}

@@ -1,12 +1,9 @@
 <template>
     <section class="advanced-search">
 
-
-        <div class="advanced-search__form">
-
-            advanced-search form here
-
-        </div>
+        <advanced-search-form>
+            <!-- Search Form Component -->
+        </advanced-search-form>
 
 
         <div class="advanced-search__results">
@@ -19,6 +16,9 @@
                 :name="apartment.name" 
                 :imgSrc="apartment.imgSrc"
                 :rating="apartment.rating">
+
+                <!-- Apartment Card Component -->
+
             </apartment-card>
 
         </div>
@@ -91,8 +91,6 @@
 .advanced-search {
 
     background-color: $bg-transparent;
-
-
     max-width: $width-inner-content;
     margin: 0 auto;
 
@@ -101,24 +99,34 @@
     flex-wrap: wrap;
     height: calc(100vh - #{$height-section-medium} ) ;
 
-    &__form {
-        flex: 0 0 100%;
-        padding: $spacing-standard;
-        height: $height-section-medium;
-    }
-
     &__results {
         flex: 0 0 50%;
         height: calc(100vh - 2 * #{$height-section-medium});
         padding: $spacing-standard;
         overflow-x: auto;  
         overflow-y: scroll;
-    }    
+
+        @include responsive(tablet) {
+            flex: 0 0 100%;
+            padding-bottom: $height-section-big + $spacing-more;
+        }
+    } 
 
     &__map {
         flex: 0 0 50%;
         padding: 10px;  // Temporaneo: evita overflow della mappa
         height: calc(100vh - 2 * #{$height-section-medium});
+
+        @include responsive(tablet) {
+            flex: 0 0 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: $height-section-big;
+            background-color: $white;   //temp
+            max-width: 100%;
+        }
     }
 
 }

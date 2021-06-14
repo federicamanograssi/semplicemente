@@ -27,7 +27,7 @@ $color-primary: rgb(16, 83, 16);
 $color-primary-light: rgb(52, 133, 52);
 $color-primary-dark: rgb(5, 48, 5);
 
-$color-secondary: rgb(255, 183, 100);
+$color-secondary: rgb(243, 154, 52);
 $color-secondary-light: lighten($color-secondary , 20%);
 $color-secondary-dark: darken($color-secondary , 20%);
 
@@ -37,6 +37,8 @@ $bg-transparent: rgba($white , .75);
 $color-text : rgb(112, 112, 112);
 
 $animation-time-standard : .25s;
+$animation-time-slow : .5s;
+$animation-time-very-slow : 1s;
 
 
 // MixIns

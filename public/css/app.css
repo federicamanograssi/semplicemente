@@ -38,7 +38,7 @@ body {
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.25s;
+  transition: all 0.25s;
 }
 
 .btn--primary {
@@ -48,7 +48,40 @@ body {
 }
 
 .btn--primary:hover {
-  background-color: #348534;
+  background-color: white;
+  color: #105310;
+}
+
+.btn--primary-inverse {
+  background-color: white;
+  color: #105310;
+  border: 1px solid #105310;
+}
+
+.btn--primary-inverse:hover {
+  background-color: #105310;
+  color: white;
+}
+
+.btn--secondary {
+  background-color: #f39a34;
+  color: white;
+  border: 1px solid #f39a34;
+}
+
+.btn--secondary:hover {
+  background-color: white;
+  color: #f39a34;
+}
+
+.form {
+  padding: 2rem;
+  height: 7rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header {

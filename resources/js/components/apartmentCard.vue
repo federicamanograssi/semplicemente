@@ -8,11 +8,22 @@
 
         <div class="single-apartment__data">
             <h2 class="single-apartment__name">{{name}}</h2>
+            
             <p class="single-apartment__description">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.
             </p>
-            <button class="btn btn--primary">Dettagli</button>
-            <span class="single-apartment__rating"><i class="fas fa-star"></i>{{rating}}</span>
+
+            <button class="btn btn--secondary">Dettagli</button>
+
+
+            <div class="single-apartment__services">
+                
+                <span class="single-apartment__rating"><i class="fas fa-star"></i>{{rating}}</span>
+                <span class="single-apartment__rating"><i class="fas fa-user"></i>5</span>
+                <span class="single-apartment__rating"><i class="fas fa-restroom"></i>2</span>
+                <span class="single-apartment__rating"><strong>€49</strong> / notte</span>
+
+            </div>
         </div>
 
     </div>
@@ -41,7 +52,16 @@
         overflow:hidden;
         display: flex;
         flex-direction: row;
+
         @include standard-shadow;
+
+        &:hover {
+            outline: $color-primary solid 1px;
+
+            .single-apartment__image {
+                transform: scale(1.1);
+            }
+        }
 
         &:not(:last-child){
             margin-bottom: $spacing-more;
@@ -50,12 +70,14 @@
         &__image-container {
             height: 100%;
             flex: 0 0 50%;
+            overflow: hidden;
         }
 
         &__image {
             height: 100%;
             width: 100%;
             object-fit: cover;
+            transition: transform $animation-time-very-slow;
         }
 
         &__data {
@@ -73,15 +95,22 @@
         }
 
         &__name {
-            color: $color-secondary;
+            color: $color-primary;
         }
 
-        &__rating {
-            color: $color-secondary;
+        &__services {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            width: 100%;
+
             i {
                 margin-right: .5rem;            
                 font-size: 90%;
+                opacity: .75;
             }
         }
+
     }
 </style>

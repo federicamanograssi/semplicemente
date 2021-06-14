@@ -24,6 +24,7 @@ Vue.component('search-section', require('./components/searchSection.vue').defaul
 Vue.component('home-jumbo', require('./components/HomeJumbo.vue').default);
 Vue.component('header-guest', require('./components/HeaderGuest.vue').default);
 Vue.component('apartment-card', require('./components/apartmentCard.vue').default);
+Vue.component('advanced-search-form', require('./components/AdvancedSearchForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
