@@ -9,4 +9,9 @@ class Message extends Model
     protected $fillable = [
         'email_sender','message_text'
     ];
+
+    public function apartment(){
+        return $this -> hasMany('App\Apartment');
+    }
+
 }

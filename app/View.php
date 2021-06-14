@@ -9,4 +9,8 @@ class View extends Model
     protected $fillable = [
         'id_apartment'
     ];
+
+    public function apartment(){
+        return $this -> hasMany('App\Apartment');
+    }
 }

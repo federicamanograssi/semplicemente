@@ -22,6 +22,18 @@ class Apartment extends Model
         return $this -> belongsToMany('App\Sponsorship');
     }
 
+    public function views(){
+        return $this -> belongsTo('App\View');
+    }
+
+    public function images(){
+        return $this -> belongsTo('App\Image');
+    }
+
+    public function messages(){
+        return $this -> belongsTo('App\Message');
+    }
+
     
 }
 
