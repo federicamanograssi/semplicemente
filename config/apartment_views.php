@@ -2,19 +2,19 @@
 
  return [
      [
-        'id_apartment'=> 1,
+        'apartment_id'=> 1,
      ],
      [
-        'id_apartment'=> 2,
+        'apartment_id'=> 2,
      ],
      [
-        'id_apartment'=> 3,
+        'apartment_id'=> 3,
      ],
      [
-        'id_apartment'=> 4,
+        'apartment_id'=> 4,
      ],
      [
-        'id_apartment'=> 5,
+        'apartment_id'=> 5,
      ],
 
     ] 

@@ -17,7 +17,7 @@ class ViewsTableSeeder extends Seeder
 
         foreach ($Views as $View) {
             $newView = new View();
-            $newView->id_apartment = $View['id_apartment'];
+            $newView->apartment_id = $View['apartment_id'];
             $newView->save();
         }
     }

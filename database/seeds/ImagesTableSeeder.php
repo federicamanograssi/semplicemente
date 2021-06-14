@@ -17,7 +17,7 @@ class ImagesTableSeeder extends Seeder
         foreach ($Images as $Image ) {
             $newImage = new Image();
 
-            $newImage->id_apartment = $Image['id_apartment'];
+            $newImage->apartment_id = $Image['apartment_id'];
             $newImage->img_path = $Image['img_path'];
             $newImage->img_description = $Image['img_description'];
             $newImage->is_cover = $Image['is_cover'];

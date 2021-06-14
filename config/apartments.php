@@ -3,7 +3,7 @@
  return [
     [
         'title'=> 'Mountain Chalet Milly',
-        'id_user'=>2,
+        'user_id'=>2,
         'rooms_n'=>4,
         'beds_n'=>2,
         'bathroom_n'=>1,
@@ -22,7 +22,7 @@
 
     [
         'title'=> 'La Baita Case Suite',
-        'id_user'=>1,
+        'user_id'=>1,
         'rooms_n'=>3,
         'beds_n'=>2,
         'bathroom_n'=>1,
@@ -37,7 +37,7 @@
     ],
     [
         'title'=> 'Loft Caterina',
-        'id_user'=>2,
+        'user_id'=>2,
         'rooms_n'=>4,
         'beds_n'=>5,
         'bathroom_n'=>2,
@@ -53,7 +53,7 @@
     ],
     [
         'title'=> 'La Casa di Alice',
-        'id_user'=>3,
+        'user_id'=>3,
         'rooms_n'=>5,
         'beds_n'=>2,
         'bathroom_n'=>2,
@@ -71,7 +71,7 @@
     ],
     [
         'title'=> 'Ledro Mountain Chalet',
-        'id_user'=>2,
+        'user_id'=>2,
         'rooms_n'=>6,
         'beds_n'=>3,
         'bathroom_n'=>2,
