@@ -11,13 +11,14 @@
                     </div>
                     <div class="images">
                         <img v-bind:src="photos[counter]" alt="">
+                        <div class="nav">
+                            <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i>
+                        </div>
                     </div>
                     <div @click="nextImage" class="next">
                         <i class="fas fa-angle-right"></i>
                     </div>
-                    <div class="nav">
-                        <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i>
-                    </div>
+                    
                 </div>
             </div>
     </div>
@@ -89,7 +90,6 @@
     position: relative;
     margin: auto;
     width: 100%;
-    height: 80%;
 }
 
 .slider-wrapper .images {
@@ -98,7 +98,7 @@
 }
 
 .slider-wrapper .images img {
-    height: 100%;
+    width: 100%;
 }
 
 .slider-wrapper .images img.active {
