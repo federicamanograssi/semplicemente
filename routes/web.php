@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*ROTTE PER GUEST
+---------------------------------------------------------------
+---------------------------------------------------------------*/
 Route::get('/', function () {
     return view('welcome');
 });

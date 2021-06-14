@@ -16,7 +16,7 @@ class AddForeignKeyImagesApartmentsTable extends Migration
         Schema::table('images', function (Blueprint $table)
 
             {
-            $table->foreign('id_apartment')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments');
             });
     }
 
@@ -28,8 +28,10 @@ class AddForeignKeyImagesApartmentsTable extends Migration
     public function down()
     {
         Schema::table('images', function (Blueprint $table){
-            $table->dropForeign('images_id_apartment_foreign');
-            $table->dropColumn('id_apartment');
+            $table->dropForeign('images_apartment_id_foreign');
+
+            // dà errore nel reset perchè questa migration viene dopo la cancellazione della tabella, quindi non la trova
+            // $table->dropColumn('apartment_id');
         });
     }
 }
