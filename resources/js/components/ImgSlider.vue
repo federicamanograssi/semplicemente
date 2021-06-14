@@ -4,7 +4,7 @@
 
     <div class="img_slider">
 
-        <!-- <div id="root" class="container">
+        <div id="root" class="container">
                 <div class="slider-wrapper">
                     <div @click="prevImage" class="prev">
                         <i class="fas fa-angle-left"></i>
@@ -16,18 +16,17 @@
                         <i class="fas fa-angle-right"></i>
                     </div>
                     <div class="nav">
-                        <i :class="(index==counter) ? active : null" @click="pallinoClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i>
+                        <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i>
                     </div>
                 </div>
-            </div> -->
-            <i class="fas fa-user-nurse"></i>
+            </div>
     </div>
 
 </template>
 
 <!-- Utilizzo Vue -->
 
-<!--<script>
+<script>
         export default {
         mounted() {
             
@@ -60,7 +59,7 @@
                 console.log(this.counter);
             }
         },
-        pallinoClick: function(index) {
+        circleClick: function(index) {
             this.counter = index;
         },
         }
@@ -69,13 +68,14 @@
 
 <!-- Style della pagina. Scoped=>Valido solo per la pagina -->
 
-<!-- Style della pagina. Scoped=>Valido solo per la pagina --><style scoped>
+<style scoped>
 
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 .container {
@@ -129,7 +129,8 @@
     padding: 20px;
     border-radius: 999px;
     background: rgba(0, 0, 0, .7);
-    color: white;
+    color: rgb(204 204 204);
+    cursor: pointer;
 }
 
 .nav>i {
@@ -137,7 +138,7 @@
 }
 
 .nav>i.active {
-    color: blue;
+    color: #393939;
 }
 
 .button {
@@ -155,19 +156,6 @@
     color: white;
 }
 
-.fantasia img {
-    z-index: 300000;
-    display: none;
-    height: 80vh;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100vw;
-}
-
-.fantasia img#fantasiaID.active {
-    display: block;
-}
 
 .slider-wrapper.none {
     display: none;
