@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Tutti i tuoi appartamenti</h1>
-                <a href="" class="btn btn-primary">
+                <a href="{{ route('apartments.create') }}" class="btn btn-primary">
                     Inserisci nuovo appartamento
                 </a>
             </div>
