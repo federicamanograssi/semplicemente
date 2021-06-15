@@ -25,7 +25,6 @@
 
                     </div>
 
-
                     <!-- Main Menu -->
                     <ul class="header__menu"
                        :class="isMenuOpen ? 'header__menu--mobile' : null">

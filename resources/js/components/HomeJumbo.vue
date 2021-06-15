@@ -40,6 +40,7 @@
 @import "../../sass/variables";
 
 .jumbotron {
+    margin-top: - $height-section-medium;   // reset main margin
     height: 100vh;
     width: 100%;
     background-color: rgba($color-primary , .25);

@@ -2,20 +2,62 @@
 
 $width-inner-content: 160rem;
 $height-section-medium: 7rem;
+$height-section-big: 20rem;
+$border-radius-standard : 5px;
+
+
 
 // Spacing
 
+$spacing-tiny       : .5rem;
 $spacing-small      : 1rem;
 $spacing-standard   : 2rem;
 $spacing-more       : 3rem;
 $spacing-huge       : 5rem;
 
+$font-size-standard : 1.6rem;
+$font-family-standard: 'Roboto', sans-serif;
+
+
 // Colors
 
-$color-primary: rgb(16, 83, 16);
-$color-primary-light: lighten($color-primary , 20%);
-$color-primary-dark: darken($color-primary , 20%);
 $white: white;
+$black: #000000;
+
+$color-primary: rgb(16, 83, 16);
+$color-primary-light: rgb(52, 133, 52);
+$color-primary-dark: rgb(5, 48, 5);
+
+$color-secondary: rgb(243, 154, 52);
+$color-secondary-light: lighten($color-secondary , 20%);
+$color-secondary-dark: darken($color-secondary , 20%);
+
+$bg-transparent: rgba($white , .75);
+
+
+$color-text : rgb(112, 112, 112);
+
+$animation-time-standard : .25s;
+$animation-time-slow : .5s;
+$animation-time-very-slow : 1s;
+
+
+// MixIns
+
+@mixin standard-tipography {
+    font-size: $font-size-standard;
+    font-family: $font-family-standard;
+    letter-spacing: 1px;
+    line-height: 1.25;
+}
+
+@mixin shadow-standard {
+    box-shadow: 0 0 1rem rgba($black , .2);
+}
+
+@mixin shadow-enhanced {
+    box-shadow: 0 0 2rem rgba($color-primary-dark , .4);
+}
 
 @mixin clearfix {
     &::after{
