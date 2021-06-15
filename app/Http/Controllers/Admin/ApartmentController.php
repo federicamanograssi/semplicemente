@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -44,7 +45,27 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2|max:100',
+            'rooms_n' => 'required|min:1',
+            'beds_n' => 'required|min:1',
+            'bathroom_n' => 'required',
+            'dimensions' => 'required',
+            'visible' => 'required',
+            'price_per_night' => 'required|min:1'
+        ]);
+
+        $data = $request->all();
+        $new_apartment = new Apartment();
+        $new_apartment->user_id = Auth::id();
+        $new_apartment->fill($data);
+        $new_apartment->save();
+
+        if(array_key_exists('services', $data)) {
+            $new_apartment->services()->sync($data['services']);
+        }
+
+        return redirect()->route('apartments.index');
     }
 
     /**
@@ -101,8 +122,10 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->services()->sync([]);
+        $apartment->delete();
+        return redirect()->route('apartments.index');
     }
 }
