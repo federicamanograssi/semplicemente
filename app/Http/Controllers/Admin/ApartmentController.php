@@ -28,7 +28,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        
+
         return view('admin.apartments.create', compact('services'));
     }
 
@@ -60,9 +60,13 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Apartment $apartment)
     {
-        //
+        $data = [
+            'apartment'=> $apartment,
+            'services'=> Service::all()
+        ];
+        return view('admin.apartments.edit', $data);
     }
 
     /**
