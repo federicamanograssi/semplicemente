@@ -46,9 +46,30 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label>N° bagni</label>
+                    <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n', $apartment->bathroom_n) }}" placeholder="Inserisci il numero dei bagni"required>
+                    @error('bathroom_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label>Dimensioni</label>
                     <input type="number" name="dimensions" min="0" class="form-control @error('dimensions') is-invalid @enderror" value="{{ old('dimensions', $apartment->dimensions) }}" placeholder="Inserisci le dimensioni in mq" required>
                     @error('dimensions')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Latitudine</label>
+                    <input type="number" name="latitude" min="0" class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude', $apartment->latitude) }}" placeholder="Latitudine"required>
+                    @error('latitude')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Longitudine</label>
+                    <input type="number" name="longitude" min="0" class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude', $apartment->longitude) }}" placeholder="Latitudine"required>
+                    @error('longitude')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

@@ -21,7 +21,7 @@
                     </div>
                 @endif
             </div>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{ route('apartments.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label>Titolo</label>
@@ -41,6 +41,27 @@
                     <label>N° letti</label>
                     <input type="number" name="beds_n" min="0" class="form-control @error('beds_n') is-invalid @enderror" value="{{ old('beds_n') }}" placeholder="Inserisci il numero dei letti"required>
                     @error('beds_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>N° bagni</label>
+                    <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n') }}" placeholder="Inserisci il numero dei bagni"required>
+                    @error('bathroom_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Latitudine</label>
+                    <input type="number" name="latitude" min="0" step='any'class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude') }}" placeholder="Latitudine"required>
+                    @error('latitude')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Longitudine</label>
+                    <input type="number" name="longitude" min="0" step='any'class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude') }}" placeholder="Longitudine"required>
+                    @error('longitude')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
