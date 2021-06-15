@@ -76,9 +76,19 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Apartment $apartment)
     {
-        //
+        $data = $request->all();
+        $apartment->update($data);
+
+        if(array_key_exists('services', $data)){
+            $apartment->services()->sync($data['services']);
+        }else {
+            $apartment->services()->sync([]);
+
+        }
+
+        return redirect()->route('apartments.index', $apartment);
     }
 
     /**
