@@ -26,7 +26,7 @@ class CreateApartmentsTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('visible')->default(0);
             $table->float('price_per_night', 6,2);
-            $table->float('rating', 2,1);
+            $table->float('rating', 2,1)->nullable();
             $table->timestamps();
 
         });

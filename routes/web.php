@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 // questa è la view per chi si è logato con successo. in realtà dobbiamo spostarla e farla diventare direttamente dashboard
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 Auth::routes();
 
@@ -32,9 +32,9 @@ Auth::routes();
 ------------------------------------------------------*/
 
 Route::prefix('admin')
-->namespace('Admin')
-->middleware('auth')
-->group(function () {
-    Route::get('/', 'HomeController@index')->name('admin_homepage');
-    Route::resource('/apartments','ApartmentController');
-});
+    ->namespace('Admin')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'HomeController@index')->name('admin_homepage');
+        // Route::resource('/apartments','ApartmentController');
+    });
