@@ -16,10 +16,13 @@ use Illuminate\Support\Facades\Auth;
 /*ROTTE PER GUEST
 ---------------------------------------------------------------
 ---------------------------------------------------------------*/
+
+// qui arrivano tutti i guest non loggati
 Route::get('/', function () {
     return view('welcome');
 });
 
+// questa è la view per chi si è logato con successo. in realtà dobbiamo spostarla e farla diventare direttamente dashboard
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
@@ -33,7 +36,5 @@ Route::prefix('admin')
 ->middleware('auth')
 ->group(function () {
     Route::get('/', 'HomeController@index')->name('admin_homepage');
-    Route::get('/profile', 'HomeController@profile')->name('admin_profile');
-    Route::post('/profile/generate-token', 'HomeController@generateToken')->name('admin_generate_token');
-    Route::resource('/apartments','ApartmentsController');
+    Route::resource('/apartments','ApartmentController');
 });

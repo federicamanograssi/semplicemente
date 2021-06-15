@@ -1,3 +1,4 @@
+{{-- view home quando ti sei loggato con successo --}}
 @extends('layouts.app')
 
 @section('content')
