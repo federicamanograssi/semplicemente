@@ -75,99 +75,71 @@
 
 <!-- Style della pagina. Scoped=>Valido solo per la pagina -->
 
-<style lang="scss">
+<style scoped lang="scss">
+
 @import "../../sass/variables";
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-}
 
 .container {
-    display: flex;
+    max-width:$width-inner-content;
     margin: 0 auto;
-    width: 70%;
-    height: 100vh;
-}
+    .slider-wrapper {
+        height: 50rem;
+        position: relative;
+        margin: auto;
+        width: 100%;
+            .images {
+                height: 100%;
+                text-align: center;
+                img.active {
+                display: inline-block;
+                }
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: $border-radius-standard;
+                    object-fit: cover;
+                }
+            }
+    }
+    .prev,
+    .next {
+        position: absolute;
+        color: #565a5c;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        font-size: 4rem;
+        cursor: pointer;
+    }
 
-.slider-wrapper {
-    position: relative;
-    margin: auto;
-    width: 100%;
-}
+    .next {
+        left: auto;
+        right: 0;
+    }
 
-.slider-wrapper .images {
-    height: 100%;
-    text-align: center;
-}
+    .nav {
+        padding: $spacing-tiny;
+        border-radius: $border-radius-standard;
+        background: rgba(0, 0, 0, .7);
+        cursor: pointer;
+    }
 
-.slider-wrapper .images img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.slider-wrapper .images img.active {
-    display: inline-block;
-}
-
-.prev,
-.next {
-    position: absolute;
-    color: #565a5c;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 40px;
-    cursor: pointer;
-}
-
-.next {
-    left: auto;
-    right: 0;
-}
-
-.nav {
-    display: flex;
-    position: absolute;
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
-    padding: 20px;
-    border-radius: 30px;
-    background: rgba(0, 0, 0, .7);
-    color: rgb(204 204 204);
-    cursor: pointer;
-}
-
-.img_preview {
-    display: flex;
-    padding: 0 8px;
-}
-
-.img_preview.active img{
-    border:3px solid white;
-}
-
-.button {
-    background-color: lime;
-    padding: 5px;
-    border-radius: 20px;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.button a {
-    text-decoration: none;
-    color: white;
-}
-
-
-.slider-wrapper.none {
+    .img_preview {
+        padding:$spacing-small;
+        display: inline-block;
+        width: 10rem;
+        height: 10rem;
+    }
+    .img_preview.active{
+        img{
+            border:3px solid $white;
+        }
+    }
+    .slider-wrapper.none {
     display: none;
+    }
 }
+
 
 </style>
