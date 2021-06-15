@@ -16,8 +16,12 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
-        return view('admin.apartments.index', compact('apartments'));
+        $data = [
+            'apartments' => Apartment::all(),
+            'services' => Service::with('apartments')
+        ];
+
+        return view('admin.apartments.index', $data);
     }
 
     /**
@@ -28,7 +32,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        
+
         return view('admin.apartments.create', compact('services'));
     }
 
@@ -60,9 +64,13 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Apartment $apartment)
     {
-        //
+        $data = [
+            'apartment'=> $apartment,
+            'services'=> Service::all()
+        ];
+        return view('admin.apartments.edit', $data);
     }
 
     /**
@@ -72,9 +80,19 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Apartment $apartment)
     {
-        //
+        $data = $request->all();
+        $apartment->update($data);
+
+        if(array_key_exists('services', $data)){
+            $apartment->services()->sync($data['services']);
+        }else {
+            $apartment->services()->sync([]);
+
+        }
+
+        return redirect()->route('apartments.index', $apartment);
     }
 
     /**
