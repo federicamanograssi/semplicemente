@@ -10,23 +10,24 @@
                         <i class="fas fa-angle-left"></i>
                     </div>
                     <div class="images">
-                        <img v-bind:src="photos[counter]" alt="">
+                        <img v-bind:src="photos[counter]" class="img_slider" alt="">
                         <div class="nav">
-                        <div :class="(index==counter) ? active : null" class="img_preview" @click="circleClick(index)" v-for="(photo,index) in photos">
-                            <img v-bind:src="photo" alt="">
-                        </div>
+                            <div :class="(index==counter) ? active : null" class="img_preview" @click="circleClick(index)" v-for="(photo,index) in photos">
+                                <img v-bind:src="photo" alt="">
+                            </div>
                         
                             <!-- <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i> -->
                         
                         
                         </div>
                     </div>
+
                     <div @click="nextImage" class="next">
                         <i class="fas fa-angle-right"></i>
                     </div>
                     
                 </div>
-            </div>
+        </div>
     </div>
 
 </template>
@@ -84,7 +85,6 @@
     max-width:$width-inner-content;
     margin: 0 auto;
     .slider-wrapper {
-        height: 50rem;
         position: relative;
         margin: auto;
         width: 100%;
@@ -94,9 +94,9 @@
                 img.active {
                 display: inline-block;
                 }
-                img {
+                .img_slider {
                     width: 100%;
-                    height: 100%;
+                    height: 50rem;
                     border-radius: $border-radius-standard;
                     object-fit: cover;
                 }
@@ -130,6 +130,12 @@
         display: inline-block;
         width: 10rem;
         height: 10rem;
+        img{
+            width: 100%;
+            border-radius: $border-radius-standard;
+            object-fit: cover;
+            height:100%;
+        }
     }
     .img_preview.active{
         img{

@@ -2208,6 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -6842,7 +6843,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  height: 50rem;\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images img[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 0;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  cursor: pointer;\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 1rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border: 3px solid white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
+exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 0;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  cursor: pointer;\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 1rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border: 3px solid white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -39218,7 +39219,10 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "images" }, [
-          _c("img", { attrs: { src: _vm.photos[_vm.counter], alt: "" } }),
+          _c("img", {
+            staticClass: "img_slider",
+            attrs: { src: _vm.photos[_vm.counter], alt: "" }
+          }),
           _vm._v(" "),
           _c(
             "div",
