@@ -1,3 +1,6 @@
+{{-- questa deve essere la pagina iniziale,
+sistemare menu con differenze per auth --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

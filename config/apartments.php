@@ -11,7 +11,7 @@
         'latitude'=>'45.971935',
         'longitude'=>'10.375169',
         'description'=>'Appartamento su due piani in casa bifamiliare 4 posti letto:
-            ampia camera matrimoniale al primo piano ;al piano inferiore cucina superaccessiorata , salotto/soggiorno con divano letto e camino , bagno
+            ampia camera matrimoniale al primo piano ;al piano inferiore cucina ---------superaccessiorata , salotto/soggiorno con divano letto e camino , bagno
             Garage e giardino attrezzato.
             In posizione soleggiata (500 m s.l.m.) dista 5 km da Sondrio.
             Ideale punto d\'appoggio per la pratica di numerosi SPORT come sci /climbing/biking/golf/canoa/tennis trekking ',
