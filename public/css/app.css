@@ -85,12 +85,54 @@ body {
 
 .form {
   padding: 2rem;
-  height: 7rem;
   display: flex;
+  justify-content: space-between;
+}
+
+.form--nowrap {
+  height: 7rem;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
   align-items: center;
+}
+
+.form--nowrap .form__field {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.form--nowrap .form__field:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.form--nowrap .form__label {
+  margin-right: 2rem;
+}
+
+.form__field {
+  padding: 2rem;
+}
+
+.form__input {
+  border: 1px solid #105310;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.25;
+  transition: all 0.25s;
+}
+
+.form__input:focus,
+.form__input:active {
+  outline: none;
+  background-color: #348534;
+  color: white;
 }
 
 .header {

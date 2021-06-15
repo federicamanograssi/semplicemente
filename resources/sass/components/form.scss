@@ -1,15 +1,39 @@
 .form {
+
     padding: $spacing-standard;
-    height: $height-section-medium;
-
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     justify-content: space-between;
-    align-items: center;
-
-    &__filed {
         
+    &--nowrap {
+        height: $height-section-medium;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        
+        .form__field {
+            height: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            &:not(:last-child) {
+                margin-right: $spacing-tiny;
+            }
+        }
+        
+        .form__label {
+            margin-right: $spacing-standard;
+        }
+    }
+    
+    &--vertical {
+        
+    }
+    
+    &__field {
+        padding: $spacing-standard;
     }
 
     &__label {
@@ -17,7 +41,17 @@
     }
 
     &__input {
-
+        border: 1px solid $color-primary;
+        padding: $spacing-tiny $spacing-standard;
+        border-radius: $border-radius-standard;
+        @include standard-tipography;
+        transition: all $animation-time-standard;
+        &:focus,
+        &:active {
+            outline: none;
+            background-color: $color-primary-light;
+            color: $white;
+        }
     }
 
 }

@@ -1980,8 +1980,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      isFiltersBoxOpen: false
+    };
+  },
+  methods: {
+    toggleFilterBox: function toggleFilterBox() {
+      this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
+    }
+  }
 });
 
 /***/ }),
@@ -6693,7 +6726,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".form--advanced-search[data-v-475ce6f9] {\n  flex: 0 0 100%;\n  background-color: #348534;\n  padding: 5px;\n}\n.form--advanced-search .form__field[data-v-475ce6f9] {\n  background-color: white;\n  height: 100%;\n  flex-grow: 1;\n  padding: 10px;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: center;\n}\n.form--advanced-search .form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 5px;\n  border-radius: 5px;\n}\n@media (max-width: 56.25em) {\n.form--advanced-search .form__field--guests[data-v-475ce6f9] {\n    display: none;\n}\n}\n@media (max-width: 56.25em) {\n.form--advanced-search .form__field--services[data-v-475ce6f9] {\n    display: none;\n}\n}\n.form--advanced-search .form__label[data-v-475ce6f9] {\n  margin-right: 2rem;\n}", ""]);
+exports.push([module.i, ".form--advanced-search[data-v-475ce6f9] {\n  flex: 0 0 100%;\n  background-color: #348534;\n  padding: 0.5rem;\n  padding-right: 0;\n  position: relative;\n}\n.form--advanced-search .form__field[data-v-475ce6f9] {\n  background-color: white;\n  padding: 10px;\n  border-radius: 5px;\n}\n@media (max-width: 56.25em) {\n.form--advanced-search .form__field--guests[data-v-475ce6f9], .form--advanced-search .form__field--services[data-v-475ce6f9] {\n    display: none;\n}\n}\n.form--advanced-search .form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  height: 80px;\n  width: 100%;\n  z-index: 55;\n  background-color: white;\n}", ""]);
 
 // exports
 
@@ -38692,63 +38725,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "form",
+    {
+      staticClass: "form form--nowrap form--advanced-search",
+      attrs: { action: "" }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "form__field" }, [
+        _c(
+          "div",
+          {
+            staticClass: "btn btn--primary-inverse",
+            on: {
+              click: function($event) {
+                return _vm.toggleFilterBox()
+              }
+            }
+          },
+          [_vm._v("Più Filtri")]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "form__filters",
+          class: _vm.isFiltersBoxOpen ? null : "hidden"
+        },
+        [_vm._m(3)]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "form",
-      { staticClass: "form form--advanced-search", attrs: { action: "" } },
-      [
-        _c("div", { staticClass: "form__field form__field--location" }, [
-          _c(
-            "label",
-            { staticClass: "form__label", attrs: { for: "localita" } },
-            [_vm._v("Località")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "localita", type: "text" }
-          })
+    return _c("div", { staticClass: "form__field form__field--location" }, [
+      _c("label", { staticClass: "form__label", attrs: { for: "localita" } }, [
+        _vm._v("Località")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form__input",
+        attrs: { id: "localita", type: "text" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form__field form__field--guests" }, [
+      _c("label", { staticClass: "form__label", attrs: { for: "ospiti" } }, [
+        _vm._v("Ospiti")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form__input",
+        attrs: { id: "ospiti", type: "text" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form__field form__field--services" }, [
+      _c("label", { staticClass: "form__label", attrs: { for: "servizi" } }, [
+        _vm._v("Servizi")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form__input",
+        attrs: { id: "servizi", type: "text" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form__group" }, [
+      _c("div", { staticClass: "form__field" }, [
+        _c("label", { staticClass: "form__label", attrs: { for: "ospiti" } }, [
+          _vm._v("Ospiti")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form__field form__field--guests" }, [
-          _c(
-            "label",
-            { staticClass: "form__label", attrs: { for: "ospiti" } },
-            [_vm._v("Ospiti")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "ospiti", type: "text" }
-          })
+        _c("input", {
+          staticClass: "form__input",
+          attrs: { id: "ospiti", type: "text" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form__field form__field--services" }, [
+        _c("label", { staticClass: "form__label", attrs: { for: "servizi" } }, [
+          _vm._v("Servizi")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form__field form__field--services" }, [
-          _c(
-            "label",
-            { staticClass: "form__label", attrs: { for: "servizi" } },
-            [_vm._v("Servizi")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "servizi", type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form__field" }, [
-          _c("div", { staticClass: "btn btn--primary-inverse" }, [
-            _vm._v("Più Filtri")
-          ])
-        ])
-      ]
-    )
+        _c("input", {
+          staticClass: "form__input",
+          attrs: { id: "servizi", type: "text" }
+        })
+      ])
+    ])
   }
 ]
 render._withStripped = true
