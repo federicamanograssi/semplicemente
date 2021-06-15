@@ -36,5 +36,5 @@ Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('admin_homepage');
-        // Route::resource('/apartments','ApartmentController');
+        Route::resource('/apartments','ApartmentController');
     });
