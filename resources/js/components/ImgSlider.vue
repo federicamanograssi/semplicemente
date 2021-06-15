@@ -75,8 +75,8 @@
 
 <!-- Style della pagina. Scoped=>Valido solo per la pagina -->
 
-<style scoped>
-
+<style lang="scss">
+@import "../../sass/variables";
 
 * {
     margin: 0;
