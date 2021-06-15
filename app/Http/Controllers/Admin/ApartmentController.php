@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Apartment;
+use App\Service;
 
-class AparmentController extends Controller
+class ApartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,8 @@ class AparmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::all();
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -24,7 +27,9 @@ class AparmentController extends Controller
      */
     public function create()
     {
-        //
+        $services = Service::all();
+        
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
