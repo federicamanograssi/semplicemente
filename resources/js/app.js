@@ -27,6 +27,7 @@ Vue.component('img-slider', require('./components/ImgSlider.vue').default);
 Vue.component('apartment-card', require('./components/apartmentCard.vue').default);
 Vue.component('advanced-search-form', require('./components/AdvancedSearchForm.vue').default);
 Vue.component('apartments-list', require('./components/apartmentList.vue').default);
+Vue.component('locations-list', require('./components/locationList.vue').default);
 
 
 /**

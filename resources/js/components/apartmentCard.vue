@@ -7,10 +7,10 @@
         </div>
 
         <div class="single-apartment__data">
-            <h2 class="single-apartment__name">{{name}}</h2>
+            <h3 class="single-apartment__name heading--primary">{{name}}</h3>
             
             <p class="single-apartment__description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
 
             <button class="btn btn--secondary">Dettagli</button>
@@ -52,14 +52,13 @@
         overflow:hidden;
         display: flex;
         flex-direction: row;
-
         background-color: $white;
 
         @include shadow-standard;
 
         &:hover {
 
-        @include shadow-enhanced;
+            @include shadow-enhanced;
 
             .single-apartment__image {
                 transform: scale(1.1);
@@ -83,6 +82,10 @@
             transition: transform $animation-time-very-slow;
         }
 
+        &__name {
+            margin-bottom: 0;
+        }
+
         &__data {
             flex: 0 0 50%;
             padding: $spacing-small;
@@ -95,10 +98,6 @@
 
         &__description {
             font-size: 85%;
-        }
-
-        &__name {
-            color: $color-primary;
         }
 
         &__services {
