@@ -1,4 +1,121 @@
 .container {
     max-width: $width-inner-content;
     margin: 0 auto;
+    i {
+        padding-right: $spacing-tiny;
+    }
+    .apartment-title {
+        padding: $spacing-standard 0;
+    }
+    .font-weight--bold {
+        font-weight: bold;
+    }
+    .form-container {
+        display: flex;
+        padding: $spacing-more 0;
+        .left-container {
+            width: 60%;
+            .type-host {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: $spacing-standard;
+                .host-img {
+                    width: $spacing-huge;
+                    img {
+                        width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+            }
+            .apartment-service {
+                padding: $spacing-small 0;
+                .service-card {
+                    padding: $spacing-small 0;
+                    display: flex;
+                }
+            }
+            .apartment-description {
+                padding: $spacing-standard 0;
+            }
+            .additional-services {
+                padding: $spacing-standard 0;
+                h3 {
+                    padding: $spacing-small 0;
+                }
+                .row {
+                    display: flex;
+                    padding: $spacing-small 0;
+                    .ad-service-card {
+                        width: 50%;
+                        display: flex;
+                    }
+                }
+            }
+        }
+        .right-container {
+            width: 50%;
+            .contact-form {
+                position: sticky;
+                top: $height-section-medium;
+                form {
+                    @include shadow-enhanced;
+                    background: $color-secondary;
+                    width: 50%;
+                    margin: 0 auto;
+                    padding: $spacing-small;
+                    border-radius: $border-radius-standard;
+                }
+                p,
+                input {
+                    margin-bottom: $spacing-tiny;
+                }
+                .btn {
+                    margin: $spacing-small 0;
+                }
+                input,
+                textarea,
+                .btn {
+                    display: block;
+                    width: 100%;
+                }
+                textarea {
+                    resize: none;
+                }
+            }
+        }
+    }
+    .map-title {
+        padding: $spacing-standard 0;
+        h3 {
+            padding-bottom: $spacing-small;
+        }
+    }
+    .chalet-map {
+        flex: 0 0 50%;
+        height: calc(100vh - 2 * #{$height-section-medium});
+    }
+    .hosted-by {
+        display: flex;
+        align-items: center;
+        padding: $spacing-standard 0;
+        .type-host {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .host-img {
+                width: $spacing-huge;
+                img {
+                    padding-right: $spacing-tiny;
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+        }
+        .redirect-btn {
+            width: 50%;
+            text-align: center;
+        }
+    }
 }

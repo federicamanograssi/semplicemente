@@ -322,3 +322,150 @@ body {
   margin: 0 auto;
 }
 
+.container i {
+  padding-right: 0.5rem;
+}
+
+.container .apartment-title {
+  padding: 2rem 0;
+}
+
+.container .font-weight--bold {
+  font-weight: bold;
+}
+
+.container .form-container {
+  display: flex;
+  padding: 3rem 0;
+}
+
+.container .form-container .left-container {
+  width: 60%;
+}
+
+.container .form-container .left-container .type-host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
+.container .form-container .left-container .type-host .host-img {
+  width: 5rem;
+}
+
+.container .form-container .left-container .type-host .host-img img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.container .form-container .left-container .apartment-service {
+  padding: 1rem 0;
+}
+
+.container .form-container .left-container .apartment-service .service-card {
+  padding: 1rem 0;
+  display: flex;
+}
+
+.container .form-container .left-container .apartment-description {
+  padding: 2rem 0;
+}
+
+.container .form-container .left-container .additional-services {
+  padding: 2rem 0;
+}
+
+.container .form-container .left-container .additional-services h3 {
+  padding: 1rem 0;
+}
+
+.container .form-container .left-container .additional-services .row {
+  display: flex;
+  padding: 1rem 0;
+}
+
+.container .form-container .left-container .additional-services .row .ad-service-card {
+  width: 50%;
+  display: flex;
+}
+
+.container .form-container .right-container {
+  width: 50%;
+}
+
+.container .form-container .right-container .contact-form {
+  position: sticky;
+  top: 7rem;
+}
+
+.container .form-container .right-container .contact-form form {
+  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
+  background: #f39a34;
+  width: 50%;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.container .form-container .right-container .contact-form p,
+.container .form-container .right-container .contact-form input {
+  margin-bottom: 0.5rem;
+}
+
+.container .form-container .right-container .contact-form .btn {
+  margin: 1rem 0;
+}
+
+.container .form-container .right-container .contact-form input,
+.container .form-container .right-container .contact-form textarea,
+.container .form-container .right-container .contact-form .btn {
+  display: block;
+  width: 100%;
+}
+
+.container .form-container .right-container .contact-form textarea {
+  resize: none;
+}
+
+.container .map-title {
+  padding: 2rem 0;
+}
+
+.container .map-title h3 {
+  padding-bottom: 1rem;
+}
+
+.container .chalet-map {
+  flex: 0 0 50%;
+  height: calc(100vh - 2 * 7rem);
+}
+
+.container .hosted-by {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.container .hosted-by .type-host {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .hosted-by .type-host .host-img {
+  width: 5rem;
+}
+
+.container .hosted-by .type-host .host-img img {
+  padding-right: 0.5rem;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.container .hosted-by .redirect-btn {
+  width: 50%;
+  text-align: center;
+}
+
