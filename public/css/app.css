@@ -358,43 +358,41 @@ h3 {
   max-width: 160rem;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  position: relative;
   height: calc(100vh - 7rem );
 }
 
 .main--advanced-search .apartments-list {
-  flex: 0 0 50%;
-  height: calc(100vh - 2 * 7rem);
+  width: 100%;
   padding: 2rem;
+  padding-right: 50%;
+  height: calc(100vh - 2 * 7rem);
   overflow-x: auto;
   overflow-y: scroll;
 }
 
 @media (max-width: 56.25em) {
   .main--advanced-search .apartments-list {
-    flex: 0 0 100%;
-    padding-bottom: 23rem;
+    padding-right: 2rem;
+    height: calc( 100% - 20rem - 7rem);
   }
 }
 
 .main--advanced-search .chalet-map {
-  flex: 0 0 50%;
-  padding: 10px;
-  height: calc(100vh - 2 * 7rem);
+  position: absolute;
+  right: 2rem;
+  top: 7rem;
+  width: calc(50% - 2 * 2rem);
+  padding: 2rem;
+  height: calc(100vh - 2 * 7rem - 3rem);
 }
 
 @media (max-width: 56.25em) {
   .main--advanced-search .chalet-map {
-    flex: 0 0 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    position: static;
     height: 20rem;
     background-color: white;
-    max-width: 100%;
+    width: 100%;
   }
 }
 

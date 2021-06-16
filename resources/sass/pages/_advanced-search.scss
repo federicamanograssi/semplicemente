@@ -4,40 +4,45 @@
     margin-left: auto;
     margin-right: auto;
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    position: relative;
     height: calc(100vh - #{$height-section-medium} ) ;
 
     .apartments-list {
 
-        flex: 0 0 50%;
-        height: calc(100vh - 2 * #{$height-section-medium});
+        // flex: 0 0 50%;
+        width: 100%;
         padding: $spacing-standard;
+        padding-right: 50%;
+        height: calc(100vh - 2 * #{$height-section-medium});
         overflow-x: auto;  
         overflow-y: scroll;
 
         @include responsive(tablet) {
-            flex: 0 0 100%;
-            padding-bottom: $height-section-big + $spacing-more;
+            // flex: 0 0 100%;
+            padding-right: $spacing-standard;
+            height: calc(  100% -  #{$height-section-big} - #{$height-section-medium}); 
         }
 
     }
     .chalet-map {
-
-        flex: 0 0 50%;
-        padding: 10px;  // Temporaneo: evita overflow della mappa
-        height: calc(100vh - 2 * #{$height-section-medium});
+        position: absolute;
+        right: $spacing-standard;
+        top: $height-section-medium;
+        width: calc(50% - 2 * #{$spacing-standard});
+        // flex: 0 0 50%;
+        // padding-top: 10px;
+        padding : $spacing-standard;
+        height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
 
         @include responsive(tablet) {
-            flex: 0 0 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            // flex: 0 0 100%;
+            position: static;
+            // bottom: 0;
+            // left: 0;
+            // width: 100%;
             height: $height-section-big;
             background-color: $white;   //temp
-            max-width: 100%;
+            width: 100%;
         }
     }
 
