@@ -6,7 +6,7 @@
         <home-jumbo></home-jumbo>
 
         <section class="home-section featured-apartments">
-            <h2 class="home-sections__heading heading--primary">
+            <h2 class="home-section__heading heading--primary">
                 Le nostre scelte Top
             </h2>
             <apartments-list class="apartments-list--responsive"></apartments-list>
@@ -24,8 +24,10 @@
         <section class="home-section featured-locations">
 
             <h2 class="home-section__heading heading--primary">
-                Esplora le migliori destinazioni
+                Le destinazioni più richieste
             </h2>
+            
+            <locations-list class="locations-list--responsive"></locations-list>
             
         </section>
 

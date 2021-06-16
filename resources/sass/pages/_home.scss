@@ -3,10 +3,15 @@
     margin-left: auto;
     margin-right: auto;
     background-color: $white;
-    padding: $spacing-standard;
+    padding: $spacing-huge $spacing-standard $spacing-standard;
 
-    padding-top: $spacing-more;
-    padding-bottom: $spacing-more;
+    &__heading {
+        // margin-top: $spacing-huge;
+        font-size: 3.5rem;
+        line-height: 4.5rem;
+        letter-spacing: 3px;
+        margin-bottom: $spacing-huge;
+    }
 }
 
 .become-host {
@@ -33,7 +38,7 @@
             background-color:$white;
             z-index: 2;
             opacity: 0;
-            transition: opacity $animation-time-standard;
+            transition: opacity $animation-time-slow;
         }
 
         &:hover {
@@ -56,7 +61,7 @@
         position: relative;
         z-index: 3;
         background-color: rgba($white , .75);
-        transition: all $animation-time-standard;
+        transition: all $animation-time-slow;
         border-radius: $border-radius-more;
     }
     
@@ -68,13 +73,13 @@
             padding: $spacing-standard $spacing-huge;
             text-decoration: none;
             color: $color-primary-light;
-            font-size: 3rem;
+            font-size: 3.5rem;
             letter-spacing: 3px;
             display: block;
             height: 100%;
             width: 100%;
             font-weight: bold;
-            transition: all $animation-time-standard;
+            transition: all $animation-time-slow;
         }
     }
 }
