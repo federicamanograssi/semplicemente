@@ -79,6 +79,10 @@
         &--responsive {
             .single-apartment {
                 flex: 0 0 calc((100% - #{$spacing-standard}) / 2);
+                
+                @include responsive(tablet) {
+                    flex: 0 0 100% ;            
+                }
             }
         }
     }

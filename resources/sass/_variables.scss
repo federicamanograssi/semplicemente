@@ -1,11 +1,13 @@
 // Sizes
 
 $width-inner-content: 160rem;
+$height-section-small: 5rem;
 $height-section-medium: 7rem;
 $height-section-big: 20rem;
+$height-section-huge: 50rem;
+
 $border-radius-standard : 5px;
-
-
+$border-radius-more : 15px;
 
 // Spacing
 
@@ -23,6 +25,7 @@ $font-family-standard: 'Roboto', sans-serif;
 
 $white: white;
 $black: #000000;
+$gray: rgb(199, 199, 199);
 
 $color-primary: rgb(16, 83, 16);
 $color-primary-light: rgb(52, 133, 52);
