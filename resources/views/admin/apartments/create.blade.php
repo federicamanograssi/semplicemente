@@ -23,6 +23,7 @@
             </div>
 
             {{-- INIZIO FORM CREA NUOVO ----- --}}
+            {{-- enctype="multipart/form-data" serve epr caricare le img --}}
             <form action="{{ route('apartments.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
@@ -124,6 +125,7 @@
                     @enderror
                 </div>
                 
+                {{-- SERVIZI ------ --}}
                 <div class="form-group">
                     <p>Seleziona i servizi:</p>
 
@@ -147,7 +149,7 @@
                 <div class="form-group">
                     <label>Immagini</label>
                     {{-- multiple serve per mettere più immagini --}}
-                    <input class='form-control-file' type="file" name="img_path" multiple>
+                    <input class='form-control-file' type="file" name="images[]" multiple>
                 </div>
 
                 <p>Visibile:</p>

@@ -80,7 +80,7 @@
                                     <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </a>
-                            <form class="d-inline-block" action="" method="post">
+                            <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit">

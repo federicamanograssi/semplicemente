@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
+use App\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 
 class ApartmentController extends Controller
@@ -35,6 +37,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
+        
 
         return view('admin.apartments.create', compact('services'));
     }
@@ -66,13 +69,30 @@ class ApartmentController extends Controller
             $lon = $response['results'][0]['position']['lon'];
  
         $data = $request->all();
+        // dd($data['img_path']);
         
         $new_apartment = new Apartment();
         $new_apartment->user_id = Auth::id();
         $new_apartment->latitude = $lat;
         $new_apartment->longitude = $lon;
         $new_apartment->fill($data);
+
+        // if(array_key_exists('images',$data)){
+        // // salvo l'immagine e recupero il path
+        // $img_path= Storage::put('apartment_images',$data['images'],'public');
+
+        // dd($img_path);
+        // // questo se devo salvarlo nella colonna 'img_path' della tabella apartments MA NON CE L'ABBIAMO
+        // $data['images'] = $img_path;
+        // // e poi fare il new_apartment['image']
+        // $new_image= new Image();
+        // $new_image->img_path = $data['images'];
+        // $new_image->save();
+        // };
+
         $new_apartment->save();
+
+
 
         if(array_key_exists('services', $data)) {
             $new_apartment->services()->sync($data['services']);
