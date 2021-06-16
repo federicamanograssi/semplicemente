@@ -50,7 +50,7 @@
                     {{-- LATITUDINE-------- --}}
                     <div class="form-group col">
                         <label>Latitudine</label>
-                        <input type="number" name="latitude" min="0" class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude', $apartment->latitude) }}" placeholder="Latitudine"required>
+                        <input type="number" name="latitude" min="0" class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude', $apartment->latitude) }}" placeholder="Latitudine"readonly>
                         @error('latitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -59,7 +59,7 @@
                     {{-- LONGITUDINE------- --}}
                     <div class="form-group col">
                         <label>Longitudine</label>
-                        <input type="number" name="longitude" min="0" class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude', $apartment->longitude) }}" placeholder="Latitudine"required>
+                        <input type="number" name="longitude" min="0" class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude', $apartment->longitude) }}" placeholder="Latitudine"readonly>
                         @error('longitude')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

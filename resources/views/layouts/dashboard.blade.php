@@ -8,6 +8,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{-- bootstrap --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -19,7 +22,14 @@
             <ul class="navbar-nav px-3">
                 
               <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
+                <a class="nav-link" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                   document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
               </li>
             </ul>
         </nav>

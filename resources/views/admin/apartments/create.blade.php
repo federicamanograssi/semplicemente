@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Inserisci un nuovo appartamento</h1>
                 <a href="{{ route('apartments.index') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Tutti i tuoi appartamenti
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Torna ai tuoi appartamenti
                 </a>
             </div>
             <div>
@@ -44,10 +44,10 @@
                     @enderror
                 </div>
 
-                {{-- LATITUDINE E LONGITUDINE --}}
+{{--                
                 <div class="row">
 
-                    {{-- LATITUDINE-------- --}}
+                  
                     <div class="form-group col">
                         <label>Latitudine</label>
                         <input type="number" name="latitude" min="0" step='any'class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude') }}" placeholder="Latitudine"required>
@@ -56,7 +56,7 @@
                         @enderror
                     </div>
 
-                    {{-- LONGITUDINE------- --}}
+                    
                     <div class="form-group col">
                         <label>Longitudine</label>
                         <input type="number" name="longitude" min="0" step='any'class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude') }}" placeholder="Longitudine"required>
@@ -64,9 +64,9 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
-                {{-- PREZZO/DIMENSIONI/LETTI/STANZE --}}
+                
                 <div class="row">
 
                     {{-- PREZZO--- --}}

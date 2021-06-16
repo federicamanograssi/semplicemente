@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+
 
 class ApartmentController extends Controller
 {
@@ -18,7 +20,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $data = [
-            'apartments' => Apartment::where('user_id', Auth::id())->get()            ,
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
             'services' => Service::with('apartments')
         ];
 
@@ -47,6 +49,7 @@ class ApartmentController extends Controller
     {
         $request->validate([
             'title' => 'required|min:2|max:100',
+            'address' => 'required|min:2|max:100',
             'rooms_n' => 'required|min:1',
             'beds_n' => 'required|min:1',
             'bathroom_n' => 'required',
@@ -56,8 +59,17 @@ class ApartmentController extends Controller
         ]);
 
         $data = $request->all();
+
+        // INDIRIZZO IN COORDINATE LAT LONG
+        $address = $request->address;
+        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address . '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
+            $lat = $response['results'][0]['position']['lat'];
+            $lon = $response['results'][0]['position']['lon'];
+
         $new_apartment = new Apartment();
         $new_apartment->user_id = Auth::id();
+        $new_apartment->latitude = $lat;
+        $new_apartment->longitude = $lon;
         $new_apartment->fill($data);
         $new_apartment->save();
 
