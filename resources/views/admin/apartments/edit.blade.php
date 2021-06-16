@@ -38,9 +38,50 @@
 
                 {{-- INDIRIZZO-------- --}}
                 <div class="form-group">
+<<<<<<< HEAD
                     <label>Indirizzo</label>
                     <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Inserisci l'indirizzo" value="{{ old('address', $apartment->address) }}" required>
                     @error('address')
+=======
+                    <label>N° stanze</label>
+                    <input type="number" name="rooms_n" min="0" class="form-control @error('rooms_n') is-invalid @enderror" value="{{ old('rooms_n', $apartment->rooms_n) }}" placeholder="Inserisci il numero delle stanze" required>
+                    @error('rooms_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>N° letti</label>
+                    <input type="number" name="beds_n" min="0" class="form-control @error('beds_n') is-invalid @enderror" value="{{ old('beds_n', $apartment->beds_n) }}" placeholder="Inserisci il numero dei letti"required>
+                    @error('beds_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>N° bagni</label>
+                    <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n', $apartment->bathroom_n) }}" placeholder="Inserisci il numero dei bagni"required>
+                    @error('bathroom_n')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="address" min="0" step='any'class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $apartment->address) }}" placeholder="Indirizzo"required>
+                    @error('address')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Dimensioni</label>
+                    <input type="number" name="dimensions" min="0" class="form-control @error('dimensions') is-invalid @enderror" value="{{ old('dimensions', $apartment->dimensions) }}" placeholder="Inserisci le dimensioni in mq" required>
+                    @error('dimensions')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Latitudine</label>
+                    <input type="number" name="latitude" min="0" class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude', $apartment->latitude) }}" placeholder="Latitudine"required>
+                    @error('latitude')
+>>>>>>> admin_ap_views
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

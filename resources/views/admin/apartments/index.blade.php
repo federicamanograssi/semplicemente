@@ -10,6 +10,7 @@
                     Inserisci nuovo appartamento
                 </a>
             </div>
+<<<<<<< HEAD
 
             <table class="table w-100 table-responsive">
 
@@ -99,6 +100,11 @@
 
                     {{-- @foreach ($apartments as $apartment)
                             <h3>{{ $apartment->images->first()->img_path}}</h3>
+=======
+            
+                    @foreach ($apartments as $apartment)
+                            {{-- <h3>{{ $apartment->images->first()->img_path}}</h3> --}}
+>>>>>>> admin_ap_views
                             <h3>{{ $apartment->title }}</h3>
                             <h3>{{ $apartment->description }}</h3>
                             <h3>{{ $apartment->price_per_night }}</h3>
