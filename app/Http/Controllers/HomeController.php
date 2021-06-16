@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // questa è la view per chi è loggato e va in home
+        return view('admin.dashboard');
     }
 }
