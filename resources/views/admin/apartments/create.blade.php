@@ -52,19 +52,13 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label>Latitudine</label>
-                    <input type="number" name="latitude" min="0" step='any'class="form-control @error('latitude') is-invalid @enderror" value="{{ old('latitude') }}" placeholder="Latitudine"required>
-                    @error('latitude')
+                    <label>Address</label>
+                    <input type="text" name="address" min="0" step='any'class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}" placeholder="Indirizzo"required>
+                    @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group">
-                    <label>Longitudine</label>
-                    <input type="number" name="longitude" min="0" step='any'class="form-control @error('longitude') is-invalid @enderror" value="{{ old('longitude') }}" placeholder="Longitudine"required>
-                    @error('longitude')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                
                 <div class="form-group">
                     <label>Dimensioni</label>
                     <input type="number" name="dimensions" min="0" class="form-control @error('dimensions') is-invalid @enderror" value="{{ old('dimensions') }}" placeholder="Inserisci le dimensioni in mq" required>

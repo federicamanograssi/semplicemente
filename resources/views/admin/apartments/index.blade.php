@@ -10,8 +10,9 @@
                     Inserisci nuovo appartamento
                 </a>
             </div>
+            
                     @foreach ($apartments as $apartment)
-                            <h3>{{ $apartment->images->first()->img_path}}</h3>
+                            {{-- <h3>{{ $apartment->images->first()->img_path}}</h3> --}}
                             <h3>{{ $apartment->title }}</h3>
                             <h3>{{ $apartment->description }}</h3>
                             <h3>{{ $apartment->price_per_night }}</h3>

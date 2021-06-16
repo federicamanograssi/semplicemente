@@ -53,6 +53,13 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="address" min="0" step='any'class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $apartment->address) }}" placeholder="Indirizzo"required>
+                    @error('address')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label>Dimensioni</label>
                     <input type="number" name="dimensions" min="0" class="form-control @error('dimensions') is-invalid @enderror" value="{{ old('dimensions', $apartment->dimensions) }}" placeholder="Inserisci le dimensioni in mq" required>
                     @error('dimensions')
