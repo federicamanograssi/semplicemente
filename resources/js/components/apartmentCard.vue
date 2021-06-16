@@ -52,14 +52,13 @@
         overflow:hidden;
         display: flex;
         flex-direction: row;
-
         background-color: $white;
 
         @include shadow-standard;
 
         &:hover {
 
-        @include shadow-enhanced;
+            @include shadow-enhanced;
 
             .single-apartment__image {
                 transform: scale(1.1);

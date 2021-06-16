@@ -9,9 +9,7 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input :class="isFiltersBoxOpen ? null : 'form__input--small'"
-                    
-                    class="form__input" type="text">
+                    <input class="form__input" type="text">
                 </div>
 
                 <!-- Search Button -->
@@ -307,13 +305,7 @@
                 }
                 .form__label {
                     flex: 0 1 50%;
-                    }
-            }
-        }
-
-        &__input {
-            &--small {
-                max-width: 18rem;   
+                }
             }
         }
 

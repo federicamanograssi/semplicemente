@@ -354,12 +354,12 @@ h3 {
 }
 
 .main--advanced-search {
+  height: calc(100vh - 7rem );
   background-color: rgba(255, 255, 255, 0.75);
   max-width: 160rem;
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  height: calc(100vh - 7rem );
 }
 
 .main--advanced-search .apartments-list {
@@ -391,7 +391,6 @@ h3 {
   .main--advanced-search .chalet-map {
     position: static;
     height: 20rem;
-    background-color: white;
     width: 100%;
   }
 }
