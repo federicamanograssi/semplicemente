@@ -7,7 +7,7 @@
         </div>
 
         <div class="single-apartment__data">
-            <h2 class="single-apartment__name">{{name}}</h2>
+            <h3 class="single-apartment__name heading--primary">{{name}}</h3>
             
             <p class="single-apartment__description">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.
@@ -95,10 +95,6 @@
 
         &__description {
             font-size: 85%;
-        }
-
-        &__name {
-            color: $color-primary;
         }
 
         &__services {
