@@ -37,14 +37,15 @@
                 </div>
 
                 {{-- INDIRIZZO-------- --}}
-                {{-- <div class="form-group">
+                <div class="form-group">
                     <label>Indirizzo</label>
                     <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Inserisci l'indirizzo" value="{{ old('address', $apartment->address) }}" required>
-                    @error('title')
+                    @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div> --}}
+                </div>
 
+                {{-- LATITUDINE E LONGITUDINE --}}
                 <div class="row">
                     {{-- LATITUDINE-------- --}}
                     <div class="form-group col">
@@ -93,28 +94,29 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                        {{-- LETTI------ --}}
-                        <div class="form-group col">
-                            <label>N° letti</label>
-                            <input type="number" name="beds_n" min="0" class="form-control @error('beds_n') is-invalid @enderror" value="{{ old('beds_n', $apartment->beds_n) }}" placeholder="Inserisci il numero dei letti"required>
-                            @error('beds_n')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        {{-- BAGNI-------- --}}
-                        <div class="form-group col">
-                            <label>N° bagni</label>
-                            <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n', $apartment->bathroom_n) }}" placeholder="Inserisci il numero dei bagni"required>
-                            @error('bathroom_n')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    {{-- LETTI------ --}}
+                    <div class="form-group col">
+                        <label>N° letti</label>
+                        <input type="number" name="beds_n" min="0" class="form-control @error('beds_n') is-invalid @enderror" value="{{ old('beds_n', $apartment->beds_n) }}" placeholder="Inserisci il numero dei letti"required>
+                        @error('beds_n')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- BAGNI-------- --}}
+                    <div class="form-group col">
+                        <label>N° bagni</label>
+                        <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n', $apartment->bathroom_n) }}" placeholder="Inserisci il numero dei bagni"required>
+                        @error('bathroom_n')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 
                 
-                
+                {{-- DESCRIZIONE-------- --}}
                 <div class="form-group">
                     <label>Descrizione</label>
                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="10" placeholder="Inserisci una descrizione" required>{{ old('description', $apartment->description) }}</textarea>
@@ -143,6 +145,7 @@
                     @enderror
                 </div>
 
+                {{-- IMMAGINI----- --}}
                 <div class="form-group">
                     <label>Immagini</label>
             {{-- multiple serve per mettere più immagini --}}
