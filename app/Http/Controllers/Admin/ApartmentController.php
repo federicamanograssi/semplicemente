@@ -18,7 +18,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $data = [
-            'apartments' => Apartment::all(),
+            'apartments' => Apartment::where('user_id', Auth::id())->get()            ,
             'services' => Service::with('apartments')
         ];
 
