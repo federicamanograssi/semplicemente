@@ -17,6 +17,7 @@ class CreateApartmentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title', 100);
+            $table->string('address', 100);
             $table->tinyInteger('rooms_n');
             $table->tinyInteger('beds_n');
             $table->tinyInteger('bathroom_n');
