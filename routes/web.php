@@ -20,6 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/index', function () {
+    return view('/guest/home');
+});
+
+Route::get('/single', function () {
+    return view('/guest/singleApartment');
+});
+
+Route::get('/search', function () {
+    return view('/guest/search');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
