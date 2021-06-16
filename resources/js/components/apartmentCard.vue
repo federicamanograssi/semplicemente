@@ -10,7 +10,7 @@
             <h3 class="single-apartment__name heading--primary">{{name}}</h3>
             
             <p class="single-apartment__description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
 
             <button class="btn btn--secondary">Dettagli</button>
@@ -81,6 +81,10 @@
             width: 100%;
             object-fit: cover;
             transition: transform $animation-time-very-slow;
+        }
+
+        &__name {
+            margin-bottom: 0;
         }
 
         &__data {

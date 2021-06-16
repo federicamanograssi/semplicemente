@@ -2552,6 +2552,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         'name': 'Livigno',
         'imgSrc': 'images/livigno.jpg'
+      }, {
+        'name': 'Sestriere',
+        'imgSrc': 'images/sestriere.jpg'
       }]
     };
   }
@@ -7051,7 +7054,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  border-radius: 5px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  background-color: white;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-apartment:hover {\n  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);\n}\n.single-apartment:hover .single-apartment__image {\n  transform: scale(1.1);\n}\n.single-apartment:not(:last-child) {\n  margin-bottom: 3rem;\n}\n.single-apartment__image-container {\n  height: 100%;\n  flex: 0 0 50%;\n  overflow: hidden;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 1s;\n}\n.single-apartment__data {\n  flex: 0 0 50%;\n  padding: 1rem;\n  text-align: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n}\n.single-apartment__description {\n  font-size: 85%;\n}\n.single-apartment__services {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: space-between;\n  width: 100%;\n}\n.single-apartment__services i {\n  margin-right: 0.5rem;\n  font-size: 90%;\n  opacity: 0.75;\n}", ""]);
+exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  border-radius: 5px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  background-color: white;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-apartment:hover {\n  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);\n}\n.single-apartment:hover .single-apartment__image {\n  transform: scale(1.1);\n}\n.single-apartment:not(:last-child) {\n  margin-bottom: 3rem;\n}\n.single-apartment__image-container {\n  height: 100%;\n  flex: 0 0 50%;\n  overflow: hidden;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 1s;\n}\n.single-apartment__name {\n  margin-bottom: 0;\n}\n.single-apartment__data {\n  flex: 0 0 50%;\n  padding: 1rem;\n  text-align: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n}\n.single-apartment__description {\n  font-size: 85%;\n}\n.single-apartment__services {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: space-between;\n  width: 100%;\n}\n.single-apartment__services i {\n  margin-right: 0.5rem;\n  font-size: 90%;\n  opacity: 0.75;\n}", ""]);
 
 // exports
 
@@ -7070,7 +7073,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 56.25em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}", ""]);
 
 // exports
 
@@ -7089,7 +7092,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.5s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 56.25em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n}\n}\n@media (max-width: 56.25em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(90%);\n  transition: all 0.5s;\n  border-radius: 5px;\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n  width: 100%;\n  margin: 0;\n  transition: all 0.5s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
+exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.5s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 56.25em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 35.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 56.25em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 35.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.5s;\n  border-radius: 5px;\n}\n@media (max-width: 56.25em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.5s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 56.25em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
 
 // exports
 
@@ -39832,7 +39835,7 @@ var render = function() {
       _vm._v(" "),
       _c("p", { staticClass: "single-apartment__description" }, [
         _vm._v(
-          "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos delectus hic ab itaque eius ipsum.\n        "
+          "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit.\n        "
         )
       ]),
       _vm._v(" "),

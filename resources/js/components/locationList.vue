@@ -62,6 +62,11 @@
                     {
                         'name' : 'Livigno',
                         'imgSrc': 'images/livigno.jpg'
+                    } ,
+
+                    {
+                        'name' : 'Sestriere',
+                        'imgSrc': 'images/sestriere.jpg'
                     }
                 ]
             }
@@ -82,6 +87,7 @@
     }
 
     .single-location {
+
         flex: 0 0 calc(  (100% - ( ( #{$spacing-more} )  * 3 ) ) / 4) ;
 
         @include responsive(desktop) {
@@ -89,11 +95,30 @@
         }
 
         @include responsive(tablet) {
-            flex: 0 0 calc(  (100% - ( #{$spacing-more} ) ) / 2) ;            
+            flex: 0 0 calc(  (100% - ( #{$spacing-more} ) ) / 2) ; 
+            @include shadow-standard;           
         }
 
-        @include responsive(tablet) {
-            flex: 0 0 100% ;            
+        @include responsive(phone) {
+            flex: 0 0 100%;            
+        }        
+
+        // Avoid blank space
+
+        &:nth-child(9) {
+            display: none;
+
+            @include responsive(desktop) {
+                display: block;
+            }
+
+            @include responsive(tablet) {
+                display: none;
+            }
+
+            @include responsive(phone) {
+                display: block;
+            }
         }
 
         height: $height-section-big;
@@ -137,9 +162,13 @@
             width: 100%;
             object-fit: cover;
             object-position: center;
-            filter: grayscale(80%) brightness(90%);
+            filter: grayscale(80%) brightness(80%);
             transition: all $animation-time-slow;
             border-radius: $border-radius-standard;
+
+            @include responsive(tablet) {
+                filter: none;
+            }
 
         }
 
@@ -148,9 +177,6 @@
             position: relative;
             z-index: 3;
 
-            // transform: translateY( calc(-1 * #{$height-section-small} - 50%));
-
-            transform: translateY( calc( -1 * ( #{$height-section-big / 2}  ) ) );
 
             width: 100%;
             margin: 0;
@@ -158,6 +184,13 @@
             line-height: $height-section-small;
             font-size: 2.2rem;
             letter-spacing: 1px;
+            transform: translateY( calc( -1 * ( #{$height-section-big / 2}  ) ) );
+            
+            @include responsive(tablet) {
+                transform: none;
+                color: $color-primary-light;
+                @include shadow-standard;
+            }   
         }
 
         &__bottom-bar {
