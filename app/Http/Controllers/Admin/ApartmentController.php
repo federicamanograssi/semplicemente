@@ -49,7 +49,7 @@ class ApartmentController extends Controller
     {
         $request->validate([
             'title' => 'required|min:2|max:100',
-            'address' => 'required|min:2|max:100',
+            'address' => 'required',
             'rooms_n' => 'required|min:1',
             'beds_n' => 'required|min:1',
             'bathroom_n' => 'required',
@@ -58,14 +58,15 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|min:1'
         ]);
 
-        $data = $request->all();
-
+        
         // INDIRIZZO IN COORDINATE LAT LONG
         $address = $request->address;
-        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address . '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
+        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address. '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
             $lat = $response['results'][0]['position']['lat'];
             $lon = $response['results'][0]['position']['lon'];
-
+ 
+        $data = $request->all();
+        
         $new_apartment = new Apartment();
         $new_apartment->user_id = Auth::id();
         $new_apartment->latitude = $lat;

@@ -49,7 +49,7 @@
                                 @endfor
                             </p>
                         </td>
-                        <td class="text-right">{{ $apartment->address }}</td>
+                        <td class="text-left">{{ $apartment->address }}</td>
                         <td class="text-right">{{ $apartment->dimensions }} m<sup>2</sup></td>
                         <td class="text-right">{{ $apartment->price_per_night }} €</td>
                         <td class="text-right">{{ $apartment->rooms_n }}</td>
