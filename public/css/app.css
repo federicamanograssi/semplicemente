@@ -28,13 +28,13 @@ body {
 .heading--primary {
   color: #105310;
   text-transform: capitalize;
+  margin-bottom: 3rem;
 }
 
 h2 {
   font-size: 3rem;
   line-height: 4rem;
   letter-spacing: 1.5px;
-  margin-bottom: 3rem;
 }
 
 h3 {
@@ -281,6 +281,71 @@ h3 {
   padding: 2rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+
+.become-host {
+  height: 50rem;
+}
+
+.become-host__background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-image: url("/img/host-become.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  position: relative;
+}
+
+.become-host__background::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: white;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.become-host__background:hover::before {
+  opacity: 0.75;
+}
+
+.become-host__background:hover .become-host__text-box {
+  background-color: #348534;
+}
+
+.become-host__background:hover .become-host__cta {
+  color: white;
+}
+
+.become-host__text-box {
+  position: relative;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.75);
+  transition: all 0.25s;
+  border-radius: 15px;
+}
+
+.become-host__cta:link,
+.become-host__cta:hover,
+.become-host__cta:active,
+.become-host__cta:visited {
+  padding: 2rem 5rem;
+  text-decoration: none;
+  color: #348534;
+  font-size: 3rem;
+  letter-spacing: 3px;
+  display: block;
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  transition: all 0.25s;
 }
 
 .main--advanced-search {

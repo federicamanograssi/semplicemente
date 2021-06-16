@@ -6,13 +6,13 @@ body {
 .heading--primary {
     color: $color-primary;
     text-transform: capitalize;
+    margin-bottom: $spacing-more;
 }
 
 h2{
     font-size: 3rem;
     line-height: 4rem;
     letter-spacing: 1.5px;
-    margin-bottom: $spacing-more;
 }
 
 h3{
