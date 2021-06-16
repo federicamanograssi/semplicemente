@@ -1,5 +1,5 @@
 {{-- view home quando ti sei loggato con successo --}}
-@extends('layouts.dashboard-new')
+@extends('layouts.dashboard')
 
 @section('content')
 QUI VA IL CONTENUTO DELLA DASHBOARD
