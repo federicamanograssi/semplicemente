@@ -2153,6 +2153,7 @@ __webpack_require__.r(__webpack_exports__);
       maxDistance: 1
     };
   },
+  props: ['location'],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
@@ -2249,14 +2250,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.items);
+  },
   data: function data() {
     return {
       'logoSrc': '/img/logo.png',
       'isMenuOpen': false
     };
   },
+  props: ['items'],
   methods: {
     toggleHeaderMenu: function toggleHeaderMenu() {
       this.isMenuOpen == true ? this.isMenuOpen = false : this.isMenuOpen = true;
@@ -2299,8 +2315,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.searchRoute);
+  },
+  props: ['search-route'],
   data: function data() {
     return {
       'videoSrc': 'img/jumbo-vid.mp4'
@@ -2525,6 +2547,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
+  props: ['search-route'],
   data: function data() {
     return {
       'locations': [{
@@ -7015,7 +7038,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 3;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 56.25em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 1rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox-list[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 1rem;\n}\n.checkbox-list li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 1rem;\n}\n.checkbox-list label[data-v-475ce6f9] {\n  opacity: 0.8;\n}", ""]);
+exports.push([module.i, ".form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 3;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 56.25em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox-list[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 1rem;\n}\n.checkbox-list li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 1rem;\n}\n.checkbox-list label[data-v-475ce6f9] {\n  opacity: 0.8;\n}", ""]);
 
 // exports
 
@@ -7034,7 +7057,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n}\n.jumbotron__bg-video[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: none;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n  border: none;\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  border-radius: 5px;\n  height: 4rem;\n  background-color: white;\n  color: #105310;\n  width: 20%;\n  border: none;\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n}\n@media (max-width: 56.25em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 56.25em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.25);\n  border-radius: 15px;\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 20%;\n}", ""]);
 
 // exports
 
@@ -39127,7 +39150,11 @@ var render = function() {
             _vm._v("Località")
           ]),
           _vm._v(" "),
-          _c("input", { staticClass: "form__input", attrs: { type: "text" } })
+          _c("input", {
+            staticClass: "form__input",
+            attrs: { type: "text" },
+            domProps: { value: this.location }
+          })
         ]
       ),
       _vm._v(" "),
@@ -39617,59 +39644,22 @@ var render = function() {
             staticClass: "header__menu",
             class: _vm.isMenuOpen ? "header__menu--mobile" : null
           },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _vm._m(3)
-          ]
+          _vm._l(this.items, function(item, index) {
+            return _c("li", { key: index, staticClass: "header__menu-item" }, [
+              _c("i", { class: item.icon }),
+              _vm._v(" "),
+              _c("a", { attrs: { href: item.slug } }, [
+                _vm._v(_vm._s(item.label))
+              ])
+            ])
+          }),
+          0
         )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      { staticClass: "header__menu-item header__menu-item--home" },
-      [_c("i", { staticClass: "fas fa-home" }), _vm._v(" Home Page")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "header__menu-item" }, [
-      _c("i", { staticClass: "far fa-heart" }),
-      _vm._v(" Chalet in Evidenza")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "header__menu-item" }, [
-      _c("i", { staticClass: "fas fa-search-location" }),
-      _vm._v(" Ricerca Avanzata")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "header__menu-item" }, [
-      _c("i", { staticClass: "fas fa-sign-in-alt" }),
-      _vm._v(" LogIn")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39705,15 +39695,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "jumbotron__search-box" }, [
+    _c("div", { staticClass: "jumbotron__search-box" }, [
       _c("h1", { staticClass: "jumbotron__title" }, [
         _vm._v("Dove vuoi andare?")
       ]),
@@ -39722,17 +39704,37 @@ var staticRenderFns = [
         _vm._v("Prenota subito la tua prossima avventura")
       ]),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "jumbotron__input",
-        attrs: { type: "text", placeholder: "Prova con 'Cortina d'Ampezzo'" }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "jumbotron__search-button" }, [
-        _vm._v("Cerca")
-      ])
+      _c(
+        "form",
+        {
+          staticClass: "form jumbotron__form",
+          attrs: { action: _vm.searchRoute, method: "get" }
+        },
+        [
+          _c("input", {
+            staticClass: "form__input jumbotron__input",
+            attrs: {
+              name: "location",
+              type: "text",
+              placeholder: "Prova con 'Cortina d'Ampezzo'"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "jumbotron__search-button btn btn--primary-light-inverse",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Cerca")]
+          )
+        ]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39948,7 +39950,11 @@ var render = function() {
     _vm._l(this.locations, function(location, index) {
       return _c(
         "a",
-        { key: index, staticClass: "single-location", attrs: { href: "#" } },
+        {
+          key: index,
+          staticClass: "single-location",
+          attrs: { href: _vm.searchRoute + "?location=" + location.name }
+        },
         [
           _c("div", { staticClass: "single-location__img-container" }, [
             _c("img", {
@@ -52955,8 +52961,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

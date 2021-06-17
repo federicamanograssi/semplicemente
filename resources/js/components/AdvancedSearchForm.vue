@@ -9,7 +9,7 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input class="form__input" type="text">
+                    <input class="form__input" type="text" :value="this.location">
                 </div>
 
                 <!-- Search Button -->
@@ -197,6 +197,7 @@
                 maxDistance : 1
             }
         },
+        props : ['location'] ,
         methods : {
             toggleFilterBox() {
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
@@ -280,13 +281,15 @@
             // Full Width Fields
 
             &--full {
-                padding: $spacing-small;
+                padding: $spacing-standard;
                 flex: 0 0 100%;
             }
 
             // 50% Width Fields
 
             &--half {
+                padding: $spacing-standard;
+
                 flex: 0 0 calc((100% - #{$spacing-tiny}) / 2);                
             }
 
@@ -300,6 +303,7 @@
             // Special Style for location field
 
             &--location {
+                flex-shrink: 1;
                 .form__input {
                     flex: 1 0 50%;
                 }
@@ -307,6 +311,11 @@
                     flex: 0 1 50%;
                 }
             }
+        }
+
+        &__input {
+            // Fixes flex-shrink
+            width: 0;
         }
 
         // Form Labels

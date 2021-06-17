@@ -24,14 +24,26 @@
                         </i>
 
                     </div>
-
                     <!-- Main Menu -->
                     <ul class="header__menu"
                        :class="isMenuOpen ? 'header__menu--mobile' : null">
-                        <li class="header__menu-item header__menu-item--home"><i class="fas fa-home"></i> Home Page</li>
-                        <li class="header__menu-item"><i class="far fa-heart"></i> Chalet in Evidenza</li>
-                        <li class="header__menu-item"><i class="fas fa-search-location"></i> Ricerca Avanzata</li>
-                        <li class="header__menu-item"><i class="fas fa-sign-in-alt"></i> LogIn</li>
+
+                        <!-- Link statici -->
+
+                        <!-- 
+                            <li class="header__menu-item header__menu-item--home"> <i class="fas fa-home"></i> Home Page</li>
+                            <li class="header__menu-item"><i class="far fa-heart"></i> <a href="/search"> Chalet in Evidenza</a></li>
+                            <li class="header__menu-item"><i class="fas fa-search-location"></i> Ricerca Avanzata</li>
+                            <li class="header__menu-item"><i class="fas fa-sign-in-alt"></i> LogIn</li> 
+                        -->
+
+                        <!-- link dinamici -->
+
+                        <li v-for="(item , index) in this.items" :key="index"
+                            class="header__menu-item">
+                            <i :class="item.icon"></i> <a :href="item.slug">{{item.label}}</a>
+                        </li>
+
                     </ul>
 
                 </nav>
@@ -43,7 +55,7 @@
 <script>
     export default {
         mounted() {
-            
+            console.log(this.items);
         } 
         ,
         data() {
@@ -52,6 +64,10 @@
                 'isMenuOpen' : false
             }
         },
+        props : 
+            ['items']
+             ,
+        
         methods : {
             toggleHeaderMenu() {
                 this.isMenuOpen == true ? this.isMenuOpen = false : this.isMenuOpen = true;

@@ -15,7 +15,7 @@ $spacing-tiny       : .5rem;
 $spacing-small      : 1rem;
 $spacing-standard   : 2rem;
 $spacing-more       : 3rem;
-$spacing-huge       : 5rem;
+$spacing-huge       : 7.5rem;
 
 $font-size-standard : 1.6rem;
 $font-family-standard: 'Roboto', sans-serif;
@@ -35,7 +35,8 @@ $color-secondary: rgb(243, 154, 52);
 $color-secondary-light: lighten($color-secondary , 20%);
 $color-secondary-dark: darken($color-secondary , 20%);
 
-$bg-transparent: rgba($white , .75);
+$bg-transparent: rgba($white , .8);
+$bg-transparent-light: rgba($white , .25);
 
 
 $color-text : rgb(112, 112, 112);

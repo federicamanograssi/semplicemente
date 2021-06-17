@@ -3,7 +3,9 @@
 
 @section('main')
     <main>
-        <home-jumbo></home-jumbo>
+        {{-- <home-jumbo :searchRoute="{{json_encode(route('search'))}}"></home-jumbo> --}}
+
+        <home-jumbo search-route="{{route('search')}}"></home-jumbo>
 
         <section class="home-section featured-apartments">
             <h2 class="home-section__heading heading--primary">
@@ -11,7 +13,6 @@
             </h2>
             <apartments-list class="apartments-list--responsive"></apartments-list>
         </section>
-
         
         <section class="home-section become-host">
             <div class="become-host__background">
@@ -27,7 +28,7 @@
                 Le destinazioni più richieste
             </h2>
             
-            <locations-list class="locations-list--responsive"></locations-list>
+            <locations-list search-route="{{route('search')}}" class="locations-list--responsive"></locations-list>
             
         </section>
 

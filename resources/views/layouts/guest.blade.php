@@ -19,7 +19,33 @@
     <div id="app">
     
     {{-- Header Component --}}
-    <header-guest></header-guest>
+
+    @php
+
+        $homePage = array(
+            'label' => 'Home Page' ,
+            'slug'  => route('guest-home') ,
+            'icon'  => 'fas fa-home'
+        );
+
+        $advancedSearch = array(
+            'label' => 'Ricerca Avanzata' ,
+            'slug'  => route('search') ,
+            'icon'  => 'fas fa-search-location'
+        );
+
+        $logIn = array(
+            'label' => 'logIn' ,
+            'slug'  => route('admin_homepage') ,
+            'icon'  => 'fas fa-sign-in-alt'
+        );
+
+        $menuItems = array( 0 => $homePage , 1 => $advancedSearch , 2 => $logIn);
+        
+    @endphp
+
+    
+    <header-guest :items="{{ json_encode($menuItems)}}"></header-guest>
     
     {{-- Main Here --}}
     

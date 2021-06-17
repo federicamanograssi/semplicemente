@@ -1,18 +1,35 @@
 @extends('layouts/guest')
 @section('title' , 'Advanced Search | ChaletBnB')
 
+@php
+
+    // Controllo se esiste il parametro url 'location'
+
+    if(isset($_GET['location'])){
+        $location = $_GET['location'];
+    }
+    else {
+        $location = '';
+    }
+@endphp
 @section('main')
 
     <main class="main main--advanced-search">
 
         {{-- <search-section></search-section> --}}
 
-        <advanced-search-form>
+        <advanced-search-form location="{{$location}}">
             <!-- Search Form -->
         </advanced-search-form>
 
         <apartments-list class="apartments-list--full-width">
-            {{-- Apartment List --}}
+
+            {{-- 
+                In questo punto devo sapere cosa cercare. 
+                Qualunque cosa sia (ad esempio una query)
+                Posso passarla al component tramite props
+            --}}
+
         </apartments-list>
 
         <section class="chalet-map">            
