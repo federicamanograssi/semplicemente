@@ -142,11 +142,15 @@
                         height: 100%;
                         width: 100%;
                         @include shadow-standard;
-                    }
                     img{
                         border-radius: $border-radius-standard;
                         width: 100%;
                         height: 100%;
+                        object-fit: cover;
+                    }                    
+                    }
+                    .card-rating{
+                        padding-top:$spacing-small ;
                     }
                 }
             }
