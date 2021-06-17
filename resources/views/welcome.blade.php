@@ -14,7 +14,6 @@ sistemare menu con differenze per auth --}}
 
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <!-- Styles -->
-        
     </head>
     <body>
         <div id="app" class="flex-center position-ref full-height">

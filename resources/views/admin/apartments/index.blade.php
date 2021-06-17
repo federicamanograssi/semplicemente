@@ -37,7 +37,7 @@
                         <td class="sorting_1">
                             <img src="" alt="" class="rounded me-3">
                             <p class="m-0 d-inline-block align-middle font-16">
-                                <a href="" class="text-body">{{ $apartment->title }}</a>
+                                <a href="{{ route('apartments.show',$apartment->id)}}" class="text-body">{{ $apartment->title }}</a>
                                 <br>
                                 @for ($i = 0; $i < floor($apartment['rating']); $i++)
                                     <span>
