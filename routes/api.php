@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Tentativi di chiamate API a DB
+
+Route::post('/apartments','Api\ApartmentController@index');
