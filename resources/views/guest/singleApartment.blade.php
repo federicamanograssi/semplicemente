@@ -166,18 +166,36 @@
 
                 <div class="right-container">
                     <div class="contact-form">
-                        <form action="#">
-                            <h3>Contatta l'host per conoscere i dettagli</h3>
-                            <p> <i class="fas fa-star"></i> {{$apartment->rating}} &#183 {{$apartment->address}}</p>
 
-                            <label class="form__label" for="name">Nome</label>
+                        <h3>Contatta l'host per conoscere i dettagli</h3>
+                        <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
+                        {{-- FORM INVIO MESSAGGIO----------- --}}
+                        <form action="{{ route('message.store') }}" method="post" enctype="multipart/form-data">
+
+                            {{-- MAIL---------- --}}
+                            <div class="form-group">
+                                <input type="email" name="email_sender" class="form-control @error('email_sender') is-invalid @enderror" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                @error('email_sender')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- TESTO MESSAGGIO----------- --}}
+                            <div class="form-group">
+                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario"></textarea>
+                                @error('message_text')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- <label class="form__label" for="name">Nome</label>
                             <input class="form__input" id="name" name="name" type="text" placeholder="Inserisci il tuo nome">
                             <label class="form__label" for="email">Email</label>
                             <input class="form__input" id="email" name="email" type="email" placeholder="Inserisci la tua email">
                             <label class="form__label" for="message">Messaggio</label>
-                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea>
+                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea> --}}
 
-                           <button class="btn btn--primary" type="submit">Contatta l'host ora</button>
+                           <button class="btn btn--primary" type="submit">Invia Messaggio</button>
 
                         </form>
                         
