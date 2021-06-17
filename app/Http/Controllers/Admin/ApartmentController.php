@@ -60,6 +60,8 @@ class ApartmentController extends Controller
             'visible' => 'required',
             'price_per_night' => 'required|min:1'
         ]);
+        
+        
 
         
         // INDIRIZZO IN COORDINATE LAT LONG
@@ -76,7 +78,26 @@ class ApartmentController extends Controller
         $new_apartment->latitude = $lat;
         $new_apartment->longitude = $lon;
         $new_apartment->fill($data);
+        
+        $new_apartment->save();
 
+        $images= $request->images;
+        
+        for($i=0; $i< count($images); $i++) {
+                if (!empty($images)) {
+                    // salviamo l'img inserita nel form nella cartella storage/app/public/images
+                    $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
+                    $extension = $images[$i]->extension();
+                    $images[$i] = Storage::putFileAs('apartment_images', $images[$i], $path .$extension, 'public');
+                    // creiamo una nuova istanza della classe images
+                    $new_image = New Image;
+                    // Compiliamo i dati della colonne immagine e apartment_id
+                    $new_image->img_path = $images[$i];
+                    $new_image->apartment_id = $new_apartment->id;
+                    // Salviamo l'immagine nel database
+                    $new_image->save();
+            }
+        }
         // if(array_key_exists('images',$data)){
         // // salvo l'immagine e recupero il path
         // $img_path= Storage::put('apartment_images',$data['images'],'public');
@@ -90,7 +111,6 @@ class ApartmentController extends Controller
         // $new_image->save();
         // };
 
-        $new_apartment->save();
 
 
 
