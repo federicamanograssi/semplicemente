@@ -419,6 +419,10 @@ h3 {
   }
 }
 
+.main--advanced-search .apartments-list--map-hidden {
+  height: calc( 100% - 7rem);
+}
+
 .main--advanced-search .chalet-map {
   position: absolute;
   right: 2rem;
@@ -430,9 +434,41 @@ h3 {
 
 @media (max-width: 56.25em) {
   .main--advanced-search .chalet-map {
-    position: static;
+    position: relative;
+    top: auto;
+    right: auto;
     height: 20rem;
     width: 100%;
+  }
+}
+
+.main--advanced-search .chalet-map__button {
+  position: fixed;
+  bottom: 20rem;
+  right: 3rem;
+  height: 7rem;
+  line-height: 7rem;
+  width: 7rem;
+  transform: translateY(50%);
+  z-index: 4;
+  background-color: white;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 3rem;
+  border: 1px solid #348534;
+  transition: background 0.25s, opacity 1s;
+  color: #348534;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.main--advanced-search .chalet-map__button-container {
+  display: none;
+}
+
+@media (max-width: 56.25em) {
+  .main--advanced-search .chalet-map__button-container {
+    display: block;
   }
 }
 

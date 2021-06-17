@@ -52420,6 +52420,39 @@ Vue.component('back-to-top', __webpack_require__(/*! ./components/backToTop.vue 
 var app = new Vue({
   el: '#app'
 });
+/*
+Toggle button on map
+(search page)
+*/
+
+var apartmentList = document.querySelector('.apartments-list');
+var mapSection = document.querySelector('.chalet-map');
+var mapCloseBtn = document.querySelector('.chalet-map__button--close');
+var mapOpenBtn = document.querySelector('.chalet-map__button--open');
+
+mapCloseBtn.onclick = function () {
+  toggleMap();
+};
+
+mapOpenBtn.onclick = function () {
+  toggleMap();
+};
+
+var mapIsShown = true;
+
+function toggleMap() {
+  if (mapIsShown) {
+    mapSection.classList.add("hidden");
+    mapCloseBtn.classList.remove("hidden");
+    apartmentList.classList.add("apartments-list--map-hidden");
+    mapIsShown = false;
+  } else {
+    mapOpenBtn.classList.add("hidden");
+    mapSection.classList.remove("hidden");
+    apartmentList.classList.remove("apartments-list--map-hidden");
+    mapIsShown = true;
+  }
+}
 
 /***/ }),
 
