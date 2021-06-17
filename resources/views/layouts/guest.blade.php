@@ -18,40 +18,77 @@
 <body>
     <div id="app">
     
-    {{-- Header Component --}}
-
+        
     @php
+        // Is User Authenticated ?
+
+        use Illuminate\Support\Facades\Auth;
+
+        $isLoggedIn = false;
+
+        if (Auth::check()) {
+            $isLoggedIn = true;
+        }
 
         $homePage = array(
+            'name'  => 'home' ,
             'label' => 'Home Page' ,
-            'slug'  => route('guest-home') ,
+            'slug'  =>  route('guest-home') ,
             'icon'  => 'fas fa-home'
         );
 
         $advancedSearch = array(
+            'name'  => 'search' ,
             'label' => 'Ricerca Avanzata' ,
-            'slug'  => route('search') ,
+            'slug'  =>  route('search') ,
             'icon'  => 'fas fa-search-location'
         );
-
+        
         $logIn = array(
+            'name'  => 'login' ,
             'label' => 'logIn' ,
-            'slug'  => route('admin_homepage') ,
+            'slug'  =>  route('login') ,
             'icon'  => 'fas fa-sign-in-alt'
         );
 
-        $menuItems = array( 0 => $homePage , 1 => $advancedSearch , 2 => $logIn);
+        $logOut = array(
+            'name'  => 'signout' ,
+            'label' => 'Esci' ,
+            'slug'  =>  route('logout') ,
+            'icon'  => 'fas fa-sign-out-alt' ,
+        );
+
+        $signUp = array(
+            'name'  => 'signup' ,
+            'label' => 'Registrati' ,
+            'slug'  =>  route('register') ,
+            'icon'  => 'fas fa-user-plus'
+        );
         
+        $menuItems = array( $homePage , $advancedSearch);
+
+        if($isLoggedIn) {
+            array_push($menuItems , $logOut);
+        } else {
+            array_push($menuItems , $logIn , $signUp);
+        }
+        
+
     @endphp
 
-    
-    <header-guest :items="{{ json_encode($menuItems)}}"></header-guest>
+
+    {{-- Header Component --}}
+
+    <header-guest :csrf="{{ json_encode(csrf_token())}}" :items="{{ json_encode($menuItems)}}"></header-guest>
     
     {{-- Main Here --}}
     
     @yield('main')
 
     {{-- Footer Here --}}
+
+    <back-to-top></back-to-top>
+    
 </div>
     <script src="{{asset('js/app.js')}}"></script>
 </body>

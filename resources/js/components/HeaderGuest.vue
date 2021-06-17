@@ -39,9 +39,27 @@
 
                         <!-- link dinamici -->
 
-                        <li v-for="(item , index) in this.items" :key="index"
-                            class="header__menu-item">
-                            <i :class="item.icon"></i> <a :href="item.slug">{{item.label}}</a>
+                        <li  v-for="(item , index) in this.items" 
+                            :key="index"
+                            :class="'header__menu-item--' + item.name"
+                             class="header__menu-item">
+                                
+                            <form
+                                v-if="item.name=='signout'"
+                                id="logout-form" 
+                                action="/logout" 
+                                method="POST">
+                                    <input type="hidden" name="_token" :value="csrf">
+                                    <button class="btn btn--primary-light-inverse" type="submit">
+                                        <i :class="item.icon"></i>
+                                        {{item.label}}
+                                    </button>
+                            </form>
+
+                            <span  v-else>
+                                <i :class="item.icon"></i> 
+                                <a :href="item.slug">{{item.label}}</a>
+                            </span>
                         </li>
 
                     </ul>
@@ -55,18 +73,16 @@
 <script>
     export default {
         mounted() {
-            console.log(this.items);
         } 
         ,
         data() {
             return {
                 'logoSrc' : '/img/logo.png' ,
-                'isMenuOpen' : false
+                'isMenuOpen' : false ,                
             }
         },
-        props : 
-            ['items']
-             ,
+        props :             
+            ['items' , 'csrf'] ,
         
         methods : {
             toggleHeaderMenu() {
