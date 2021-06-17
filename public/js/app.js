@@ -2144,6 +2144,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7090,7 +7099,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 3;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 56.25em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox-list[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 1rem;\n}\n.checkbox-list li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 1rem;\n}\n.checkbox-list label[data-v-475ce6f9] {\n  opacity: 0.8;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 5;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 56.25em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 56.25em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n  padding-top: 3rem;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox__container[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 3rem;\n  padding-bottom: 3rem;\n}\n.checkbox__container li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n}\n.checkbox__label[data-v-475ce6f9] {\n  display: block;\n  position: relative;\n  padding-left: 3rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.checkbox__label input:checked ~ .checkbox__checkmark[data-v-475ce6f9]:after {\n  display: block;\n}\n.checkbox__field[data-v-475ce6f9] {\n  position: absolute;\n  cursor: pointer;\n  opacity: 0;\n  height: 0;\n  width: 0;\n}\n.checkbox__checkmark[data-v-475ce6f9] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.2rem;\n  width: 2.2rem;\n  border: 1px solid #348534;\n  border-radius: 5px;\n}\n.checkbox__checkmark[data-v-475ce6f9]:after {\n  content: \"\\F078\";\n  position: absolute;\n  display: none;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  line-height: 2.2rem;\n  width: 100%;\n  text-align: center;\n  color: #348534;\n  font-size: 90%;\n}", ""]);
 
 // exports
 
@@ -39577,60 +39586,100 @@ var staticRenderFns = [
           _vm._v("Servizi Aggiuntivi:")
         ]),
         _vm._v(" "),
-        _c("ul", { staticClass: "checkbox-list" }, [
+        _c("ul", { staticClass: "checkbox__container" }, [
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Aria Condizionata\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Cucina\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Piscina\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Garage\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Navetta Aeroportuale\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Escursioni Guidate\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Colazione Inclusa\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ]),
           _vm._v(" "),
           _c("li", [
-            _c("label", { staticClass: "container" }, [
+            _c("label", { staticClass: "checkbox__label" }, [
               _vm._v("Escort in camera\n                                "),
-              _c("input", { attrs: { type: "checkbox", checked: "checked" } })
+              _c("input", {
+                staticClass: "checkbox__field",
+                attrs: { type: "checkbox", checked: "checked" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "checkbox__checkmark" })
             ])
           ])
         ])

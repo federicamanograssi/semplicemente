@@ -242,7 +242,7 @@ h3 {
   cursor: pointer;
   display: none;
   position: relative;
-  z-index: 10;
+  z-index: 20;
 }
 
 @media (max-width: 56.25em) {
@@ -291,7 +291,7 @@ h3 {
 
 .header__menu--mobile {
   position: fixed;
-  z-index: 5;
+  z-index: 15;
   height: 100vh;
   top: 0;
   left: 0;

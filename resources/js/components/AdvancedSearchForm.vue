@@ -101,54 +101,63 @@
                     <!-- Additional Services -->
 
                     <div class="form__field form__field--big">
+
                         <span class="form__label">Servizi Aggiuntivi:</span>
                         
-                            <ul class="checkbox-list">
+                            <ul class="checkbox__container">
                                 <li>
-                                    <label class="container">Aria Condizionata
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Aria Condizionata
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Cucina
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Cucina
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Piscina
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Piscina
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Garage
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Garage
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Navetta Aeroportuale
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Navetta Aeroportuale
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Escursioni Guidate
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Escursioni Guidate
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Colazione Inclusa
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Colazione Inclusa
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
                                 <li>
-                                    <label class="container">Escort in camera
-                                        <input type="checkbox" checked="checked">
+                                    <label class="checkbox__label">Escort in camera
+                                        <input type="checkbox" class="checkbox__field" checked="checked">
+                                    <span class="checkbox__checkmark"></span>
                                     </label>
                                 </li>
 
@@ -224,7 +233,7 @@
             top: 100%;
             left: 0;
             width: 100%;
-            z-index: 3;
+            z-index: 5;
 
             .form__group {
                 padding-top: 0;
@@ -298,6 +307,7 @@
             &--big {
                 height: auto;
                 flex-direction: column;
+                padding-top: $spacing-more;
             }
 
             // Special Style for location field
@@ -399,27 +409,77 @@
 
     // Checkboxes List
 
-    .checkbox-list {
-        list-style-type: none;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-evenly;
+    .checkbox{
 
-        max-width: calc(#{$width-inner-content} / 2);
-        padding-top: $spacing-small;
+        &__container {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
 
-        li {
-            margin-right: $spacing-standard;
-            margin-bottom: $spacing-small;
+            max-width: calc(#{$width-inner-content} / 2);
+            padding-top: $spacing-more;
+            padding-bottom: $spacing-more;
+
+            li {
+                margin-right: $spacing-standard;
+                margin-bottom: $spacing-standard;
+            }
         }
 
-        label {
-            opacity: .8;
+
+        &__label {
+            display: block;
+            position: relative;
+            padding-left: $spacing-more;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+
+            &:hover input ~ .checkbox__checkmark {
+                // Style Hover
+            }
+            & input:checked ~ .checkbox__checkmark {
+                // Style Checked
+            }
+            & input:checked ~ .checkbox__checkmark:after {
+                display: block;
+            }
         }
 
-        input {
+        &__field {
+            position: absolute;
+            cursor: pointer;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
 
+        &__checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2.2rem;
+            width: 2.2rem;
+            border: 1px solid $color-primary-light;
+            border-radius: $border-radius-standard;
+
+            &:after {
+                content: "\f078";
+                position: absolute;
+                display: none;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                line-height: 2.2rem;
+                width: 100%;
+                text-align: center;
+                color: $color-primary-light;
+                font-size: 90%;
+            }
         }
     }
 
