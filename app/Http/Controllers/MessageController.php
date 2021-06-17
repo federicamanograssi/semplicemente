@@ -34,19 +34,23 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $apartment_id)
+    public function store(Request $request)
     {
         $request->validate([
             'email_sender' => 'required|min:2|max:50',
             'message_text' => 'required',
+            'apartment_id' => 'required',
         ]);
 
         $data = $request->all();
         $newMessage = new Message();
-        $newMessage->apartment_id= $apartment_id;
+        $newMessage->apartment_id = $data['apartment_id'];
         $newMessage->fill($data);
-        dd($newMessage);
         $newMessage->save();
+
+        // AGGIUNGERE MESSAGGIO SUCCESSO INVIO E SVUOTARE FORM senza far fare redirect
+
+        return redirect()->route('apartments.show',$data['apartment_id']);
     }
 
     /**

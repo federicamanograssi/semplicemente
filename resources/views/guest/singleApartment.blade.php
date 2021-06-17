@@ -167,10 +167,12 @@
                 <div class="right-container">
                     <div class="contact-form">
 
-                        <h3>Contatta l'host per conoscere i dettagli</h3>
-                        <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
                         {{-- FORM INVIO MESSAGGIO----------- --}}
-                        <form action="{{ route('message.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('saveMessage') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+
+                            <h3>Contatta l'host per conoscere i dettagli</h3>
+                            <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
                             {{-- MAIL---------- --}}
                             <div class="form-group">
@@ -186,6 +188,11 @@
                                 @error('message_text')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            {{-- ID APT---------- --}}
+                            <div class="form-group">
+                                <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
                             </div>
 
                             {{-- <label class="form__label" for="name">Nome</label>
