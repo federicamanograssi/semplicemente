@@ -19,10 +19,6 @@ use Illuminate\Support\Facades\Auth;
 
 // qui arrivano tutti i guest non loggati
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/index', function () {
     return view('/guest/home');
 });
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Message;
+use App\Apartment;
 
-class HomeController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        //
     }
 
     /**
@@ -33,9 +34,19 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $apartment_id)
     {
-        //
+        $request->validate([
+            'email_sender' => 'required|min:2|max:50',
+            'message_text' => 'required',
+        ]);
+
+        $data = $request->all();
+        $newMessage = new Message();
+        $newMessage->apartment_id= $apartment_id;
+        $newMessage->fill($data);
+        dd($newMessage);
+        $newMessage->save();
     }
 
     /**
