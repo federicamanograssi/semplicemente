@@ -17,7 +17,7 @@
                 <h1 class="jumbotron__title">Dove vuoi andare?</h1>
                 <p class="jumbotron__text">Prenota subito la tua prossima avventura</p>
                 <input type="text" class="jumbotron__input" placeholder="Prova con 'Cortina d'Ampezzo'">
-                <button class="jumbotron__search-button">Cerca</button>
+                <button  class="jumbotron__search-button">Cerca</button>
             </div>
         </div>
 </template>
@@ -29,9 +29,9 @@
         },
         data() {
             return {
-                'videoSrc' : 'img/jumbo-vid.mp4'
+                'videoSrc' : 'img/jumbo-vid.mp4',
             }
-        }
+        },
     }
 </script>
 

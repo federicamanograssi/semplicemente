@@ -22,10 +22,14 @@ class ApartmentController extends Controller
             'results'=> $apartments
         ]);
     }
-    public function search(Request $request)
+    public function search()
     {
-        $data=$request;
-        dd($data);
+        $apartments=Apartment::all();
+
+        return response()->json([
+            'success'=> true,
+            'results'=> 'ciao'
+        ]);
     }
     /**
      * Show the form for creating a new resource.
