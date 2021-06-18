@@ -2157,6 +2157,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     if (this.location) {
       this.userQuery = this.location;
+      this.getCoordinates(this.userQuery);
     } else {
       this.userQuery = 'prova';
     }
@@ -2185,11 +2186,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getCoordinates: function getCoordinates(address) {
+      // Does not work :-(
       var apiKey = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
-      axios.get('https://api.tomtom.com/search/2/search/riposto.json?', {
-        params: {//
-        }
-      }).then(function (response) {
+      var apiString = 'https://api.tomtom.com/search/2/search/' + address + '.json?Key=' + apiKey;
+      axios // .get(apiString)
+      .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t').then(function (response) {
         console.log(response.data.results);
       });
     }

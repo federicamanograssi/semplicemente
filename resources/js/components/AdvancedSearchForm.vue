@@ -202,6 +202,7 @@
 
             if(this.location){
                     this.userQuery = this.location;
+                    this.getCoordinates(this.userQuery);
                 }
                 else {
                     this.userQuery = 'prova';
@@ -234,13 +235,12 @@
                 });
             } ,
             getCoordinates(address) {
-                let apiKey = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
+                // Does not work :-(
+                let apiKey    = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
+                let apiString   = 'https://api.tomtom.com/search/2/search/' + address + '.json?Key=' + apiKey;                
                 axios
-                    .get('https://api.tomtom.com/search/2/search/riposto.json?' , {
-                        params: {
-                            //
-                            }
-                        })
+                    // .get(apiString)
+                    .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t')
                     .then((response)=>{
                         console.log(response.data.results);
                 });
