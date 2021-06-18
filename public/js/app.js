@@ -2184,10 +2184,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response.data.results);
       });
     },
-    getCoordinates: function getCoordinates(query) {
+    getCoordinates: function getCoordinates(address) {
       axios.get('http://127.0.0.1:8000/api/location', {
         params: {
-          location: query
+          key: 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t'
         }
       }).then(function (response) {
         console.log(response.data.results);
