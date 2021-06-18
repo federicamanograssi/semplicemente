@@ -2154,6 +2154,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.search(this.location);
+  },
   data: function data() {
     return {
       isFiltersBoxOpen: false,
@@ -2167,8 +2170,15 @@ __webpack_require__.r(__webpack_exports__);
     toggleFilterBox: function toggleFilterBox() {
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
-    search: function search() {
-      alert("Hai effettuato una ricerca. Bravo!");
+    search: function search(location) {
+      if (location) {
+        // SEARCH APT
+        axios.post('http://127.0.0.1:8000/api/apartments').then(function (listaApt) {
+          console.log(listaApt.data.results);
+        });
+      } else {
+        alert("Non hai effettuato una ricerca. Bravo!");
+      }
     }
   }
 });
@@ -53315,8 +53325,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -198,6 +198,9 @@
 
 <script>
     export default {
+        mounted(){
+            this.search(this.location);
+        },
         data() {
             return {
                 isFiltersBoxOpen : false ,
@@ -211,9 +214,21 @@
             toggleFilterBox() {
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
-            search() {
-                alert("Hai effettuato una ricerca. Bravo!");
-            }
+            search(location) {
+                if(location){
+                    
+                    // SEARCH APT
+                    axios
+                        .post('http://127.0.0.1:8000/api/apartments')
+                        .then((listaApt)=>{
+                            console.log(listaApt.data.results);
+                        })
+
+                }
+                else{
+                    alert("Non hai effettuato una ricerca. Bravo!");
+                }
+            },
         }
     }
 </script>
