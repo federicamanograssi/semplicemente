@@ -31,6 +31,16 @@ class ApartmentController extends Controller
             'results'=> 'ciao'
         ]);
     }
+    public function location(Request $request)
+    {
+        
+        $location = $request->input('location');
+
+        return response()->json([
+            'success'=> true,
+            'results'=> 'Hai cercato ' . $location
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *

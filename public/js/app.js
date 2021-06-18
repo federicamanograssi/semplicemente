@@ -2155,14 +2155,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.search(this.location);
+    if (this.location) {
+      this.userQuery = this.location;
+    } else {
+      this.userQuery = 'prova';
+    }
   },
   data: function data() {
     return {
       isFiltersBoxOpen: false,
       minRating: 3,
       maxPrice: 50,
-      maxDistance: 1
+      maxDistance: 1,
+      userQuery: null
     };
   },
   props: ['location'],
@@ -2170,15 +2175,23 @@ __webpack_require__.r(__webpack_exports__);
     toggleFilterBox: function toggleFilterBox() {
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
-    search: function search(location) {
-      if (location) {
-        // SEARCH APT
-        axios.post('http://127.0.0.1:8000/api/apartments').then(function (listaApt) {
-          console.log(listaApt.data.results);
-        });
-      } else {
-        alert("Non hai effettuato una ricerca. Bravo!");
-      }
+    search: function search(query) {
+      axios.get('http://127.0.0.1:8000/api/location', {
+        params: {
+          location: query
+        }
+      }).then(function (response) {
+        console.log(response.data.results);
+      });
+    },
+    getCoordinates: function getCoordinates(query) {
+      axios.get('http://127.0.0.1:8000/api/location', {
+        params: {
+          location: query
+        }
+      }).then(function (response) {
+        console.log(response.data.results);
+      });
     }
   }
 });
@@ -39271,9 +39284,25 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.userQuery,
+                expression: "userQuery"
+              }
+            ],
             staticClass: "form__input",
             attrs: { type: "text" },
-            domProps: { value: this.location }
+            domProps: { value: _vm.userQuery },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.userQuery = $event.target.value
+              }
+            }
           })
         ]
       ),
@@ -39287,7 +39316,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.search()
+                    return _vm.search(_vm.userQuery)
                   }
                 }
               },
@@ -39493,7 +39522,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.search()
+                    return _vm.search(_vm.userQuery)
                   }
                 }
               },
@@ -53325,8 +53354,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -20,5 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Tentativi di chiamate API a DB
 
-Route::post('/apartments','Api\ApartmentController@index');
+Route::get('/apartments','Api\ApartmentController@index');
 Route::post('/apartments/search','Api\ApartmentController@search');
+
+Route::get('/location','Api\ApartmentController@location');

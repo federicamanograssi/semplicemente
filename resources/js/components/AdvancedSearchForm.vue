@@ -9,7 +9,7 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input class="form__input" type="text" :value="this.location">
+                    <input class="form__input" type="text" v-model="userQuery">
                 </div>
 
                 <!-- Search Button -->
@@ -18,7 +18,7 @@
                     class="form__field">       
                     <button                     
                     type="button" 
-                    @click="search()"
+                    @click="search(userQuery)"
                     class="btn btn--primary-light"><span class="hide-on-tablet">Cerca </span><i class="fas fa-search"></i></button>
                 </div>
 
@@ -172,9 +172,9 @@
 
                     <div class="form__field form__field--half">
                         <button 
-                        @click="search()"
-                        type="button" 
-                        class="btn btn--primary-light">
+                        @click="search(userQuery)"
+                         type="button" 
+                         class="btn btn--primary-light">
                             Cerca 
                             <i class="fas fa-search"></i>
                         </button>                
@@ -199,37 +199,52 @@
 <script>
     export default {
         mounted(){
-            this.search(this.location);
+
+            if(this.location){
+                    this.userQuery = this.location;
+                }
+                else {
+                    this.userQuery = 'prova';
+                }
         },
         data() {
             return {
                 isFiltersBoxOpen : false ,
                 minRating : 3 ,
                 maxPrice : 50 ,
-                maxDistance : 1
+                maxDistance : 1 ,
+                userQuery : null
             }
         },
         props : ['location'] ,
         methods : {
             toggleFilterBox() {
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
-            } ,
-            search(location) {
-                if(location){
-                    
-                    // SEARCH APT
-                    axios
-                        .post('http://127.0.0.1:8000/api/apartments')
-                        .then((listaApt)=>{
-                            console.log(listaApt.data.results);
+            }
+             ,
+            search(query) {
+                axios
+                    .get('http://127.0.0.1:8000/api/location' , {
+                        params: {
+                            location: query
+                            }
                         })
-
-                }
-                else{
-                    alert("Non hai effettuato una ricerca. Bravo!");
-                }
-            },
-        }
+                    .then((response)=>{
+                        console.log(response.data.results);
+                });
+            } ,
+            getCoordinates(query) {
+                axios
+                    .get('http://127.0.0.1:8000/api/location' , {
+                        params: {
+                            location: query
+                            }
+                        })
+                    .then((response)=>{
+                        console.log(response.data.results);
+                });
+            }
+        }        
     }
 </script>
 

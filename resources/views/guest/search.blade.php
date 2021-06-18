@@ -12,6 +12,10 @@
         $location = '';
     }
 @endphp
+
+
+
+
 @section('main')
 
     <main class="main main--advanced-search">
