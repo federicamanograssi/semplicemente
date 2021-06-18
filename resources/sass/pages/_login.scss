@@ -1,0 +1,31 @@
+.login-form {
+    @include shadow-enhanced;
+    background: $color-secondary;
+    width: 25%;
+    margin: 0 auto;
+    padding: $spacing-small;
+    border-radius: $border-radius-standard;
+}
+
+.width_container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-primary;
+}
+
+.input_width {
+    width: 100%;
+    margin-bottom: $spacing-tiny;
+}
+
+div[class$="-form"] {
+    margin-bottom: $spacing-tiny;
+}
+
+.btn--log {
+    margin: $spacing-small 0;
+    width: 50%;
+}
