@@ -23,7 +23,7 @@
                                 <span><i class="fas fa-star"></i>{{rating[counter+index]}}</span>
                             </div>
                             <div class="card-title">
-                                 <p><a href="#">{{title[counter+index]}}</a></p>
+                                 <p>{{title[counter+index]}}</p>
                             </div>
    
                         </div>
@@ -82,7 +82,7 @@
                     2,
                     3,
                     4,
-                    5,
+                    3,
                     5,
                     5,
                 ]
@@ -135,6 +135,7 @@
                 width: 100%;
                 display: flex;
                 .card{
+                    cursor: pointer;
                     width: 25%;
                     height:$height-section-big;
                     padding:$spacing-standard;

@@ -2453,7 +2453,7 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       photos: ["https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg", "https://www.borgomaira.it/wp-content/uploads/2019/06/img-chalet-home-new3.jpg", "https://lh3.googleusercontent.com/proxy/VYlaBx3WgYi5dqhCgOtEMloUJ2I98eoQHg8nph6KnSwKVzPeROkWvFymycnkobixJ0bNhxSAcaKZyXN5L214-VWDOEqMUUgQ5R9IYvQJUA", "https://www.immobilien-consulting.at/wp-content/uploads/2021/02/IMG-20210402-WA0033.jpg", "https://www.catellanismith.com/app/uploads/2019/12/img-amb-chalet-3.jpg", "https://st.hzcdn.com/simgs/pictures/landscapes/chalet-architecture-ontario-canada-techo-bloc-img~b8c1b3b5022dd587_4-3335-1-6e31288.jpg", "https://www.altoadige-tirolo.com/media/medium/img,alpwell-chalet2_35466786.jpg", "https://www.lagederbau.it/cache/img-immobilien-chalet-st-ulrich-photo-2020-10-27-15-01-49-2-1200.jpg"],
       title: ["Chalet Sponsorizzato 1", "Chalet Sponsorizzato 2", "Chalet Sponsorizzato 3", "Chalet Sponsorizzato 4", "Chalet Sponsorizzato 5", "Chalet Sponsorizzato 6", "Chalet Sponsorizzato 7", "Chalet Sponsorizzato 8"],
-      rating: [5, 1, 2, 3, 4, 5, 5, 5]
+      rating: [5, 1, 2, 3, 4, 3, 5, 5]
     };
   },
   methods: {
@@ -7166,7 +7166,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
+exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
 
 // exports
 
@@ -39993,11 +39993,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-title" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v(_vm._s(_vm.title[_vm.counter + index]))
-                      ])
-                    ])
+                    _c("p", [_vm._v(_vm._s(_vm.title[_vm.counter + index]))])
                   ])
                 ])
               : _vm._e()
