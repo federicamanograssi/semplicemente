@@ -234,10 +234,11 @@
                 });
             } ,
             getCoordinates(address) {
+                let apiKey = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
                 axios
-                    .get('http://127.0.0.1:8000/api/location' , {
+                    .get('https://api.tomtom.com/search/2/search/riposto.json?' , {
                         params: {
-                            key: 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t'
+                            //
                             }
                         })
                     .then((response)=>{
