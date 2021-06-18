@@ -33,9 +33,9 @@
         props : ['search-route'] ,
         data() {
             return {
-                'videoSrc' : 'img/jumbo-vid.mp4'
+                'videoSrc' : 'img/jumbo-vid.mp4',
             }
-        }
+        },
     }
 </script>
 
