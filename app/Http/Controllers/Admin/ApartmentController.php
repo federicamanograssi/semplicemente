@@ -88,7 +88,8 @@ class ApartmentController extends Controller
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
                     $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
                     $extension = $images[$i]->extension();
-                    $images[$i] = Storage::putFileAs('apartment_images', $images[$i], $path .$extension, 'public');
+                    $name = $path .$extension;
+                    $images[$i] = $images[$i]->storeAs('apartment_images', $name, 'public');
                     // creiamo una nuova istanza della classe images
                     $new_image = New Image;
                     // Compiliamo i dati della colonne immagine e apartment_id
