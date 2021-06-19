@@ -96,6 +96,9 @@ class ApartmentController extends Controller
                     $new_image->img_path = $data['image'.$i];
                     $new_image->img_description = $data['img_description'.$i];
                     $new_image->apartment_id = $new_apartment->id;
+                    if ($data['is_cover'] == 'image'.$i) {
+                        $new_image->is_cover = 1;
+                    }
                     // Salviamo l'immagine nel database
                     $new_image->save();
             }
