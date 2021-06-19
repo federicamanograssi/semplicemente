@@ -2156,8 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (this.location) {
-      this.userQuery = this.location;
-      this.getCoordinates(this.userQuery);
+      this.userQuery = this.location; // this.getCoordinates(this.userQuery);
     } else {
       this.userQuery = 'prova';
     }
@@ -2179,7 +2178,8 @@ __webpack_require__.r(__webpack_exports__);
     search: function search(query) {
       axios.get('http://127.0.0.1:8000/api/location', {
         params: {
-          location: query
+          location: query,
+          radius: this.maxDistance * 20
         }
       }).then(function (response) {
         console.log(response.data.results);
@@ -2190,7 +2190,8 @@ __webpack_require__.r(__webpack_exports__);
       var apiKey = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
       var apiString = 'https://api.tomtom.com/search/2/search/' + address + '.json?Key=' + apiKey;
       axios // .get(apiString)
-      .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t').then(function (response) {
+      // .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t')
+      .get('https://api.tomtom.com/search/2/geocode/cortina.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb').then(function (response) {
         console.log(response.data.results);
       });
     }
