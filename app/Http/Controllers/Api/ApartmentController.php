@@ -36,11 +36,13 @@ class ApartmentController extends Controller
     }
     public function location(Request $request)
     {
+        /*
+            Formula distanza fra due punti
+            dist = arccos(sin(lat1) · sin(lat2) + cos(lat1) · cos(lat2) · cos(lon1 - lon2)) · R
+            PHP: acos( sin($radLat1) * sin($lat2) + cos($radLat1) * cos($lat2) * cos($radLon1 - $lon2) );
+        */
 
-        // $apartments=config('apartments');
         $apartments=Apartment::all();
-        // Oppure: $apartments = DB::table('apartments')->where('title', '=', $location )->get();
-
         
         $location = $request->input('location');    // Query Location
         $radius   = $request->input('radius');      // Query Radius
@@ -55,31 +57,24 @@ class ApartmentController extends Controller
         $radLon1 =   (M_PI / 180) * $lon;        
         
         $earthRadius = 6371; // Raggio Terrestre (KM)
-
-        // Formula distanza fra due punti
-        // dist = arccos(sin(lat1) · sin(lat2) + cos(lat1) · cos(lat2) · cos(lon1 - lon2)) · R
-        // ..In PHP 
-        // acos( sin($radLat1) * sin($lat2) + cos($radLat1) * cos($lat2) * cos($radLon1 - $lon2) )
-        
-
-        // Prima Prova: Calcolo la distanza fra il punto indicato dall'utente e tutti gli appartamenti che abbiamo in config
-        
+                
         $chalets = array();
-        foreach($apartments as $index => $apartment) {
+
+        foreach($apartments as $apartment) {
             
-            $newChalet = array(
-                'name'=> $apartment['title'] ,
-                'lat' => (M_PI / 180) * $apartment['latitude'] ,
-                'lon' => (M_PI / 180) * $apartment['longitude'] ,
-            );
+            $dist = acos( sin($radLat1) * sin((M_PI / 180) * $apartment['latitude']) + cos($radLat1) * cos((M_PI / 180) * $apartment['latitude']) * cos($radLon1 - (M_PI / 180) * $apartment['longitude']) ) * $earthRadius;
 
-            // Calcolo distanza con il punto indicato dall'utente
+            if ($dist <= $radius) {
 
-            $dist = acos( sin($radLat1) * sin($newChalet['lat']) + cos($radLat1) * cos($newChalet['lat']) * cos($radLon1 - $newChalet['lon']) ) * $earthRadius;            
-            $newChalet['distanza'] = $dist;
+                $newChalet = array(
+                    'name' => $apartment['title'] ,
+                    'lat'  => (M_PI / 180) * $apartment['latitude'] ,
+                    'lon'  => (M_PI / 180) * $apartment['longitude'] ,
+                    'dist' => $dist
+                );
 
-            if($dist <= $radius){
                 array_push($chalets , $newChalet);
+
             }
         }
 
