@@ -146,11 +146,24 @@
                 </div>
 
                 {{-- IMMAGINI----- --}}
-                <div class="form-group">
-                    <label>Immagini</label>
+                {{-- <div class="form-group"> --}}
+                    {{-- <label>Immagini</label> --}}
                     {{-- multiple serve per mettere più immagini --}}
-                    <input class='form-control-file' type="file" name="images[]" multiple>
+                    {{-- <input class='form-control-file' type="file" name="images[]" multiple>
+                </div> --}}
+
+            {{-- PROVA PIU' INPUT IMMAGINI --}}
+            <label>Immagini:</label>
+            <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+                <div class="row" id="add_more">
+                    <div class= "col-2">
+                        <img id="img1" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg" />
+                        <input class='form-control-file' type="file" name="image1" id="img_input1">
+                        <input type="text" name="img_description1" placeholder="Descrizione">
+                    </div>
                 </div>
+
+                <input type="hidden" name="n_img" id="n_img" value= "0">
 
                 <p>Visibile:</p>
                 <div class="form-check form-check-inline">
@@ -179,4 +192,72 @@
         </div>
     </div>
 </div>
+
+<style type="text/css">
+
+    img{
+        width: 100px;
+        height: auto;
+        display: block;
+    }
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+var i = 1;
+var j = 1;
+    
+function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img'+i).attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#img_input"+i).change(function(){
+        readURL(this);
+    });
+
+$("#add").click(function(){
+
+    ++i;
+    ++j; 
+
+    $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
+
+    document.getElementById("n_img").setAttribute('value', j);
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img'+i).attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#img_input"+i).change(function(){
+        readURL(this);
+    });
+});
+
+
+    $(document).on('click', '.remove-input', function(){  
+        --j;
+        $(this).parents('.remove-div').remove();
+        document.getElementById("n_img").setAttribute('value', j);
+
+    });  
+
+
+
+</script>
 @endsection

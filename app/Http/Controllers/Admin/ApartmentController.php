@@ -81,19 +81,20 @@ class ApartmentController extends Controller
         
         $new_apartment->save();
 
-        $images= $request->images;
+        $j = $data['n_img'];
         
-        for($i=0; $i< count($images); $i++) {
-                if (!empty($images)) {
+        for($i=1; $i<= $j; $i++) {
+                if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
                     $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
-                    $extension = $images[$i]->extension();
+                    $extension = $data['image'.$i]->extension();
                     $name = $path .$extension;
-                    $images[$i] = $images[$i]->storeAs('apartment_images', $name, 'public');
+                    $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
                     // creiamo una nuova istanza della classe images
                     $new_image = New Image;
                     // Compiliamo i dati della colonne immagine e apartment_id
-                    $new_image->img_path = $images[$i];
+                    $new_image->img_path = $data['image'.$i];
+                    $new_image->img_description = $data['img_description'.$i];
                     $new_image->apartment_id = $new_apartment->id;
                     // Salviamo l'immagine nel database
                     $new_image->save();
