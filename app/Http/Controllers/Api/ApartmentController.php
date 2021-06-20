@@ -53,8 +53,12 @@ class ApartmentController extends Controller
         $lon = $response['results'][0]['position']['lon'];
         
         // Coordinate (conversione da decimali a radianti)
+        
         $radLat1 =   (M_PI / 180) * $lat;
         $radLon1 =   (M_PI / 180) * $lon;        
+
+        $sinRadLat1 = sin($radLat1);    // Seno Latitudine input utente
+        $cosRadLat1 = cos($radLat1);    // Coseno Latitudine input utente
         
         $earthRadius = 6371; // Raggio Terrestre (KM)
                 
@@ -62,7 +66,7 @@ class ApartmentController extends Controller
 
         foreach($apartments as $apartment) {
             
-            $dist = acos( sin($radLat1) * sin((M_PI / 180) * $apartment['latitude']) + cos($radLat1) * cos((M_PI / 180) * $apartment['latitude']) * cos($radLon1 - (M_PI / 180) * $apartment['longitude']) ) * $earthRadius;
+            $dist = acos( $sinRadLat1 * sin((M_PI / 180) * $apartment['latitude']) + $cosRadLat1 * cos((M_PI / 180) * $apartment['latitude']) * cos($radLon1 - (M_PI / 180) * $apartment['longitude']) ) * $earthRadius;
 
             if ($dist <= $radius) {
 
@@ -81,7 +85,6 @@ class ApartmentController extends Controller
         
         return response()->json([
             'success'=> true,
-            // 'results'=> 'Hai cercato ' . $location . ' Il raggio è pari a  ' . $radius . ' chilometri'
             'results'=> $chalets
         ]);
     }

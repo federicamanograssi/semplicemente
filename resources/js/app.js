@@ -53,10 +53,14 @@ const mapSection = document.querySelector('.chalet-map');
 const mapCloseBtn = document.querySelector('.chalet-map__button--close');
 const mapOpenBtn = document.querySelector('.chalet-map__button--open');
 
-mapCloseBtn.onclick = function() { toggleMap() };
-mapOpenBtn.onclick = function() { toggleMap() };
+var mapIsShown;
 
-var mapIsShown = true;
+if(mapCloseBtn && mapOpenBtn){
+    mapCloseBtn.onclick = function() { toggleMap() };
+    mapOpenBtn.onclick = function() { toggleMap() };
+    mapIsShown = true;
+}
+
 
 
 function toggleMap() {

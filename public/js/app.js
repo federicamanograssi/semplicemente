@@ -52696,16 +52696,19 @@ var apartmentList = document.querySelector('.apartments-list');
 var mapSection = document.querySelector('.chalet-map');
 var mapCloseBtn = document.querySelector('.chalet-map__button--close');
 var mapOpenBtn = document.querySelector('.chalet-map__button--open');
+var mapIsShown;
 
-mapCloseBtn.onclick = function () {
-  toggleMap();
-};
+if (mapCloseBtn && mapOpenBtn) {
+  mapCloseBtn.onclick = function () {
+    toggleMap();
+  };
 
-mapOpenBtn.onclick = function () {
-  toggleMap();
-};
+  mapOpenBtn.onclick = function () {
+    toggleMap();
+  };
 
-var mapIsShown = true;
+  mapIsShown = true;
+}
 
 function toggleMap() {
   if (mapIsShown) {
