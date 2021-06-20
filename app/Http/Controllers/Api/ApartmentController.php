@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\DB;
 use App\Apartment;
+use App\Image;
 
 class ApartmentController extends Controller
 {
@@ -70,11 +71,19 @@ class ApartmentController extends Controller
 
             if ($dist <= $radius) {
 
+                $cover_img = DB::table('images')->where(
+                    [
+                        ['apartment_id', '=' , $apartment['id']] ,
+                        ['is_cover' ,    '=' , '1']
+                    ]
+                    )->first()->img_path;
+
                 $newChalet = array(
                     'name' => $apartment['title'] ,
                     'lat'  => (M_PI / 180) * $apartment['latitude'] ,
                     'lon'  => (M_PI / 180) * $apartment['longitude'] ,
-                    'dist' => $dist
+                    'dist' => $dist ,                        
+                    'cover_img' => $cover_img
                 );
 
                 array_push($chalets , $newChalet);
