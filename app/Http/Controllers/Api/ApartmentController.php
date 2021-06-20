@@ -56,7 +56,7 @@ class ApartmentController extends Controller
         // Coordinate (conversione da decimali a radianti)
         
         $radLat1 =   (M_PI / 180) * $lat;
-        $radLon1 =   (M_PI / 180) * $lon;        
+        $radLon1 =   (M_PI / 180) * $lon;
 
         $sinRadLat1 = sin($radLat1);    // Seno Latitudine input utente
         $cosRadLat1 = cos($radLat1);    // Coseno Latitudine input utente
@@ -94,7 +94,9 @@ class ApartmentController extends Controller
         
         return response()->json([
             'success'=> true,
-            'results'=> $chalets
+            'results'=> $chalets ,
+            'base_lat' => $lat ,
+            'base_lon' => $lon
         ]);
     }
     /**

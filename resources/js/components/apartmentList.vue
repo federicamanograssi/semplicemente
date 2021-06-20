@@ -1,5 +1,6 @@
 <template>
-    <section class="apartments-list">
+    <section class="apartments-list"
+    :class="mapIsShown ? null : 'apartments-list--map-hidden'">
 
             <apartment-card 
                  v-for="(apartment , index) in apartments" 
@@ -23,7 +24,7 @@
             }
             else this.apartments = this.defaultApartments;
         },
-        props : ['apartments'],
+        props : ['apartments' , 'mapIsShown'],
         data() {
             return {
                 'defaultApartments' : [

@@ -11,6 +11,8 @@
     {{-- Style --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+    @yield('headPush')
+
     {{-- Dinamyc Title --}}
     <title>@yield('title')</title>
 </head>

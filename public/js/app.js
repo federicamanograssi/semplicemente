@@ -2227,16 +2227,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {//
   },
@@ -2245,11 +2235,14 @@ __webpack_require__.r(__webpack_exports__);
       apartments: [],
       currentQuery: {
         baseLocation: this.destination,
+        baseLat: 0,
+        baseLon: 0,
         maxDistance: 1,
         minRating: 1,
         maxPrice: 200,
         selectedServices: []
-      }
+      },
+      mapIsShown: true
     };
   },
   props: ['destination'],
@@ -2265,6 +2258,9 @@ __webpack_require__.r(__webpack_exports__);
         } else apartment.visible = true;
       });
     },
+    toggleMap: function toggleMap() {
+      this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
+    },
     search: function search() {
       console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
       self = this;
@@ -2278,6 +2274,8 @@ __webpack_require__.r(__webpack_exports__);
           apartment['visible'] = true;
         });
         self.apartments = response.data.results;
+        self.currentQuery.baseLat = response.data.base_lat;
+        self.currentQuery.baseLon = response.data.base_lon;
         self.filterResults();
       });
     },
@@ -2288,7 +2286,12 @@ __webpack_require__.r(__webpack_exports__);
         newSearchIsNeeded = true;
       }
 
-      this.currentQuery = newQuery;
+      newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
+
+      newQuery.base_lon = this.currentQuery.base_lon; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
+
+      this.currentQuery = newQuery; //   <-- Per questo ottieni due console.log al variare delle coordinate!
+
       if (newSearchIsNeeded) this.search();else this.filterResults();
     }
   }
@@ -2634,12 +2637,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (this.apartments) {//
     } else this.apartments = this.defaultApartments;
   },
-  props: ['apartments'],
+  props: ['apartments', 'mapIsShown'],
   data: function data() {
     return {
       'defaultApartments': [{
@@ -2699,6 +2703,95 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     testScroll: function testScroll(ev) {
       if (window.pageYOffset > 200) this.hasScrolled = true;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.mymap = L.map('chalet-map').setView([45.900383, 10.723176], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox/light-v10',
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
+    }).addTo(this.mymap);
+  },
+  data: function data() {
+    return {
+      mymap: null,
+      mapIsShown: true
+    };
+  },
+  props: ['baseLat', 'baseLon'],
+  watch: {
+    baseLat: {
+      handler: function handler(val, oldVal) {
+        console.log("La latitudine è passata da " + oldVal + ' a ' + val);
+        this.updateCoordinates();
+      }
+    },
+    baseLon: {
+      handler: function handler(val, oldVal) {
+        this.updateCoordinates();
+      }
+    }
+  },
+  methods: {
+    toggleMap: function toggleMap() {
+      this.$emit('mapToggled');
+      var mapClasses = document.getElementById("chalet-map").classList;
+      this.mapIsShown ? mapClasses.add('hidden') : mapClasses.remove('hidden');
+      this.mymap.invalidateSize(); // Previene deformazione della mappa alla sua ricomparsa
+
+      this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
+    },
+    updateCoordinates: function updateCoordinates() {
+      console.log("Aggiorno Centro Mappa");
+      console.log(this.baseLat + ' ' + this.baseLon);
+      this.mymap.panTo([this.baseLat, this.baseLon, {
+        animate: true,
+        duration: 5.0
+      }]);
     }
   }
 });
@@ -7320,6 +7413,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  z-index: 4;\n  bottom: 3rem;\n  right: 3rem;\n  background-color: #348534;\n  text-align: center;\n  border-radius: 5px;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.back-to-top__link[data-v-93d4de10] {\n  display: block;\n  width: 5rem;\n  height: 5rem;\n  line-height: 5rem;\n  transition: all 0.25s;\n}\n.back-to-top__link[data-v-93d4de10]:link, .back-to-top__link[data-v-93d4de10]:hover, .back-to-top__link[data-v-93d4de10]:active, .back-to-top__link[data-v-93d4de10]:visited {\n  color: white;\n  text-decoration: none;\n}\n.back-to-top[data-v-93d4de10]:hover {\n  background-color: white;\n}\n.back-to-top:hover .back-to-top__link[data-v-93d4de10] {\n  color: #348534;\n}\n.back-to-top__icon[data-v-93d4de10] {\n  font-size: 1.5em;\n  position: relative;\n  top: 3px;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".chalet-map[data-v-0a941ebc] {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 7rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 56.25em) {\n.chalet-map[data-v-0a941ebc] {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container[data-v-0a941ebc] {\n  display: none;\n}\n@media (max-width: 56.25em) {\n.chalet-map__button-container[data-v-0a941ebc] {\n    display: block;\n}\n}\n.chalet-map__button[data-v-0a941ebc] {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 555;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -38741,6 +38853,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/locationList.vue?vue&type=style&index=0&lang=scss&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/locationList.vue?vue&type=style&index=0&lang=scss& ***!
@@ -39832,54 +39974,25 @@ var render = function() {
       _vm._v(" "),
       _c("apartments-list", {
         staticClass: "apartments-list--full-width",
-        attrs: { apartments: _vm.apartments }
+        attrs: { apartments: _vm.apartments, mapIsShown: _vm.mapIsShown }
       }),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._m(1)
+      _c("chalet-map", {
+        attrs: {
+          baseLon: _vm.currentQuery.baseLon,
+          baseLat: _vm.currentQuery.baseLat
+        },
+        on: {
+          mapToggled: function($event) {
+            return _vm.toggleMap()
+          }
+        }
+      })
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "chalet-map" }, [
-      _c("iframe", {
-        staticStyle: { border: "0" },
-        attrs: {
-          src:
-            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54471.2440560787!2d12.052418201662949!3d46.66978139530556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47783435d247033f%3A0xdd3c30437b92e42b!2s32043%20Cortina%20d'Ampezzo%20BL!5e1!3m2!1sit!2sit!4v1623660828144!5m2!1sit!2sit",
-          width: "100%",
-          height: "100%",
-          allowfullscreen: "",
-          loading: "lazy"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chalet-map__button-container" }, [
-      _c(
-        "div",
-        { staticClass: "chalet-map__button chalet-map__button--close" },
-        [_c("i", { staticClass: "fas fa-times" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "chalet-map__button chalet-map__button--open hidden" },
-        [_c("i", { staticClass: "fas fa-map-marked-alt" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40294,7 +40407,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "apartments-list" },
+    {
+      staticClass: "apartments-list",
+      class: _vm.mapIsShown ? null : "apartments-list--map-hidden"
+    },
     _vm._l(_vm.apartments, function(apartment, index) {
       return _c("apartment-card", {
         key: index,
@@ -40349,6 +40465,62 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "map-section" }, [
+    _c("div", { staticClass: "chalet-map", attrs: { id: "chalet-map" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "chalet-map__button-container" }, [
+      _c(
+        "div",
+        {
+          staticClass: "chalet-map__button chalet-map__button--close",
+          class: _vm.mapIsShown ? null : "hidden",
+          on: {
+            click: function($event) {
+              return _vm.toggleMap()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fas fa-times" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "chalet-map__button chalet-map__button--open",
+          class: _vm.mapIsShown ? "hidden" : null,
+          on: {
+            click: function($event) {
+              return _vm.toggleMap()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fas fa-map-marked-alt" })]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52654,6 +52826,7 @@ Vue.component('apartments-list', __webpack_require__(/*! ./components/apartmentL
 Vue.component('locations-list', __webpack_require__(/*! ./components/locationList.vue */ "./resources/js/components/locationList.vue")["default"]);
 Vue.component('back-to-top', __webpack_require__(/*! ./components/backToTop.vue */ "./resources/js/components/backToTop.vue")["default"]);
 Vue.component('advanced-search-page', __webpack_require__(/*! ./components/AdvancedSearchPage.vue */ "./resources/js/components/AdvancedSearchPage.vue")["default"]);
+Vue.component('chalet-map', __webpack_require__(/*! ./components/chaletMap.vue */ "./resources/js/components/chaletMap.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -52663,42 +52836,6 @@ Vue.component('advanced-search-page', __webpack_require__(/*! ./components/Advan
 var app = new Vue({
   el: '#app'
 });
-/*
-Toggle button on map
-(search page)
-*/
-
-var apartmentList = document.querySelector('.apartments-list');
-var mapSection = document.querySelector('.chalet-map');
-var mapCloseBtn = document.querySelector('.chalet-map__button--close');
-var mapOpenBtn = document.querySelector('.chalet-map__button--open');
-var mapIsShown;
-
-if (mapCloseBtn && mapOpenBtn) {
-  mapCloseBtn.onclick = function () {
-    toggleMap();
-  };
-
-  mapOpenBtn.onclick = function () {
-    toggleMap();
-  };
-
-  mapIsShown = true;
-}
-
-function toggleMap() {
-  if (mapIsShown) {
-    mapSection.classList.add("hidden");
-    mapCloseBtn.classList.remove("hidden");
-    apartmentList.classList.add("apartments-list--map-hidden");
-    mapIsShown = false;
-  } else {
-    mapOpenBtn.classList.add("hidden");
-    mapSection.classList.remove("hidden");
-    apartmentList.classList.remove("apartments-list--map-hidden");
-    mapIsShown = true;
-  }
-}
 
 /***/ }),
 
@@ -53471,6 +53608,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_backToTop_vue_vue_type_template_id_93d4de10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_backToTop_vue_vue_type_template_id_93d4de10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/chaletMap.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/chaletMap.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& */ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&");
+/* harmony import */ var _chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=script&lang=js& */ "./resources/js/components/chaletMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0a941ebc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/chaletMap.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/chaletMap.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/chaletMap.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

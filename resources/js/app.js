@@ -30,6 +30,7 @@ Vue.component('apartments-list', require('./components/apartmentList.vue').defau
 Vue.component('locations-list', require('./components/locationList.vue').default);
 Vue.component('back-to-top', require('./components/backToTop.vue').default);
 Vue.component('advanced-search-page', require('./components/AdvancedSearchPage.vue').default);
+Vue.component('chalet-map', require('./components/chaletMap.vue').default);
 
 
 /**
@@ -41,39 +42,3 @@ Vue.component('advanced-search-page', require('./components/AdvancedSearchPage.v
 const app = new Vue({
     el: '#app',
 });
-
-
-/*
-Toggle button on map
-(search page)
-*/
-
-const apartmentList = document.querySelector('.apartments-list');
-const mapSection = document.querySelector('.chalet-map');
-const mapCloseBtn = document.querySelector('.chalet-map__button--close');
-const mapOpenBtn = document.querySelector('.chalet-map__button--open');
-
-var mapIsShown;
-
-if(mapCloseBtn && mapOpenBtn){
-    mapCloseBtn.onclick = function() { toggleMap() };
-    mapOpenBtn.onclick = function() { toggleMap() };
-    mapIsShown = true;
-}
-
-
-
-function toggleMap() {
-    if(mapIsShown){        
-        mapSection.classList.add("hidden");
-        mapCloseBtn.classList.remove("hidden");
-        apartmentList.classList.add("apartments-list--map-hidden");
-        mapIsShown = false;
-    }
-    else {
-        mapOpenBtn.classList.add("hidden");
-        mapSection.classList.remove("hidden");
-        apartmentList.classList.remove("apartments-list--map-hidden");
-        mapIsShown = true;
-    }
-}
