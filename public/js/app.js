@@ -2114,53 +2114,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {//
+  mounted: function mounted() {
+    this.servicesList = this.getServicesList();
   },
   data: function data() {
     return {
@@ -2168,7 +2125,9 @@ __webpack_require__.r(__webpack_exports__);
       maxDistance: this.query.maxDistance,
       minRating: this.query.minRating,
       maxPrice: this.query.maxPrice,
-      isFiltersBoxOpen: false
+      isFiltersBoxOpen: false,
+      servicesList: [],
+      selectedServices: []
     };
   },
   props: ['query'],
@@ -2182,11 +2141,57 @@ __webpack_require__.r(__webpack_exports__);
       // un campo viene modificato
       var newQuery = {
         baseLocation: this.baseLocation,
-        maxDistance: this.maxDistance,
+        maxDistance: this.maxDistance * 20,
         minRating: this.minRating,
-        maxPrice: this.maxPrice
+        maxPrice: this.maxPrice,
+        selectedServices: this.selectedServices
       };
+      console.log("Occhio, Sto mandando una nuova query");
       this.$emit('newQuery', newQuery);
+    },
+    getServicesList: function getServicesList() {
+      // Momentaneamente mi creo un array
+      // In seguito otterremo questa lista tramite API
+      var servicesList = [{
+        'service_name': "Cucina"
+      }, {
+        'service_name': "Riscaldamento"
+      }, {
+        'service_name': "Aria condizionata"
+      }, {
+        'service_name': "Wi-fi"
+      }, {
+        'service_name': "Lavatrice"
+      }, {
+        'service_name': "Asciugatrice"
+      }, {
+        'service_name': "Camino"
+      }, {
+        'service_name': "Parcheggio"
+      }, {
+        'service_name': "Piscina"
+      }, {
+        'service_name': "Idromassaggio"
+      }, {
+        'service_name': "Palestra"
+      }, {
+        'service_name': "TV"
+      }, {
+        'service_name': "Self check-in"
+      }, {
+        'service_name': "Ferro da stiro"
+      }, {
+        'service_name': "Asciugacapelli"
+      }, {
+        'service_name': "Colazione"
+      }, {
+        'service_name': "Accesso piste da sci"
+      }, {
+        'service_name': "Biancheria letto"
+      }, {
+        'service_name': "Essenziali bagno"
+      }];
+      return servicesList;
     }
   }
 });
@@ -2242,34 +2247,49 @@ __webpack_require__.r(__webpack_exports__);
         baseLocation: this.destination,
         maxDistance: 1,
         minRating: 1,
-        maxPrice: 200
+        maxPrice: 200,
+        selectedServices: []
       }
     };
   },
   props: ['destination'],
   methods: {
-    filterResults: function filterResults() {// filter results
+    filterResults: function filterResults() {
+      var _this = this;
+
+      // filter results
+      this.apartments.forEach(function (apartment) {
+        // Check Distance 
+        if (apartment['dist'] > _this.currentQuery.maxDistance) {
+          apartment.visible = false;
+        } else apartment.visible = true;
+      });
     },
     search: function search() {
+      console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
       self = this;
       axios.get('http://127.0.0.1:8000/api/location', {
         params: {
           location: this.currentQuery.baseLocation,
-          radius: this.currentQuery.maxDistance * 20
+          radius: this.currentQuery.maxDistance
         }
       }).then(function (response) {
+        response.data.results.forEach(function (apartment) {
+          apartment['visible'] = true;
+        });
         self.apartments = response.data.results;
+        self.filterResults();
       });
     },
     getNewQuery: function getNewQuery(newQuery) {
       var newSearchIsNeeded = false;
 
-      if (this.currentQuery.baseLocation != newQuery.baseLocation || this.currentQuery.maxDistance != newQuery.maxDistance) {
+      if (this.currentQuery.baseLocation != newQuery.baseLocation || this.currentQuery.maxDistance < newQuery.maxDistance) {
         newSearchIsNeeded = true;
       }
 
       this.currentQuery = newQuery;
-      if (newSearchIsNeeded) this.search();
+      if (newSearchIsNeeded) this.search();else this.filterResults();
     }
   }
 });
@@ -39393,26 +39413,7 @@ var render = function() {
       ),
       _vm._v(" "),
       !_vm.isFiltersBoxOpen
-        ? _c("div", { staticClass: "form__field" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn--primary-light",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.updateQuery()
-                  }
-                }
-              },
-              [
-                _c("span", { staticClass: "hide-on-tablet" }, [
-                  _vm._v("Cerca ")
-                ]),
-                _c("i", { staticClass: "fas fa-search" })
-              ]
-            )
-          ])
+        ? _c("div", { staticClass: "form__field" }, [_vm._m(0)])
         : _vm._e(),
       _vm._v(" "),
       !_vm.isFiltersBoxOpen
@@ -39432,7 +39433,10 @@ var render = function() {
                 _c("span", { staticClass: "hide-on-tablet" }, [
                   _vm._v("Vedi Più ")
                 ]),
-                _vm._v("Filtri")
+                _c("span", { staticClass: "hide-on-mobile" }, [
+                  _vm._v("Filtri ")
+                ]),
+                _c("i", { staticClass: "show-on-mobile fas fa-cog" })
               ]
             )
           ])
@@ -39499,7 +39503,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
           _c(
@@ -39605,29 +39609,98 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "form__group" }, [
+          _c("div", { staticClass: "form__field form__field--big" }, [
+            _c("span", { staticClass: "form__label" }, [
+              _vm._v("Servizi Aggiuntivi:")
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "checkbox__container services-list" },
+              _vm._l(_vm.servicesList, function(service, index) {
+                return _c(
+                  "li",
+                  { key: index, staticClass: "services-list__item" },
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "checkbox__label",
+                        attrs: { for: "service-" + index }
+                      },
+                      [
+                        _vm._v(
+                          "\n\n                                " +
+                            _vm._s(service.service_name) +
+                            "\n\n                                "
+                        ),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedServices,
+                              expression: "selectedServices"
+                            }
+                          ],
+                          staticClass: "checkbox__field",
+                          attrs: {
+                            id: "service-" + index,
+                            type: "checkbox",
+                            checked: "checked"
+                          },
+                          domProps: {
+                            value: service.service_name,
+                            checked: Array.isArray(_vm.selectedServices)
+                              ? _vm._i(
+                                  _vm.selectedServices,
+                                  service.service_name
+                                ) > -1
+                              : _vm.selectedServices
+                          },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$a = _vm.selectedServices,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = service.service_name,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selectedServices = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selectedServices = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.selectedServices = $$c
+                                }
+                              },
+                              function($event) {
+                                return _vm.updateQuery()
+                              }
+                            ]
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "checkbox__checkmark" })
+                      ]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
-          _c("div", { staticClass: "form__field form__field--half" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn--primary-light",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.updateQuery()
-                  }
-                }
-              },
-              [
-                _vm._v("\n                    Cerca \n                    "),
-                _c("i", { staticClass: "fas fa-search" })
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form__field form__field--half" }, [
+          _c("div", { staticClass: "form__field form__field--full" }, [
             _c(
               "button",
               {
@@ -39652,6 +39725,19 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn--primary-light", attrs: { type: "button" } },
+      [
+        _c("span", { staticClass: "hide-on-tablet" }, [_vm._v("Cerca ")]),
+        _c("i", { staticClass: "fas fa-search" })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39707,116 +39793,6 @@ var staticRenderFns = [
           })
         ]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form__group" }, [
-      _c("div", { staticClass: "form__field form__field--big" }, [
-        _c("span", { staticClass: "form__label" }, [
-          _vm._v("Servizi Aggiuntivi:")
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "checkbox__container" }, [
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Aria Condizionata\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Cucina\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Piscina\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Garage\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Navetta Aeroportuale\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Escursioni Guidate\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Colazione Inclusa\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("label", { staticClass: "checkbox__label" }, [
-              _vm._v("Escort in camera\n                                "),
-              _c("input", {
-                staticClass: "checkbox__field",
-                attrs: { type: "checkbox", checked: "checked" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "checkbox__checkmark" })
-            ])
-          ])
-        ])
-      ])
     ])
   }
 ]

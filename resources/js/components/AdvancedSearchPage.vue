@@ -39,10 +39,11 @@
                 apartments: [] ,                
 
                 currentQuery : {                
-                    baseLocation   : this.destination,
-                    maxDistance : 1,
-                    minRating   : 1,
-                    maxPrice    : 200
+                    baseLocation    : this.destination,
+                    maxDistance     : 1,
+                    minRating       : 1,
+                    maxPrice        : 200 ,
+                    selectedServices    : []
                 }
             }
         },
@@ -50,31 +51,47 @@
         methods : {
             filterResults(){
                 // filter results
+                this.apartments.forEach(apartment => {
+
+                    // Check Distance 
+
+                    if( apartment['dist'] > this.currentQuery.maxDistance)
+                        {                            
+                            apartment.visible = false;
+                            }
+                    else apartment.visible = true;
+                });
             },
             search() {
+                console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
                 self = this;
                 axios
                     .get('http://127.0.0.1:8000/api/location' , {
                         params: {
                             location    :   this.currentQuery.baseLocation ,
-                            radius      :   this.currentQuery.maxDistance * 20
+                            radius      :   this.currentQuery.maxDistance
                             }
                         })
                     .then((response)=>{
+                        response.data.results.forEach(apartment => {
+                            apartment['visible'] = true;
+                        });
+                        
                         self.apartments = response.data.results;
+                        self.filterResults();
                 });        
             } ,
             getNewQuery(newQuery){
                 let newSearchIsNeeded = false;
                 
-                if((this.currentQuery.baseLocation != newQuery.baseLocation) || (this.currentQuery.maxDistance != newQuery.maxDistance) ){
+                if((this.currentQuery.baseLocation != newQuery.baseLocation) || (this.currentQuery.maxDistance < newQuery.maxDistance) ){
                     newSearchIsNeeded = true;
                 }
 
                 this.currentQuery = newQuery;
 
                 if(newSearchIsNeeded) this.search();
-
+                else this.filterResults();
             }
         }
     }

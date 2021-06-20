@@ -69,6 +69,16 @@ h3 {
   }
 }
 
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 35.5em) {
+  .show-on-mobile {
+    display: initial;
+  }
+}
+
 .btn {
   font-size: 1.6rem;
   font-family: "Roboto", sans-serif;

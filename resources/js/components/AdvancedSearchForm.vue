@@ -19,8 +19,7 @@
                 <div v-if="!isFiltersBoxOpen"
                     class="form__field">       
                     <button                     
-                    type="button" 
-                    @click="updateQuery()"
+                    type="button"
                     class="btn btn--primary-light"><span class="hide-on-tablet">Cerca </span><i class="fas fa-search"></i></button>
                 </div>
 
@@ -29,7 +28,7 @@
 
                 <div v-if="!isFiltersBoxOpen"                     
                     class="form__field">
-                    <button @click="toggleFilterBox()" type="button" class="btn btn--primary-light"><span class="hide-on-tablet">Vedi Più </span>Filtri</button>
+                    <button @click="toggleFilterBox()" type="button" class="btn btn--primary-light"><span class="hide-on-tablet">Vedi Più </span><span class="hide-on-mobile">Filtri </span><i class="show-on-mobile fas fa-cog"></i></button>
                 </div>
                     
             </div>
@@ -106,83 +105,40 @@
 
                         <span class="form__label">Servizi Aggiuntivi:</span>
                         
-                            <ul class="checkbox__container">
-                                <li>
-                                    <label class="checkbox__label">Aria Condizionata
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
+                            <ul class="checkbox__container services-list">
+
+                                <li
+                                    v-for="(service , index) in servicesList"
+                                    :key="index"
+                                    class="services-list__item">
+
+                                    <label 
+                                        :for="'service-'+index"
+                                        class="checkbox__label">
+
+                                        {{service.service_name}}
+
+                                        <input 
+                                            :id="'service-'+index"
+                                            type="checkbox"
+                                            class="checkbox__field"
+                                            :value="service.service_name"
+                                            v-model="selectedServices"
+                                            checked="checked"
+                                            @change="updateQuery()">
+
+                                        <span class="checkbox__checkmark"></span>
+
                                     </label>
                                 </li>
-
-                                <li>
-                                    <label class="checkbox__label">Cucina
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Piscina
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Garage
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Navetta Aeroportuale
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Escursioni Guidate
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Colazione Inclusa
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="checkbox__label">Escort in camera
-                                        <input type="checkbox" class="checkbox__field" checked="checked">
-                                    <span class="checkbox__checkmark"></span>
-                                    </label>
-                                </li>
-
-                            </ul>                            
+                            </ul>                 
                     </div>
                 </div>
                 
 
                 <div class="form__group">
 
-                    <!-- Search Button -->
-
-                    <div class="form__field form__field--half">
-                        <button 
-                        @click="updateQuery()"
-                         type="button" 
-                         class="btn btn--primary-light">
-                            Cerca 
-                            <i class="fas fa-search"></i>
-                        </button>                
-                    </div>
-
-                    <div class="form__field form__field--half">
+                    <div class="form__field form__field--full">
                         
                         <button
                         @click="toggleFilterBox()"
@@ -204,7 +160,7 @@
 import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
-            //
+            this.servicesList = this.getServicesList();
         },
         data() {
             return {
@@ -213,7 +169,11 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 maxDistance     : this.query.maxDistance ,
                 minRating       : this.query.minRating ,
                 maxPrice        : this.query.maxPrice ,
-                isFiltersBoxOpen : false
+
+                isFiltersBoxOpen : false ,
+
+                servicesList : [],
+                selectedServices : []
             }
         },
         props: ['query'] ,
@@ -228,17 +188,85 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 // un campo viene modificato
 
                 let newQuery = {
-                    baseLocation  : this.baseLocation,
-                    maxDistance : this.maxDistance,
-                    minRating   : this.minRating,
-                    maxPrice    : this.maxPrice
+                    baseLocation    : this.baseLocation,
+                    maxDistance     : this.maxDistance * 20,
+                    minRating       : this.minRating,
+                    maxPrice        : this.maxPrice,
+                    selectedServices    : this.selectedServices
                 }
-
+                console.log("Occhio, Sto mandando una nuova query");
                 this.$emit('newQuery' , newQuery);
 
             } ,
-        }
-    }
+            getServicesList(){
+
+                // Momentaneamente mi creo un array
+                // In seguito otterremo questa lista tramite API
+
+                let servicesList = [
+                    {
+                        'service_name' : "Cucina"
+                    } ,
+                    {
+                        'service_name' : "Riscaldamento"
+                    } ,
+                    {
+                        'service_name' : "Aria condizionata"
+                    } ,
+                    {
+                        'service_name' : "Wi-fi"
+                    } ,
+                    {
+                        'service_name' : "Lavatrice"
+                    } ,
+                    {
+                        'service_name' : "Asciugatrice"
+                    } ,
+                    {
+                        'service_name' : "Camino"
+                    } ,
+                    {
+                        'service_name' : "Parcheggio"
+                    } ,
+                    {
+                        'service_name' : "Piscina"
+                    } ,
+                    {
+                        'service_name' : "Idromassaggio"        
+                    } ,
+                    {
+                        'service_name' : "Palestra"        
+                    } ,
+                    {
+                        'service_name' : "TV"            
+                    } ,
+                    {
+                        'service_name' : "Self check-in"        
+                    } ,
+                    {
+                        'service_name' : "Ferro da stiro"         
+                    } ,
+                    {
+                        'service_name' : "Asciugacapelli"    
+                    } ,
+                    {
+                        'service_name' : "Colazione"  
+                    } ,
+                    {
+                        'service_name' : "Accesso piste da sci" 
+                    } ,
+                    {
+                        'service_name' : "Biancheria letto"            
+                    } ,
+                    {
+                        'service_name' : "Essenziali bagno"
+                    }
+                ] ;
+
+                return servicesList;
+        }       
+    }       
+}
 </script>
 
 <style scoped lang="scss">

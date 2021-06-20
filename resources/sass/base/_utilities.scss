@@ -20,3 +20,10 @@
         display: none;
     }
 }
+
+.show-on-mobile {
+    display: none;
+    @include responsive(phone) {
+        display: initial;
+    }
+}
