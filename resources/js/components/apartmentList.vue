@@ -18,11 +18,15 @@
 <script>
     export default {
         mounted() {
-            
+            if(this.apartments){
+                //
+            }
+            else this.apartments = this.defaultApartments;
         },
+        props : ['apartments'],
         data() {
             return {
-                'apartments' : [
+                'defaultApartments' : [
                     {
                         'name' : 'Mountain Chalet Milly' ,
                         'imgSrc' : 'img/sampleApartments/01/94264560.jpg' ,

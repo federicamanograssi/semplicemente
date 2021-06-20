@@ -1955,6 +1955,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdvancedSearchPage_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdvancedSearchPage.vue */ "./resources/js/components/AdvancedSearchPage.vue");
 //
 //
 //
@@ -2123,6 +2124,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {//
+  },
+  data: function data() {
+    return {
+      baseLocation: this.query.baseLocation,
+      maxDistance: this.query.maxDistance,
+      minRating: this.query.minRating,
+      maxPrice: this.query.maxPrice,
+      isFiltersBoxOpen: false
+    };
+  },
+  props: ['query'],
+  methods: {
+    toggleFilterBox: function toggleFilterBox() {
+      // Gestione del box con i filtri avanzati
+      this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
+    },
+    updateQuery: function updateQuery() {
+      // Metodo richiamato ogni volta che 
+      // un campo viene modificato
+      var newQuery = {
+        baseLocation: this.baseLocation,
+        maxDistance: this.maxDistance,
+        minRating: this.minRating,
+        maxPrice: this.maxPrice
+      };
+      this.$emit('newQuery', newQuery);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2154,46 +2233,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    if (this.location) {
-      this.userQuery = this.location; // this.getCoordinates(this.userQuery);
-    } else {
-      this.userQuery = 'prova';
-    }
+  mounted: function mounted() {//
   },
   data: function data() {
     return {
-      isFiltersBoxOpen: false,
-      minRating: 3,
-      maxPrice: 50,
-      maxDistance: 1,
-      userQuery: null
+      apartments: [],
+      currentQuery: {
+        baseLocation: this.destination,
+        maxDistance: 1,
+        minRating: 1,
+        maxPrice: 200
+      }
     };
   },
-  props: ['location'],
+  props: ['destination'],
   methods: {
-    toggleFilterBox: function toggleFilterBox() {
-      this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
+    filterResults: function filterResults() {// filter results
     },
-    search: function search(query) {
+    search: function search() {
+      self = this;
       axios.get('http://127.0.0.1:8000/api/location', {
         params: {
-          location: query,
-          radius: this.maxDistance * 20
+          location: this.currentQuery.baseLocation,
+          radius: this.currentQuery.maxDistance * 20
         }
       }).then(function (response) {
-        console.log(response.data.results);
+        self.apartments = response.data.results;
       });
     },
-    getCoordinates: function getCoordinates(address) {
-      // Does not work :-(
-      var apiKey = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
-      var apiString = 'https://api.tomtom.com/search/2/search/' + address + '.json?Key=' + apiKey;
-      axios // .get(apiString)
-      // .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t')
-      .get('https://api.tomtom.com/search/2/geocode/cortina.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb').then(function (response) {
-        console.log(response.data.results);
-      });
+    getNewQuery: function getNewQuery(newQuery) {
+      var newSearchIsNeeded = false;
+
+      if (this.currentQuery.baseLocation != newQuery.baseLocation || this.currentQuery.maxDistance != newQuery.maxDistance) {
+        newSearchIsNeeded = true;
+      }
+
+      this.currentQuery = newQuery;
+      if (newSearchIsNeeded) this.search();
     }
   }
 });
@@ -2539,10 +2615,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    if (this.apartments) {//
+    } else this.apartments = this.defaultApartments;
+  },
+  props: ['apartments'],
   data: function data() {
     return {
-      'apartments': [{
+      'defaultApartments': [{
         'name': 'Mountain Chalet Milly',
         'imgSrc': 'img/sampleApartments/01/94264560.jpg',
         'rating': '4'
@@ -39290,19 +39370,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.userQuery,
-                expression: "userQuery"
+                value: _vm.baseLocation,
+                expression: "baseLocation"
               }
             ],
             staticClass: "form__input",
             attrs: { type: "text" },
-            domProps: { value: _vm.userQuery },
+            domProps: { value: _vm.baseLocation },
             on: {
+              change: function($event) {
+                return _vm.updateQuery()
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.userQuery = $event.target.value
+                _vm.baseLocation = $event.target.value
               }
             }
           })
@@ -39318,7 +39401,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.search(_vm.userQuery)
+                    return _vm.updateQuery()
                   }
                 }
               },
@@ -39399,6 +39482,9 @@ var render = function() {
                   },
                   domProps: { value: _vm.maxDistance },
                   on: {
+                    change: function($event) {
+                      return _vm.updateQuery()
+                    },
                     __r: function($event) {
                       _vm.maxDistance = $event.target.value
                     }
@@ -39449,6 +39535,9 @@ var render = function() {
                   },
                   domProps: { value: _vm.maxPrice },
                   on: {
+                    change: function($event) {
+                      return _vm.updateQuery()
+                    },
                     __r: function($event) {
                       _vm.maxPrice = $event.target.value
                     }
@@ -39498,6 +39587,9 @@ var render = function() {
                   },
                   domProps: { value: _vm.minRating },
                   on: {
+                    change: function($event) {
+                      return _vm.updateQuery()
+                    },
                     __r: function($event) {
                       _vm.minRating = $event.target.value
                     }
@@ -39524,7 +39616,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.search(_vm.userQuery)
+                    return _vm.updateQuery()
                   }
                 }
               },
@@ -39725,6 +39817,90 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "main",
+    { staticClass: "main main--advanced-search" },
+    [
+      _c("advanced-search-form", {
+        attrs: { query: _vm.currentQuery },
+        on: {
+          newQuery: function($event) {
+            return _vm.getNewQuery($event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("apartments-list", {
+        staticClass: "apartments-list--full-width",
+        attrs: { apartments: _vm.apartments }
+      }),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1)
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "chalet-map" }, [
+      _c("iframe", {
+        staticStyle: { border: "0" },
+        attrs: {
+          src:
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54471.2440560787!2d12.052418201662949!3d46.66978139530556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47783435d247033f%3A0xdd3c30437b92e42b!2s32043%20Cortina%20d'Ampezzo%20BL!5e1!3m2!1sit!2sit!4v1623660828144!5m2!1sit!2sit",
+          width: "100%",
+          height: "100%",
+          allowfullscreen: "",
+          loading: "lazy"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "chalet-map__button-container" }, [
+      _c(
+        "div",
+        { staticClass: "chalet-map__button chalet-map__button--close" },
+        [_c("i", { staticClass: "fas fa-times" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "chalet-map__button chalet-map__button--open hidden" },
+        [_c("i", { staticClass: "fas fa-map-marked-alt" })]
+      )
     ])
   }
 ]
@@ -52501,6 +52677,7 @@ Vue.component('advanced-search-form', __webpack_require__(/*! ./components/Advan
 Vue.component('apartments-list', __webpack_require__(/*! ./components/apartmentList.vue */ "./resources/js/components/apartmentList.vue")["default"]);
 Vue.component('locations-list', __webpack_require__(/*! ./components/locationList.vue */ "./resources/js/components/locationList.vue")["default"]);
 Vue.component('back-to-top', __webpack_require__(/*! ./components/backToTop.vue */ "./resources/js/components/backToTop.vue")["default"]);
+Vue.component('advanced-search-page', __webpack_require__(/*! ./components/AdvancedSearchPage.vue */ "./resources/js/components/AdvancedSearchPage.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -52673,6 +52850,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchForm_vue_vue_type_template_id_475ce6f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchForm_vue_vue_type_template_id_475ce6f9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AdvancedSearchPage.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/AdvancedSearchPage.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44& */ "./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44&");
+/* harmony import */ var _AdvancedSearchPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdvancedSearchPage.vue?vue&type=script&lang=js& */ "./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdvancedSearchPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdvancedSearchPage.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdvancedSearchPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdvancedSearchPage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdvancedSearchPage.vue?vue&type=template&id=5e5b5f44&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdvancedSearchPage_vue_vue_type_template_id_5e5b5f44___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

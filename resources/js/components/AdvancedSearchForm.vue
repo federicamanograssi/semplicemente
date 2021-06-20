@@ -9,7 +9,9 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input class="form__input" type="text" v-model="userQuery">
+                    <input  v-model="baseLocation" 
+                            @change="updateQuery()" 
+                            class="form__input" type="text">
                 </div>
 
                 <!-- Search Button -->
@@ -18,7 +20,7 @@
                     class="form__field">       
                     <button                     
                     type="button" 
-                    @click="search(userQuery)"
+                    @click="updateQuery()"
                     class="btn btn--primary-light"><span class="hide-on-tablet">Cerca </span><i class="fas fa-search"></i></button>
                 </div>
 
@@ -47,7 +49,7 @@
                         <label for="search-form-distance" class="form__label">Distanza</label>
 
                         <div class="form__slider__container">
-                            <input v-model="maxDistance" type="range" min="1" max="3" value="1" class="form__slider" id="search-form-distance">
+                            <input v-model="maxDistance" @change="updateQuery()" type="range" min="1" max="3" value="1" class="form__slider" id="search-form-distance">
                         </div>
 
                         <span class="form__slider__value">{{maxDistance * 20}} Km</span>
@@ -79,7 +81,7 @@
                     <div class="form__field form__field--half form__field--price">
                         <label class="form__label" for="search-form-price">Prezzo (max)</label>
                         <div class="form__slider__container">
-                            <input v-model="maxPrice" type="range" min="20" max="500" value="50" class="form__slider" id="search-form-price">
+                            <input @change="updateQuery()" v-model="maxPrice" type="range" min="20" max="500" value="50" class="form__slider" id="search-form-price">
                         </div>
                         <span class="form__slider__value">{{maxPrice}} <i class="fas fa-euro-sign"></i></span>
                     </div>
@@ -89,7 +91,7 @@
                     <div class="form__field form__field--half form__field--rating">
                         <label class="form__label" for="search-form-rating">Valutazione (min)</label>
                         <div class="form__slider__container">
-                            <input v-model="minRating" type="range" min="1" max="5" value="3" class="form__slider" id="search-form-rating">
+                            <input @change="updateQuery()" v-model="minRating" type="range" min="1" max="5" value="3" class="form__slider" id="search-form-rating">
                         </div>
                         <span class="form__slider__value">{{minRating}} <i class="fas fa-star"></i></span>
                     </div>
@@ -172,7 +174,7 @@
 
                     <div class="form__field form__field--half">
                         <button 
-                        @click="search(userQuery)"
+                        @click="updateQuery()"
                          type="button" 
                          class="btn btn--primary-light">
                             Cerca 
@@ -181,12 +183,14 @@
                     </div>
 
                     <div class="form__field form__field--half">
-                        <button 
+                        
+                        <button
                         @click="toggleFilterBox()"
                         type="button" 
                         class="btn btn--primary-light">
                             Fatto                             
-                        </button>                
+                        </button>
+                        
                     </div>
                 </div>
 
@@ -197,58 +201,43 @@
 </template>
 
 <script>
+import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
-
-            if(this.location){
-                    this.userQuery = this.location;
-                    // this.getCoordinates(this.userQuery);
-                }
-                else {
-                    this.userQuery = 'prova';
-                }
+            //
         },
         data() {
             return {
-                isFiltersBoxOpen : false ,
-                minRating : 3 ,
-                maxPrice : 50 ,
-                maxDistance : 1 ,
-                userQuery : null
+
+                baseLocation   : this.query.baseLocation ,
+                maxDistance     : this.query.maxDistance ,
+                minRating       : this.query.minRating ,
+                maxPrice        : this.query.maxPrice ,
+                isFiltersBoxOpen : false
             }
         },
-        props : ['location'] ,
+        props: ['query'] ,
         methods : {
             toggleFilterBox() {
+                // Gestione del box con i filtri avanzati
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
-            }
-             ,
-            search(query) {
-                axios
-                    .get('http://127.0.0.1:8000/api/location' , {
-                        params: {
-                            location    :   query ,
-                            radius      :   this.maxDistance * 20
-                            }
-                        })
-                    .then((response)=>{
-                        console.log(response.data.results);
-                });
             } ,
-            getCoordinates(address) {
-                // Does not work :-(
-                let apiKey    = 'WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t';
-                let apiString   = 'https://api.tomtom.com/search/2/search/' + address + '.json?Key=' + apiKey;                
-                axios
-                    // .get(apiString)
-                    // .get('https://api.tomtom.com/search/2/search/riposto.json?Key=WxAHSBhUUkDgjAAiHLJGDRM7ILkbRQ9t')
-                    .get('https://api.tomtom.com/search/2/geocode/cortina.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')
-                    
-                    .then((response)=>{
-                        console.log(response.data.results);
-                });
-            }
-        }        
+            updateQuery(){
+                
+                // Metodo richiamato ogni volta che 
+                // un campo viene modificato
+
+                let newQuery = {
+                    baseLocation  : this.baseLocation,
+                    maxDistance : this.maxDistance,
+                    minRating   : this.minRating,
+                    maxPrice    : this.maxPrice
+                }
+
+                this.$emit('newQuery' , newQuery);
+
+            } ,
+        }
     }
 </script>
 
