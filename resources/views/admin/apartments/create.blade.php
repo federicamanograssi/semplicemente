@@ -256,9 +256,7 @@ $("#add").click(function(){
 
 
     $(document).on('click', '.remove-input', function(){  
-        --j;
         $(this).parents('.remove-div').remove();
-        document.getElementById("n_img").setAttribute('value', j);
         document.getElementById("is_cover1").checked=true;
 
     });  
