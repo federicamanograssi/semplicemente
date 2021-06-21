@@ -10,7 +10,7 @@
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
                     <input  v-model="baseLocation" 
-                            @change="updateQuery()" 
+                            @change="updateQuery()" key="" 
                             class="form__input" type="text">
                 </div>
 
@@ -62,14 +62,14 @@
 
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
-                        <input id="search-form-rooms" class="form__input" type="number">
+                        <input @change="updateQuery()" v-model="minRooms" id="search-form-rooms" class="form__input" type="number">
                     </div>
 
-                    <!-- Toilets -->
+                    <!-- Beds (i.e. max Guests) -->
 
-                    <div class="form__field form__field--half form__field--toilets">
-                        <label for="search-form-toilets" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Bagni (min)</label>
-                        <input id="search-form-toilets" class="form__input" type="number">
+                    <div class="form__field form__field--half form__field--guests">
+                        <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
+                        <input @change="updateQuery()" v-model="guests" id="search-form-guests" class="form__input" type="number">
                     </div>
                 </div>
 
@@ -171,6 +171,8 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 maxDistance     : this.query.maxDistance ,
                 minRating       : this.query.minRating ,
                 maxPrice        : this.query.maxPrice ,
+                minRooms        : this.query.minRooms ,
+                guests       : this.query.guests,
                 selectedServices : [] ,
 
                 // Proprietà relative al funzionamento del form
@@ -194,9 +196,11 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
 
                 let newQuery = {
                     baseLocation        : this.baseLocation,
-                    maxDistance         : this.maxDistance,
-                    minRating           : this.minRating,
-                    maxPrice            : this.maxPrice,
+                    maxDistance         : Number(this.maxDistance),
+                    guests              : Number(this.guests),
+                    minRating           : Number(this.minRating),
+                    minRooms            : Number(this.minRooms),
+                    maxPrice            : Number(this.maxPrice),
                     selectedServices    : this.selectedServices ,
                     baseLat             : this.query.baseLat ,
                     baseLon             : this.query.baseLon

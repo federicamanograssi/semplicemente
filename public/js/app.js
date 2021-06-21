@@ -2126,6 +2126,8 @@ __webpack_require__.r(__webpack_exports__);
       maxDistance: this.query.maxDistance,
       minRating: this.query.minRating,
       maxPrice: this.query.maxPrice,
+      minRooms: this.query.minRooms,
+      guests: this.query.guests,
       selectedServices: [],
       // Proprietà relative al funzionamento del form
       isFiltersBoxOpen: false,
@@ -2145,9 +2147,11 @@ __webpack_require__.r(__webpack_exports__);
       // lo stabilirà il parent component (AdvancedSearchPage)
       var newQuery = {
         baseLocation: this.baseLocation,
-        maxDistance: this.maxDistance,
-        minRating: this.minRating,
-        maxPrice: this.maxPrice,
+        maxDistance: Number(this.maxDistance),
+        guests: Number(this.guests),
+        minRating: Number(this.minRating),
+        minRooms: Number(this.minRooms),
+        maxPrice: Number(this.maxPrice),
         selectedServices: this.selectedServices,
         baseLat: this.query.baseLat,
         baseLon: this.query.baseLon
@@ -2247,6 +2251,8 @@ __webpack_require__.r(__webpack_exports__);
         baseLon: 0,
         maxDistance: 40,
         minRating: 1,
+        minRooms: 1,
+        guests: 2,
         maxPrice: 200,
         selectedServices: [] // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
         // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
@@ -2261,7 +2267,7 @@ __webpack_require__.r(__webpack_exports__);
       this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
       // Facciamo riferimento alla lista degli appartamenti generale
       // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'break')
+      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
 
       for (var i = 0; i < this.apartments.length; i++) {
         var apt = this.apartments[i]; // Alias
@@ -2275,12 +2281,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
         if (apt.price > query.maxPrice) {
-          // Possiamo approfittarne per stabilire prezzo max e min
+          // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
           continue;
         } // Controllo Punteggio
 
 
         if (apt.rating < query.minRating) {
+          continue;
+        } // Controllo numero ospiti / letti
+
+
+        if (apt.beds < query.guests) {
+          continue;
+        } // Controllo Numero Camere
+
+
+        if (apt.rooms < query.minRooms) {
           continue;
         }
 
@@ -39691,6 +39707,7 @@ var render = function() {
                 expression: "baseLocation"
               }
             ],
+            key: "",
             staticClass: "form__input",
             attrs: { type: "text" },
             domProps: { value: _vm.baseLocation },
@@ -39801,7 +39818,75 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "form__group" }, [
+          _c(
+            "div",
+            { staticClass: "form__field form__field--half form__field--rooms" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.minRooms,
+                    expression: "minRooms"
+                  }
+                ],
+                staticClass: "form__input",
+                attrs: { id: "search-form-rooms", type: "number" },
+                domProps: { value: _vm.minRooms },
+                on: {
+                  change: function($event) {
+                    return _vm.updateQuery()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.minRooms = $event.target.value
+                  }
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "form__field form__field--half form__field--guests"
+            },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.guests,
+                    expression: "guests"
+                  }
+                ],
+                staticClass: "form__input",
+                attrs: { id: "search-form-guests", type: "number" },
+                domProps: { value: _vm.guests },
+                on: {
+                  change: function($event) {
+                    return _vm.updateQuery()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.guests = $event.target.value
+                  }
+                }
+              })
+            ]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
           _c(
@@ -40040,58 +40125,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form__group" }, [
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--rooms" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-rooms" }
-            },
-            [
-              _vm._v("Camere "),
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("da letto ")
-              ]),
-              _vm._v("(min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-rooms", type: "number" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--toilets" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-toilets" }
-            },
-            [
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("Numero ")
-              ]),
-              _vm._v("Bagni (min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-toilets", type: "number" }
-          })
-        ]
-      )
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-rooms" }
+      },
+      [
+        _vm._v("Camere "),
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("da letto ")]),
+        _vm._v("(min)")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-guests" }
+      },
+      [
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
+        _vm._v("Ospiti")
+      ]
+    )
   }
 ]
 render._withStripped = true

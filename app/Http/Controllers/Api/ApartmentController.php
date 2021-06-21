@@ -86,7 +86,8 @@ class ApartmentController extends Controller
                     'cover_img' => $cover_img ,
                     'beds' => $apartment['beds_n'] ,
                     'rating' => $apartment['rating'] ,
-                    'price' => $apartment['price_per_night']
+                    'price' => $apartment['price_per_night'] ,
+                    'rooms' => $apartment['rooms_n']
                 );
 
                 array_push($chalets , $newChalet);

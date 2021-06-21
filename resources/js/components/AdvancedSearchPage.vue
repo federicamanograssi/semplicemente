@@ -37,6 +37,8 @@
                     baseLon         : 0 ,
                     maxDistance     : 40,
                     minRating       : 1,
+                    minRooms       : 1,
+                    guests          : 2,
                     maxPrice        : 200 ,
                     selectedServices    : []
                     // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
@@ -54,7 +56,7 @@
 
                 // Facciamo riferimento alla lista degli appartamenti generale
                 // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-                // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'break')
+                // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
 
                 for(let i = 0; i < this.apartments.length ; i++) {
 
@@ -70,13 +72,25 @@
                     // Controllo Prezzo
 
                     if (apt.price > query.maxPrice) {
-                        // Possiamo approfittarne per stabilire prezzo max e min
+                        // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
                         continue;
                     }
 
                     // Controllo Punteggio
 
                     if ( apt.rating < query.minRating ) {                
+                        continue;
+                    }
+
+                    // Controllo numero ospiti / letti
+
+                    if ( apt.beds < query.guests ) {                
+                        continue;
+                    }
+
+                    // Controllo Numero Camere
+                    
+                    if ( apt.rooms < query.minRooms ) {                
                         continue;
                     }
 
