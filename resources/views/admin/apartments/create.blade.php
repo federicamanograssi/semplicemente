@@ -229,8 +229,7 @@ function readURL(input) {
     });
 
 $("#add").click(function(){
- if(){
-    console.log(i);
+ if($('#img'+i).attr('src')!= "https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"){
     ++i;
     ++j; 
 
