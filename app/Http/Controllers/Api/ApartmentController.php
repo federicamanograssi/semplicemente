@@ -43,7 +43,7 @@ class ApartmentController extends Controller
             PHP: acos( sin($radLat1) * sin($lat2) + cos($radLat1) * cos($lat2) * cos($radLon1 - $lon2) );
         */
 
-        $apartments=Apartment::all();
+        $apartments=Apartment::where('visible','1')->get();
         
         $location = $request->input('location');    // Query Location
         $radius   = $request->input('radius');      // Query Radius
@@ -66,11 +66,13 @@ class ApartmentController extends Controller
         $chalets = array();
 
         foreach($apartments as $apartment) {
-            
+
+            // calcola distanza radiale dal punto di ricerca inserito
             $dist = acos( $sinRadLat1 * sin((M_PI / 180) * $apartment['latitude']) + $cosRadLat1 * cos((M_PI / 180) * $apartment['latitude']) * cos($radLon1 - (M_PI / 180) * $apartment['longitude']) ) * $earthRadius;
 
             if ($dist <= $radius) {
 
+                // - prendere img di copertina
                 $cover_img = DB::table('images')->where(
                     [
                         ['apartment_id', '=' , $apartment['id']] ,
@@ -78,14 +80,20 @@ class ApartmentController extends Controller
                     ]
                     )->first()->img_path;
 
+                //- crea array con i dati necessari per stampa e filtri    
                 $newChalet = array(
                     'name' => $apartment['title'] ,
                     'lat'  => (M_PI / 180) * $apartment['latitude'] ,
                     'lon'  => (M_PI / 180) * $apartment['longitude'] ,
                     'dist' => $dist ,                        
-                    'cover_img' => $cover_img
+                    'cover_img' => $cover_img,
+                    'rooms' => $apartment['rooms_n'],
+                    'beds' => $apartment['beds_n'],
+                    'price' => $apartment['price_per_night'],
+                    'rating' => $apartment['rating'],
                 );
 
+                //- salvare l'array dell'apt nell'array di risultati da restituire
                 array_push($chalets , $newChalet);
 
             }
