@@ -2117,7 +2117,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.servicesList = this.getServicesList();
+    // richiamo il metodo che riempie la lista servizi
+    this.getServicesList();
   },
   data: function data() {
     return {
@@ -2150,48 +2151,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('newQuery', newQuery);
     },
     getServicesList: function getServicesList() {
-      // Momentaneamente mi creo un array
-      // In seguito otterremo questa lista tramite API
-      var servicesList = [{
-        'service_name': "Cucina"
-      }, {
-        'service_name': "Riscaldamento"
-      }, {
-        'service_name': "Aria condizionata"
-      }, {
-        'service_name': "Wi-fi"
-      }, {
-        'service_name': "Lavatrice"
-      }, {
-        'service_name': "Asciugatrice"
-      }, {
-        'service_name': "Camino"
-      }, {
-        'service_name': "Parcheggio"
-      }, {
-        'service_name': "Piscina"
-      }, {
-        'service_name': "Idromassaggio"
-      }, {
-        'service_name': "Palestra"
-      }, {
-        'service_name': "TV"
-      }, {
-        'service_name': "Self check-in"
-      }, {
-        'service_name': "Ferro da stiro"
-      }, {
-        'service_name': "Asciugacapelli"
-      }, {
-        'service_name': "Colazione"
-      }, {
-        'service_name': "Accesso piste da sci"
-      }, {
-        'service_name': "Biancheria letto"
-      }, {
-        'service_name': "Essenziali bagno"
-      }];
-      return servicesList;
+      var _this = this;
+
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        // console.log(servicesList.data.results);
+        _this.servicesList = servicesList.data.results;
+      });
     }
   }
 });
@@ -40056,25 +40021,25 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "form__field form__field--half form__field--toilets" },
+        { staticClass: "form__field form__field--half form__field--beds" },
         [
           _c(
             "label",
             {
               staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-toilets" }
+              attrs: { for: "search-form-beds" }
             },
             [
               _c("span", { staticClass: "hide-on-mobile" }, [
                 _vm._v("Numero ")
               ]),
-              _vm._v("Bagni (min)")
+              _vm._v("Posti letto (min)")
             ]
           ),
           _vm._v(" "),
           _c("input", {
             staticClass: "form__input",
-            attrs: { id: "search-form-toilets", type: "number" }
+            attrs: { id: "search-form-beds", type: "number" }
           })
         ]
       )
@@ -40333,7 +40298,7 @@ var render = function() {
       },
       [
         _c("source", { attrs: { src: _vm.videoSrc, type: "video/mp4" } }),
-        _vm._v("\n                Browser non supportato!\n            ")
+        _vm._v("\r\n                Browser non supportato!\r\n            ")
       ]
     ),
     _vm._v(" "),
@@ -54105,8 +54070,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
