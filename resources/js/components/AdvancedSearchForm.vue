@@ -216,7 +216,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 axios
                 .get('http://127.0.0.1:8000/api/services')
                 .then((servicesList)=>{
-                    // console.log(servicesList.data.results);
+                    console.log(servicesList.data.results);
                     this.servicesList= servicesList.data.results
                 })
         }       
