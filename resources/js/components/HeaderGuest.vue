@@ -28,17 +28,6 @@
                     <ul class="header__menu"
                        :class="isMenuOpen ? 'header__menu--mobile' : null">
 
-                        <!-- Link statici -->
-
-                        <!-- 
-                            <li class="header__menu-item header__menu-item--home"> <i class="fas fa-home"></i> Home Page</li>
-                            <li class="header__menu-item"><i class="far fa-heart"></i> <a href="/search"> Chalet in Evidenza</a></li>
-                            <li class="header__menu-item"><i class="fas fa-search-location"></i> Ricerca Avanzata</li>
-                            <li class="header__menu-item"><i class="fas fa-sign-in-alt"></i> LogIn</li> 
-                        -->
-
-                        <!-- link dinamici -->
-
                         <li  v-for="(item , index) in this.items" 
                             :key="index"
                             :class="'header__menu-item--' + item.name"

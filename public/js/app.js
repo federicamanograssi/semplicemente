@@ -2121,13 +2121,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      // Proprietà relative alla query dell'utente
       baseLocation: this.query.baseLocation,
       maxDistance: this.query.maxDistance,
       minRating: this.query.minRating,
       maxPrice: this.query.maxPrice,
+      selectedServices: [],
+      // Proprietà relative al funzionamento del form
       isFiltersBoxOpen: false,
-      servicesList: [],
-      selectedServices: []
+      servicesList: []
     };
   },
   props: ['query'],
@@ -2138,16 +2140,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateQuery: function updateQuery() {
       // Metodo richiamato ogni volta che 
-      // un campo viene modificato
+      // un qualsiasi campo viene modificato
+      // Quali siano le operazioni da eseguire in base alle modifiche
+      // lo stabilirà il parent component (AdvancedSearchPage)
       var newQuery = {
         baseLocation: this.baseLocation,
-        maxDistance: this.maxDistance * 20,
+        maxDistance: this.maxDistance,
         minRating: this.minRating,
         maxPrice: this.maxPrice,
-        selectedServices: this.selectedServices
+        selectedServices: this.selectedServices,
+        baseLat: this.query.baseLat,
+        baseLon: this.query.baseLon
       };
       console.log("Occhio, Sto mandando una nuova query");
-      this.$emit('newQuery', newQuery);
+      this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore (AdvancedSearchPage)
     },
     getServicesList: function getServicesList() {
       // Momentaneamente mi creo un array
@@ -2228,7 +2234,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {//
+  mounted: function mounted() {
+    this.search();
   },
   data: function data() {
     return {
@@ -2237,7 +2244,7 @@ __webpack_require__.r(__webpack_exports__);
         baseLocation: this.destination,
         baseLat: 0,
         baseLon: 0,
-        maxDistance: 1,
+        maxDistance: 40,
         minRating: 1,
         maxPrice: 200,
         selectedServices: []
@@ -2254,8 +2261,8 @@ __webpack_require__.r(__webpack_exports__);
       this.apartments.forEach(function (apartment) {
         // Check Distance 
         if (apartment['dist'] > _this.currentQuery.maxDistance) {
-          apartment.visible = false;
-        } else apartment.visible = true;
+          apartment.visibleAfterFilters = false;
+        } else apartment.visibleAfterFilters = true;
       });
     },
     toggleMap: function toggleMap() {
@@ -2271,7 +2278,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         response.data.results.forEach(function (apartment) {
-          apartment['visible'] = true;
+          apartment['visibleAfterFilters'] = true;
         });
         self.apartments = response.data.results;
         self.currentQuery.baseLat = response.data.base_lat;
@@ -2281,18 +2288,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNewQuery: function getNewQuery(newQuery) {
       var newSearchIsNeeded = false;
+      var oldQuery = this.currentQuery;
 
-      if (this.currentQuery.baseLocation != newQuery.baseLocation || this.currentQuery.maxDistance < newQuery.maxDistance) {
+      if (oldQuery.baseLocation != newQuery.baseLocation || oldQuery.maxDistance < newQuery.maxDistance) {
         newSearchIsNeeded = true;
       }
 
-      newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
+      this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
 
-      newQuery.base_lon = this.currentQuery.base_lon; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
-
-      this.currentQuery = newQuery; //   <-- Per questo ottieni due console.log al variare delle coordinate!
-
-      if (newSearchIsNeeded) this.search();else this.filterResults();
+      if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio                
+      else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
     }
   }
 });
@@ -2341,17 +2346,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2840,7 +2834,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.mymap = L.map('chalet-map').setView([45.900383, 10.723176], 13);
+    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -2883,8 +2877,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Aggiorno Centro Mappa");
       console.log(this.baseLat + ' ' + this.baseLon);
       this.mymap.panTo([this.baseLat, this.baseLon, {
-        animate: true,
-        duration: 5.0
+        animate: true
       }]);
     }
   }
@@ -39764,9 +39757,10 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: "1",
-                    max: "3",
-                    value: "1",
+                    min: "20",
+                    max: "60",
+                    value: "20",
+                    step: "20",
                     id: "search-form-distance"
                   },
                   domProps: { value: _vm.maxDistance },
@@ -39782,7 +39776,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.maxDistance * 20) + " Km")
+                _vm._v(_vm._s(_vm.maxDistance) + " Km")
               ])
             ]
           )
@@ -40333,7 +40327,7 @@ var render = function() {
       },
       [
         _c("source", { attrs: { src: _vm.videoSrc, type: "video/mp4" } }),
-        _vm._v("\n                Browser non supportato!\n            ")
+        _vm._v("\r\n                Browser non supportato!\r\n            ")
       ]
     ),
     _vm._v(" "),
@@ -54105,8 +54099,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

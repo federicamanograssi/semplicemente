@@ -22,7 +22,7 @@
     export default {
 
         mounted() {
-            //
+            this.search();
         },
         data() {            
             return {
@@ -32,7 +32,7 @@
                     baseLocation    : this.destination,
                     baseLat         : 0 ,
                     baseLon         : 0 ,
-                    maxDistance     : 1,
+                    maxDistance     : 40,
                     minRating       : 1,
                     maxPrice        : 200 ,
                     selectedServices    : []
@@ -51,9 +51,9 @@
 
                     if( apartment['dist'] > this.currentQuery.maxDistance)
                         {                            
-                            apartment.visible = false;
+                            apartment.visibleAfterFilters = false;
                             }
-                    else apartment.visible = true;
+                    else apartment.visibleAfterFilters = true;
                 });
             },
             toggleMap(){
@@ -72,7 +72,7 @@
                     .then((response)=>{
 
                         response.data.results.forEach(apartment => {
-                            apartment['visible'] = true;
+                            apartment['visibleAfterFilters'] = true;
                         });
                         
                         self.apartments = response.data.results;
@@ -86,18 +86,18 @@
             getNewQuery(newQuery){
 
                 let newSearchIsNeeded = false;
+                const oldQuery = this.currentQuery;
                 
-                if((this.currentQuery.baseLocation != newQuery.baseLocation) || (this.currentQuery.maxDistance < newQuery.maxDistance) ){
+                if((oldQuery.baseLocation != newQuery.baseLocation) || (oldQuery.maxDistance < newQuery.maxDistance) ){
                     newSearchIsNeeded = true;
                 }
 
-                newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
-                newQuery.base_lon = this.currentQuery.base_lon; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
 
-                this.currentQuery = newQuery; //   <-- Per questo ottieni due console.log al variare delle coordinate!
 
-                if(newSearchIsNeeded) this.search();
-                else this.filterResults();
+                this.currentQuery = newQuery;   // sovrascrive la vecchia query con quella nuova
+
+                if(newSearchIsNeeded) this.search();    // lancia una nuova ricerca nel DB se necessaio                
+                else this.filterResults();              // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
             }
         }
     }
