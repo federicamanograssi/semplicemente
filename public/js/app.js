@@ -2114,10 +2114,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.servicesList = this.getServicesList();
+    this.servicesList = this.getServicesList(); // this.maxPrice == 0 ? this.maxPrice = this.aptListInfo.highestAptPrice : null;
+  },
+  updated: function updated() {//
   },
   data: function data() {
     return {
@@ -2134,17 +2139,26 @@ __webpack_require__.r(__webpack_exports__);
       servicesList: []
     };
   },
-  props: ['query'],
+  props: ['query', 'aptListInfo'],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
       // Gestione del box con i filtri avanzati
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
     updateQuery: function updateQuery() {
-      // Metodo richiamato ogni volta che 
+      if (!this.maxPrice) {
+        this.maxPrice = this.aptListInfo.highestAptPrice;
+        console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
+      }
+
+      if (this.maxPrice < this.aptListInfo.lowestAptPrice) {
+        this.maxPrice = this.aptListInfo.lowestAptPrice;
+      } // Metodo richiamato ogni volta che 
       // un qualsiasi campo viene modificato
       // Quali siano le operazioni da eseguire in base alle modifiche
       // lo stabilirà il parent component (AdvancedSearchPage)
+
+
       var newQuery = {
         baseLocation: this.baseLocation,
         maxDistance: Number(this.maxDistance),
@@ -2245,7 +2259,12 @@ __webpack_require__.r(__webpack_exports__);
     return {
       apartments: [],
       filteredApartments: [],
+      aptListInfo: {
+        highestAptPrice: 0,
+        lowestAptPrice: 0
+      },
       currentQuery: {
+        // defaults                
         baseLocation: this.destination,
         baseLat: 0,
         baseLon: 0,
@@ -2253,15 +2272,14 @@ __webpack_require__.r(__webpack_exports__);
         minRating: 1,
         minRooms: 1,
         guests: 2,
-        maxPrice: 200,
-        selectedServices: [] // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
-        // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
-
+        maxPrice: null,
+        selectedServices: []
       },
       mapIsShown: true
     };
   },
   props: ['destination'],
+  // Arriva come parametro URL
   methods: {
     filterResults: function filterResults() {
       this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
@@ -2281,7 +2299,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
         if (apt.price > query.maxPrice) {
-          // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
+          // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati                        
           continue;
         } // Controllo Punteggio
 
@@ -2306,6 +2324,18 @@ __webpack_require__.r(__webpack_exports__);
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
     },
+    getaptListInfo: function getaptListInfo() {
+      var maxPrice = 100;
+      var minPrice = 0;
+      this.apartments.forEach(function (apt) {
+        minPrice == 0 ? minPrice = apt.price : null; // prima iterazione
+
+        apt.price > maxPrice ? maxPrice = apt.price : null;
+        apt.price < minPrice ? minPrice = apt.price : null;
+      });
+      this.aptListInfo.highestAptPrice = maxPrice;
+      this.aptListInfo.lowestAptPrice = minPrice;
+    },
     search: function search() {
       console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
       self = this;
@@ -2318,6 +2348,7 @@ __webpack_require__.r(__webpack_exports__);
         self.apartments = response.data.results;
         self.currentQuery.baseLat = response.data.base_lat;
         self.currentQuery.baseLon = response.data.base_lon;
+        self.getaptListInfo();
         self.filterResults();
       });
     },
@@ -2327,7 +2358,15 @@ __webpack_require__.r(__webpack_exports__);
 
       if (oldQuery.baseLocation != newQuery.baseLocation || oldQuery.maxDistance < newQuery.maxDistance) {
         newSearchIsNeeded = true;
-      }
+      } // il blocco commentato qui sotto non funziona ancora
+      // if(!this.maxPrice){
+      //     this.maxPrice = this.aptListInfo.highestAptPrice;
+      //     console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
+      // }
+      // if(this.maxPrice < this.aptListInfo.lowestAptPrice){
+      //     this.maxPrice = this.aptListInfo.lowestAptPrice;                
+      // }
+
 
       this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
 
@@ -39915,9 +39954,8 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: "20",
-                    max: "500",
-                    value: "50",
+                    min: _vm.aptListInfo.lowestAptPrice,
+                    max: _vm.aptListInfo.highestAptPrice,
                     id: "search-form-price"
                   },
                   domProps: { value: _vm.maxPrice },
@@ -39933,7 +39971,11 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.maxPrice) + " "),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.maxPrice) +
+                    "\n                     "
+                ),
                 _c("i", { staticClass: "fas fa-euro-sign" })
               ])
             ]
@@ -40181,7 +40223,7 @@ var render = function() {
     { staticClass: "main main--advanced-search" },
     [
       _c("advanced-search-form", {
-        attrs: { query: _vm.currentQuery },
+        attrs: { query: _vm.currentQuery, aptListInfo: _vm.aptListInfo },
         on: {
           newQuery: function($event) {
             return _vm.getNewQuery($event)

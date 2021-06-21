@@ -10,7 +10,8 @@
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
                     <input  v-model="baseLocation" 
-                            @change="updateQuery()" key="" 
+                            @change="updateQuery()" 
+                            key="" 
                             class="form__input" type="text">
                 </div>
 
@@ -80,9 +81,11 @@
                     <div class="form__field form__field--half form__field--price">
                         <label class="form__label" for="search-form-price">Prezzo (max)</label>
                         <div class="form__slider__container">
-                            <input @change="updateQuery()" v-model="maxPrice" type="range" min="20" max="500" value="50" class="form__slider" id="search-form-price">
+                            <input @change="updateQuery()" v-model="maxPrice" type="range" :min="aptListInfo.lowestAptPrice" :max="aptListInfo.highestAptPrice" class="form__slider" id="search-form-price">
                         </div>
-                        <span class="form__slider__value">{{maxPrice}} <i class="fas fa-euro-sign"></i></span>
+                        <span class="form__slider__value">
+                            {{maxPrice}}
+                             <i class="fas fa-euro-sign"></i></span>
                     </div>
 
                     <!-- Rating -->
@@ -161,6 +164,10 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
             this.servicesList = this.getServicesList();
+            // this.maxPrice == 0 ? this.maxPrice = this.aptListInfo.highestAptPrice : null;
+        },
+        updated() {
+            //
         },
         data() {
             return {
@@ -181,13 +188,23 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 servicesList : []
             }
         },
-        props: ['query'] ,
+        props: [ 'query' , 'aptListInfo' ] ,
         methods : {
             toggleFilterBox() {
                 // Gestione del box con i filtri avanzati
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
             updateQuery(){
+
+            if(!this.maxPrice){
+                this.maxPrice = this.aptListInfo.highestAptPrice;
+                console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
+            }
+
+            if(this.maxPrice < this.aptListInfo.lowestAptPrice){
+                this.maxPrice = this.aptListInfo.lowestAptPrice;                
+            }
+            
                 
                 // Metodo richiamato ogni volta che 
                 // un qualsiasi campo viene modificato

@@ -3,7 +3,7 @@
 
         
 
-        <advanced-search-form v-on:newQuery="getNewQuery($event)" :query="currentQuery">
+        <advanced-search-form v-on:newQuery="getNewQuery($event)" :query="currentQuery" :aptListInfo="aptListInfo">
             <!-- Search Form -->
         </advanced-search-form>
 
@@ -31,24 +31,28 @@
 
                 filteredApartments : [] ,
 
-                currentQuery : {                
+                aptListInfo : {
+                    highestAptPrice : 0 ,
+                    lowestAptPrice  : 0
+                } ,
+
+
+                currentQuery : {      // defaults                
                     baseLocation    : this.destination,
                     baseLat         : 0 ,
                     baseLon         : 0 ,
                     maxDistance     : 40,
                     minRating       : 1,
                     minRooms       : 1,
-                    guests          : 2,
-                    maxPrice        : 200 ,
+                    guests          : 2,                    
+                    maxPrice        : null ,
                     selectedServices    : []
-                    // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
-                    // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
                 } ,
 
                 mapIsShown : true
             }
         },
-        props : ['destination'] ,
+        props : ['destination'] ,   // Arriva come parametro URL
         methods : {
             filterResults(){
 
@@ -62,7 +66,6 @@
 
                     const apt   = this.apartments[i];   // Alias
                     const query = this.currentQuery;    // Alias
-
                     // Controllo la distanza
 
                     if (apt.dist > query.maxDistance) {
@@ -72,7 +75,7 @@
                     // Controllo Prezzo
 
                     if (apt.price > query.maxPrice) {
-                        // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
+                        // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati                        
                         continue;
                     }
 
@@ -89,18 +92,36 @@
                     }
 
                     // Controllo Numero Camere
-                    
+
                     if ( apt.rooms < query.minRooms ) {                
                         continue;
                     }
 
                     this.filteredApartments.push(this.apartments[i]);   // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
+                    
                 }
+
+
 
             },
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
             },
+            getaptListInfo() {
+                
+                let maxPrice = 100;
+                let minPrice = 0;
+
+                this.apartments.forEach(apt => {
+                    minPrice == 0 ? minPrice = apt.price : null;    // prima iterazione
+                    apt.price > maxPrice ? maxPrice = apt.price : null;
+                    apt.price < minPrice ? minPrice = apt.price : null;
+                });
+
+                this.aptListInfo.highestAptPrice = maxPrice;
+                this.aptListInfo.lowestAptPrice  = minPrice;
+
+            } ,
             search() {
                 console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
                 self = this;
@@ -117,11 +138,12 @@
                         self.currentQuery.baseLat = response.data.base_lat;
                         self.currentQuery.baseLon = response.data.base_lon;
 
+                        self.getaptListInfo();
                         self.filterResults();
+
                 });        
             } ,
             getNewQuery(newQuery){
-
 
                 let newSearchIsNeeded = false;
 
@@ -131,10 +153,22 @@
                     newSearchIsNeeded = true;
                 }
 
+                // il blocco commentato qui sotto non funziona ancora
+
+                // if(!this.maxPrice){
+                //     this.maxPrice = this.aptListInfo.highestAptPrice;
+                //     console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
+                // }
+
+                // if(this.maxPrice < this.aptListInfo.lowestAptPrice){
+                //     this.maxPrice = this.aptListInfo.lowestAptPrice;                
+                // }
+
                 this.currentQuery = newQuery;   // sovrascrive la vecchia query con quella nuova
 
                 if(newSearchIsNeeded) this.search();    // lancia una nuova ricerca nel DB se necessaio                
                 else this.filterResults();              // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
+                
             }
         }
     }
