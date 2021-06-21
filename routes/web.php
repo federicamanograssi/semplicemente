@@ -24,15 +24,15 @@ Route::get('/', function () {
 
 Route::get('/index', function () {
     return view('/guest/home');
-});
+})->name('guest-home');
 
 Route::get('/single', function () {
     return view('/guest/singleApartment');
-});
+})->name('single-apartment');
 
 Route::get('/search', function () {
     return view('/guest/search');
-});
+})->name('search');
 
 Route::get('/home', 'HomeController@index')->name('home');
 // questa è la view per chi si è logato con successo. in realtà dobbiamo spostarla e farla diventare direttamente dashboard

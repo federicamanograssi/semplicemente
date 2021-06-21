@@ -29,6 +29,9 @@ Vue.component('apartment-card', require('./components/apartmentCard.vue').defaul
 Vue.component('advanced-search-form', require('./components/AdvancedSearchForm.vue').default);
 Vue.component('apartments-list', require('./components/apartmentList.vue').default);
 Vue.component('locations-list', require('./components/locationList.vue').default);
+Vue.component('back-to-top', require('./components/backToTop.vue').default);
+Vue.component('advanced-search-page', require('./components/AdvancedSearchPage.vue').default);
+Vue.component('chalet-map', require('./components/chaletMap.vue').default);
 
 
 /**

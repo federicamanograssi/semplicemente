@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Tentativi di chiamate API a DB
+
+Route::get('/apartments','Api\ApartmentController@index');
+Route::post('/apartments/search','Api\ApartmentController@search');
+
+Route::get('/location','Api\ApartmentController@location');
