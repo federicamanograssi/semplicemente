@@ -405,7 +405,7 @@ h3 {
 }
 
 .main--advanced-search {
-  height: calc(100vh - 7rem );
+  height: calc(100vh - 7rem);
   background-color: rgba(255, 255, 255, 0.8);
   max-width: 160rem;
   margin-left: auto;
@@ -586,7 +586,7 @@ h3 {
 }
 
 .container .sponsored-gallery {
-  padding: 5rem 0;
+  padding: 7.5rem 0;
 }
 
 .register-form,

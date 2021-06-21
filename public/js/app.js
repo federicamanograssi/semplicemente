@@ -53599,7 +53599,6 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/apartmentCard.vue"
 component.options.__file = "resources/js/components/SponsoredSlider.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
@@ -53609,10 +53608,6 @@ component.options.__file = "resources/js/components/SponsoredSlider.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/SponsoredSlider.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/***/ "./resources/js/components/apartmentCard.vue?vue&type=script&lang=js&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/components/apartmentCard.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
