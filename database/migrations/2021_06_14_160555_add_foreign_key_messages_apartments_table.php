@@ -16,7 +16,7 @@ class AddForeignKeyMessagesApartmentsTable extends Migration
         Schema::table('messages', function (Blueprint $table)
 
             {
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             });
     }
 

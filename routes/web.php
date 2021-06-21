@@ -18,17 +18,22 @@ use Illuminate\Support\Facades\Auth;
 ---------------------------------------------------------------*/
 
 // qui arrivano tutti i guest non loggati
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/index', function () {
+// Route::get('/index', function () {
+//     return view('/guest/home');
+// });
+
+Route::get('/', function () {
     return view('/guest/home');
 })->name('guest-home');
 
 Route::get('/single', function () {
     return view('/guest/singleApartment');
-})->name('single-apartment');
+});
+Route::post('/single', 'MessageController@store')->name('saveMessage');
 
 Route::get('/search', function () {
     return view('/guest/search');
@@ -49,5 +54,6 @@ Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('admin_homepage');
+        Route::resource('/messages', 'MessageController');
         Route::resource('/apartments','ApartmentController');
     });

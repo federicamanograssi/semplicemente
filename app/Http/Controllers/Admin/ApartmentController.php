@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
+use App\Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 
 class ApartmentController extends Controller
@@ -35,6 +37,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
+        
 
         return view('admin.apartments.create', compact('services'));
     }
@@ -49,7 +52,7 @@ class ApartmentController extends Controller
     {
         $request->validate([
             'title' => 'required|min:2|max:100',
-            'address' => 'required|min:2|max:100',
+            'address' => 'required',
             'rooms_n' => 'required|min:1',
             'beds_n' => 'required|min:1',
             'bathroom_n' => 'required',
@@ -57,21 +60,64 @@ class ApartmentController extends Controller
             'visible' => 'required',
             'price_per_night' => 'required|min:1'
         ]);
+        
+        
 
-        $data = $request->all();
-
+        
         // INDIRIZZO IN COORDINATE LAT LONG
         $address = $request->address;
-        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address . '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
+        $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address. '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
             $lat = $response['results'][0]['position']['lat'];
             $lon = $response['results'][0]['position']['lon'];
-
+ 
+        $data = $request->all();
+        // dd($data['img_path']);
+        
         $new_apartment = new Apartment();
         $new_apartment->user_id = Auth::id();
         $new_apartment->latitude = $lat;
         $new_apartment->longitude = $lon;
         $new_apartment->fill($data);
+        
         $new_apartment->save();
+
+        $j = $data['n_img'];
+        
+        for($i=1; $i<= $j; $i++) {
+                if (!empty($data['image'.$i])) {
+                    // salviamo l'img inserita nel form nella cartella storage/app/public/images
+                    $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
+                    $extension = $data['image'.$i]->extension();
+                    $name = $path .$extension;
+                    $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
+                    // creiamo una nuova istanza della classe images
+                    $new_image = New Image;
+                    // Compiliamo i dati della colonne immagine e apartment_id
+                    $new_image->img_path = $data['image'.$i];
+                    $new_image->img_description = $data['img_description'.$i];
+                    $new_image->apartment_id = $new_apartment->id;
+                    if ($data['is_cover'] == 'image'.$i) {
+                        $new_image->is_cover = 1;
+                    }
+                    // Salviamo l'immagine nel database
+                    $new_image->save();
+            }
+        }
+        // if(array_key_exists('images',$data)){
+        // // salvo l'immagine e recupero il path
+        // $img_path= Storage::put('apartment_images',$data['images'],'public');
+
+        // dd($img_path);
+        // // questo se devo salvarlo nella colonna 'img_path' della tabella apartments MA NON CE L'ABBIAMO
+        // $data['images'] = $img_path;
+        // // e poi fare il new_apartment['image']
+        // $new_image= new Image();
+        // $new_image->img_path = $data['images'];
+        // $new_image->save();
+        // };
+
+
+
 
         if(array_key_exists('services', $data)) {
             $new_apartment->services()->sync($data['services']);
@@ -86,9 +132,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Apartment $apartment)
     {
-        //
+        return view('guest.singleApartment',compact('apartment'));
     }
 
     /**

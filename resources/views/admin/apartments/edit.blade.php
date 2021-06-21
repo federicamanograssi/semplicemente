@@ -23,6 +23,7 @@
             </div>
 
             {{-- INIZIO FORM MODIFICA------------------- --}}
+            {{-- enctype="multipart/form-data" serve epr caricare le img --}}
             <form action="{{ route('apartments.update', ['apartment' => $apartment->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -148,7 +149,12 @@
                 {{-- IMMAGINI----- --}}
                 <div class="form-group">
                     <label>Immagini</label>
-            {{-- multiple serve per mettere più immagini --}}
+                    {{-- controlliamo se sono presenti immagini da mostrare
+                    @if(qualcosa che controlli tabella ponte)
+                        <img src="{{ asset('storage/'. e concateniamo il path img)}}" alt=""> --}}
+
+
+                    {{-- multiple serve per mettere più immagini --}}
                     <input class='form-control-file' type="file" name="img_path" multiple>
                 </div>
 

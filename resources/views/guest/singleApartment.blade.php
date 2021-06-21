@@ -1,4 +1,4 @@
-@extends('layouts/guest')
+@extends('layouts.guest')
 @section('title', 'Single-Apartment | ChaletBnB')
 
 @section('main')
@@ -6,9 +6,9 @@
 
         <div class="container">
             <section class="apartment-title">
-                <h2>Chalet meglio di casa tua sicuro</h2>
+                <h2>{{$apartment->title}}</h2>
                 <div class="rating-location">
-                    <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
+                    <p> <i class="fas fa-star"></i> {{$apartment->rating}} &#183 {{$apartment->address}}</p>
                 </div>
             </section>
         </div>
@@ -24,7 +24,19 @@
 
                         <div class="little-description">
                             <h3>Intero Appartamento - Host: Zia Pina </h3>
-                            <p> 2 ospiti &#183 Monolocale &#183 1 Letto &#183 1 Bagno , Italy</p>
+                            <p> {{$apartment->rooms_n}} stanze &#183 
+                                @if($apartment['beds_n'] ==1) 
+                                    1 Letto 
+                                @else 
+                                    {{$apartment->beds_n}} Letti
+                                @endif
+                                &#183 
+                                @if($apartment['bathroom_n'] ==1) 
+                                    1 Bagno 
+                                @else 
+                                    {{$apartment->bathroom_n}} Bagni
+                                @endif
+                            </p>
                         </div>
                         <div class="host-img">
                             <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
@@ -50,8 +62,20 @@
                                 <i class="fas fa-user-friends"></i>
                             </div>
                             <div class="service-description">
-                                <p class="font-weight--bold">2 Ospiti</p>
-                                <p>Capienza fino a due ospiti!</p>
+                                <p class="font-weight--bold">
+                                    @if($apartment['beds_n'] ==1) 
+                                    1 Ospite
+                                    @else 
+                                        {{$apartment->beds_n}} Ospiti
+                                    @endif
+                                </p>
+                                <p>Capienza fino a
+                                    @if($apartment['beds_n'] ==1) 
+                                    1 Ospite
+                                    @else 
+                                        {{$apartment->beds_n}} Ospiti
+                                    @endif
+                                </p>
                             </div>
                         </div>
 
@@ -70,8 +94,14 @@
                                 <i class="fas fa-shower"></i>
                             </div>
                             <div class="service-description">
-                                <p class="font-weight--bold">1 Bagno</p>
-                                <p>Pisciate tutti in compagnia!</p>
+                                <p class="font-weight--bold">
+                                    @if($apartment['bathroom_n'] ==1) 
+                                    1 Bagno
+                                    @else 
+                                        {{$apartment->beds_n}} Bagni
+                                    @endif
+                                </p>
+                                <p>Asciugamani e prodotti per la pulizia inclusi.</p>
                             </div>
                         </div>
                     </section>
@@ -79,16 +109,13 @@
                     <hr>
 
                     <section class="apartment-description">
-                        <p>Descrizione accurata ipsum dolor sit amet consectetur adipisicing elit. Corrupti ratione maiores excepturi nam
-                            necessitatibus impedit animi magnam eius quae molestias, quod accusamus quo! Ipsum repellendus
-                            eveniet doloremque sed quas ratione.</p>
-                        <p><a href="#">Mostra altro <i class="fas fa-chevron-right"></i></a> </p>
+                        <p>{{$apartment->description}}</p>
                     </section>
 
                     <hr>
 
                     <section class="additional-services">
-                        <h3>Servizi Aggiuntivi</h3>
+                        <h3>Servizi Inclusi</h3>
                         <div class="row">
                             <div class="ad-service-card">
                                 <div class="ad-service-icon">
@@ -139,18 +166,43 @@
 
                 <div class="right-container">
                     <div class="contact-form">
-                        <form action="#">
+
+                        {{-- FORM INVIO MESSAGGIO----------- --}}
+                        <form action="{{ route('saveMessage') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+
                             <h3>Contatta l'host per conoscere i dettagli</h3>
                             <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
-                            <label class="form__label" for="name">Nome</label>
+                            {{-- MAIL---------- --}}
+                            <div class="form-group">
+                                <input type="email" name="email_sender" class="form-control @error('email_sender') is-invalid @enderror" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                @error('email_sender')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- TESTO MESSAGGIO----------- --}}
+                            <div class="form-group">
+                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario"></textarea>
+                                @error('message_text')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- ID APT---------- --}}
+                            <div class="form-group">
+                                <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                            </div>
+
+                            {{-- <label class="form__label" for="name">Nome</label>
                             <input class="form__input" id="name" name="name" type="text" placeholder="Inserisci il tuo nome">
                             <label class="form__label" for="email">Email</label>
                             <input class="form__input" id="email" name="email" type="email" placeholder="Inserisci la tua email">
                             <label class="form__label" for="message">Messaggio</label>
-                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea>
+                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea> --}}
 
-                           <button class="btn btn--primary" type="submit">Contatta l'host ora</button>
+                           <button class="btn btn--primary" type="submit">Invia Messaggio</button>
 
                         </form>
                         
@@ -165,7 +217,11 @@
                 <div class="map-title">
                     <h3>Posizione</h3>
 
-                    <p>Rome,Italy</p>
+                    <p>{{$apartment->address}}</p>
+                    <p>
+                        <span><strong>Lat:</strong>{{$apartment->latitude}}</span> <span><strong>Lon:</strong>{{$apartment->longitude}}</span>
+                    </p>
+
                 </div>
                 
 

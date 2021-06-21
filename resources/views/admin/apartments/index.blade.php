@@ -37,7 +37,7 @@
                         <td class="sorting_1">
                             <img src="" alt="" class="rounded me-3">
                             <p class="m-0 d-inline-block align-middle font-16">
-                                <a href="" class="text-body">{{ $apartment->title }}</a>
+                                <a href="{{ route('apartments.show',$apartment->id)}}" class="text-body">{{ $apartment->title }}</a>
                                 <br>
                                 @for ($i = 0; $i < floor($apartment['rating']); $i++)
                                     <span>
@@ -49,7 +49,7 @@
                                 @endfor
                             </p>
                         </td>
-                        <td class="text-right">{{ $apartment->address }}</td>
+                        <td class="text-left">{{ $apartment->address }}</td>
                         <td class="text-right">{{ $apartment->dimensions }} m<sup>2</sup></td>
                         <td class="text-right">{{ $apartment->price_per_night }} €</td>
                         <td class="text-right">{{ $apartment->rooms_n }}</td>
@@ -80,7 +80,7 @@
                                     <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </a>
-                            <form class="d-inline-block" action="" method="post">
+                            <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit">

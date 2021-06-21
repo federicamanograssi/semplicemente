@@ -16,7 +16,7 @@ class AddForeignKeyViewsApartmentsTable extends Migration
         Schema::table('views', function (Blueprint $table)
 
             {
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             });
     }
 

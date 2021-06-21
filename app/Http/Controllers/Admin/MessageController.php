@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Message;
+use App\Apartment;
 
-class HomeController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data = [
+            'messages' => Message::all(),
+
+            // FILTRARE SOLO QUELLI DELL'UTENTE
+            // 'messages' => Message::where('user_id', Auth::id())->get(),
+        ];
+
+        return view('admin.messages.index', $data);
     }
 
     /**
@@ -35,7 +44,21 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email_sender' => 'required|min:2|max:50',
+            'message_text' => 'required',
+            'apartment_id' => 'required',
+        ]);
+
+        $data = $request->all();
+        $newMessage = new Message();
+        $newMessage->apartment_id = $data['apartment_id'];
+        $newMessage->fill($data);
+        $newMessage->save();
+
+        // AGGIUNGERE MESSAGGIO SUCCESSO INVIO E SVUOTARE FORM senza far fare redirect
+
+        return redirect()->route('apartments.show',$data['apartment_id']);
     }
 
     /**

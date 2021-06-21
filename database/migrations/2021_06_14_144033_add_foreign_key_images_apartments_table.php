@@ -16,7 +16,7 @@ class AddForeignKeyImagesApartmentsTable extends Migration
         Schema::table('images', function (Blueprint $table)
 
             {
-            $table->foreign('apartment_id')->references('id')->on('apartments');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
             });
     }
 
