@@ -164,7 +164,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
             this.servicesList = this.getServicesList();
-            // this.maxPrice == 0 ? this.maxPrice = this.aptListInfo.highestAptPrice : null;
+            if(!this.maxPrice) console.log("OK IL PREZZO È NULL \n il prezzo massimo di tutti gli appartamenti blablabla è invece " + this.aptListInfo.highestAptPrice);
         },
         updated() {
             //
@@ -179,7 +179,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 minRating       : this.query.minRating ,
                 maxPrice        : this.query.maxPrice ,
                 minRooms        : this.query.minRooms ,
-                guests       : this.query.guests,
+                guests          : this.query.guests,
                 selectedServices : [] ,
 
                 // Proprietà relative al funzionamento del form
@@ -195,16 +195,6 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
             updateQuery(){
-
-            if(!this.maxPrice){
-                this.maxPrice = this.aptListInfo.highestAptPrice;
-                console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
-            }
-
-            if(this.maxPrice < this.aptListInfo.lowestAptPrice){
-                this.maxPrice = this.aptListInfo.lowestAptPrice;                
-            }
-            
                 
                 // Metodo richiamato ogni volta che 
                 // un qualsiasi campo viene modificato

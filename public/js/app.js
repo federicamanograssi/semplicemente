@@ -2120,7 +2120,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.servicesList = this.getServicesList(); // this.maxPrice == 0 ? this.maxPrice = this.aptListInfo.highestAptPrice : null;
+    this.servicesList = this.getServicesList();
+    if (!this.maxPrice) console.log("OK IL PREZZO È NULL \n il prezzo massimo di tutti gli appartamenti blablabla è invece " + this.aptListInfo.highestAptPrice);
   },
   updated: function updated() {//
   },
@@ -2146,19 +2147,10 @@ __webpack_require__.r(__webpack_exports__);
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
     updateQuery: function updateQuery() {
-      if (!this.maxPrice) {
-        this.maxPrice = this.aptListInfo.highestAptPrice;
-        console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
-      }
-
-      if (this.maxPrice < this.aptListInfo.lowestAptPrice) {
-        this.maxPrice = this.aptListInfo.lowestAptPrice;
-      } // Metodo richiamato ogni volta che 
+      // Metodo richiamato ogni volta che 
       // un qualsiasi campo viene modificato
       // Quali siano le operazioni da eseguire in base alle modifiche
       // lo stabilirà il parent component (AdvancedSearchPage)
-
-
       var newQuery = {
         baseLocation: this.baseLocation,
         maxDistance: Number(this.maxDistance),
