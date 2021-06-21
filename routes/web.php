@@ -54,5 +54,6 @@ Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('admin_homepage');
+        Route::resource('/messages', 'MessageController');
         Route::resource('/apartments','ApartmentController');
     });
