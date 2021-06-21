@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
 use App\Apartment;
@@ -15,7 +16,14 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'messages' => Message::all(),
+
+            // FILTRARE SOLO QUELLI DELL'UTENTE
+            // 'messages' => Message::where('user_id', Auth::id())->get(),
+        ];
+
+        return view('admin.messages.index', $data);
     }
 
     /**
