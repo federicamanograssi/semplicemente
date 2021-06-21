@@ -7,7 +7,7 @@
             <!-- Search Form -->
         </advanced-search-form>
 
-        <apartments-list :apartments="apartments" :mapIsShown="mapIsShown" class="apartments-list--full-width">
+        <apartments-list :apartments="filteredApartments" :mapIsShown="mapIsShown" class="apartments-list--full-width">
             <!-- Lista degli appartamenti -->
         </apartments-list>
 
@@ -22,20 +22,27 @@
     export default {
 
         mounted() {
-            //
+            this.search();
         },
         data() {            
             return {
+
                 apartments: [] ,
+
+                filteredApartments : [] ,
 
                 currentQuery : {                
                     baseLocation    : this.destination,
                     baseLat         : 0 ,
                     baseLon         : 0 ,
-                    maxDistance     : 1,
+                    maxDistance     : 40,
                     minRating       : 1,
+                    minRooms       : 1,
+                    guests          : 2,
                     maxPrice        : 200 ,
                     selectedServices    : []
+                    // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
+                    // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
                 } ,
 
                 mapIsShown : true
@@ -44,17 +51,52 @@
         props : ['destination'] ,
         methods : {
             filterResults(){
-                // filter results
-                this.apartments.forEach(apartment => {
 
-                    // Check Distance 
+                this.filteredApartments = [];   // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
 
-                    if( apartment['dist'] > this.currentQuery.maxDistance)
-                        {                            
-                            apartment.visible = false;
-                            }
-                    else apartment.visible = true;
-                });
+                // Facciamo riferimento alla lista degli appartamenti generale
+                // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
+                // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
+
+                for(let i = 0; i < this.apartments.length ; i++) {
+
+                    const apt   = this.apartments[i];   // Alias
+                    const query = this.currentQuery;    // Alias
+
+                    // Controllo la distanza
+
+                    if (apt.dist > query.maxDistance) {
+                        continue;
+                    }
+                    
+                    // Controllo Prezzo
+
+                    if (apt.price > query.maxPrice) {
+                        // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
+                        continue;
+                    }
+
+                    // Controllo Punteggio
+
+                    if ( apt.rating < query.minRating ) {                
+                        continue;
+                    }
+
+                    // Controllo numero ospiti / letti
+
+                    if ( apt.beds < query.guests ) {                
+                        continue;
+                    }
+
+                    // Controllo Numero Camere
+                    
+                    if ( apt.rooms < query.minRooms ) {                
+                        continue;
+                    }
+
+                    this.filteredApartments.push(this.apartments[i]);   // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
+                }
+
             },
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -70,13 +112,8 @@
                             }
                         })
                     .then((response)=>{
-
-                        response.data.results.forEach(apartment => {
-                            apartment['visible'] = true;
-                        });
                         
                         self.apartments = response.data.results;
-
                         self.currentQuery.baseLat = response.data.base_lat;
                         self.currentQuery.baseLon = response.data.base_lon;
 
@@ -85,19 +122,19 @@
             } ,
             getNewQuery(newQuery){
 
+
                 let newSearchIsNeeded = false;
+
+                const oldQuery = this.currentQuery;
                 
-                if((this.currentQuery.baseLocation != newQuery.baseLocation) || (this.currentQuery.maxDistance < newQuery.maxDistance) ){
+                if((oldQuery.baseLocation != newQuery.baseLocation) || (oldQuery.maxDistance < newQuery.maxDistance) ){
                     newSearchIsNeeded = true;
                 }
 
-                newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
-                newQuery.base_lon = this.currentQuery.base_lon; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
+                this.currentQuery = newQuery;   // sovrascrive la vecchia query con quella nuova
 
-                this.currentQuery = newQuery; //   <-- Per questo ottieni due console.log al variare delle coordinate!
-
-                if(newSearchIsNeeded) this.search();
-                else this.filterResults();
+                if(newSearchIsNeeded) this.search();    // lancia una nuova ricerca nel DB se necessaio                
+                else this.filterResults();              // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
             }
         }
     }

@@ -19,7 +19,7 @@
         $destination = $_GET['location'];
     }
     else {
-        $destination = '';
+        $destination = 'bressanone';
     }
 @endphp
 

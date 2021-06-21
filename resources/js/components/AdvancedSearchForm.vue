@@ -10,7 +10,7 @@
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
                     <input  v-model="baseLocation" 
-                            @change="updateQuery()" 
+                            @change="updateQuery()" key="" 
                             class="form__input" type="text">
                 </div>
 
@@ -48,10 +48,10 @@
                         <label for="search-form-distance" class="form__label">Distanza</label>
 
                         <div class="form__slider__container">
-                            <input v-model="maxDistance" @change="updateQuery()" type="range" min="1" max="3" value="1" class="form__slider" id="search-form-distance">
+                            <input v-model="maxDistance" @change="updateQuery()" type="range" min="20" max="60" value="20" step="20" class="form__slider" id="search-form-distance">
                         </div>
 
-                        <span class="form__slider__value">{{maxDistance * 20}} Km</span>
+                        <span class="form__slider__value">{{maxDistance}} Km</span>
 
                     </div>
                 </div>
@@ -62,7 +62,7 @@
 
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
-                        <input id="search-form-rooms" class="form__input" type="number">
+                        <input @change="updateQuery()" v-model="minRooms" id="search-form-rooms" class="form__input" type="number">
                     </div>
 
                     <!-- Posti letto -->
@@ -166,15 +166,20 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
         data() {
             return {
 
+                // Proprietà relative alla query dell'utente
+
                 baseLocation   : this.query.baseLocation ,
                 maxDistance     : this.query.maxDistance ,
                 minRating       : this.query.minRating ,
                 maxPrice        : this.query.maxPrice ,
+                minRooms        : this.query.minRooms ,
+                guests       : this.query.guests,
+                selectedServices : [] ,
+
+                // Proprietà relative al funzionamento del form
 
                 isFiltersBoxOpen : false ,
-
-                servicesList : [],
-                selectedServices : []
+                servicesList : []
             }
         },
         props: ['query'] ,
@@ -186,17 +191,24 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             updateQuery(){
                 
                 // Metodo richiamato ogni volta che 
-                // un campo viene modificato
+                // un qualsiasi campo viene modificato
+                // Quali siano le operazioni da eseguire in base alle modifiche
+                // lo stabilirà il parent component (AdvancedSearchPage)
 
                 let newQuery = {
-                    baseLocation    : this.baseLocation,
-                    maxDistance     : this.maxDistance * 20,
-                    minRating       : this.minRating,
-                    maxPrice        : this.maxPrice,
-                    selectedServices    : this.selectedServices
+                    baseLocation        : this.baseLocation,
+                    maxDistance         : Number(this.maxDistance),
+                    guests              : Number(this.guests),
+                    minRating           : Number(this.minRating),
+                    minRooms            : Number(this.minRooms),
+                    maxPrice            : Number(this.maxPrice),
+                    selectedServices    : this.selectedServices ,
+                    baseLat             : this.query.baseLat ,
+                    baseLon             : this.query.baseLon
                 }
+
                 console.log("Occhio, Sto mandando una nuova query");
-                this.$emit('newQuery' , newQuery);
+                this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore (AdvancedSearchPage)
 
             } ,
             getServicesList(){
