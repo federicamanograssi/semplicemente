@@ -2248,7 +2248,9 @@ __webpack_require__.r(__webpack_exports__);
         maxDistance: 40,
         minRating: 1,
         maxPrice: 200,
-        selectedServices: []
+        selectedServices: [] // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
+        // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
+
       },
       mapIsShown: true
     };
@@ -2259,21 +2261,31 @@ __webpack_require__.r(__webpack_exports__);
       this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
       // Facciamo riferimento alla lista degli appartamenti generale
       // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-      // il tutto tramite un ciclo ___
+      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'break')
 
       for (var i = 0; i < this.apartments.length; i++) {
-        if (this.apartments[i].dist > this.currentQuery.maxDistance) {
-          break;
-        } //more checks here
+        var apt = this.apartments[i]; // Alias
+
+        var query = this.currentQuery; // Alias
+        // Controllo la distanza
+
+        if (apt.dist > query.maxDistance) {
+          continue;
+        } // Controllo Prezzo
 
 
-        this.filteredApartments.push(this.apartments[i]);
-      } // this.apartments.forEach(apartment => {
-      //     // Check Distance first
-      //     if( apartment['dist'] < this.currentQuery.maxDistance) {                            
-      //         }
-      // });
+        if (apt.price > query.maxPrice) {
+          // Possiamo approfittarne per stabilire prezzo max e min
+          continue;
+        } // Controllo Punteggio
 
+
+        if (apt.rating < query.minRating) {
+          continue;
+        }
+
+        this.filteredApartments.push(this.apartments[i]); // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
+      }
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2700,7 +2712,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     imgSrc: String,
-    rating: String
+    rating: Number
   }
 });
 

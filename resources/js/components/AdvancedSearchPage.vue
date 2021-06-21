@@ -39,6 +39,8 @@
                     minRating       : 1,
                     maxPrice        : 200 ,
                     selectedServices    : []
+                    // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
+                    // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
                 } ,
 
                 mapIsShown : true
@@ -52,29 +54,34 @@
 
                 // Facciamo riferimento alla lista degli appartamenti generale
                 // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-                // il tutto tramite un ciclo ___
+                // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'break')
 
                 for(let i = 0; i < this.apartments.length ; i++) {
 
-                    if (this.apartments[i].dist > this.currentQuery.maxDistance) {
-                        break
+                    const apt   = this.apartments[i];   // Alias
+                    const query = this.currentQuery;    // Alias
+
+                    // Controllo la distanza
+
+                    if (apt.dist > query.maxDistance) {
+                        continue;
                     }
                     
-                    //more checks here
+                    // Controllo Prezzo
 
-                    this.filteredApartments.push(this.apartments[i]);
+                    if (apt.price > query.maxPrice) {
+                        // Possiamo approfittarne per stabilire prezzo max e min
+                        continue;
+                    }
+
+                    // Controllo Punteggio
+
+                    if ( apt.rating < query.minRating ) {                
+                        continue;
+                    }
+
+                    this.filteredApartments.push(this.apartments[i]);   // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
                 }
-
-                // this.apartments.forEach(apartment => {
-
-                //     // Check Distance first
-
-                //     if( apartment['dist'] < this.currentQuery.maxDistance) {                            
-                //         }
-
-
-                // });
-
 
             },
             toggleMap(){
@@ -93,7 +100,6 @@
                     .then((response)=>{
                         
                         self.apartments = response.data.results;
-
                         self.currentQuery.baseLat = response.data.base_lat;
                         self.currentQuery.baseLon = response.data.base_lon;
 
