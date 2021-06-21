@@ -60,6 +60,13 @@
             'icon'  => 'fas fa-sign-out-alt' ,
         );
 
+        $dashboard = array(
+            'name'  => 'dashboard' ,
+            'label' => 'Dashboard' ,
+            'slug'  =>  route('admin_homepage') ,
+            'icon'  => 'fas fa-user' ,
+        );
+
         $signUp = array(
             'name'  => 'signup' ,
             'label' => 'Registrati' ,
@@ -70,7 +77,7 @@
         $menuItems = array( $homePage , $advancedSearch);
 
         if($isLoggedIn) {
-            array_push($menuItems , $logOut);
+            array_push($menuItems , $dashboard , $logOut);
         } else {
             array_push($menuItems , $logIn , $signUp);
         }
