@@ -1,4 +1,6 @@
 .container {
+    @include responsive(tablet);
+    @include responsive(phone);
     max-width: $width-inner-content;
     margin: 0 auto;
     i {
@@ -117,5 +119,8 @@
             width: 50%;
             text-align: center;
         }
+    }
+    .sponsored-gallery {
+        padding: $spacing-huge 0;
     }
 }

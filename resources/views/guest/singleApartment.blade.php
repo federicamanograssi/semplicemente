@@ -215,33 +215,17 @@
         </main>
 
         <section class="footer-top">
-            <div class="sponsored-gallery">
-                <h3>Gli alloggi sponsorizzati</h3>
-
-                <div class="sponsored-card">
-                    <div class="card-img">
-                        <img src="https://www.arredoshop.it/4984-large_default/camera-da-letto-luisa.jpg" alt="">
-                    </div>
-                    <div class="card-description">
-                        <div class="card-rating">
-                            <p class="little"><i class="fas fa-star"></i>5</p>
-                        </div>
-                        <div class="card-title">
-                            Titolo dell'appartamento
-                        </div>
-                    </div>
+            <div class="container">
+                <div class="sponsored-gallery">
+                    
+                    <h3>Gli alloggi sponsorizzati</h3>
+                    <sponsored-slider></sponsored-slider>
+                    
                 </div>
-            </div>
+            </div>   
         </section>
 
 
-        
-
-        <hr>
-
-
-        <section class="footer-bottom">
-
     </div>
 
-    @endsection
+@endsection

@@ -1,22 +1,20 @@
 .main--advanced-search {
-    height: calc(100vh - #{$height-section-medium} ) ;
+    height: calc(100vh - #{$height-section-medium});
     background-color: $bg-transparent;
     max-width: $width-inner-content;
     margin-left: auto;
     margin-right: auto;
     position: relative;
-
     .apartments-list {
         width: 100%;
         padding: $spacing-standard;
         padding-right: 50%;
         height: calc(100vh - 2 * #{$height-section-medium});
-        overflow-x: auto;  
+        overflow-x: auto;
         overflow-y: scroll;
-
         @include responsive(tablet) {
             padding-right: $spacing-standard;
-            height: calc(  100% -  #{$height-section-big} - #{$height-section-medium}); 
+            height: calc( 100% - #{$height-section-big} - #{$height-section-medium});
         }
     }
     .chalet-map {
@@ -24,14 +22,12 @@
         right: $spacing-standard;
         top: $height-section-medium;
         width: calc(50% - 2 * #{$spacing-standard});
-        padding : $spacing-standard;
+        padding: $spacing-standard;
         height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
-
         @include responsive(tablet) {
             position: static;
-            height: $height-section-big;            
+            height: $height-section-big;
             width: 100%;
         }
     }
-
 }

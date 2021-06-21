@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('home-jumbo', require('./components/HomeJumbo.vue').default);
 Vue.component('header-guest', require('./components/HeaderGuest.vue').default);
 Vue.component('img-slider', require('./components/ImgSlider.vue').default);
+Vue.component('sponsored-slider', require('./components/SponsoredSlider.vue').default);
 Vue.component('apartment-card', require('./components/apartmentCard.vue').default);
 Vue.component('advanced-search-form', require('./components/AdvancedSearchForm.vue').default);
 Vue.component('apartments-list', require('./components/apartmentList.vue').default);
