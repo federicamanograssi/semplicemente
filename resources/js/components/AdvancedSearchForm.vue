@@ -65,11 +65,11 @@
                         <input id="search-form-rooms" class="form__input" type="number">
                     </div>
 
-                    <!-- Toilets -->
+                    <!-- Posti letto -->
 
-                    <div class="form__field form__field--half form__field--toilets">
-                        <label for="search-form-toilets" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Bagni (min)</label>
-                        <input id="search-form-toilets" class="form__input" type="number">
+                    <div class="form__field form__field--half form__field--beds">
+                        <label for="search-form-beds" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Posti letto (min)</label>
+                        <input id="search-form-beds" class="form__input" type="number">
                     </div>
                 </div>
 
@@ -199,6 +199,14 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
 
             } ,
             getServicesList(){
+
+                axios
+                .get('http://127.0.0.1:8000/api/services')
+                .then((servicesList)=>{
+                    console.log(servicesList.data.results);
+                    return servicesList;
+                })
+                   
 
                 // Momentaneamente mi creo un array
                 // In seguito otterremo questa lista tramite API

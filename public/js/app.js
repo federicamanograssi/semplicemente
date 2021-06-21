@@ -2150,8 +2150,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('newQuery', newQuery);
     },
     getServicesList: function getServicesList() {
-      // Momentaneamente mi creo un array
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        console.log(servicesList.data.results);
+        return servicesList;
+      }); // Momentaneamente mi creo un array
       // In seguito otterremo questa lista tramite API
+
       var servicesList = [{
         'service_name': "Cucina"
       }, {
@@ -40056,25 +40060,25 @@ var staticRenderFns = [
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "form__field form__field--half form__field--toilets" },
+        { staticClass: "form__field form__field--half form__field--beds" },
         [
           _c(
             "label",
             {
               staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-toilets" }
+              attrs: { for: "search-form-beds" }
             },
             [
               _c("span", { staticClass: "hide-on-mobile" }, [
                 _vm._v("Numero ")
               ]),
-              _vm._v("Bagni (min)")
+              _vm._v("Posti letto (min)")
             ]
           ),
           _vm._v(" "),
           _c("input", {
             staticClass: "form__input",
-            attrs: { id: "search-form-toilets", type: "number" }
+            attrs: { id: "search-form-beds", type: "number" }
           })
         ]
       )
@@ -40333,7 +40337,7 @@ var render = function() {
       },
       [
         _c("source", { attrs: { src: _vm.videoSrc, type: "video/mp4" } }),
-        _vm._v("\n                Browser non supportato!\n            ")
+        _vm._v("\r\n                Browser non supportato!\r\n            ")
       ]
     ),
     _vm._v(" "),
@@ -54105,8 +54109,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

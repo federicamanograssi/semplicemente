@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use App\Apartment;
 use App\Image;
+use App\Service;
 
 class ApartmentController extends Controller
 {
@@ -17,6 +18,8 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  Mostra lista appartamenti
     public function index()
     {
         $apartments=Apartment::all();
@@ -26,15 +29,31 @@ class ApartmentController extends Controller
             'results'=> $apartments
         ]);
     }
-    public function search()
+    
+    //  Ritorna lista servizi
+    public function services()
     {
-        $apartments=Apartment::all();
+        $services=Service::all();
 
         return response()->json([
             'success'=> true,
-            'results'=> 'ciao'
+            'results'=> $services
         ]);
     }
+    // public function search()
+    // {
+    //     $apartments=Apartment::all();
+
+    //     return response()->json([
+    //         'success'=> true,
+    //         'results'=> 'ciao'
+    //     ]);
+    // }
+
+    /**
+     * RICERCA APT VISIBILI NEL DB 
+     * ALL'INTERNO DI UN DETERMINATO RAGGIO 
+     * A PARTIRE DAL PUNTO DI RICERCA INSERITO */
     public function location(Request $request)
     {
         /*
