@@ -9,7 +9,9 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input class="form__input" type="text">
+                    <input  v-model="baseLocation" 
+                            @change="updateQuery()" 
+                            class="form__input" type="text">
                 </div>
 
                 <!-- Search Button -->
@@ -17,8 +19,7 @@
                 <div v-if="!isFiltersBoxOpen"
                     class="form__field">       
                     <button                     
-                    type="button" 
-                    @click="search()"
+                    type="button"
                     class="btn btn--primary-light"><span class="hide-on-tablet">Cerca </span><i class="fas fa-search"></i></button>
                 </div>
 
@@ -27,7 +28,7 @@
 
                 <div v-if="!isFiltersBoxOpen"                     
                     class="form__field">
-                    <button @click="toggleFilterBox()" type="button" class="btn btn--primary-light"><span class="hide-on-tablet">Vedi Più </span>Filtri</button>
+                    <button @click="toggleFilterBox()" type="button" class="btn btn--primary-light"><span class="hide-on-tablet">Vedi Più </span><span class="hide-on-mobile">Filtri </span><i class="show-on-mobile fas fa-cog"></i></button>
                 </div>
                     
             </div>
@@ -47,7 +48,7 @@
                         <label for="search-form-distance" class="form__label">Distanza</label>
 
                         <div class="form__slider__container">
-                            <input v-model="maxDistance" type="range" min="1" max="3" value="1" class="form__slider" id="search-form-distance">
+                            <input v-model="maxDistance" @change="updateQuery()" type="range" min="1" max="3" value="1" class="form__slider" id="search-form-distance">
                         </div>
 
                         <span class="form__slider__value">{{maxDistance * 20}} Km</span>
@@ -79,7 +80,7 @@
                     <div class="form__field form__field--half form__field--price">
                         <label class="form__label" for="search-form-price">Prezzo (max)</label>
                         <div class="form__slider__container">
-                            <input v-model="maxPrice" type="range" min="20" max="500" value="50" class="form__slider" id="search-form-price">
+                            <input @change="updateQuery()" v-model="maxPrice" type="range" min="20" max="500" value="50" class="form__slider" id="search-form-price">
                         </div>
                         <span class="form__slider__value">{{maxPrice}} <i class="fas fa-euro-sign"></i></span>
                     </div>
@@ -89,7 +90,7 @@
                     <div class="form__field form__field--half form__field--rating">
                         <label class="form__label" for="search-form-rating">Valutazione (min)</label>
                         <div class="form__slider__container">
-                            <input v-model="minRating" type="range" min="1" max="5" value="3" class="form__slider" id="search-form-rating">
+                            <input @change="updateQuery()" v-model="minRating" type="range" min="1" max="5" value="3" class="form__slider" id="search-form-rating">
                         </div>
                         <span class="form__slider__value">{{minRating}} <i class="fas fa-star"></i></span>
                     </div>
@@ -101,83 +102,51 @@
                     <!-- Additional Services -->
 
                     <div class="form__field form__field--big">
+
                         <span class="form__label">Servizi Aggiuntivi:</span>
                         
-                            <ul class="checkbox-list">
-                                <li>
-                                    <label class="container">Aria Condizionata
-                                        <input type="checkbox" checked="checked">
+                            <ul class="checkbox__container services-list">
+
+                                <li
+                                    v-for="(service , index) in servicesList"
+                                    :key="index"
+                                    class="services-list__item">
+
+                                    <label 
+                                        :for="'service-'+index"
+                                        class="checkbox__label">
+
+                                        {{service.service_name}}
+
+                                        <input 
+                                            :id="'service-'+index"
+                                            type="checkbox"
+                                            class="checkbox__field"
+                                            :value="service.service_name"
+                                            v-model="selectedServices"
+                                            checked="checked"
+                                            @change="updateQuery()">
+
+                                        <span class="checkbox__checkmark"></span>
+
                                     </label>
                                 </li>
-
-                                <li>
-                                    <label class="container">Cucina
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Piscina
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Garage
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Navetta Aeroportuale
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Escursioni Guidate
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Colazione Inclusa
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label class="container">Escort in camera
-                                        <input type="checkbox" checked="checked">
-                                    </label>
-                                </li>
-
-                            </ul>                            
+                            </ul>                 
                     </div>
                 </div>
                 
 
                 <div class="form__group">
 
-                    <!-- Search Button -->
-
-                    <div class="form__field form__field--half">
-                        <button 
-                        @click="search()"
-                        type="button" 
-                        class="btn btn--primary-light">
-                            Cerca 
-                            <i class="fas fa-search"></i>
-                        </button>                
-                    </div>
-
-                    <div class="form__field form__field--half">
-                        <button 
+                    <div class="form__field form__field--full">
+                        
+                        <button
                         @click="toggleFilterBox()"
                         type="button" 
                         class="btn btn--primary-light">
                             Fatto                             
-                        </button>                
+                        </button>
+                        
                     </div>
                 </div>
 
@@ -188,24 +157,116 @@
 </template>
 
 <script>
+import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
+        mounted(){
+            this.servicesList = this.getServicesList();
+        },
         data() {
             return {
+
+                baseLocation   : this.query.baseLocation ,
+                maxDistance     : this.query.maxDistance ,
+                minRating       : this.query.minRating ,
+                maxPrice        : this.query.maxPrice ,
+
                 isFiltersBoxOpen : false ,
-                minRating : 3 ,
-                maxPrice : 50 ,
-                maxDistance : 1
+
+                servicesList : [],
+                selectedServices : []
             }
         },
+        props: ['query'] ,
         methods : {
             toggleFilterBox() {
+                // Gestione del box con i filtri avanzati
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
-            search() {
-                alert("Hai effettuato una ricerca. Bravo!");
-            }
-        }
-    }
+            updateQuery(){
+                
+                // Metodo richiamato ogni volta che 
+                // un campo viene modificato
+
+                let newQuery = {
+                    baseLocation    : this.baseLocation,
+                    maxDistance     : this.maxDistance * 20,
+                    minRating       : this.minRating,
+                    maxPrice        : this.maxPrice,
+                    selectedServices    : this.selectedServices
+                }
+                console.log("Occhio, Sto mandando una nuova query");
+                this.$emit('newQuery' , newQuery);
+
+            } ,
+            getServicesList(){
+
+                // Momentaneamente mi creo un array
+                // In seguito otterremo questa lista tramite API
+
+                let servicesList = [
+                    {
+                        'service_name' : "Cucina"
+                    } ,
+                    {
+                        'service_name' : "Riscaldamento"
+                    } ,
+                    {
+                        'service_name' : "Aria condizionata"
+                    } ,
+                    {
+                        'service_name' : "Wi-fi"
+                    } ,
+                    {
+                        'service_name' : "Lavatrice"
+                    } ,
+                    {
+                        'service_name' : "Asciugatrice"
+                    } ,
+                    {
+                        'service_name' : "Camino"
+                    } ,
+                    {
+                        'service_name' : "Parcheggio"
+                    } ,
+                    {
+                        'service_name' : "Piscina"
+                    } ,
+                    {
+                        'service_name' : "Idromassaggio"        
+                    } ,
+                    {
+                        'service_name' : "Palestra"        
+                    } ,
+                    {
+                        'service_name' : "TV"            
+                    } ,
+                    {
+                        'service_name' : "Self check-in"        
+                    } ,
+                    {
+                        'service_name' : "Ferro da stiro"         
+                    } ,
+                    {
+                        'service_name' : "Asciugacapelli"    
+                    } ,
+                    {
+                        'service_name' : "Colazione"  
+                    } ,
+                    {
+                        'service_name' : "Accesso piste da sci" 
+                    } ,
+                    {
+                        'service_name' : "Biancheria letto"            
+                    } ,
+                    {
+                        'service_name' : "Essenziali bagno"
+                    }
+                ] ;
+
+                return servicesList;
+        }       
+    }       
+}
 </script>
 
 <style scoped lang="scss">
@@ -223,7 +284,7 @@
             top: 100%;
             left: 0;
             width: 100%;
-            z-index: 3;
+            z-index: 5;
 
             .form__group {
                 padding-top: 0;
@@ -280,13 +341,15 @@
             // Full Width Fields
 
             &--full {
-                padding: $spacing-small;
+                padding: $spacing-standard;
                 flex: 0 0 100%;
             }
 
             // 50% Width Fields
 
             &--half {
+                padding: $spacing-standard;
+
                 flex: 0 0 calc((100% - #{$spacing-tiny}) / 2);                
             }
 
@@ -295,11 +358,13 @@
             &--big {
                 height: auto;
                 flex-direction: column;
+                padding-top: $spacing-more;
             }
 
             // Special Style for location field
 
             &--location {
+                flex-shrink: 1;
                 .form__input {
                     flex: 1 0 50%;
                 }
@@ -307,6 +372,11 @@
                     flex: 0 1 50%;
                 }
             }
+        }
+
+        &__input {
+            // Fixes flex-shrink
+            width: 0;
         }
 
         // Form Labels
@@ -390,27 +460,77 @@
 
     // Checkboxes List
 
-    .checkbox-list {
-        list-style-type: none;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        justify-content: space-evenly;
+    .checkbox{
 
-        max-width: calc(#{$width-inner-content} / 2);
-        padding-top: $spacing-small;
+        &__container {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
 
-        li {
-            margin-right: $spacing-standard;
-            margin-bottom: $spacing-small;
+            max-width: calc(#{$width-inner-content} / 2);
+            padding-top: $spacing-more;
+            padding-bottom: $spacing-more;
+
+            li {
+                margin-right: $spacing-standard;
+                margin-bottom: $spacing-standard;
+            }
         }
 
-        label {
-            opacity: .8;
+
+        &__label {
+            display: block;
+            position: relative;
+            padding-left: $spacing-more;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+
+            &:hover input ~ .checkbox__checkmark {
+                // Style Hover
+            }
+            & input:checked ~ .checkbox__checkmark {
+                // Style Checked
+            }
+            & input:checked ~ .checkbox__checkmark:after {
+                display: block;
+            }
         }
 
-        input {
+        &__field {
+            position: absolute;
+            cursor: pointer;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
 
+        &__checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2.2rem;
+            width: 2.2rem;
+            border: 1px solid $color-primary-light;
+            border-radius: $border-radius-standard;
+
+            &:after {
+                content: "\f078";
+                position: absolute;
+                display: none;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                line-height: 2.2rem;
+                width: 100%;
+                text-align: center;
+                color: $color-primary-light;
+                font-size: 90%;
+            }
         }
     }
 

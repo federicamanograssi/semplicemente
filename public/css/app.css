@@ -2,6 +2,7 @@
 
 0,700;0,900;1,400&display=swap);html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 *,
@@ -48,6 +49,10 @@ h3 {
   display: none;
 }
 
+.transparent {
+  opacity: 0;
+}
+
 .color-primary {
   color: #105310;
 }
@@ -61,6 +66,16 @@ h3 {
 @media (max-width: 35.5em) {
   .hide-on-mobile {
     display: none;
+  }
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 35.5em) {
+  .show-on-mobile {
+    display: initial;
   }
 }
 
@@ -102,6 +117,18 @@ h3 {
   color: #348534;
 }
 
+.btn--primary-light-inverse {
+  background-color: white;
+  color: #348534;
+  border: 1px solid #348534;
+}
+
+.btn--primary-light-inverse:hover {
+  background-color: #348534;
+  color: white;
+  border-color: white;
+}
+
 .btn--primary-inverse {
   background-color: white;
   color: #105310;
@@ -130,7 +157,8 @@ h3 {
 
 .form__input {
   border: 1px solid #105310;
-  padding: 1rem 2rem;
+  padding: 1rem;
+  padding-left: 2rem;
   border-radius: 5px;
   font-size: 1.6rem;
   font-family: "Roboto", sans-serif;
@@ -146,12 +174,36 @@ h3 {
   color: white;
 }
 
+.form__input::-moz-placeholder {
+  color: #105310;
+}
+
+.form__input:-ms-input-placeholder {
+  color: #105310;
+}
+
+.form__input::placeholder {
+  color: #105310;
+}
+
+.form__input:focus::-moz-placeholder {
+  color: white;
+}
+
+.form__input:focus:-ms-input-placeholder {
+  color: white;
+}
+
+.form__input:focus::placeholder {
+  color: white;
+}
+
 .header {
   height: 7rem;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.8);
   color: #105310;
   position: fixed;
-  z-index: 5;
+  z-index: 15;
   top: 0;
   left: 0;
   width: 100%;
@@ -160,18 +212,12 @@ h3 {
 
 @media (max-width: 56.25em) {
   .header {
-    position: static;
+    position: absolute;
   }
 }
 
 .header + * {
   margin-top: 7rem;
-}
-
-@media (max-width: 56.25em) {
-  .header + * {
-    margin-top: 0;
-  }
 }
 
 .header__inner {
@@ -206,7 +252,7 @@ h3 {
   cursor: pointer;
   display: none;
   position: relative;
-  z-index: 10;
+  z-index: 20;
 }
 
 @media (max-width: 56.25em) {
@@ -217,6 +263,10 @@ h3 {
 
 .header__close-menu {
   color: white;
+  position: fixed;
+  top: 3rem;
+  right: 3rem;
+  font-size: 2em;
 }
 
 .header__menu {
@@ -230,18 +280,17 @@ h3 {
   line-height: calc(7rem - 2 * 2rem );
 }
 
-.header__menu-item--home {
-  display: none;
-}
-
-@media (max-width: 56.25em) {
-  .header__menu-item--home {
-    display: block;
-  }
+.header__menu-item a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .header__menu-item:not(:last-child) {
   margin-right: 3rem;
+}
+
+.header__menu-item button {
+  font-size: inherit;
 }
 
 @media (max-width: 56.25em) {
@@ -252,8 +301,9 @@ h3 {
 
 .header__menu--mobile {
   position: fixed;
-  z-index: 5;
+  z-index: 15;
   height: 100vh;
+  top: 0;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -261,12 +311,13 @@ h3 {
   background-image: linear-gradient(to bottom left, #053005, rgba(52, 133, 52, 0.95));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 .header__menu--mobile .header__menu-item {
   font-size: 3rem;
+  height: auto;
 }
 
 .header__menu--mobile .header__menu-item:not(:last-child) {
@@ -278,14 +329,14 @@ h3 {
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  padding: 5rem 2rem 2rem;
+  padding: 7.5rem 2rem 2rem;
 }
 
 .home-section__heading {
   font-size: 3.5rem;
   line-height: 4.5rem;
   letter-spacing: 3px;
-  margin-bottom: 5rem;
+  margin-bottom: 7.5rem;
 }
 
 .become-host {
@@ -341,7 +392,7 @@ h3 {
 .become-host__cta:hover,
 .become-host__cta:active,
 .become-host__cta:visited {
-  padding: 2rem 5rem;
+  padding: 2rem 7.5rem;
   text-decoration: none;
   color: #348534;
   font-size: 3.5rem;
@@ -355,7 +406,7 @@ h3 {
 
 .main--advanced-search {
   height: calc(100vh - 7rem );
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.8);
   max-width: 160rem;
   margin-left: auto;
   margin-right: auto;
@@ -378,21 +429,8 @@ h3 {
   }
 }
 
-.main--advanced-search .chalet-map {
-  position: absolute;
-  right: 2rem;
-  top: 7rem;
-  width: calc(50% - 2 * 2rem);
-  padding: 2rem;
-  height: calc(100vh - 2 * 7rem - 3rem);
-}
-
-@media (max-width: 56.25em) {
-  .main--advanced-search .chalet-map {
-    position: static;
-    height: 20rem;
-    width: 100%;
-  }
+.main--advanced-search .apartments-list--map-hidden {
+  height: calc( 100% - 7rem);
 }
 
 .container {
@@ -429,7 +467,7 @@ h3 {
 }
 
 .container .form-container .left-container .type-host .host-img {
-  width: 5rem;
+  width: 7.5rem;
 }
 
 .container .form-container .left-container .type-host .host-img img {
@@ -533,7 +571,7 @@ h3 {
 }
 
 .container .hosted-by .type-host .host-img {
-  width: 5rem;
+  width: 7.5rem;
 }
 
 .container .hosted-by .type-host .host-img img {

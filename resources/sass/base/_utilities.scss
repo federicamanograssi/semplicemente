@@ -2,6 +2,9 @@
     display: none;
 }
 
+.transparent {
+    opacity: 0;
+}
 .color-primary {
     color: $color-primary;
 }
@@ -15,5 +18,12 @@
 .hide-on-mobile {
     @include responsive(phone) {
         display: none;
+    }
+}
+
+.show-on-mobile {
+    display: none;
+    @include responsive(phone) {
+        display: initial;
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <section class="locations-list">
 
-        <a   href="#" v-for="(location,index) in this.locations" :key="index" class="single-location">
+        <a   :href="searchRoute + '?location=' + location.name" v-for="(location,index) in this.locations" :key="index" class="single-location">
             
             <div class="single-location__img-container">
                 <img class="single-location__img" :src="location.imgSrc" :alt="location.name">
@@ -20,6 +20,7 @@
         mounted() {
             
         },
+        props : ['search-route'] ,
         data() {
             return {
                 'locations' : [

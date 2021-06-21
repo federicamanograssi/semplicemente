@@ -3,21 +3,21 @@
     background-color: $bg-transparent;
     color: $color-primary;
     position: fixed;
-    z-index: 5;
+    z-index: 15;
     top: 0;
     left: 0;
     width: 100%;
     letter-spacing: 1px;
 
     @include responsive(tablet) {
-        position: static;
+        position: absolute;
     }
 
     & + * {
         margin-top: $height-section-medium;
         
         @include responsive(tablet) {
-            margin-top: 0;
+            // margin-top: 0;
         }
     }
 
@@ -54,7 +54,7 @@
         cursor: pointer;
         display: none;
         position: relative;
-        z-index: 10;
+        z-index: 20;
 
         @include responsive(tablet) {
             display: block;
@@ -63,6 +63,10 @@
 
     &__close-menu {
         color: $white;
+        position: fixed;
+        top: $spacing-more;
+        right: $spacing-more;
+        font-size: 2em;
     }
 
     &__menu {
@@ -74,16 +78,17 @@
             height: calc(#{$height-section-medium} - 2 * #{$spacing-standard} );
             line-height: calc(#{$height-section-medium} - 2 * #{$spacing-standard} );
 
-            &--home {
-                display: none;
-
-                @include responsive(tablet) {
-                    display: block;
-                }
+            a {
+                color: inherit;
+                text-decoration: none;
             }
             
             &:not(:last-child) {
                 margin-right: $spacing-more;
+            }
+
+            button {
+                font-size: inherit;
             }
         }
         
@@ -97,8 +102,9 @@
 
         &--mobile {
             position: fixed;
-            z-index: 5;
+            z-index: 15;
             height: 100vh;
+            top: 0;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -106,11 +112,12 @@
             background-image: linear-gradient(to bottom left , rgba($color-primary-dark , 1) , rgba($color-primary-light , .95));
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: center;
 
             .header__menu-item {                
                 font-size: 3rem;
+                height:auto;
 
                 &:not(:last-child) {
                     margin-bottom: $spacing-more;

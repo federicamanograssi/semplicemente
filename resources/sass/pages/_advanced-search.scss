@@ -18,20 +18,9 @@
             padding-right: $spacing-standard;
             height: calc(  100% -  #{$height-section-big} - #{$height-section-medium}); 
         }
-    }
-    .chalet-map {
-        position: absolute;
-        right: $spacing-standard;
-        top: $height-section-medium;
-        width: calc(50% - 2 * #{$spacing-standard});
-        padding : $spacing-standard;
-        height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
 
-        @include responsive(tablet) {
-            position: static;
-            height: $height-section-big;            
-            width: 100%;
+        &--map-hidden {
+            height: calc(  100% - #{$height-section-medium}); 
         }
     }
-
 }
