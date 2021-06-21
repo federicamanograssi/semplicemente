@@ -167,7 +167,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="n_img" id="n_img" value= "0">
+                <input type="hidden" name="n_img" id="n_img" value= "1">
 
                 <p>Visibile:</p>
                 <div class="form-check form-check-inline">

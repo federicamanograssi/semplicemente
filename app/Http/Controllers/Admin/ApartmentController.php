@@ -82,7 +82,6 @@ class ApartmentController extends Controller
         $new_apartment->save();
 
         $j = $data['n_img'];
-        
         for($i=1; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
