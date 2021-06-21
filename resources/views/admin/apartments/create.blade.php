@@ -162,7 +162,7 @@
                         <input type="text" name="img_description1" placeholder="Descrizione">
                         <p>Copertina</p>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="is_cover" id="image1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required>
+                            <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required>
                         </div>
                     </div>
                 </div>
@@ -229,11 +229,12 @@ function readURL(input) {
     });
 
 $("#add").click(function(){
-
+ if(){
+    console.log(i);
     ++i;
     ++j; 
 
-    $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><p>Copertina</p><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="is_cover" id="image'+i+'" class="form-control @error('is_cover') is-invalid @enderror" value="image'+i+'"  checked required></div><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
+    $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><p>Copertina</p><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="is_cover" id="is_cover'+i+'" class="form-control @error('is_cover') is-invalid @enderror" value="image'+i+'" required></div><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
 
     document.getElementById("n_img").setAttribute('value', j);
 
@@ -251,6 +252,7 @@ $("#add").click(function(){
     $("#img_input"+i).change(function(){
         readURL(this);
     });
+ }
 });
 
 
@@ -258,6 +260,7 @@ $("#add").click(function(){
         --j;
         $(this).parents('.remove-div').remove();
         document.getElementById("n_img").setAttribute('value', j);
+        document.getElementById("is_cover1").checked=true;
 
     });  
 
