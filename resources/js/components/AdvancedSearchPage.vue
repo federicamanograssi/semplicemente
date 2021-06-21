@@ -7,7 +7,7 @@
             <!-- Search Form -->
         </advanced-search-form>
 
-        <apartments-list :apartments="apartments" :mapIsShown="mapIsShown" class="apartments-list--full-width">
+        <apartments-list :apartments="filteredApartments" :mapIsShown="mapIsShown" class="apartments-list--full-width">
             <!-- Lista degli appartamenti -->
         </apartments-list>
 
@@ -26,7 +26,10 @@
         },
         data() {            
             return {
+
                 apartments: [] ,
+
+                filteredApartments : [] ,
 
                 currentQuery : {                
                     baseLocation    : this.destination,
@@ -44,17 +47,35 @@
         props : ['destination'] ,
         methods : {
             filterResults(){
-                // filter results
-                this.apartments.forEach(apartment => {
 
-                    // Check Distance 
+                this.filteredApartments = [];   // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
 
-                    if( apartment['dist'] > this.currentQuery.maxDistance)
-                        {                            
-                            apartment.visibleAfterFilters = false;
-                            }
-                    else apartment.visibleAfterFilters = true;
-                });
+                // Facciamo riferimento alla lista degli appartamenti generale
+                // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
+                // il tutto tramite un ciclo ___
+
+                for(let i = 0; i < this.apartments.length ; i++) {
+
+                    if (this.apartments[i].dist > this.currentQuery.maxDistance) {
+                        break
+                    }
+                    
+                    //more checks here
+
+                    this.filteredApartments.push(this.apartments[i]);
+                }
+
+                // this.apartments.forEach(apartment => {
+
+                //     // Check Distance first
+
+                //     if( apartment['dist'] < this.currentQuery.maxDistance) {                            
+                //         }
+
+
+                // });
+
+
             },
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -70,10 +91,6 @@
                             }
                         })
                     .then((response)=>{
-
-                        response.data.results.forEach(apartment => {
-                            apartment['visibleAfterFilters'] = true;
-                        });
                         
                         self.apartments = response.data.results;
 
@@ -85,14 +102,14 @@
             } ,
             getNewQuery(newQuery){
 
+
                 let newSearchIsNeeded = false;
+
                 const oldQuery = this.currentQuery;
                 
                 if((oldQuery.baseLocation != newQuery.baseLocation) || (oldQuery.maxDistance < newQuery.maxDistance) ){
                     newSearchIsNeeded = true;
                 }
-
-
 
                 this.currentQuery = newQuery;   // sovrascrive la vecchia query con quella nuova
 

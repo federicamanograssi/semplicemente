@@ -2240,6 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       apartments: [],
+      filteredApartments: [],
       currentQuery: {
         baseLocation: this.destination,
         baseLat: 0,
@@ -2255,15 +2256,24 @@ __webpack_require__.r(__webpack_exports__);
   props: ['destination'],
   methods: {
     filterResults: function filterResults() {
-      var _this = this;
+      this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
+      // Facciamo riferimento alla lista degli appartamenti generale
+      // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
+      // il tutto tramite un ciclo ___
 
-      // filter results
-      this.apartments.forEach(function (apartment) {
-        // Check Distance 
-        if (apartment['dist'] > _this.currentQuery.maxDistance) {
-          apartment.visibleAfterFilters = false;
-        } else apartment.visibleAfterFilters = true;
-      });
+      for (var i = 0; i < this.apartments.length; i++) {
+        if (this.apartments[i].dist > this.currentQuery.maxDistance) {
+          break;
+        } //more checks here
+
+
+        this.filteredApartments.push(this.apartments[i]);
+      } // this.apartments.forEach(apartment => {
+      //     // Check Distance first
+      //     if( apartment['dist'] < this.currentQuery.maxDistance) {                            
+      //         }
+      // });
+
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2277,9 +2287,6 @@ __webpack_require__.r(__webpack_exports__);
           radius: this.currentQuery.maxDistance
         }
       }).then(function (response) {
-        response.data.results.forEach(function (apartment) {
-          apartment['visibleAfterFilters'] = true;
-        });
         self.apartments = response.data.results;
         self.currentQuery.baseLat = response.data.base_lat;
         self.currentQuery.baseLon = response.data.base_lon;
@@ -40111,7 +40118,10 @@ var render = function() {
       _vm._v(" "),
       _c("apartments-list", {
         staticClass: "apartments-list--full-width",
-        attrs: { apartments: _vm.apartments, mapIsShown: _vm.mapIsShown }
+        attrs: {
+          apartments: _vm.filteredApartments,
+          mapIsShown: _vm.mapIsShown
+        }
       }),
       _vm._v(" "),
       _c("chalet-map", {
