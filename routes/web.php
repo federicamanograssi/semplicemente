@@ -33,7 +33,7 @@ Route::get('/', function () {
 Route::get('/single', function () {
     return view('/guest/singleApartment');
 });
-Route::post('/single', 'MessageController@store')->name('saveMessage');
+Route::post('/single', 'Admin\MessageController@store')->name('saveMessage');
 
 Route::get('/search', function () {
     return view('/guest/search');
