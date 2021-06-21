@@ -1,4 +1,6 @@
 .container {
+    @include responsive(tablet);
+    @include responsive(phone);
     max-width: $width-inner-content;
     margin: 0 auto;
     i {

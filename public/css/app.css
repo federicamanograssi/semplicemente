@@ -354,7 +354,7 @@ h3 {
 }
 
 .main--advanced-search {
-  height: calc(100vh - 7rem );
+  height: calc(100vh - 7rem);
   background-color: rgba(255, 255, 255, 0.75);
   max-width: 160rem;
   margin-left: auto;
@@ -551,45 +551,14 @@ h3 {
   padding: 5rem 0;
 }
 
+.register-form,
 .login-form {
   box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
-  background: #f39a34;
   width: 25%;
   margin: 0 auto;
-  padding: 1rem;
-  border-radius: 5px;
-}
-
-.width_container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #105310;
-}
-
-.input_width {
-  width: 100%;
-  margin-bottom: 0.5rem;
-}
-
-div[class$=-form] {
-  margin-bottom: 0.5rem;
-}
-
-.btn--log {
-  margin: 1rem 0;
-  width: 50%;
-}
-
-.register-form {
-  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
   background: #f39a34;
-  margin: 0 auto;
   padding: 1rem;
   border-radius: 5px;
-  width: 25%;
 }
 
 .width_container {
@@ -613,5 +582,10 @@ div[class$=-form] {
 .btn--reg {
   margin: 1rem 0;
   width: 100%;
+}
+
+.btn--log {
+  margin: 1rem 0;
+  width: 50%;
 }
 

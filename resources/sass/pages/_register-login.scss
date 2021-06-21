@@ -1,8 +1,9 @@
+.register-form,
 .login-form {
     @include shadow-enhanced;
-    background: $color-secondary;
     width: 25%;
     margin: 0 auto;
+    background: $color-secondary;
     padding: $spacing-small;
     border-radius: $border-radius-standard;
 }
@@ -23,6 +24,11 @@
 
 div[class$="-form"] {
     margin-bottom: $spacing-tiny;
+}
+
+.btn--reg {
+    margin: $spacing-small 0;
+    width: 100%;
 }
 
 .btn--log {
