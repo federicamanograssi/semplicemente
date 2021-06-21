@@ -2117,7 +2117,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.servicesList = this.getServicesList();
+    // richiamo il metodo che riempie la lista servizi
+    this.getServicesList();
   },
   data: function data() {
     return {
@@ -2150,52 +2151,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('newQuery', newQuery);
     },
     getServicesList: function getServicesList() {
-      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
-        console.log(servicesList.data.results);
-        return servicesList;
-      }); // Momentaneamente mi creo un array
-      // In seguito otterremo questa lista tramite API
+      var _this = this;
 
-      var servicesList = [{
-        'service_name': "Cucina"
-      }, {
-        'service_name': "Riscaldamento"
-      }, {
-        'service_name': "Aria condizionata"
-      }, {
-        'service_name': "Wi-fi"
-      }, {
-        'service_name': "Lavatrice"
-      }, {
-        'service_name': "Asciugatrice"
-      }, {
-        'service_name': "Camino"
-      }, {
-        'service_name': "Parcheggio"
-      }, {
-        'service_name': "Piscina"
-      }, {
-        'service_name': "Idromassaggio"
-      }, {
-        'service_name': "Palestra"
-      }, {
-        'service_name': "TV"
-      }, {
-        'service_name': "Self check-in"
-      }, {
-        'service_name': "Ferro da stiro"
-      }, {
-        'service_name': "Asciugacapelli"
-      }, {
-        'service_name': "Colazione"
-      }, {
-        'service_name': "Accesso piste da sci"
-      }, {
-        'service_name': "Biancheria letto"
-      }, {
-        'service_name': "Essenziali bagno"
-      }];
-      return servicesList;
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        // console.log(servicesList.data.results);
+        _this.servicesList = servicesList.data.results;
+      });
     }
   }
 });

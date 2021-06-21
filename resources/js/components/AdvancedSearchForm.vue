@@ -160,7 +160,8 @@
 import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
-            this.servicesList = this.getServicesList();
+            // richiamo il metodo che riempie la lista servizi
+            this.getServicesList();
         },
         data() {
             return {
@@ -203,75 +204,9 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 axios
                 .get('http://127.0.0.1:8000/api/services')
                 .then((servicesList)=>{
-                    console.log(servicesList.data.results);
-                    return servicesList;
+                    // console.log(servicesList.data.results);
+                    this.servicesList= servicesList.data.results
                 })
-                   
-
-                // Momentaneamente mi creo un array
-                // In seguito otterremo questa lista tramite API
-
-                let servicesList = [
-                    {
-                        'service_name' : "Cucina"
-                    } ,
-                    {
-                        'service_name' : "Riscaldamento"
-                    } ,
-                    {
-                        'service_name' : "Aria condizionata"
-                    } ,
-                    {
-                        'service_name' : "Wi-fi"
-                    } ,
-                    {
-                        'service_name' : "Lavatrice"
-                    } ,
-                    {
-                        'service_name' : "Asciugatrice"
-                    } ,
-                    {
-                        'service_name' : "Camino"
-                    } ,
-                    {
-                        'service_name' : "Parcheggio"
-                    } ,
-                    {
-                        'service_name' : "Piscina"
-                    } ,
-                    {
-                        'service_name' : "Idromassaggio"        
-                    } ,
-                    {
-                        'service_name' : "Palestra"        
-                    } ,
-                    {
-                        'service_name' : "TV"            
-                    } ,
-                    {
-                        'service_name' : "Self check-in"        
-                    } ,
-                    {
-                        'service_name' : "Ferro da stiro"         
-                    } ,
-                    {
-                        'service_name' : "Asciugacapelli"    
-                    } ,
-                    {
-                        'service_name' : "Colazione"  
-                    } ,
-                    {
-                        'service_name' : "Accesso piste da sci" 
-                    } ,
-                    {
-                        'service_name' : "Biancheria letto"            
-                    } ,
-                    {
-                        'service_name' : "Essenziali bagno"
-                    }
-                ] ;
-
-                return servicesList;
         }       
     }       
 }
