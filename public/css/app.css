@@ -627,3 +627,13 @@ div[class$=-form] {
   width: 50%;
 }
 
+.admin {
+  background-color: #ffefd5;
+  height: 90vh;
+}
+
+.admin .card {
+  background-color: #d8af7f;
+  color: #5a5034;
+}
+
