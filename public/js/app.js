@@ -2117,40 +2117,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.servicesList = this.getServicesList();
-    if (!this.maxPrice) console.log("OK IL PREZZO È NULL \n il prezzo massimo di tutti gli appartamenti blablabla è invece " + this.aptListInfo.highestAptPrice);
-  },
-  updated: function updated() {//
+    this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
   },
   data: function data() {
     return {
-      // Proprietà relative alla query dell'utente
-      baseLocation: this.query.baseLocation,
-      maxDistance: this.query.maxDistance,
-      minRating: this.query.minRating,
-      maxPrice: this.query.maxPrice,
-      minRooms: this.query.minRooms,
-      guests: this.query.guests,
-      selectedServices: [],
-      // Proprietà relative al funzionamento del form
+      baseLocation: this.currentQuery.baseLocation,
+      maxDistance: Number(this.currentQuery.maxDistance),
+      minRating: Number(this.currentQuery.minRating),
+      maxPrice: Number(this.currentQuery.maxPrice),
+      minRooms: Number(this.currentQuery.minRooms),
+      guests: Number(this.currentQuery.guests),
+      selectedServices: this.currentQuery.selectedServices,
       isFiltersBoxOpen: false,
-      servicesList: []
+      servicesList: [] // lista di tutti i servizi supportati dall'applicazione
+
     };
   },
-  props: ['query', 'aptListInfo'],
+  props: ['currentQuery', // array contenente tutte le informazioni relative alla ricerca
+  'highestAptPrice', // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
+  'lowestAptPrice' // prezzo minimo [...] 
+  ],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
       // Gestione del box con i filtri avanzati
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
     updateQuery: function updateQuery() {
-      // Metodo richiamato ogni volta che 
-      // un qualsiasi campo viene modificato
-      // Quali siano le operazioni da eseguire in base alle modifiche
-      // lo stabilirà il parent component (AdvancedSearchPage)
+      // Metodo richiamato ogni volta che un qualsiasi campo viene modificato.
+      // Quali siano le operazioni da eseguire in base alle modifiche effettuate
+      // lo stabilirà il parent component (AdvancedSearchPage) attraverso il metodo getNewQuery()
       var newQuery = {
         baseLocation: this.baseLocation,
         maxDistance: Number(this.maxDistance),
@@ -2158,12 +2195,10 @@ __webpack_require__.r(__webpack_exports__);
         minRating: Number(this.minRating),
         minRooms: Number(this.minRooms),
         maxPrice: Number(this.maxPrice),
-        selectedServices: this.selectedServices,
-        baseLat: this.query.baseLat,
-        baseLon: this.query.baseLon
+        selectedServices: this.selectedServices
       };
       console.log("Occhio, Sto mandando una nuova query");
-      this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore (AdvancedSearchPage)
+      this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore
     },
     getServicesList: function getServicesList() {
       // Momentaneamente mi creo un array
@@ -2243,6 +2278,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.search();
@@ -2251,27 +2303,25 @@ __webpack_require__.r(__webpack_exports__);
     return {
       apartments: [],
       filteredApartments: [],
-      aptListInfo: {
-        highestAptPrice: 0,
-        lowestAptPrice: 0
-      },
+      baseLat: 0,
+      baseLon: 0,
+      highestAptPrice: 200,
+      lowestAptPrice: 0,
       currentQuery: {
-        // defaults                
         baseLocation: this.destination,
-        baseLat: 0,
-        baseLon: 0,
         maxDistance: 40,
+        guests: 2,
         minRating: 1,
         minRooms: 1,
-        guests: 2,
-        maxPrice: null,
+        // maxPrice         : 199 ,
+        maxPrice: this.highestAptPrice,
         selectedServices: []
       },
       mapIsShown: true
     };
   },
   props: ['destination'],
-  // Arriva come parametro URL
+  // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
     filterResults: function filterResults() {
       this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
@@ -2283,7 +2333,7 @@ __webpack_require__.r(__webpack_exports__);
         var apt = this.apartments[i]; // Alias
 
         var query = this.currentQuery; // Alias
-        // Controllo la distanza
+        // Controllo la distanza                
 
         if (apt.dist > query.maxDistance) {
           continue;
@@ -2310,27 +2360,30 @@ __webpack_require__.r(__webpack_exports__);
           continue;
         }
 
-        this.filteredApartments.push(this.apartments[i]); // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
+        this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
       }
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
     },
     getaptListInfo: function getaptListInfo() {
-      var maxPrice = 100;
-      var minPrice = 0;
-      this.apartments.forEach(function (apt) {
-        minPrice == 0 ? minPrice = apt.price : null; // prima iterazione
+      if (this.apartments.length == 0) return; // Se la lista di appartamenti è vuota abbandona la fuzione
+      // Definizione di prezzo minimo e massimo fra tutti gli
+      // appartamenti presenti nell'array (filtrati e non)
 
+      var maxPrice = this.apartments[0].price;
+      var minPrice = this.apartments[0].price;
+      this.apartments.forEach(function (apt) {
         apt.price > maxPrice ? maxPrice = apt.price : null;
         apt.price < minPrice ? minPrice = apt.price : null;
       });
-      this.aptListInfo.highestAptPrice = maxPrice;
-      this.aptListInfo.lowestAptPrice = minPrice;
+      this.highestAptPrice = Math.ceil(maxPrice);
+      this.lowestAptPrice = Math.ceil(minPrice);
     },
     search: function search() {
       console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
-      self = this;
+      self = this; // alias
+
       axios.get('http://127.0.0.1:8000/api/location', {
         params: {
           location: this.currentQuery.baseLocation,
@@ -2338,31 +2391,25 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         self.apartments = response.data.results;
-        self.currentQuery.baseLat = response.data.base_lat;
-        self.currentQuery.baseLon = response.data.base_lon;
+        self.baseLat = response.data.base_lat; // latitudine  località cercata dall'utente
+
+        self.baseLon = response.data.base_lon; // Longitudine località cercata dall'utente
+
         self.getaptListInfo();
         self.filterResults();
       });
     },
     getNewQuery: function getNewQuery(newQuery) {
       var newSearchIsNeeded = false;
-      var oldQuery = this.currentQuery;
+      var oldQuery = this.currentQuery; // alias
 
       if (oldQuery.baseLocation != newQuery.baseLocation || oldQuery.maxDistance < newQuery.maxDistance) {
-        newSearchIsNeeded = true;
-      } // il blocco commentato qui sotto non funziona ancora
-      // if(!this.maxPrice){
-      //     this.maxPrice = this.aptListInfo.highestAptPrice;
-      //     console.log(this.maxPrice + '\n' + this.aptListInfo.highestAptPrice);
-      // }
-      // if(this.maxPrice < this.aptListInfo.lowestAptPrice){
-      //     this.maxPrice = this.aptListInfo.lowestAptPrice;                
-      // }
-
+        newSearchIsNeeded = true; // flag: se è cambiata la località o è aumentato il raggio serve una nuova ricerca nel DB
+      }
 
       this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
 
-      if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio                
+      if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio (il successivo filtraggio sarà richiamato dal metodo search() )
       else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
     }
   }
@@ -39946,8 +39993,9 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: _vm.aptListInfo.lowestAptPrice,
-                    max: _vm.aptListInfo.highestAptPrice,
+                    min: _vm.lowestAptPrice,
+                    max: _vm.highestAptPrice,
+                    step: "1",
                     id: "search-form-price"
                   },
                   domProps: { value: _vm.maxPrice },
@@ -40019,7 +40067,11 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.minRating) + " "),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.minRating) +
+                    " \n                    "
+                ),
                 _c("i", { staticClass: "fas fa-star" })
               ])
             ]
@@ -40215,7 +40267,11 @@ var render = function() {
     { staticClass: "main main--advanced-search" },
     [
       _c("advanced-search-form", {
-        attrs: { query: _vm.currentQuery, aptListInfo: _vm.aptListInfo },
+        attrs: {
+          currentQuery: _vm.currentQuery,
+          highestAptPrice: _vm.highestAptPrice,
+          lowestAptPrice: _vm.lowestAptPrice
+        },
         on: {
           newQuery: function($event) {
             return _vm.getNewQuery($event)
@@ -40232,10 +40288,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("chalet-map", {
-        attrs: {
-          baseLon: _vm.currentQuery.baseLon,
-          baseLat: _vm.currentQuery.baseLat
-        },
+        attrs: { baseLon: _vm.baseLon, baseLat: _vm.baseLat },
         on: {
           mapToggled: function($event) {
             return _vm.toggleMap()

@@ -10,8 +10,8 @@
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
                     <input  v-model="baseLocation" 
-                            @change="updateQuery()" 
-                            key="" 
+                            @change="updateQuery()"
+                            key=""
                             class="form__input" type="text">
                 </div>
 
@@ -49,7 +49,16 @@
                         <label for="search-form-distance" class="form__label">Distanza</label>
 
                         <div class="form__slider__container">
-                            <input v-model="maxDistance" @change="updateQuery()" type="range" min="20" max="60" value="20" step="20" class="form__slider" id="search-form-distance">
+                            <input 
+                                v-model="maxDistance" 
+                                @change="updateQuery()" 
+                                type="range" 
+                                min="20" 
+                                max="60" 
+                                value="20" 
+                                step="20" 
+                                class="form__slider" 
+                                id="search-form-distance">
                         </div>
 
                         <span class="form__slider__value">{{maxDistance}} Km</span>
@@ -63,14 +72,24 @@
 
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
-                        <input @change="updateQuery()" v-model="minRooms" id="search-form-rooms" class="form__input" type="number">
+                        <input 
+                            @change="updateQuery()" 
+                            v-model="minRooms" 
+                            id="search-form-rooms" 
+                            class="form__input" 
+                            type="number">
                     </div>
 
                     <!-- Beds (i.e. max Guests) -->
 
                     <div class="form__field form__field--half form__field--guests">
                         <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
-                        <input @change="updateQuery()" v-model="guests" id="search-form-guests" class="form__input" type="number">
+                        <input 
+                            @change="updateQuery()" 
+                            v-model="guests" 
+                            id="search-form-guests" 
+                            class="form__input" 
+                            type="number">
                     </div>
                 </div>
 
@@ -81,7 +100,15 @@
                     <div class="form__field form__field--half form__field--price">
                         <label class="form__label" for="search-form-price">Prezzo (max)</label>
                         <div class="form__slider__container">
-                            <input @change="updateQuery()" v-model="maxPrice" type="range" :min="aptListInfo.lowestAptPrice" :max="aptListInfo.highestAptPrice" class="form__slider" id="search-form-price">
+                            <input 
+                            @change="updateQuery()" 
+                            v-model="maxPrice" 
+                            type="range" 
+                            :min="lowestAptPrice" 
+                            :max="highestAptPrice" 
+                            class="form__slider"
+                            step="1" 
+                            id="search-form-price">
                         </div>
                         <span class="form__slider__value">
                             {{maxPrice}}
@@ -93,9 +120,20 @@
                     <div class="form__field form__field--half form__field--rating">
                         <label class="form__label" for="search-form-rating">Valutazione (min)</label>
                         <div class="form__slider__container">
-                            <input @change="updateQuery()" v-model="minRating" type="range" min="1" max="5" value="3" class="form__slider" id="search-form-rating">
+                            <input 
+                                @change="updateQuery()" 
+                                v-model="minRating" 
+                                type="range" 
+                                min="1" 
+                                max="5" 
+                                value="3" 
+                                class="form__slider" 
+                                id="search-form-rating">
                         </div>
-                        <span class="form__slider__value">{{minRating}} <i class="fas fa-star"></i></span>
+                        <span class="form__slider__value">
+                            {{minRating}} 
+                            <i class="fas fa-star"></i>
+                        </span>
                     </div>
 
                 </div>
@@ -164,31 +202,29 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
             this.servicesList = this.getServicesList();
-            if(!this.maxPrice) console.log("OK IL PREZZO È NULL \n il prezzo massimo di tutti gli appartamenti blablabla è invece " + this.aptListInfo.highestAptPrice);
-        },
-        updated() {
-            //
+            this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
+        
         },
         data() {
             return {
-
-                // Proprietà relative alla query dell'utente
-
-                baseLocation   : this.query.baseLocation ,
-                maxDistance     : this.query.maxDistance ,
-                minRating       : this.query.minRating ,
-                maxPrice        : this.query.maxPrice ,
-                minRooms        : this.query.minRooms ,
-                guests          : this.query.guests,
-                selectedServices : [] ,
-
-                // Proprietà relative al funzionamento del form
+                baseLocation        : this.currentQuery.baseLocation ,
+                maxDistance         : Number(this.currentQuery.maxDistance) ,
+                minRating           : Number(this.currentQuery.minRating) ,
+                maxPrice            : Number(this.currentQuery.maxPrice) ,
+                minRooms            : Number(this.currentQuery.minRooms) ,
+                guests              : Number(this.currentQuery.guests) ,
+                selectedServices    : this.currentQuery.selectedServices ,
 
                 isFiltersBoxOpen : false ,
-                servicesList : []
+                servicesList : []   // lista di tutti i servizi supportati dall'applicazione
             }
         },
-        props: [ 'query' , 'aptListInfo' ] ,
+        props: [
+                'currentQuery' ,    // array contenente tutte le informazioni relative alla ricerca
+                'highestAptPrice' , // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
+                'lowestAptPrice'    // prezzo minimo [...] 
+            ] ,
+
         methods : {
             toggleFilterBox() {
                 // Gestione del box con i filtri avanzati
@@ -196,10 +232,9 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             } ,
             updateQuery(){
                 
-                // Metodo richiamato ogni volta che 
-                // un qualsiasi campo viene modificato
-                // Quali siano le operazioni da eseguire in base alle modifiche
-                // lo stabilirà il parent component (AdvancedSearchPage)
+                // Metodo richiamato ogni volta che un qualsiasi campo viene modificato.
+                // Quali siano le operazioni da eseguire in base alle modifiche effettuate
+                // lo stabilirà il parent component (AdvancedSearchPage) attraverso il metodo getNewQuery()
 
                 let newQuery = {
                     baseLocation        : this.baseLocation,
@@ -209,12 +244,10 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                     minRooms            : Number(this.minRooms),
                     maxPrice            : Number(this.maxPrice),
                     selectedServices    : this.selectedServices ,
-                    baseLat             : this.query.baseLat ,
-                    baseLon             : this.query.baseLon
                 }
 
                 console.log("Occhio, Sto mandando una nuova query");
-                this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore (AdvancedSearchPage)
+                this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore
 
             } ,
             getServicesList(){
