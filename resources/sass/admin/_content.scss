@@ -1,10 +1,20 @@
 .admin {
     background-color: #ffefd5;
-    height: 90vh;
+    // background-color: #d8af7f;
+    height: calc(100vh - 70px);
 
+
+    .row {
+        padding-top:15px;
+        padding-bottom:15px;
+    }
     .card {
-        background-color: #d8af7f;
-        color: #5a5034
+    background-color: #d8af7f;
+    // background-color: #ffefd5;
+    color: #5a5034
+    }
 
+    .svg {
+        color: inherit;
     }
 }

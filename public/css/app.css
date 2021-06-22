@@ -629,11 +629,47 @@ div[class$=-form] {
 
 .admin {
   background-color: #ffefd5;
-  height: 90vh;
+  height: calc(100vh - 70px);
+}
+
+.admin .row {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .admin .card {
   background-color: #d8af7f;
   color: #5a5034;
+}
+
+.admin .svg {
+  color: inherit;
+}
+
+.nav_layout {
+  background-color: #385744;
+  color: #ffefd5;
+}
+
+.nav_layout a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav_layout a:hover {
+  color: #d8af7f;
+}
+
+.nav_layout .nav_header {
+  height: 70px;
+}
+
+.nav_layout .sidebar-sticky li {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.nav_layout .sidebar-sticky li svg {
+  margin-right: 10px;
 }
 

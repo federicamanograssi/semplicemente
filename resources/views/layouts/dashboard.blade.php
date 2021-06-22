@@ -16,9 +16,9 @@
 <body>
 
     {{-- INIZIO PAGINA---- contenitore generale--}}
-    <div class="h-100">
+    <div class="nav_layout h-100">
         
-        <nav class="navbar flex-md-nowrap p-0">
+        <nav class="nav_header navbar flex-md-nowrap pl-3 px-3 pr-3">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">BoolChalet</a>
             <ul class="navbar-nav px-3">
                 
@@ -37,9 +37,9 @@
     
         <div class="container-fluid h-100">
             {{-- SIDEBAR---------- --}}
-            <div class="row align-items-stretch">
+            <div class="row">
                 {{-- rendere la sidebar responsive --}}
-              <nav class="col-md-2 d-md-block bg-light sidebar">
+              <nav class="col-md-2 d-md-block">
                 <div class="sidebar-sticky">
 
                     {{-- MENU NAVIGAZIONE --}}
