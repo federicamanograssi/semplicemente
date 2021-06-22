@@ -80,7 +80,7 @@
                             type="number">
                     </div>
 
-                    <!-- Beds (i.e. max Guests) -->
+                    <!-- Posti letto -->
 
                     <div class="form__field form__field--half form__field--guests">
                         <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
@@ -252,70 +252,12 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             } ,
             getServicesList(){
 
-                // Momentaneamente mi creo un array
-                // In seguito otterremo questa lista tramite API
-
-                let servicesList = [
-                    {
-                        'service_name' : "Cucina"
-                    } ,
-                    {
-                        'service_name' : "Riscaldamento"
-                    } ,
-                    {
-                        'service_name' : "Aria condizionata"
-                    } ,
-                    {
-                        'service_name' : "Wi-fi"
-                    } ,
-                    {
-                        'service_name' : "Lavatrice"
-                    } ,
-                    {
-                        'service_name' : "Asciugatrice"
-                    } ,
-                    {
-                        'service_name' : "Camino"
-                    } ,
-                    {
-                        'service_name' : "Parcheggio"
-                    } ,
-                    {
-                        'service_name' : "Piscina"
-                    } ,
-                    {
-                        'service_name' : "Idromassaggio"        
-                    } ,
-                    {
-                        'service_name' : "Palestra"        
-                    } ,
-                    {
-                        'service_name' : "TV"            
-                    } ,
-                    {
-                        'service_name' : "Self check-in"        
-                    } ,
-                    {
-                        'service_name' : "Ferro da stiro"         
-                    } ,
-                    {
-                        'service_name' : "Asciugacapelli"    
-                    } ,
-                    {
-                        'service_name' : "Colazione"  
-                    } ,
-                    {
-                        'service_name' : "Accesso piste da sci" 
-                    } ,
-                    {
-                        'service_name' : "Biancheria letto"            
-                    } ,
-                    {
-                        'service_name' : "Essenziali bagno"
-                    }
-                ] ;
-
-                return servicesList;
+                axios
+                .get('http://127.0.0.1:8000/api/services')
+                .then((servicesList)=>{
+                    console.log(servicesList.data.results);
+                    this.servicesList= servicesList.data.results
+                })
         }       
     }       
 }

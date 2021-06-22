@@ -2201,48 +2201,12 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore
     },
     getServicesList: function getServicesList() {
-      // Momentaneamente mi creo un array
-      // In seguito otterremo questa lista tramite API
-      var servicesList = [{
-        'service_name': "Cucina"
-      }, {
-        'service_name': "Riscaldamento"
-      }, {
-        'service_name': "Aria condizionata"
-      }, {
-        'service_name': "Wi-fi"
-      }, {
-        'service_name': "Lavatrice"
-      }, {
-        'service_name': "Asciugatrice"
-      }, {
-        'service_name': "Camino"
-      }, {
-        'service_name': "Parcheggio"
-      }, {
-        'service_name': "Piscina"
-      }, {
-        'service_name': "Idromassaggio"
-      }, {
-        'service_name': "Palestra"
-      }, {
-        'service_name': "TV"
-      }, {
-        'service_name': "Self check-in"
-      }, {
-        'service_name': "Ferro da stiro"
-      }, {
-        'service_name': "Asciugacapelli"
-      }, {
-        'service_name': "Colazione"
-      }, {
-        'service_name': "Accesso piste da sci"
-      }, {
-        'service_name': "Biancheria letto"
-      }, {
-        'service_name': "Essenziali bagno"
-      }];
-      return servicesList;
+      var _this = this;
+
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        // console.log(servicesList.data.results);
+        _this.servicesList = servicesList.data.results;
+      });
     }
   }
 });
@@ -2296,8 +2260,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.search();
+  mounted: function mounted() {//
   },
   data: function data() {
     return {
@@ -2324,10 +2287,7 @@ __webpack_require__.r(__webpack_exports__);
   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
     filterResults: function filterResults() {
-      this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
-      // Facciamo riferimento alla lista degli appartamenti generale
-      // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
+      var _this = this;
 
       for (var i = 0; i < this.apartments.length; i++) {
         var apt = this.apartments[i]; // Alias
@@ -2390,6 +2350,9 @@ __webpack_require__.r(__webpack_exports__);
           radius: this.currentQuery.maxDistance
         }
       }).then(function (response) {
+        response.data.results.forEach(function (apartment) {
+          apartment['visible'] = true;
+        });
         self.apartments = response.data.results;
         self.baseLat = response.data.base_lat; // latitudine  località cercata dall'utente
 
@@ -2407,7 +2370,7 @@ __webpack_require__.r(__webpack_exports__);
         newSearchIsNeeded = true; // flag: se è cambiata la località o è aumentato il raggio serve una nuova ricerca nel DB
       }
 
-      this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
+      newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
 
       if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio (il successivo filtraggio sarà richiamato dal metodo search() )
       else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
@@ -2459,6 +2422,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2806,7 +2780,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     imgSrc: String,
-    rating: Number
+    rating: String
   }
 });
 
@@ -2947,7 +2921,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
+    this.mymap = L.map('chalet-map').setView([45.900383, 10.723176], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -2990,7 +2964,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Aggiorno Centro Mappa");
       console.log(this.baseLat + ' ' + this.baseLon);
       this.mymap.panTo([this.baseLat, this.baseLon, {
-        animate: true
+        animate: true,
+        duration: 5.0
       }]);
     }
   }
@@ -39785,7 +39760,6 @@ var render = function() {
                 expression: "baseLocation"
               }
             ],
-            key: "",
             staticClass: "form__input",
             attrs: { type: "text" },
             domProps: { value: _vm.baseLocation },
@@ -39871,10 +39845,9 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: "20",
-                    max: "60",
-                    value: "20",
-                    step: "20",
+                    min: "1",
+                    max: "3",
+                    value: "1",
                     id: "search-form-distance"
                   },
                   domProps: { value: _vm.maxDistance },
@@ -39890,81 +39863,13 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.maxDistance) + " Km")
+                _vm._v(_vm._s(_vm.maxDistance * 20) + " Km")
               ])
             ]
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form__group" }, [
-          _c(
-            "div",
-            { staticClass: "form__field form__field--half form__field--rooms" },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.minRooms,
-                    expression: "minRooms"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: { id: "search-form-rooms", type: "number" },
-                domProps: { value: _vm.minRooms },
-                on: {
-                  change: function($event) {
-                    return _vm.updateQuery()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.minRooms = $event.target.value
-                  }
-                }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "form__field form__field--half form__field--guests"
-            },
-            [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.guests,
-                    expression: "guests"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: { id: "search-form-guests", type: "number" },
-                domProps: { value: _vm.guests },
-                on: {
-                  change: function($event) {
-                    return _vm.updateQuery()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.guests = $event.target.value
-                  }
-                }
-              })
-            ]
-          )
-        ]),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
           _c(
@@ -40211,34 +40116,58 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "form__label form__label--left",
-        attrs: { for: "search-form-rooms" }
-      },
-      [
-        _vm._v("Camere "),
-        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("da letto ")]),
-        _vm._v("(min)")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "form__label form__label--left",
-        attrs: { for: "search-form-guests" }
-      },
-      [
-        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
-        _vm._v("Ospiti")
-      ]
-    )
+    return _c("div", { staticClass: "form__group" }, [
+      _c(
+        "div",
+        { staticClass: "form__field form__field--half form__field--rooms" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "form__label form__label--left",
+              attrs: { for: "search-form-rooms" }
+            },
+            [
+              _vm._v("Camere "),
+              _c("span", { staticClass: "hide-on-mobile" }, [
+                _vm._v("da letto ")
+              ]),
+              _vm._v("(min)")
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form__input",
+            attrs: { id: "search-form-rooms", type: "number" }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form__field form__field--half form__field--beds" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "form__label form__label--left",
+              attrs: { for: "search-form-beds" }
+            },
+            [
+              _c("span", { staticClass: "hide-on-mobile" }, [
+                _vm._v("Numero ")
+              ]),
+              _vm._v("Posti letto (min)")
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form__input",
+            attrs: { id: "search-form-beds", type: "number" }
+          })
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -40281,10 +40210,7 @@ var render = function() {
       _vm._v(" "),
       _c("apartments-list", {
         staticClass: "apartments-list--full-width",
-        attrs: {
-          apartments: _vm.filteredApartments,
-          mapIsShown: _vm.mapIsShown
-        }
+        attrs: { apartments: _vm.apartments, mapIsShown: _vm.mapIsShown }
       }),
       _vm._v(" "),
       _c("chalet-map", {
@@ -54269,8 +54195,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
