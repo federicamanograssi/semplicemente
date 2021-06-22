@@ -2158,9 +2158,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
-    // richiamo il metodo che riempie la lista servizi
     this.getServicesList();
+    this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
   },
   data: function data() {
     return {
@@ -2205,8 +2204,8 @@ __webpack_require__.r(__webpack_exports__);
     getServicesList: function getServicesList() {
       var _this = this;
 
+      // Chiamata API che restituisce la lista complessiva dei servizi
       axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
-        // console.log(servicesList.data.results);
         _this.servicesList = servicesList.data.results;
       });
     }
@@ -40179,58 +40178,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form__group" }, [
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--rooms" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-rooms" }
-            },
-            [
-              _vm._v("Camere "),
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("da letto ")
-              ]),
-              _vm._v("(min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-rooms", type: "number" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--beds" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-beds" }
-            },
-            [
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("Numero ")
-              ]),
-              _vm._v("Posti letto (min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-beds", type: "number" }
-          })
-        ]
-      )
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-rooms" }
+      },
+      [
+        _vm._v("Camere "),
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("da letto ")]),
+        _vm._v("(min)")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-guests" }
+      },
+      [
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
+        _vm._v("Ospiti")
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -54261,8 +54236,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
