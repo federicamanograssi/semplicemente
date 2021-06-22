@@ -134,11 +134,19 @@
             .cards {
                 width: 100%;
                 display: flex;
+                @include responsive(phone) {
+                    display: block;
+                }
                 .card{
                     cursor: pointer;
                     width: 25%;
                     height:$height-section-big;
                     padding:$spacing-standard;
+                    @include responsive(phone) {
+                    width: 100%;
+                    height: $height-section-big;
+                    margin-bottom:$spacing-more;
+                    }
                     .card-img{
                         height: 100%;
                         width: 100%;

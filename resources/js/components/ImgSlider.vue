@@ -119,6 +119,9 @@
     }
 
     .nav {
+            @include responsive(phone) {
+                display: none;
+            }
         padding: $spacing-tiny;
         border-radius: $border-radius-standard;
         background: rgba(0, 0, 0, .7);

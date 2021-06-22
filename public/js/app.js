@@ -2158,8 +2158,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.getServicesList();
     this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
+    // richiamo il metodo che riempie la lista servizi
+    this.getServicesList();
   },
   data: function data() {
     return {
@@ -2204,8 +2205,8 @@ __webpack_require__.r(__webpack_exports__);
     getServicesList: function getServicesList() {
       var _this = this;
 
-      // Chiamata API che restituisce la lista complessiva dei servizi
       axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        // console.log(servicesList.data.results);
         _this.servicesList = servicesList.data.results;
       });
     }
@@ -7522,7 +7523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 0;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  cursor: pointer;\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 1rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border: 3px solid white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
+exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 0;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  cursor: pointer;\n}\n@media (max-width: 35.5em) {\n.container .nav[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 1rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border: 3px solid white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -7541,7 +7542,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
+exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
 
 // exports
 
@@ -40178,34 +40179,58 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "form__label form__label--left",
-        attrs: { for: "search-form-rooms" }
-      },
-      [
-        _vm._v("Camere "),
-        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("da letto ")]),
-        _vm._v("(min)")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "form__label form__label--left",
-        attrs: { for: "search-form-guests" }
-      },
-      [
-        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
-        _vm._v("Ospiti")
-      ]
-    )
+    return _c("div", { staticClass: "form__group" }, [
+      _c(
+        "div",
+        { staticClass: "form__field form__field--half form__field--rooms" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "form__label form__label--left",
+              attrs: { for: "search-form-rooms" }
+            },
+            [
+              _vm._v("Camere "),
+              _c("span", { staticClass: "hide-on-mobile" }, [
+                _vm._v("da letto ")
+              ]),
+              _vm._v("(min)")
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form__input",
+            attrs: { id: "search-form-rooms", type: "number" }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form__field form__field--half form__field--beds" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "form__label form__label--left",
+              attrs: { for: "search-form-beds" }
+            },
+            [
+              _c("span", { staticClass: "hide-on-mobile" }, [
+                _vm._v("Numero ")
+              ]),
+              _vm._v("Posti letto (min)")
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form__input",
+            attrs: { id: "search-form-beds", type: "number" }
+          })
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -54236,8 +54261,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
