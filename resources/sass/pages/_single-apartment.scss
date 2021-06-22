@@ -1,6 +1,4 @@
 .container {
-    @include responsive(tablet);
-    @include responsive(phone);
     max-width: $width-inner-content;
     margin: 0 auto;
     i {
@@ -15,8 +13,17 @@
     .form-container {
         display: flex;
         padding: $spacing-more 0;
+        @include responsive(phone) {
+            display: block;
+        }
         .left-container {
             width: 60%;
+            @include responsive(tablet) {
+                width: 40%;
+            }
+            @include responsive(phone) {
+                width: 100%;
+            }
             .type-host {
                 display: flex;
                 justify-content: space-between;
@@ -57,10 +64,22 @@
         }
         .right-container {
             width: 50%;
+            @include responsive(tablet) {
+                width: 60%;
+            }
+            @include responsive(phone) {
+                width: 100%;
+            }
             .contact-form {
                 position: sticky;
-                top: $height-section-medium;
+                top: calc(#{$height-section-medium} + 2rem);
                 form {
+                    @include responsive(tablet) {
+                        width: 80%;
+                    }
+                    @include responsive(phone) {
+                        width: 100%;
+                    }
                     @include shadow-enhanced;
                     background: $color-secondary;
                     width: 50%;
@@ -96,16 +115,32 @@
     .chalet-map {
         flex: 0 0 50%;
         height: calc(100vh - 2 * #{$height-section-medium});
+        @include responsive(tablet) {
+            position: static;
+            height: $height-section-huge;
+            width: 100%;
+        }
+        @include responsive(phone) {
+            height: $height-section-huge;
+            width: 100%;
+        }
     }
     .hosted-by {
         display: flex;
         align-items: center;
         padding: $spacing-standard 0;
+        @include responsive(phone) {
+            display: block;
+        }
         .type-host {
             width: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            @include responsive(phone) {
+                width: 100%;
+                margin-bottom: $spacing-standard;
+            }
             .host-img {
                 width: $spacing-huge;
                 img {
@@ -118,6 +153,9 @@
         .redirect-btn {
             width: 50%;
             text-align: center;
+            @include responsive(phone) {
+                width: 100%;
+            }
         }
     }
     .sponsored-gallery {
