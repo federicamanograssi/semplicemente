@@ -104,7 +104,7 @@
                             @change="updateQuery()" 
                             v-model="maxPrice" 
                             type="range" 
-                            :min="lowestAptPrice" 
+                            min="0" 
                             :max="highestAptPrice" 
                             class="form__slider"
                             step="1" 
@@ -201,7 +201,7 @@
 import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
-            this.servicesList = this.getServicesList();
+            this.getServicesList();
             this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
         
         },
@@ -246,79 +246,22 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                     selectedServices    : this.selectedServices ,
                 }
 
-                console.log("Occhio, Sto mandando una nuova query");
+                console.log("Occhio, Sto mandando una nuova query:");
+                console.log(newQuery);
                 this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore
 
             } ,
             getServicesList(){
 
-                // Momentaneamente mi creo un array
-                // In seguito otterremo questa lista tramite API
-
-                let servicesList = [
-                    {
-                        'service_name' : "Cucina"
-                    } ,
-                    {
-                        'service_name' : "Riscaldamento"
-                    } ,
-                    {
-                        'service_name' : "Aria condizionata"
-                    } ,
-                    {
-                        'service_name' : "Wi-fi"
-                    } ,
-                    {
-                        'service_name' : "Lavatrice"
-                    } ,
-                    {
-                        'service_name' : "Asciugatrice"
-                    } ,
-                    {
-                        'service_name' : "Camino"
-                    } ,
-                    {
-                        'service_name' : "Parcheggio"
-                    } ,
-                    {
-                        'service_name' : "Piscina"
-                    } ,
-                    {
-                        'service_name' : "Idromassaggio"        
-                    } ,
-                    {
-                        'service_name' : "Palestra"        
-                    } ,
-                    {
-                        'service_name' : "TV"            
-                    } ,
-                    {
-                        'service_name' : "Self check-in"        
-                    } ,
-                    {
-                        'service_name' : "Ferro da stiro"         
-                    } ,
-                    {
-                        'service_name' : "Asciugacapelli"    
-                    } ,
-                    {
-                        'service_name' : "Colazione"  
-                    } ,
-                    {
-                        'service_name' : "Accesso piste da sci" 
-                    } ,
-                    {
-                        'service_name' : "Biancheria letto"            
-                    } ,
-                    {
-                        'service_name' : "Essenziali bagno"
-                    }
-                ] ;
-
-                return servicesList;
+                // Chiamata API che restituisce la lista complessiva dei servizi
+                axios
+                .get('http://127.0.0.1:8000/api/services')
+                .then((servicesList)=>{                    
+                    this.servicesList = servicesList.data.results;
+                });
+            }       
         }       
-    }       
-}
+    }
 </script>
 
 <style scoped lang="scss">

@@ -2158,7 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.servicesList = this.getServicesList();
+    this.getServicesList();
     this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
   },
   data: function data() {
@@ -2197,52 +2197,17 @@ __webpack_require__.r(__webpack_exports__);
         maxPrice: Number(this.maxPrice),
         selectedServices: this.selectedServices
       };
-      console.log("Occhio, Sto mandando una nuova query");
+      console.log("Occhio, Sto mandando una nuova query:");
+      console.log(newQuery);
       this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore
     },
     getServicesList: function getServicesList() {
-      // Momentaneamente mi creo un array
-      // In seguito otterremo questa lista tramite API
-      var servicesList = [{
-        'service_name': "Cucina"
-      }, {
-        'service_name': "Riscaldamento"
-      }, {
-        'service_name': "Aria condizionata"
-      }, {
-        'service_name': "Wi-fi"
-      }, {
-        'service_name': "Lavatrice"
-      }, {
-        'service_name': "Asciugatrice"
-      }, {
-        'service_name': "Camino"
-      }, {
-        'service_name': "Parcheggio"
-      }, {
-        'service_name': "Piscina"
-      }, {
-        'service_name': "Idromassaggio"
-      }, {
-        'service_name': "Palestra"
-      }, {
-        'service_name': "TV"
-      }, {
-        'service_name': "Self check-in"
-      }, {
-        'service_name': "Ferro da stiro"
-      }, {
-        'service_name': "Asciugacapelli"
-      }, {
-        'service_name': "Colazione"
-      }, {
-        'service_name': "Accesso piste da sci"
-      }, {
-        'service_name': "Biancheria letto"
-      }, {
-        'service_name': "Essenziali bagno"
-      }];
-      return servicesList;
+      var _this = this;
+
+      // Chiamata API che restituisce la lista complessiva dei servizi
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        _this.servicesList = servicesList.data.results;
+      });
     }
   }
 });
@@ -2297,6 +2262,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
     this.search();
   },
   data: function data() {
@@ -2314,7 +2280,7 @@ __webpack_require__.r(__webpack_exports__);
         minRating: 1,
         minRooms: 1,
         // maxPrice         : 199 ,
-        maxPrice: this.highestAptPrice,
+        maxPrice: null,
         selectedServices: []
       },
       mapIsShown: true
@@ -2358,7 +2324,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (apt.rooms < query.minRooms) {
           continue;
-        }
+        } // Controllo Servizi Aggiuntivi
+
 
         this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
       }
@@ -39993,7 +39960,7 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: _vm.lowestAptPrice,
+                    min: "0",
                     max: _vm.highestAptPrice,
                     step: "1",
                     id: "search-form-price"
@@ -40792,7 +40759,7 @@ var render = function() {
         key: index,
         attrs: {
           name: apartment.name,
-          imgSrc: apartment.imgSrc,
+          imgSrc: "storage/" + apartment.cover_img,
           rating: apartment.rating
         }
       })

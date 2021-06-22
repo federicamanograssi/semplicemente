@@ -39,6 +39,7 @@
     export default {
 
         mounted() {
+            this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
             this.search();
         },
         data() {            
@@ -61,7 +62,7 @@
                     minRating        : 1 ,
                     minRooms         : 1 ,
                     // maxPrice         : 199 ,
-                    maxPrice         : this.highestAptPrice ,
+                    maxPrice         : null ,
                     selectedServices : []  ,
                 } ,
 
@@ -113,6 +114,10 @@
                     if ( apt.rooms < query.minRooms ) {                
                         continue;
                     }
+
+                    // Controllo Servizi Aggiuntivi
+
+
 
                     this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
                 
