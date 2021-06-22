@@ -16,6 +16,24 @@
      [
         'apartment_id'=> 5,
      ],
+     [
+      'apartment_id'=> 16,
+      ],
+      [
+         'apartment_id'=> 17,
+      ],
+      [
+         'apartment_id'=> 18,
+      ],
+      [
+         'apartment_id'=> 19,
+      ],
+      [
+         'apartment_id'=> 20,
+      ],
+      [
+         'apartment_id'=> 21,
+      ],
 
     ] 
 ?>
