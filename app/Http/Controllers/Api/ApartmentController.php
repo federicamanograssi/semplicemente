@@ -99,7 +99,16 @@ class ApartmentController extends Controller
                     ]
                     )->first()->img_path;
 
+
+                    // - prendere servizi correlati
+    
+                $services = DB::table('apartment_service')
+                    ->select('service_id')
+                    ->where('apartment_id',$apartment['id'])
+                    ->get();
+
                 //- crea array con i dati necessari per stampa e filtri    
+
                 $newChalet = array(
                     'name' => $apartment['title'] ,
                     'lat'  => (M_PI / 180) * $apartment['latitude'] ,
@@ -110,6 +119,7 @@ class ApartmentController extends Controller
                     'beds' => $apartment['beds_n'],
                     'price' => $apartment['price_per_night'],
                     'rating' => $apartment['rating'],
+                    'services' => $services
                 );
 
                 //- salvare l'array dell'apt nell'array di risultati da restituire
