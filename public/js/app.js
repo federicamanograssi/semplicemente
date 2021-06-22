@@ -2158,7 +2158,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.getServicesList();
     this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
   },
   data: function data() {
@@ -2170,15 +2169,14 @@ __webpack_require__.r(__webpack_exports__);
       minRooms: Number(this.currentQuery.minRooms),
       guests: Number(this.currentQuery.guests),
       selectedServices: this.currentQuery.selectedServices,
-      isFiltersBoxOpen: false,
-      servicesList: [] // lista di tutti i servizi supportati dall'applicazione
+      isFiltersBoxOpen: false // servicesList : []   // lista di tutti i servizi supportati dall'applicazione
 
     };
   },
   props: ['currentQuery', // array contenente tutte le informazioni relative alla ricerca
   'highestAptPrice', // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
-  'lowestAptPrice' // prezzo minimo [...] 
-  ],
+  'lowestAptPrice', // prezzo minimo [...] 
+  'servicesList'],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
       // Gestione del box con i filtri avanzati
@@ -2200,14 +2198,6 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Occhio, Sto mandando una nuova query:");
       console.log(newQuery);
       this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore
-    },
-    getServicesList: function getServicesList() {
-      var _this = this;
-
-      // Chiamata API che restituisce la lista complessiva dei servizi
-      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
-        _this.servicesList = servicesList.data.results;
-      });
     }
   }
 });
@@ -2260,9 +2250,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
+    this.getServicesList();
     this.search();
   },
   data: function data() {
@@ -2271,7 +2263,8 @@ __webpack_require__.r(__webpack_exports__);
       filteredApartments: [],
       baseLat: 0,
       baseLon: 0,
-      highestAptPrice: 200,
+      servicesList: [],
+      highestAptPrice: 300,
       lowestAptPrice: 0,
       currentQuery: {
         baseLocation: this.destination,
@@ -2279,7 +2272,6 @@ __webpack_require__.r(__webpack_exports__);
         guests: 2,
         minRating: 1,
         minRooms: 1,
-        // maxPrice         : 199 ,
         maxPrice: null,
         selectedServices: []
       },
@@ -2295,40 +2287,47 @@ __webpack_require__.r(__webpack_exports__);
       // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
       // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
 
-      for (var i = 0; i < this.apartments.length; i++) {
+      mainFor: for (var i = 0; i < this.apartments.length; i++) {
         var apt = this.apartments[i]; // Alias
 
         var query = this.currentQuery; // Alias
-        // Controllo la distanza                
 
-        if (apt.dist > query.maxDistance) {
-          continue;
-        } // Controllo Prezzo
+        if (apt.dist > query.maxDistance) continue; // Filtro distanza
+
+        if (apt.price > query.maxPrice) continue; // Filtro Prezzo
+
+        if (apt.rating < query.minRating) continue; // filtro Punteggio
+
+        if (apt.beds < query.guests) continue; // Filtro Posti letto
+
+        if (apt.rooms < query.minRooms) continue; // Filtro Camere
+        // Controllo Servizi Aggiuntivi
+
+        if (apt.services.length == 0) {
+          continue; // Se non ci sono servizi aggiuntivi l'appartamento è scartato a priori
+        } else {
+          for (var _i = 0; _i < query.selectedServices.length; _i++) {
+            // Ciclo tutti i servizi richiesti dall'utente
+            var reqServ = query.selectedServices[_i]; // alias
+
+            var found = false; // flag
+
+            for (var j = 0; j < apt.services.length; j++) {
+              // per ogni servizio richiesto controllo che sia presente fra quelli offerti dall'appartamento
+              var aptServ = apt.services[j];
+              if (aptServ == reqServ) found = true; // Se il servizio è present porto il flag a true
+            } // inner for
 
 
-        if (apt.price > query.maxPrice) {
-          // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati                        
-          continue;
-        } // Controllo Punteggio
+            if (found == false) continue mainFor; // se anche un solo servizio richiesto non era presente l'appartamento è scartato
+          } // outer for
 
-
-        if (apt.rating < query.minRating) {
-          continue;
-        } // Controllo numero ospiti / letti
-
-
-        if (apt.beds < query.guests) {
-          continue;
-        } // Controllo Numero Camere
-
-
-        if (apt.rooms < query.minRooms) {
-          continue;
-        } // Controllo Servizi Aggiuntivi
+        } // else
 
 
         this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
-      }
+      } // main for
+
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2357,6 +2356,18 @@ __webpack_require__.r(__webpack_exports__);
           radius: this.currentQuery.maxDistance
         }
       }).then(function (response) {
+        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
+        // (Benché ciò dovrebbe avvenire lato server...)
+        response.data.results.forEach(function (apt) {
+          if (apt.services.length > 0) {
+            var tmpArray = [];
+            apt.services.forEach(function (service) {
+              service.service_id ? tmpArray.push(service.service_id) : null;
+            });
+            apt.services = tmpArray;
+          }
+        }); // Fine Conversione
+
         self.apartments = response.data.results;
         self.baseLat = response.data.base_lat; // latitudine  località cercata dall'utente
 
@@ -2378,6 +2389,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio (il successivo filtraggio sarà richiamato dal metodo search() )
       else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
+    },
+    getServicesList: function getServicesList() {
+      var _this = this;
+
+      // Chiamata API che restituisce la lista complessiva dei servizi
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        _this.servicesList = servicesList.data.results;
+      });
     }
   }
 });
@@ -39839,8 +39858,8 @@ var render = function() {
                   attrs: {
                     type: "range",
                     min: "20",
-                    max: "60",
-                    value: "20",
+                    max: "100",
+                    value: "40",
                     step: "20",
                     id: "search-form-distance"
                   },
@@ -40087,12 +40106,9 @@ var render = function() {
                             checked: "checked"
                           },
                           domProps: {
-                            value: service.service_name,
+                            value: service.id,
                             checked: Array.isArray(_vm.selectedServices)
-                              ? _vm._i(
-                                  _vm.selectedServices,
-                                  service.service_name
-                                ) > -1
+                              ? _vm._i(_vm.selectedServices, service.id) > -1
                               : _vm.selectedServices
                           },
                           on: {
@@ -40102,7 +40118,7 @@ var render = function() {
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
-                                  var $$v = service.service_name,
+                                  var $$v = service.id,
                                     $$i = _vm._i($$a, $$v)
                                   if ($$el.checked) {
                                     $$i < 0 &&
@@ -40237,7 +40253,8 @@ var render = function() {
         attrs: {
           currentQuery: _vm.currentQuery,
           highestAptPrice: _vm.highestAptPrice,
-          lowestAptPrice: _vm.lowestAptPrice
+          lowestAptPrice: _vm.lowestAptPrice,
+          servicesList: _vm.servicesList
         },
         on: {
           newQuery: function($event) {

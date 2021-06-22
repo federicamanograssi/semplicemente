@@ -31,6 +31,7 @@ class ApartmentController extends Controller
     }
     
     //  Ritorna lista servizi
+
     public function services()
     {
         $services=Service::all();
@@ -40,15 +41,6 @@ class ApartmentController extends Controller
             'results'=> $services
         ]);
     }
-    // public function search()
-    // {
-    //     $apartments=Apartment::all();
-
-    //     return response()->json([
-    //         'success'=> true,
-    //         'results'=> 'ciao'
-    //     ]);
-    // }
 
     /**
      * RICERCA APT VISIBILI NEL DB 
@@ -107,6 +99,7 @@ class ApartmentController extends Controller
                     ->where('apartment_id',$apartment['id'])
                     ->get();
 
+                    
                 //- crea array con i dati necessari per stampa e filtri    
 
                 $newChalet = array(

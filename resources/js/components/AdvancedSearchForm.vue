@@ -54,8 +54,8 @@
                                 @change="updateQuery()" 
                                 type="range" 
                                 min="20" 
-                                max="60" 
-                                value="20" 
+                                max="100" 
+                                value="40" 
                                 step="20" 
                                 class="form__slider" 
                                 id="search-form-distance">
@@ -154,7 +154,7 @@
                                     class="services-list__item">
 
                                     <label 
-                                        :for="'service-'+index"
+                                        :for="'service-' + index"
                                         class="checkbox__label">
 
                                         {{service.service_name}}
@@ -163,7 +163,7 @@
                                             :id="'service-'+index"
                                             type="checkbox"
                                             class="checkbox__field"
-                                            :value="service.service_name"
+                                            :value="service.id"
                                             v-model="selectedServices"
                                             checked="checked"
                                             @change="updateQuery()">
@@ -201,9 +201,7 @@
 import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
         mounted(){
-            this.getServicesList();
-            this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
-        
+            this.maxPrice ? null : this.maxPrice = this.highestAptPrice;        
         },
         data() {
             return {
@@ -216,13 +214,14 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 selectedServices    : this.currentQuery.selectedServices ,
 
                 isFiltersBoxOpen : false ,
-                servicesList : []   // lista di tutti i servizi supportati dall'applicazione
+                // servicesList : []   // lista di tutti i servizi supportati dall'applicazione
             }
         },
         props: [
                 'currentQuery' ,    // array contenente tutte le informazioni relative alla ricerca
                 'highestAptPrice' , // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
-                'lowestAptPrice'    // prezzo minimo [...] 
+                'lowestAptPrice' ,   // prezzo minimo [...] 
+                'servicesList'
             ] ,
 
         methods : {
@@ -250,16 +249,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 console.log(newQuery);
                 this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore
 
-            } ,
-            getServicesList(){
-
-                // Chiamata API che restituisce la lista complessiva dei servizi
-                axios
-                .get('http://127.0.0.1:8000/api/services')
-                .then((servicesList)=>{                    
-                    this.servicesList = servicesList.data.results;
-                });
-            }       
+            } ,   
         }       
     }
 </script>

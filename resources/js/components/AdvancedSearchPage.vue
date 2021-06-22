@@ -7,6 +7,7 @@
             :currentQuery="currentQuery"
             :highestAptPrice="highestAptPrice"
             :lowestAptPrice="lowestAptPrice"
+            :servicesList="servicesList"
             >
 
             <!-- Search Form -->
@@ -40,6 +41,7 @@
 
         mounted() {
             this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
+            this.getServicesList();
             this.search();
         },
         data() {            
@@ -52,7 +54,9 @@
                 baseLat  : 0 ,
                 baseLon : 0 ,
 
-                highestAptPrice  : 200  ,
+                servicesList : [],
+
+                highestAptPrice  : 300  ,
                 lowestAptPrice   :  0 ,
 
                 currentQuery : {
@@ -61,7 +65,6 @@
                     guests           : 2 ,
                     minRating        : 1 ,
                     minRooms         : 1 ,
-                    // maxPrice         : 199 ,
                     maxPrice         : null ,
                     selectedServices : []  ,
                 } ,
@@ -79,49 +82,39 @@
                 // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
                 // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
                 
-                for(let i = 0; i < this.apartments.length ; i++) {
+                mainFor: for(let i = 0; i < this.apartments.length ; i++) {
 
                     const apt   = this.apartments[i];   // Alias
                     const query = this.currentQuery;    // Alias
-                
-                    // Controllo la distanza                
 
-                    if (apt.dist > query.maxDistance) {
-                        continue;
-                    }
+                    if (apt.dist > query.maxDistance)   continue;   // Filtro distanza
+                    if (apt.price > query.maxPrice)     continue;   // Filtro Prezzo
+                    if ( apt.rating < query.minRating ) continue;   // filtro Punteggio
+                    if ( apt.beds < query.guests )      continue;   // Filtro Posti letto
+                    if ( apt.rooms < query.minRooms )   continue;   // Filtro Camere
                     
-                    // Controllo Prezzo
-
-                    if (apt.price > query.maxPrice) {
-                        // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati                        
-                        continue;
-                    }
-
-                    // Controllo Punteggio
-
-                    if ( apt.rating < query.minRating ) {                
-                        continue;
-                    }
-
-                    // Controllo numero ospiti / letti
-
-                    if ( apt.beds < query.guests ) {                
-                        continue;
-                    }
-
-                    // Controllo Numero Camere
-
-                    if ( apt.rooms < query.minRooms ) {                
-                        continue;
-                    }
-
                     // Controllo Servizi Aggiuntivi
 
+                    if (apt.services.length == 0){
+                        continue    // Se non ci sono servizi aggiuntivi l'appartamento è scartato a priori
+                    } else {
+                        for(let i=0; i<query.selectedServices.length; i++){ // Ciclo tutti i servizi richiesti dall'utente
+                            const reqServ = query.selectedServices[i];  // alias
+                            let found = false;  // flag
 
+                            for(let j=0; j<apt.services.length; j++){   // per ogni servizio richiesto controllo che sia presente fra quelli offerti dall'appartamento
+                                const aptServ = apt.services[j];
+                                if(aptServ == reqServ) found = true;    // Se il servizio è present porto il flag a true
+                            }   // inner for
+
+                            if (found == false) continue mainFor;       // se anche un solo servizio richiesto non era presente l'appartamento è scartato
+      
+                        }   // outer for
+                    } // else
 
                     this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
                 
-                }                    
+                }  // main for
             },
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -157,7 +150,24 @@
                             }
                         })
                     .then((response)=>{
-                        
+
+                        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
+                        // (Benché ciò dovrebbe avvenire lato server...)
+
+                        response.data.results.forEach(apt => {
+                            
+                            if(apt.services.length>0){
+                                
+                                let tmpArray=[];
+                                
+                                apt.services.forEach(service => {
+                                    service.service_id ? tmpArray.push(service.service_id) : null;                                
+                                });
+
+                                apt.services = tmpArray;
+                            }
+                        }); // Fine Conversione
+
                         self.apartments = response.data.results;
 
                         self.baseLat = response.data.base_lat;  // latitudine  località cercata dall'utente
@@ -165,7 +175,7 @@
 
                         self.getaptListInfo();
                         self.filterResults();
-                });        
+                });
             } ,
             getNewQuery(newQuery){
 
@@ -183,7 +193,17 @@
                              
                 else this.filterResults();              // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
                 
-            }
+            },
+                getServicesList(){
+
+                // Chiamata API che restituisce la lista complessiva dei servizi
+
+                axios
+                .get('http://127.0.0.1:8000/api/services')
+                .then((servicesList)=>{                    
+                    this.servicesList = servicesList.data.results;
+                });
+            }    
         }
     }
 </script>
