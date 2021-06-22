@@ -6,18 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name', 'BoolChalet') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    
     {{-- bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 
     {{-- INIZIO PAGINA---- contenitore generale--}}
     <div class="h-100">
         
-        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <nav class="header navbar flex-md-nowrap p-0">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">BoolChalet</a>
             <ul class="navbar-nav px-3">
                 
@@ -36,7 +37,7 @@
     
         <div class="container-fluid h-100">
             {{-- SIDEBAR---------- --}}
-            <div class="row">
+            <div class="row align-items-stretch">
                 {{-- rendere la sidebar responsive --}}
               <nav class="col-md-2 d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
@@ -45,7 +46,7 @@
                   <ul class="nav flex-column">
                     {{-- dashboard--- --}}
                     <li class="nav-item">
-                      <a class="nav-link active" href={{ route('dashboard')}}>
+                      <a class="nav-link active" href={{ route('admin_homepage')}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
                             <path d="M12 2L2 7l10 5l10-5l-10-5z"></path>
                             <path d="M2 17l10 5l10-5"/><path d="M2 12l10 5l10-5"></path>
