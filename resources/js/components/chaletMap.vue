@@ -28,7 +28,7 @@
     export default {
 
         mounted() {
-            this.mymap = L.map('chalet-map').setView([45.900383, 10.723176], 13);
+            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -74,7 +74,7 @@
                 console.log("Aggiorno Centro Mappa");
                 console.log(this.baseLat + ' ' + this.baseLon);
                 
-                this.mymap.panTo([ this.baseLat , this.baseLon , {animate: true, duration: 5.0} ]);
+                this.mymap.panTo([ this.baseLat , this.baseLon , {animate: true,} ]);
             }
         }
     }

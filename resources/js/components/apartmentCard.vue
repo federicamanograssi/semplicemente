@@ -37,7 +37,7 @@
         props : {
             name : String,
             imgSrc : String,
-            rating : String,
+            rating : Number,
         }
     }
 </script>
