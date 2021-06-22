@@ -2122,13 +2122,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      // Proprietà relative alla query dell'utente
       baseLocation: this.query.baseLocation,
       maxDistance: this.query.maxDistance,
       minRating: this.query.minRating,
       maxPrice: this.query.maxPrice,
+      minRooms: this.query.minRooms,
+      guests: this.query.guests,
+      selectedServices: [],
+      // Proprietà relative al funzionamento del form
       isFiltersBoxOpen: false,
-      servicesList: [],
-      selectedServices: []
+      servicesList: []
     };
   },
   props: ['query'],
@@ -2139,22 +2143,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateQuery: function updateQuery() {
       // Metodo richiamato ogni volta che 
-      // un campo viene modificato
+      // un qualsiasi campo viene modificato
+      // Quali siano le operazioni da eseguire in base alle modifiche
+      // lo stabilirà il parent component (AdvancedSearchPage)
       var newQuery = {
         baseLocation: this.baseLocation,
-        maxDistance: this.maxDistance * 20,
-        minRating: this.minRating,
-        maxPrice: this.maxPrice,
-        selectedServices: this.selectedServices
+        maxDistance: Number(this.maxDistance),
+        guests: Number(this.guests),
+        minRating: Number(this.minRating),
+        minRooms: Number(this.minRooms),
+        maxPrice: Number(this.maxPrice),
+        selectedServices: this.selectedServices,
+        baseLat: this.query.baseLat,
+        baseLon: this.query.baseLon
       };
       console.log("Occhio, Sto mandando una nuova query");
-      this.$emit('newQuery', newQuery);
+      this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore (AdvancedSearchPage)
     },
     getServicesList: function getServicesList() {
       var _this = this;
 
       axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
-        // console.log(servicesList.data.results);
+        console.log(servicesList.data.results);
         _this.servicesList = servicesList.data.results;
       });
     }
@@ -2193,19 +2203,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {//
+  mounted: function mounted() {
+    this.search();
   },
   data: function data() {
     return {
       apartments: [],
+      filteredApartments: [],
       currentQuery: {
         baseLocation: this.destination,
         baseLat: 0,
         baseLon: 0,
-        maxDistance: 1,
+        maxDistance: 40,
         minRating: 1,
+        minRooms: 1,
+        guests: 2,
         maxPrice: 200,
-        selectedServices: []
+        selectedServices: [] // highestPrice : ***Si deve calcolare il prezzo massimo fra gli appartamenti filtrati e passarlo al form, in modo che si possa visualizzare come valore minimo nello slider***
+        // LowestPrice  : ***Come sopra, ma per il prezzo minimo***
+
       },
       mapIsShown: true
     };
@@ -2213,15 +2229,44 @@ __webpack_require__.r(__webpack_exports__);
   props: ['destination'],
   methods: {
     filterResults: function filterResults() {
-      var _this = this;
+      this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
+      // Facciamo riferimento alla lista degli appartamenti generale
+      // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
+      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
 
-      // filter results
-      this.apartments.forEach(function (apartment) {
-        // Check Distance 
-        if (apartment['dist'] > _this.currentQuery.maxDistance) {
-          apartment.visible = false;
-        } else apartment.visible = true;
-      });
+      for (var i = 0; i < this.apartments.length; i++) {
+        var apt = this.apartments[i]; // Alias
+
+        var query = this.currentQuery; // Alias
+        // Controllo la distanza
+
+        if (apt.dist > query.maxDistance) {
+          continue;
+        } // Controllo Prezzo
+
+
+        if (apt.price > query.maxPrice) {
+          // Possiamo approfittarne per stabilire prezzo max e min di tutti gli appartamenti selezionati
+          continue;
+        } // Controllo Punteggio
+
+
+        if (apt.rating < query.minRating) {
+          continue;
+        } // Controllo numero ospiti / letti
+
+
+        if (apt.beds < query.guests) {
+          continue;
+        } // Controllo Numero Camere
+
+
+        if (apt.rooms < query.minRooms) {
+          continue;
+        }
+
+        this.filteredApartments.push(this.apartments[i]); // Se l'appartamento sopravvive al filtraggio viene pushato nella lista degli appartamenti da visualizzare 
+      }
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2235,9 +2280,6 @@ __webpack_require__.r(__webpack_exports__);
           radius: this.currentQuery.maxDistance
         }
       }).then(function (response) {
-        response.data.results.forEach(function (apartment) {
-          apartment['visible'] = true;
-        });
         self.apartments = response.data.results;
         self.currentQuery.baseLat = response.data.base_lat;
         self.currentQuery.baseLon = response.data.base_lon;
@@ -2246,18 +2288,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNewQuery: function getNewQuery(newQuery) {
       var newSearchIsNeeded = false;
+      var oldQuery = this.currentQuery;
 
-      if (this.currentQuery.baseLocation != newQuery.baseLocation || this.currentQuery.maxDistance < newQuery.maxDistance) {
+      if (oldQuery.baseLocation != newQuery.baseLocation || oldQuery.maxDistance < newQuery.maxDistance) {
         newSearchIsNeeded = true;
       }
 
-      newQuery.base_lat = this.currentQuery.base_lat; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
+      this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
 
-      newQuery.base_lon = this.currentQuery.base_lon; // <-- provvisorissimo: serve ad evitare che le coordinate passino per il 'undefinied
-
-      this.currentQuery = newQuery; //   <-- Per questo ottieni due console.log al variare delle coordinate!
-
-      if (newSearchIsNeeded) this.search();else this.filterResults();
+      if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio                
+      else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
     }
   }
 });
@@ -2306,17 +2346,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2664,7 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     imgSrc: String,
-    rating: String
+    rating: Number
   }
 });
 
@@ -2805,7 +2834,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.mymap = L.map('chalet-map').setView([45.900383, 10.723176], 13);
+    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -2848,8 +2877,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Aggiorno Centro Mappa");
       console.log(this.baseLat + ' ' + this.baseLon);
       this.mymap.panTo([this.baseLat, this.baseLon, {
-        animate: true,
-        duration: 5.0
+        animate: true
       }]);
     }
   }
@@ -39644,6 +39672,7 @@ var render = function() {
                 expression: "baseLocation"
               }
             ],
+            key: "",
             staticClass: "form__input",
             attrs: { type: "text" },
             domProps: { value: _vm.baseLocation },
@@ -39729,9 +39758,10 @@ var render = function() {
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
-                    min: "1",
-                    max: "3",
-                    value: "1",
+                    min: "20",
+                    max: "60",
+                    value: "20",
+                    step: "20",
                     id: "search-form-distance"
                   },
                   domProps: { value: _vm.maxDistance },
@@ -39747,13 +39777,48 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.maxDistance * 20) + " Km")
+                _vm._v(_vm._s(_vm.maxDistance) + " Km")
               ])
             ]
           )
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "form__group" }, [
+          _c(
+            "div",
+            { staticClass: "form__field form__field--half form__field--rooms" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.minRooms,
+                    expression: "minRooms"
+                  }
+                ],
+                staticClass: "form__input",
+                attrs: { id: "search-form-rooms", type: "number" },
+                domProps: { value: _vm.minRooms },
+                on: {
+                  change: function($event) {
+                    return _vm.updateQuery()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.minRooms = $event.target.value
+                  }
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(2)
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
           _c(
@@ -39992,58 +40057,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form__group" }, [
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--rooms" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-rooms" }
-            },
-            [
-              _vm._v("Camere "),
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("da letto ")
-              ]),
-              _vm._v("(min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-rooms", type: "number" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form__field form__field--half form__field--beds" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "form__label form__label--left",
-              attrs: { for: "search-form-beds" }
-            },
-            [
-              _c("span", { staticClass: "hide-on-mobile" }, [
-                _vm._v("Numero ")
-              ]),
-              _vm._v("Posti letto (min)")
-            ]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form__input",
-            attrs: { id: "search-form-beds", type: "number" }
-          })
-        ]
-      )
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-rooms" }
+      },
+      [
+        _vm._v("Camere "),
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("da letto ")]),
+        _vm._v("(min)")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form__field form__field--half form__field--beds" },
+      [
+        _c(
+          "label",
+          {
+            staticClass: "form__label form__label--left",
+            attrs: { for: "search-form-beds" }
+          },
+          [
+            _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
+            _vm._v("Posti letto (min)")
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form__input",
+          attrs: { id: "search-form-beds", type: "number" }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -40082,7 +40134,10 @@ var render = function() {
       _vm._v(" "),
       _c("apartments-list", {
         staticClass: "apartments-list--full-width",
-        attrs: { apartments: _vm.apartments, mapIsShown: _vm.mapIsShown }
+        attrs: {
+          apartments: _vm.filteredApartments,
+          mapIsShown: _vm.mapIsShown
+        }
       }),
       _vm._v(" "),
       _c("chalet-map", {
@@ -54070,8 +54125,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

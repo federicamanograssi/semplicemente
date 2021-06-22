@@ -18,7 +18,7 @@
     {{-- INIZIO PAGINA---- contenitore generale--}}
     <div class="h-100">
         
-        <nav class="header navbar flex-md-nowrap p-0">
+        <nav class="navbar flex-md-nowrap p-0">
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">BoolChalet</a>
             <ul class="navbar-nav px-3">
                 
