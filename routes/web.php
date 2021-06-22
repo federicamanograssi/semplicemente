@@ -25,6 +25,12 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/index', function () {
 //     return view('/guest/home');
 // });
+Route::get('/payment/make', 'PaymentsController@make')->name('payment.make');
+Route::get('/payment', function() {
+    return view('payment');
+});
+
+
 
 Route::get('/', function () {
     return view('/guest/home');
