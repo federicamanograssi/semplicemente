@@ -2773,7 +2773,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     imgSrc: String,
-    rating: Number
+    rating: Number,
+    id: Number,
+    is_sponsored: Boolean
   }
 });
 
@@ -2788,6 +2790,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -40760,7 +40764,9 @@ var render = function() {
         attrs: {
           name: apartment.name,
           imgSrc: "storage/" + apartment.cover_img,
-          rating: apartment.rating
+          rating: apartment.rating,
+          id: apartment.id,
+          is_sponsored: apartment.is_sponsored
         }
       })
     }),

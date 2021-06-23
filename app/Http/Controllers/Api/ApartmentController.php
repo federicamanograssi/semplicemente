@@ -107,6 +107,16 @@ class ApartmentController extends Controller
                     ->where('apartment_id',$apartment['id'])
                     ->get();
 
+                    // check in evidenza
+                
+                $checkSponsor = DB::table('apartment_sponsorship')
+                    ->where('apartment_id',$apartment['id'])->first();
+                if($checkSponsor){
+                    $is_sponsored = true;
+                } else {
+                    $is_sponsored = false;
+                };
+
                 //- crea array con i dati necessari per stampa e filtri    
 
                 $newChalet = array(
@@ -120,7 +130,8 @@ class ApartmentController extends Controller
                     'beds' => $apartment['beds_n'],
                     'price' => $apartment['price_per_night'],
                     'rating' => $apartment['rating'],
-                    'services' => $services
+                    'services' => $services,
+                    'is_sponsored' => $is_sponsored
                 );
 
                 //- salvare l'array dell'apt nell'array di risultati da restituire

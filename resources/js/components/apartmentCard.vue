@@ -38,6 +38,8 @@
             name : String,
             imgSrc : String,
             rating : Number,
+            id:Number,
+            is_sponsored:Boolean
         }
     }
 </script>
