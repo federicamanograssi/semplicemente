@@ -2283,7 +2283,7 @@ __webpack_require__.r(__webpack_exports__);
   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
     filterResults: function filterResults() {
-      this.filteredApartments = []; // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
+      this.filteredApartments = []; // Resetta lista appartamenti filtrati
       // Facciamo riferimento alla lista degli appartamenti generale
       // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
       // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
@@ -2324,11 +2324,56 @@ __webpack_require__.r(__webpack_exports__);
           } // outer for
 
         } // else
+        // Assegna casualmente una sponsorizzazione ad un apparamento su 3
+        // (Soluzione temporanea prima di ottenere l'informazione dal server)
 
 
-        this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
+        var rNum = Math.floor(Math.random() * 3) + 1;
+        rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
+        this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array             
       } // main for
 
+
+      if (this.filteredApartments.length > 1) this.sortApartments();
+    },
+    sortApartments: function sortApartments() {
+      // Ordina gli appartamenti per distanza rispetto alla località cercata dall'utente
+      // in seguito porta comunque gli appartamenti sponsorizzati nelle prime posizioni
+      var sortedApt = []; //  Predispongo array
+
+      while (this.filteredApartments.length > 1) {
+        var minDist = this.filteredApartments[0].dist; // Valore iniziale distanza minima impostata sul primio elemento
+
+        var closerApt = 0; //elemento la cui distanza è quella inferiore
+
+        for (var i = 0; i < this.filteredApartments.length; i++) {
+          var apt = this.filteredApartments[i]; // Alias
+
+          if (apt.dist <= minDist) {
+            minDist = apt.dist;
+            closerApt = i;
+          }
+        }
+
+        sortedApt.push(this.filteredApartments[closerApt]); // aggiunge l'apt la cui distanza è quella minima all'array degli apt ordinati
+
+        this.filteredApartments.splice(closerApt, 1); // Rimuove l'apt appena aggiunto dall'array principale per escluderlo dalle verifiche successive
+      }
+
+      sortedApt.push(this.filteredApartments[0]); // pusha l'ultimo apt rimasto nell'array principale (non gestito dal while)
+
+      this.filteredApartments = []; // A questo punto filteredApartments è vuoto mentre sortApartments contiene tutti gli apt già ordinati
+      // Devo adesso inserire nelle prime posizioni gli apt sponsorizzati
+      // Ricreo l'array principale inserrendo ai primi posti gli apt sponsorizzati
+
+      for (var _i2 = 0; _i2 < sortedApt.length; _i2++) {
+        if (sortedApt[_i2].isSponsored) this.filteredApartments.push(sortedApt[_i2]);
+      } // Dopo gli apt sponsorizzati inserisco quelli rimanenti                
+
+
+      for (var _i3 = 0; _i3 < sortedApt.length; _i3++) {
+        if (!sortedApt[_i3].isSponsored) this.filteredApartments.push(sortedApt[_i3]);
+      }
     },
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2800,14 +2845,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.dist = Math.round(this.dist * 100) / 100;
+  },
   props: {
     name: String,
     imgSrc: String,
     rating: Number,
     id: Number,
     price: Number,
-    beds: Number
+    beds: Number,
+    isSponsored: Boolean,
+    dist: Number
   }
 });
 
@@ -2822,6 +2871,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -40749,7 +40800,7 @@ var render = function() {
     "a",
     {
       staticClass: "single-apartment",
-      class: "single-apartment--sponsored",
+      class: _vm.isSponsored ? "single-apartment--sponsored" : null,
       attrs: { href: "single/" + _vm.id }
     },
     [
@@ -40787,6 +40838,11 @@ var render = function() {
           _c("span", { staticClass: "single-apartment__price" }, [
             _c("strong", [_vm._v(_vm._s(_vm.price) + "€")]),
             _vm._v(" / notte")
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "single-apartment__distance" }, [
+            _c("i", { staticClass: "fas fa-map-marker-alt" }),
+            _vm._v(_vm._s(Math.round(_vm.dist * 100) / 100) + " Km")
           ])
         ])
       ])
@@ -40843,7 +40899,9 @@ var render = function() {
           rating: apartment.rating,
           id: apartment.id,
           price: apartment.price,
-          beds: apartment.beds
+          beds: apartment.beds,
+          isSponsored: apartment.isSponsored,
+          dist: apartment.dist
         }
       })
     }),

@@ -77,7 +77,7 @@
         methods : {
             filterResults(){
 
-                this.filteredApartments = [];   // Resetta lista appartamenti filtrati (ne compileremo una nuova a breve)
+                this.filteredApartments = [];   // Resetta lista appartamenti filtrati
 
                 // Facciamo riferimento alla lista degli appartamenti generale
                 // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
@@ -113,9 +113,61 @@
                         }   // outer for
                     } // else
 
-                    this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array                    
-                
+                    // Assegna casualmente una sponsorizzazione ad un apparamento su 3
+                    // (Soluzione temporanea prima di ottenere l'informazione dal server)
+
+                    let rNum = Math.floor(Math.random() * 3 ) + 1; 
+                    rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
+
+                    this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array             
+                                    
                 }  // main for
+
+                if (this.filteredApartments.length > 1) this.sortApartments();
+
+            },
+            sortApartments(){
+                // Ordina gli appartamenti per distanza rispetto alla località cercata dall'utente
+                // in seguito porta comunque gli appartamenti sponsorizzati nelle prime posizioni
+                
+                let sortedApt = []; //  Predispongo array
+                    
+                while(this.filteredApartments.length > 1) {
+                    
+                    let minDist   = this.filteredApartments[0].dist;    // Valore iniziale distanza minima impostata sul primio elemento
+                    let closerApt = 0;  //elemento la cui distanza è quella inferiore
+
+                    for(let i = 0; i < this.filteredApartments.length ; i++) {
+                        
+                        const apt   = this.filteredApartments[i];   // Alias
+
+                        if(apt.dist <= minDist) {
+                            minDist  = apt.dist;
+                            closerApt = i;                            
+                        }
+                    }
+
+                    sortedApt.push(this.filteredApartments[closerApt]); // aggiunge l'apt la cui distanza è quella minima all'array degli apt ordinati
+
+                    this.filteredApartments.splice(closerApt , 1);  // Rimuove l'apt appena aggiunto dall'array principale per escluderlo dalle verifiche successive
+
+                }
+
+                sortedApt.push(this.filteredApartments[0]); // pusha l'ultimo apt rimasto nell'array principale (non gestito dal while)
+
+                this.filteredApartments = [];
+
+                // A questo punto filteredApartments è vuoto mentre sortApartments contiene tutti gli apt già ordinati
+                // Devo adesso inserire nelle prime posizioni gli apt sponsorizzati
+                
+                // Ricreo l'array principale inserrendo ai primi posti gli apt sponsorizzati
+                for(let i = 0; i < sortedApt.length ; i++)
+                    if(sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
+
+                // Dopo gli apt sponsorizzati inserisco quelli rimanenti                
+                for(let i = 0; i < sortedApt.length ; i++)
+                    if(!sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
+
             },
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -148,7 +200,8 @@
                         params: {
                             location    :   this.currentQuery.baseLocation ,
                             radius      :   this.currentQuery.maxDistance
-                            }
+                
+                }
                         })
                     .then((response)=>{
 

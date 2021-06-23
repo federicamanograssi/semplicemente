@@ -11,6 +11,8 @@
                 :id="apartment.id"
                 :price="apartment.price"
                 :beds="apartment.beds"
+                :isSponsored="apartment.isSponsored"
+                :dist="apartment.dist"
                 >
 
                 <!-- Apartment Card Component -->
