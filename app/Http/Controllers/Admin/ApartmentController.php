@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
 use App\Image;
-use App\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -134,10 +133,6 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        $new_view = new View;
-        $new_view->apartment_id = $apartment->id;
-        $new_view->save();
-
         return view('guest.singleApartment',compact('apartment'));
     }
 

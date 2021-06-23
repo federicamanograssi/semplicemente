@@ -3,7 +3,9 @@
 
 @section('main')
     <main>
-
+        @foreach ($apartments as $apartment)
+            
+        
         <div class="container">
             <section class="apartment-title">
                 <h2>{{$apartment->title}}</h2>
@@ -267,7 +269,7 @@
         
 
 
-
+            @endforeach
         </main>
 
         <section class="footer-top">

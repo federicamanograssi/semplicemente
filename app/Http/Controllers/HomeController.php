@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Apartment;
+use App\View;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -26,8 +27,17 @@ class HomeController extends Controller
     {
         
     }
-    public function show(Apartment $apartment)
+    public function show($id)
     {
-        return view('guest.singleApartment',compact('apartment'));
+        $data = [
+            'apartments' => Apartment::where('id', $id)->first()->get()
+        ];
+
+        //crea nuova visualizzazione dell'appartamento
+        $new_view = new View;
+        $new_view->apartment_id = $id;
+        $new_view->save();
+
+        return view('guest.singleApartment',$data);
     }
 }
