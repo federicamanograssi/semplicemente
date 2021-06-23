@@ -3,6 +3,7 @@
 
 @section('main')
     <main>
+        
         @foreach ($apartments as $apartment)
             
         
