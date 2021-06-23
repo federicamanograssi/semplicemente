@@ -1,5 +1,5 @@
 <template>
-    <a href="#" class="single-apartment"
+    <a :href="'single/'+id" class="single-apartment"
         :class="'single-apartment--sponsored'">
 
         <div class="sponsored-box">

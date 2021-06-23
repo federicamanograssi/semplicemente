@@ -36,25 +36,36 @@
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
-        }).addTo(this.mymap);
+            }).addTo(this.mymap);
+
+
         },
         data() {            
             return {                
-                mymap : null ,
-                mapIsShown : true
+                mymap        : null ,
+                mapIsShown   : true ,
+                radiusCircle : null ,
+                marker       : null ,
+                markers      : null
             }
         },
-        props : ['baseLat' , 'baseLon'] ,    
+        props : ['baseLat' , 'baseLon' , 'apartments'] ,    
         watch: { 
             baseLat: {                
                 handler: function(val, oldVal) {
                     console.log("La latitudine è passata da " + oldVal + ' a ' + val);
-                this.updateCoordinates();
+                    this.updateCoordinates();
                 },
             } ,
+            apartments: {                
+                handler: function(val,oldVal) {
+                    console.log("Occhio: è cambiato l'array degli appartamenti!");
+                    this.updateMarkers();
+            },
+        } ,
             baseLon: {                
                 handler: function(val, oldVal) {
-                this.updateCoordinates();
+                    this.updateCoordinates();
                 },
             } 
         },
@@ -62,19 +73,51 @@
             toggleMap() {
                 this.$emit('mapToggled');
                 
-                let mapClasses = document.getElementById("chalet-map").classList;
-                
-                this.mapIsShown ? mapClasses.add('hidden') : mapClasses.remove('hidden');
-                
+                let mapClasses = document.getElementById("chalet-map").classList;                
+                this.mapIsShown ? mapClasses.add('hidden') : mapClasses.remove('hidden');                
                 this.mymap.invalidateSize();    // Previene deformazione della mappa alla sua ricomparsa
-
                 this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
+
             } ,
             updateCoordinates(){
-                console.log("Aggiorno Centro Mappa");
-                console.log(this.baseLat + ' ' + this.baseLon);
-                
+                // Questo metodo esegue le operazioni necessarie al variare
+                // della destinazione ricercata dall'utente
+
+                // Centra la mappa sulla destinazione cercata
                 this.mymap.panTo([ this.baseLat , this.baseLon , {animate: true,} ]);
+
+                // Cancella il cerchio corrisponente al raggio precedente (se esistente)
+                if(this.radiusCircle) this.radiusCircle.remove();
+
+                // Crea un nuovo cerchio corrisponente al raggio di ricerca                
+                this.radiusCircle = L.circle([this.baseLat, this.baseLon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.05,
+                    radius: 20000
+                }).addTo(this.mymap);
+
+            },
+            updateMarkers(){                
+                // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
+
+                // Se sono presenti dei marker precedenti li rimuove dalla mappa
+                // Prima di crearne una nuova lista aggiornata
+                if(this.markers){
+                    this.markers.forEach(marker => {
+                        marker.remove();
+                    });
+                }
+
+                this.markers=[];    // Reset array to default
+
+                // Per ogni appartamento che ha superato la selezione 
+                // crea un marker nell'array e lo aggiunge alla mappa
+                this.apartments.forEach(apt => {                    
+                    let newMarker = L.marker([apt.lat, apt.lon]);
+                    this.markers.push(newMarker);
+                    newMarker.addTo(this.mymap);
+                });
             }
         }
     }
@@ -94,7 +137,6 @@
         height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
 
         @include responsive(tablet) {
-            // position: relative;
             top: auto;
             right: auto;
             height: $height-section-big;

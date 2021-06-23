@@ -2251,6 +2251,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
@@ -2964,15 +2965,24 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       mymap: null,
-      mapIsShown: true
+      mapIsShown: true,
+      radiusCircle: null,
+      marker: null,
+      markers: null
     };
   },
-  props: ['baseLat', 'baseLon'],
+  props: ['baseLat', 'baseLon', 'apartments'],
   watch: {
     baseLat: {
       handler: function handler(val, oldVal) {
         console.log("La latitudine è passata da " + oldVal + ' a ' + val);
         this.updateCoordinates();
+      }
+    },
+    apartments: {
+      handler: function handler(val, oldVal) {
+        console.log("Occhio: è cambiato l'array degli appartamenti!");
+        this.updateMarkers();
       }
     },
     baseLon: {
@@ -2991,11 +3001,45 @@ __webpack_require__.r(__webpack_exports__);
       this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
     },
     updateCoordinates: function updateCoordinates() {
-      console.log("Aggiorno Centro Mappa");
-      console.log(this.baseLat + ' ' + this.baseLon);
+      // Questo metodo esegue le operazioni necessarie al variare
+      // della destinazione ricercata dall'utente
+      // Centra la mappa sulla destinazione cercata
       this.mymap.panTo([this.baseLat, this.baseLon, {
         animate: true
-      }]);
+      }]); // Cancella il cerchio corrisponente al raggio precedente (se esistente)
+
+      if (this.radiusCircle) this.radiusCircle.remove(); // Crea un nuovo cerchio corrisponente al raggio di ricerca                
+
+      this.radiusCircle = L.circle([this.baseLat, this.baseLon], {
+        color: 'green',
+        fillColor: 'green',
+        fillOpacity: 0.05,
+        radius: 20000
+      }).addTo(this.mymap);
+    },
+    updateMarkers: function updateMarkers() {
+      var _this = this;
+
+      // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
+      // Se sono presenti dei marker precedenti li rimuove dalla mappa
+      // Prima di crearne una nuova lista aggiornata
+      if (this.markers) {
+        this.markers.forEach(function (marker) {
+          marker.remove();
+        });
+      }
+
+      this.markers = []; // Reset array to default
+      // Per ogni appartamento che ha superato la selezione 
+      // crea un marker nell'array e lo aggiunge alla mappa
+
+      this.apartments.forEach(function (apt) {
+        var newMarker = L.marker([apt.lat, apt.lon]);
+
+        _this.markers.push(newMarker);
+
+        newMarker.addTo(_this.mymap);
+      });
     }
   }
 });
@@ -7616,7 +7660,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 56.25em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 56.25em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}", ""]);
 
 // exports
 
@@ -40290,7 +40334,11 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("chalet-map", {
-        attrs: { baseLon: _vm.baseLon, baseLat: _vm.baseLat },
+        attrs: {
+          baseLon: _vm.baseLon,
+          baseLat: _vm.baseLat,
+          apartments: _vm.filteredApartments
+        },
         on: {
           mapToggled: function($event) {
             return _vm.toggleMap()
@@ -40702,7 +40750,7 @@ var render = function() {
     {
       staticClass: "single-apartment",
       class: "single-apartment--sponsored",
-      attrs: { href: "#" }
+      attrs: { href: "single/" + _vm.id }
     },
     [
       _vm._m(0),

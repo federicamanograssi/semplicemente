@@ -104,8 +104,10 @@ class ApartmentController extends Controller
 
                 $newChalet = array(
                     'name' => $apartment['title'] ,
-                    'lat'  => (M_PI / 180) * $apartment['latitude'] ,
-                    'lon'  => (M_PI / 180) * $apartment['longitude'] ,
+                    // 'lat'  => (M_PI / 180) * $apartment['latitude'] ,
+                    // 'lon'  => (M_PI / 180) * $apartment['longitude'] ,
+                    'lat'  => $apartment['latitude'] ,
+                    'lon'  => $apartment['longitude'] ,
                     'dist' => $dist ,
                     'cover_img' => $cover_img,
                     'rooms' => $apartment['rooms_n'],

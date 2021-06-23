@@ -26,7 +26,8 @@
         <chalet-map 
             v-on:mapToggled="toggleMap()" 
             :baseLon="baseLon" 
-            :baseLat="baseLat">
+            :baseLat="baseLat"
+            :apartments="filteredApartments">
 
             <!-- Mappa -->
 

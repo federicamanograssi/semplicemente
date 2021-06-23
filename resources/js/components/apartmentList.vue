@@ -78,6 +78,7 @@
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
+        align-content: flex-start;
 
         &--full-width {
             .single-apartment {
