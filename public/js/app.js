@@ -2252,6 +2252,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
@@ -2260,10 +2261,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      // Liste di Appartamenti
       apartments: [],
+      // Lista Generale con tutti i risultati trovati
       filteredApartments: [],
+      // Appartamenti che soddisfano i filtri definiti dall'utente
+      listApartments: [],
+      // Array ottimizzato per il component apartmentList
+      mapApartmens: [],
+      // Array ottimizzato per il component chaletMap
       baseLat: 0,
+      // latitudine località cercata
       baseLon: 0,
+      // Longituine località cercata
       servicesList: [],
       highestAptPrice: 300,
       lowestAptPrice: 0,
@@ -2334,7 +2344,42 @@ __webpack_require__.r(__webpack_exports__);
       } // main for
 
 
-      if (this.filteredApartments.length > 1) this.sortApartments();
+      if (this.filteredApartments.length > 1) this.sortApartments(); // this.mapApartmens = [];
+
+      this.mapApartmens = this.filteredApartments.map(function (_ref) {
+        var lat = _ref.lat,
+            lon = _ref.lon,
+            id = _ref.id,
+            name = _ref.name;
+        return {
+          lat: lat,
+          lon: lon,
+          id: id,
+          name: name
+        };
+      });
+      this.listApartments = this.filteredApartments.map(function (_ref2) {
+        var id = _ref2.id,
+            name = _ref2.name,
+            price = _ref2.price,
+            dist = _ref2.dist,
+            beds = _ref2.beds,
+            rating = _ref2.rating,
+            isSponsored = _ref2.isSponsored,
+            cover_img = _ref2.cover_img;
+        return {
+          id: id,
+          name: name,
+          price: price,
+          dist: dist,
+          beds: beds,
+          rating: rating,
+          isSponsored: isSponsored,
+          cover_img: cover_img
+        };
+      });
+      console.log("Lista appartamenti da passare alla mappa");
+      console.log(this.mapApartmens);
     },
     sortApartments: function sortApartments() {
       // Ordina gli appartamenti per distanza rispetto alla località cercata dall'utente
@@ -3002,8 +3047,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // 100Km --> zoom 8
+  // 60Km  --> zoom 9
+  // 20Km  --> zoom 10
   mounted: function mounted() {
-    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
+    var zoomLevel = 0;
+    if (this.radius <= 20) zoomLevel = 10;else if (this.radius >= 80) zoomLevel = 8;else zoomLevel = 9;
+    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -3018,26 +3068,23 @@ __webpack_require__.r(__webpack_exports__);
       mymap: null,
       mapIsShown: true,
       radiusCircle: null,
-      marker: null,
       markers: null
     };
   },
-  props: ['baseLat', 'baseLon', 'apartments'],
+  props: ['baseLat', 'baseLon', 'apartments', 'radius'],
   watch: {
     baseLat: {
-      handler: function handler(val, oldVal) {
-        console.log("La latitudine è passata da " + oldVal + ' a ' + val);
+      handler: function handler() {
         this.updateCoordinates();
       }
     },
     apartments: {
-      handler: function handler(val, oldVal) {
-        console.log("Occhio: è cambiato l'array degli appartamenti!");
+      handler: function handler() {
         this.updateMarkers();
       }
     },
-    baseLon: {
-      handler: function handler(val, oldVal) {
+    radius: {
+      handler: function handler() {
         this.updateCoordinates();
       }
     }
@@ -3065,7 +3112,7 @@ __webpack_require__.r(__webpack_exports__);
         color: 'green',
         fillColor: 'green',
         fillOpacity: 0.05,
-        radius: 20000
+        radius: this.radius * 1000
       }).addTo(this.mymap);
     },
     updateMarkers: function updateMarkers() {
@@ -3073,14 +3120,13 @@ __webpack_require__.r(__webpack_exports__);
 
       // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
       // Se sono presenti dei marker precedenti li rimuove dalla mappa
-      // Prima di crearne una nuova lista aggiornata
       if (this.markers) {
         this.markers.forEach(function (marker) {
           marker.remove();
         });
       }
 
-      this.markers = []; // Reset array to default
+      this.markers = []; // Reset array
       // Per ogni appartamento che ha superato la selezione 
       // crea un marker nell'array e lo aggiunge alla mappa
 
@@ -40378,17 +40424,15 @@ var render = function() {
       _vm._v(" "),
       _c("apartments-list", {
         staticClass: "apartments-list--full-width",
-        attrs: {
-          apartments: _vm.filteredApartments,
-          mapIsShown: _vm.mapIsShown
-        }
+        attrs: { apartments: _vm.listApartments, mapIsShown: _vm.mapIsShown }
       }),
       _vm._v(" "),
       _c("chalet-map", {
         attrs: {
           baseLon: _vm.baseLon,
           baseLat: _vm.baseLat,
-          apartments: _vm.filteredApartments
+          apartments: _vm.mapApartmens,
+          radius: _vm.currentQuery.maxDistance
         },
         on: {
           mapToggled: function($event) {

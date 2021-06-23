@@ -15,7 +15,7 @@
         </advanced-search-form>
 
         <apartments-list 
-            :apartments="filteredApartments" 
+            :apartments="listApartments" 
             :mapIsShown="mapIsShown" 
              class="apartments-list--full-width">
 
@@ -27,7 +27,8 @@
             v-on:mapToggled="toggleMap()" 
             :baseLon="baseLon" 
             :baseLat="baseLat"
-            :apartments="filteredApartments">
+            :apartments="mapApartmens"
+            :radius="currentQuery.maxDistance">
 
             <!-- Mappa -->
 
@@ -47,13 +48,16 @@
         },
         data() {            
             return {
+                
+                // Liste di Appartamenti
 
-                apartments: [] ,
+                apartments: [] ,            // Lista Generale con tutti i risultati trovati
+                filteredApartments : [] ,   // Appartamenti che soddisfano i filtri definiti dall'utente
+                listApartments : [],        // Array ottimizzato per il component apartmentList
+                mapApartmens : [],          // Array ottimizzato per il component chaletMap
 
-                filteredApartments : [] ,
-
-                baseLat  : 0 ,
-                baseLon : 0 ,
+                baseLat  : 0 ,  // latitudine località cercata
+                baseLon : 0 ,   // Longituine località cercata
 
                 servicesList : [],
 
@@ -124,6 +128,16 @@
                 }  // main for
 
                 if (this.filteredApartments.length > 1) this.sortApartments();
+
+                // this.mapApartmens = [];
+                this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name}) => ({lat, lon , id , name}));
+
+                this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, isSponsored, cover_img}) => ({id , name , price, dist, beds, rating, isSponsored, cover_img}));
+
+
+
+                console.log("Lista appartamenti da passare alla mappa");
+                console.log(this.mapApartmens);
 
             },
             sortApartments(){

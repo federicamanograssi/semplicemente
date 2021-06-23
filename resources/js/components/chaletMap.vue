@@ -26,9 +26,19 @@
 
 <script>
     export default {
-
+        // 100Km --> zoom 8
+        // 60Km  --> zoom 9
+        // 20Km  --> zoom 10
         mounted() {
-            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
+
+            let zoomLevel = 0;
+            
+            if(this.radius <= 20) zoomLevel = 10;
+            else if (this.radius >= 80) zoomLevel = 8;
+            else zoomLevel = 9;
+
+
+            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -37,36 +47,31 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
             }).addTo(this.mymap);
-
-
         },
         data() {            
             return {                
                 mymap        : null ,
                 mapIsShown   : true ,
                 radiusCircle : null ,
-                marker       : null ,
                 markers      : null
             }
         },
-        props : ['baseLat' , 'baseLon' , 'apartments'] ,    
+        props : ['baseLat' , 'baseLon' , 'apartments' , 'radius'] ,
         watch: { 
             baseLat: {                
-                handler: function(val, oldVal) {
-                    console.log("La latitudine è passata da " + oldVal + ' a ' + val);
+                handler: function() {
                     this.updateCoordinates();
-                },
+                }
             } ,
             apartments: {                
-                handler: function(val,oldVal) {
-                    console.log("Occhio: è cambiato l'array degli appartamenti!");
+                handler: function() {
                     this.updateMarkers();
-            },
-        } ,
-            baseLon: {                
-                handler: function(val, oldVal) {
+                }
+             } ,
+            radius: {                
+                handler: function() {
                     this.updateCoordinates();
-                },
+                }
             } 
         },
         methods : {
@@ -94,7 +99,7 @@
                     color: 'green',
                     fillColor: 'green',
                     fillOpacity: 0.05,
-                    radius: 20000
+                    radius: this.radius * 1000
                 }).addTo(this.mymap);
 
             },
@@ -102,17 +107,18 @@
                 // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
 
                 // Se sono presenti dei marker precedenti li rimuove dalla mappa
-                // Prima di crearne una nuova lista aggiornata
+                
                 if(this.markers){
                     this.markers.forEach(marker => {
                         marker.remove();
                     });
                 }
 
-                this.markers=[];    // Reset array to default
+                this.markers=[];    // Reset array
 
                 // Per ogni appartamento che ha superato la selezione 
                 // crea un marker nell'array e lo aggiunge alla mappa
+                
                 this.apartments.forEach(apt => {                    
                     let newMarker = L.marker([apt.lat, apt.lon]);
                     this.markers.push(newMarker);
