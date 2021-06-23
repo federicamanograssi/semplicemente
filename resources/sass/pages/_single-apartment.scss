@@ -3,6 +3,14 @@
     margin: 0 auto;
     i {
         padding-right: $spacing-tiny;
+        @include responsive(phone) {
+            font-size: 150%;
+        }
+    }
+    i.fa-star {
+        @include responsive(phone) {
+            font-size: initial;
+        }
     }
     .apartment-title {
         padding: $spacing-standard 0;
@@ -156,9 +164,40 @@
             @include responsive(phone) {
                 width: 100%;
             }
+            .host-btn {
+                width: 80%;
+            }
         }
     }
     .sponsored-gallery {
         padding: $spacing-huge 0;
+        .sponsored-slider-phone {
+            display: none;
+            @include responsive(phone) {
+                display: block;
+            }
+            .slider-phone-cards {
+                .slider-phone-card {
+                    width: 100%;
+                    height: 30rem;
+                    margin-bottom: $spacing-huge;
+                    .slider-phone-img {
+                        height: 100%;
+                        width: 100%;
+                        padding: $spacing-small;
+                        img {
+                            border-radius: $border-radius-standard;
+                            @include shadow-enhanced;
+                            height: 100%;
+                            width: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    .slider-phone-description {
+                        padding-left: $spacing-small;
+                    }
+                }
+            }
+        }
     }
 }

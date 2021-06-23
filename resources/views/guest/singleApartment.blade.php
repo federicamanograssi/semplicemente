@@ -200,7 +200,7 @@
                 <section class="redirect-btn">
                     {{--Al click la pagina si ridireziona al form di inserimento messaggio --}}
 
-                    <button class="btn btn--primary">
+                    <button class="btn btn--primary host-btn">
                         Contatta l'host ora
                     </button>
                 </section>
@@ -220,7 +220,67 @@
                     
                     <h3>Gli alloggi sponsorizzati</h3>
                     <sponsored-slider></sponsored-slider>
-                    
+                    <div class="sponsored-slider-phone">
+                        <div class="slider-phone-cards">
+                            <div class="slider-phone-card">
+                                <div class="slider-phone-img">
+                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
+                                </div>
+                                <div class="slider-phone-description">
+                                    <div class="slider-rating">
+                                        <span><i><i class="fas fa-star"></i></i>5</span>
+                                    </div>
+                                    <div class="slider-title">
+                                        Chalet Sponsorizzato 1
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slider-phone-card">
+                                <div class="slider-phone-img">
+                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
+                                </div>
+                                <div class="slider-phone-description">
+                                    <div class="slider-rating">
+                                        <span><i><i class="fas fa-star"></i></i>5</span>
+                                    </div>
+                                    <div class="slider-title">
+                                        Chalet Sponsorizzato 2
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slider-phone-card">
+                                <div class="slider-phone-img">
+                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
+                                </div>
+                                <div class="slider-phone-description">
+                                    <div class="slider-rating">
+                                        <span><i><i class="fas fa-star"></i></i>5</span>
+                                    </div>
+                                    <div class="slider-title">
+                                        Chalet Sponsorizzato 3
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slider-phone-card">
+                                <div class="slider-phone-img">
+                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
+                                </div>
+                                <div class="slider-phone-description">
+                                    <div class="slider-rating">
+                                        <span><i><i class="fas fa-star"></i></i>5</span>
+                                    </div>
+                                    <div class="slider-title">
+                                        Chalet Sponsorizzato 4
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>                        
+                    </div>
                 </div>
             </div>   
         </section>
