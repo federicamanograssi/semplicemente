@@ -109,6 +109,7 @@ class ApartmentController extends Controller
                 //- crea array con i dati necessari per stampa e filtri    
                 $newChalet = array(
                     'name' => $apartment['title'] ,
+                    'id' => $apartment['id'] ,
                     'lat'  => (M_PI / 180) * $apartment['latitude'] ,
                     'lon'  => (M_PI / 180) * $apartment['longitude'] ,
                     'dist' => $dist ,                        

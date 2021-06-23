@@ -7,7 +7,8 @@
                 :key="index" 
                 :name="apartment.name" 
                 :imgSrc="apartment.imgSrc"
-                :rating="apartment.rating">
+                :rating="apartment.rating"
+                :id="apartment.id">
 
                 <!-- Apartment Card Component -->
 

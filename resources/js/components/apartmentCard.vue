@@ -7,7 +7,7 @@
         </div>
 
         <div class="single-apartment__data">
-            <h3 class="single-apartment__name heading--primary">{{name}}</h3>
+            <h3 class="single-apartment__name heading--primary"><a :href="'/single/'+id">{{name}}</a></h3>
             
             <p class="single-apartment__description">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -38,6 +38,7 @@
             name : String,
             imgSrc : String,
             rating : Number,
+            id:Number
         }
     }
 </script>

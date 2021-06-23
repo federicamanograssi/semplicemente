@@ -2693,7 +2693,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     imgSrc: String,
-    rating: Number
+    rating: Number,
+    id: Number
   }
 });
 
@@ -2708,6 +2709,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -40561,7 +40563,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "single-apartment__data" }, [
       _c("h3", { staticClass: "single-apartment__name heading--primary" }, [
-        _vm._v(_vm._s(_vm.name))
+        _c("a", { attrs: { href: "/single/" + _vm.id } }, [
+          _vm._v(_vm._s(_vm.name))
+        ])
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "single-apartment__description" }, [
@@ -40649,7 +40653,8 @@ var render = function() {
         attrs: {
           name: apartment.name,
           imgSrc: apartment.imgSrc,
-          rating: apartment.rating
+          rating: apartment.rating,
+          id: apartment.id
         }
       })
     }),

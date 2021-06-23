@@ -30,9 +30,9 @@ Route::get('/', function () {
     return view('/guest/home');
 })->name('guest-home');
 
-Route::get('/single', function () {
-    return view('/guest/singleApartment');
-});
+Route::get('/single/{id}', 'HomeController@show')->name('guest_show_apartment');
+
+
 Route::post('/single', 'Admin\MessageController@store')->name('saveMessage');
 
 Route::get('/search', function () {
