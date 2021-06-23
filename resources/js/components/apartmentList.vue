@@ -7,7 +7,11 @@
                 :key="index" 
                 :name="apartment.name" 
                 :imgSrc="'storage/' + apartment.cover_img"
-                :rating="apartment.rating">
+                :rating="apartment.rating"
+                :id="apartment.id"
+                :price="apartment.price"
+                :beds="apartment.beds"
+                >
 
                 <!-- Apartment Card Component -->
 

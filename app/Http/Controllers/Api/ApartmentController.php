@@ -106,13 +106,14 @@ class ApartmentController extends Controller
                     'name' => $apartment['title'] ,
                     'lat'  => (M_PI / 180) * $apartment['latitude'] ,
                     'lon'  => (M_PI / 180) * $apartment['longitude'] ,
-                    'dist' => $dist ,                        
+                    'dist' => $dist ,
                     'cover_img' => $cover_img,
                     'rooms' => $apartment['rooms_n'],
                     'beds' => $apartment['beds_n'],
                     'price' => $apartment['price_per_night'],
                     'rating' => $apartment['rating'],
-                    'services' => $services
+                    'services' => $services ,
+                    'id' =>    $apartment['id']
                 );
 
                 //- salvare l'array dell'apt nell'array di risultati da restituire

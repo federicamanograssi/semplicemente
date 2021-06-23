@@ -2787,12 +2787,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   props: {
     name: String,
     imgSrc: String,
-    rating: Number
+    rating: Number,
+    id: Number,
+    price: Number,
+    beds: Number
   }
 });
 
@@ -2807,6 +2821,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -7579,7 +7597,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  border-radius: 5px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  background-color: white;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-apartment:hover {\n  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);\n}\n.single-apartment:hover .single-apartment__image {\n  transform: scale(1.1);\n}\n.single-apartment:not(:last-child) {\n  margin-bottom: 3rem;\n}\n.single-apartment__image-container {\n  height: 100%;\n  flex: 0 0 50%;\n  overflow: hidden;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 1s;\n}\n.single-apartment__name {\n  margin-bottom: 0;\n}\n.single-apartment__data {\n  flex: 0 0 50%;\n  padding: 1rem;\n  text-align: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n}\n.single-apartment__description {\n  font-size: 85%;\n}\n.single-apartment__services {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: space-between;\n  width: 100%;\n}\n.single-apartment__services i {\n  margin-right: 0.5rem;\n  font-size: 90%;\n  opacity: 0.75;\n}", ""]);
+exports.push([module.i, ".single-apartment {\n  height: 20rem;\n  width: 100%;\n  border-radius: 5px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: row;\n  background-color: white;\n  text-align: center;\n  transition: box-shadow 0.6s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-apartment:link, .single-apartment:hover, .single-apartment:visited, .single-apartment:active, .single-apartment:focus {\n  text-decoration: none;\n  color: inherit;\n}\n.single-apartment:hover {\n  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);\n}\n.single-apartment:hover .single-apartment__image {\n  transform: scale(1.1);\n}\n.single-apartment:hover .single-apartment__name {\n  color: #348534;\n}\n.single-apartment:hover .single-apartment__services i,\n.single-apartment:hover .single-apartment__services strong {\n  color: #348534;\n}\n.single-apartment:not(:last-child) {\n  margin-bottom: 3rem;\n}\n.single-apartment__image-container {\n  height: 100%;\n  flex: 0 0 50%;\n  overflow: hidden;\n}\n.single-apartment__image {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  transition: transform 1.2s;\n}\n.single-apartment__name {\n  margin-bottom: 0;\n  transition: color 0.6s;\n}\n.single-apartment__data {\n  flex: 0 0 50%;\n  padding: 1rem;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n}\n.single-apartment__services {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: space-between;\n  width: 100%;\n}\n.single-apartment__services i {\n  margin-right: 0.5rem;\n  font-size: 90%;\n  transition: color 0.6s;\n}\n.single-apartment__services strong {\n  transition: color 0.6s;\n}\n.single-apartment .sponsored-box {\n  display: none;\n}\n.single-apartment--sponsored {\n  position: relative;\n}\n.single-apartment--sponsored .sponsored-box {\n  display: block;\n}\n.sponsored-box {\n  position: absolute;\n  left: 1rem;\n  top: 1rem;\n  background-color: white;\n  z-index: 999;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  color: #f39a34;\n  height: 3.5rem;\n  line-height: 3.5rem;\n  border-radius: 5px;\n}", ""]);
 
 // exports
 
@@ -7617,7 +7635,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  z-index: 4;\n  bottom: 3rem;\n  right: 3rem;\n  background-color: #348534;\n  text-align: center;\n  border-radius: 5px;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.back-to-top__link[data-v-93d4de10] {\n  display: block;\n  width: 5rem;\n  height: 5rem;\n  line-height: 5rem;\n  transition: all 0.25s;\n}\n.back-to-top__link[data-v-93d4de10]:link, .back-to-top__link[data-v-93d4de10]:hover, .back-to-top__link[data-v-93d4de10]:active, .back-to-top__link[data-v-93d4de10]:visited {\n  color: white;\n  text-decoration: none;\n}\n.back-to-top[data-v-93d4de10]:hover {\n  background-color: white;\n}\n.back-to-top:hover .back-to-top__link[data-v-93d4de10] {\n  color: #348534;\n}\n.back-to-top__icon[data-v-93d4de10] {\n  font-size: 1.5em;\n  position: relative;\n  top: 3px;\n}", ""]);
+exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  z-index: 4;\n  bottom: 3rem;\n  right: 3rem;\n  background-color: #348534;\n  text-align: center;\n  border-radius: 5px;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.back-to-top__link[data-v-93d4de10] {\n  display: block;\n  width: 5rem;\n  height: 5rem;\n  line-height: 5rem;\n  transition: all 0.25s;\n}\n.back-to-top__link[data-v-93d4de10]:link, .back-to-top__link[data-v-93d4de10]:hover, .back-to-top__link[data-v-93d4de10]:active, .back-to-top__link[data-v-93d4de10]:visited {\n  color: white;\n  text-decoration: none;\n}\n.back-to-top[data-v-93d4de10]:hover {\n  background-color: white;\n}\n.back-to-top:hover .back-to-top__link[data-v-93d4de10] {\n  color: #348534;\n}\n.back-to-top__icon[data-v-93d4de10] {\n  font-size: 1.5em;\n  position: relative;\n  top: 3px;\n}", ""]);
 
 // exports
 
@@ -7636,7 +7654,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".chalet-map[data-v-0a941ebc] {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 7rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 56.25em) {\n.chalet-map[data-v-0a941ebc] {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container[data-v-0a941ebc] {\n  display: none;\n}\n@media (max-width: 56.25em) {\n.chalet-map__button-container[data-v-0a941ebc] {\n    display: block;\n}\n}\n.chalet-map__button[data-v-0a941ebc] {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 555;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".chalet-map[data-v-0a941ebc] {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 7rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 56.25em) {\n.chalet-map[data-v-0a941ebc] {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container[data-v-0a941ebc] {\n  display: none;\n}\n@media (max-width: 56.25em) {\n.chalet-map__button-container[data-v-0a941ebc] {\n    display: block;\n}\n}\n.chalet-map__button[data-v-0a941ebc] {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 555;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -7655,7 +7673,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.5s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 56.25em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 35.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 56.25em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 35.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.5s;\n  border-radius: 5px;\n}\n@media (max-width: 56.25em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.5s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 56.25em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
+exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.6s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 56.25em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 35.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 56.25em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 35.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.6s;\n  border-radius: 5px;\n}\n@media (max-width: 56.25em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.6s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 56.25em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
 
 // exports
 
@@ -40679,68 +40697,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "single-apartment" }, [
-    _c("div", { staticClass: "single-apartment__image-container" }, [
-      _c("img", {
-        staticClass: "single-apartment__image",
-        attrs: { src: _vm.imgSrc, alt: _vm.name }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "single-apartment__data" }, [
-      _c("h3", { staticClass: "single-apartment__name heading--primary" }, [
-        _vm._v(_vm._s(_vm.name))
+  return _c(
+    "a",
+    {
+      staticClass: "single-apartment",
+      class: "single-apartment--sponsored",
+      attrs: { href: "#" }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "single-apartment__image-container" }, [
+        _c("img", {
+          staticClass: "single-apartment__image",
+          attrs: { src: _vm.imgSrc, alt: _vm.name }
+        })
       ]),
       _vm._v(" "),
-      _c("p", { staticClass: "single-apartment__description" }, [
-        _vm._v(
-          "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit.\n        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn--secondary" }, [_vm._v("Dettagli")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "single-apartment__services" }, [
-        _c("span", { staticClass: "single-apartment__rating" }, [
-          _c("i", { staticClass: "fas fa-star" }),
-          _vm._v(_vm._s(_vm.rating))
+      _c("div", { staticClass: "single-apartment__data" }, [
+        _c("h3", { staticClass: "single-apartment__name" }, [
+          _vm._v(_vm._s(_vm.name))
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("p", { staticClass: "single-apartment__description" }, [
+          _vm._v(
+            "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit.\n        "
+          )
+        ]),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2)
+        _c("div", { staticClass: "single-apartment__services" }, [
+          _c("span", { staticClass: "single-apartment__rating" }, [
+            _c("i", { staticClass: "fas fa-star" }),
+            _vm._v(_vm._s(_vm.rating))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "single-apartment__beds" }, [
+            _c("i", { staticClass: "fas fa-user" }),
+            _vm._v(_vm._s(_vm.beds))
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "single-apartment__price" }, [
+            _c("strong", [_vm._v(_vm._s(_vm.price) + "€")]),
+            _vm._v(" / notte")
+          ])
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "single-apartment__rating" }, [
-      _c("i", { staticClass: "fas fa-user" }),
-      _vm._v("5")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "single-apartment__rating" }, [
-      _c("i", { staticClass: "fas fa-restroom" }),
-      _vm._v("2")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "single-apartment__rating" }, [
-      _c("strong", [_vm._v("€49")]),
-      _vm._v(" / notte")
+    return _c("div", { staticClass: "sponsored-box" }, [
+      _c("span", { staticClass: "sponsored-box__text" }, [
+        _vm._v("\n            In Evidenza\n        ")
+      ]),
+      _vm._v(" "),
+      _c("i", { staticClass: "sponsored-box__icon far fa-thumbs-up" })
     ])
   }
 ]
@@ -40777,7 +40792,10 @@ var render = function() {
         attrs: {
           name: apartment.name,
           imgSrc: "storage/" + apartment.cover_img,
-          rating: apartment.rating
+          rating: apartment.rating,
+          id: apartment.id,
+          price: apartment.price,
+          beds: apartment.beds
         }
       })
     }),
