@@ -16,28 +16,24 @@ use Illuminate\Support\Facades\Auth;
 /*ROTTE PER GUEST
 ---------------------------------------------------------------
 ---------------------------------------------------------------*/
-
-// qui arrivano tutti i guest non loggati
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/index', function () {
-//     return view('/guest/home');
-// });
-
+// ----home
 Route::get('/', function () {
     return view('/guest/home');
 })->name('guest-home');
 
+
+//---single apartment
 Route::get('/single/{id}', 'HomeController@show')->name('guest_show_apartment');
-
-
+// mandare un messaggio da pagina single apartment
 Route::post('/single', 'Admin\MessageController@store')->name('saveMessage');
 
+
+// -----ricerca avanzata
 Route::get('/search', function () {
     return view('/guest/search');
 })->name('search');
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 // questa è la view per chi si è logato con successo. in realtà dobbiamo spostarla e farla diventare direttamente dashboard

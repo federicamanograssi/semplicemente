@@ -455,8 +455,26 @@ h3 {
   padding: 3rem 0;
 }
 
+@media (max-width: 35.5em) {
+  .container .form-container {
+    display: block;
+  }
+}
+
 .container .form-container .left-container {
   width: 60%;
+}
+
+@media (max-width: 56.25em) {
+  .container .form-container .left-container {
+    width: 40%;
+  }
+}
+
+@media (max-width: 35.5em) {
+  .container .form-container .left-container {
+    width: 100%;
+  }
 }
 
 .container .form-container .left-container .type-host {
@@ -510,9 +528,21 @@ h3 {
   width: 50%;
 }
 
+@media (max-width: 56.25em) {
+  .container .form-container .right-container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 35.5em) {
+  .container .form-container .right-container {
+    width: 100%;
+  }
+}
+
 .container .form-container .right-container .contact-form {
   position: sticky;
-  top: 7rem;
+  top: calc(7rem + 2rem);
 }
 
 .container .form-container .right-container .contact-form form {
@@ -522,6 +552,18 @@ h3 {
   margin: 0 auto;
   padding: 1rem;
   border-radius: 5px;
+}
+
+@media (max-width: 56.25em) {
+  .container .form-container .right-container .contact-form form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 35.5em) {
+  .container .form-container .right-container .contact-form form {
+    width: 100%;
+  }
 }
 
 .container .form-container .right-container .contact-form p,
@@ -557,10 +599,31 @@ h3 {
   height: calc(100vh - 2 * 7rem);
 }
 
+@media (max-width: 56.25em) {
+  .container .chalet-map {
+    position: static;
+    height: 50rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 35.5em) {
+  .container .chalet-map {
+    height: 50rem;
+    width: 100%;
+  }
+}
+
 .container .hosted-by {
   display: flex;
   align-items: center;
   padding: 2rem 0;
+}
+
+@media (max-width: 35.5em) {
+  .container .hosted-by {
+    display: block;
+  }
 }
 
 .container .hosted-by .type-host {
@@ -568,6 +631,13 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 35.5em) {
+  .container .hosted-by .type-host {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 }
 
 .container .hosted-by .type-host .host-img {
@@ -583,6 +653,12 @@ h3 {
 .container .hosted-by .redirect-btn {
   width: 50%;
   text-align: center;
+}
+
+@media (max-width: 35.5em) {
+  .container .hosted-by .redirect-btn {
+    width: 100%;
+  }
 }
 
 .container .sponsored-gallery {

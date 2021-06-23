@@ -26,7 +26,6 @@ class HomeController extends Controller
     {
         
     }
-
     public function show(Apartment $apartment)
     {
         return view('guest.singleApartment',compact('apartment'));

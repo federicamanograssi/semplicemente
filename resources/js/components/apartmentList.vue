@@ -6,9 +6,10 @@
                  v-for="(apartment , index) in apartments" 
                 :key="index" 
                 :name="apartment.name" 
-                :imgSrc="apartment.imgSrc"
+                :imgSrc="'storage/' + apartment.cover_img"
                 :rating="apartment.rating"
-                :id="apartment.id">
+                :id="apartment.id"
+                :is_sponsored="apartment.is_sponsored">
 
                 <!-- Apartment Card Component -->
 

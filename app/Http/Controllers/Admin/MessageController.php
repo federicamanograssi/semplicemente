@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
@@ -20,9 +21,7 @@ class MessageController extends Controller
     {
 
         $data = [
-            
             // FILTRARE SOLO QUELLI DELL'UTENTE
-
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
             })->get()
