@@ -115,9 +115,6 @@ class ApartmentController extends Controller
         // $new_image->save();
         // };
 
-
-
-
         if(array_key_exists('services', $data)) {
             $new_apartment->services()->sync($data['services']);
         }
@@ -146,7 +143,8 @@ class ApartmentController extends Controller
     {
         $data = [
             'apartment'=> $apartment,
-            'services'=> Service::all()
+            'services'=> Service::all(),
+            'images' => Image::where('apartment_id', $apartment->id)->get()
         ];
         return view('admin.apartments.edit', $data);
     }

@@ -147,16 +147,43 @@
                 </div>
 
                 {{-- IMMAGINI----- --}}
-                <div class="form-group">
-                    <label>Immagini</label>
+                {{-- <div class="form-group">
+                    <label>Immagini</label> --}}
                     {{-- controlliamo se sono presenti immagini da mostrare
                     @if(qualcosa che controlli tabella ponte)
                         <img src="{{ asset('storage/'. e concateniamo il path img)}}" alt=""> --}}
 
 
                     {{-- multiple serve per mettere più immagini --}}
-                    <input class='form-control-file' type="file" name="img_path" multiple>
-                </div>
+                    {{-- <input class='form-control-file' type="file" name="img_path" multiple>
+                </div> --}}
+
+                <label>Immagini:</label>
+                <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+                    <div class="row" id="add_more">
+                        @foreach ($images as $image)
+                        
+                        <div class= "col-2">
+                            <img id="img1" src={{ '/storage/' .$image->img_path }} />
+                            {{-- <input class='form-control-file' type="file" name="image1" id="img_input1">
+                            <input type="text" name="img_description1" placeholder="Descrizione">
+                            <p>Copertina</p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required> --}}
+                            </div>
+                        @endforeach
+                        <div class="col-2">
+                            <img id="img1" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/>
+                            <input class='form-control-file' type="file" name="image1" id="img_input1">
+                            <input type="text" name="img_description1" placeholder="Descrizione">
+                            <p>Copertina</p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required>
+                        </div>
+                        </div>
+                    </div>
+    
+
 
                 <p>Visibile:</p>
                 <div class="form-check form-check-inline">
@@ -185,4 +212,18 @@
         </div>
     </div>
 </div>
+
+
+
+<style type="text/css">
+
+    img{
+        width: 100px;
+        height: auto;
+        display: block;
+    }
+
+</style>
+
+
 @endsection
