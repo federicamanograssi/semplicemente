@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Apartment;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,9 @@ class HomeController extends Controller
     public function index()
     {
         
+    }
+    public function show(Apartment $apartment)
+    {
+        return view('guest.singleApartment',compact('apartment'));
     }
 }
