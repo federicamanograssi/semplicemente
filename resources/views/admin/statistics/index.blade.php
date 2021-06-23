@@ -1,27 +1,21 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
+<admin-stats-page>
+</admin-stats-page>
 {{-- select --}}
+<select class="custom-select custom-select-lg mb-3">
+    <option selected>Seleziona Appartamento</option>
+    @foreach ($apartments as $apartment)
+    <option value="{{$apartment->id}}">{{$apartment->title}}</option>
+    @endforeach
+  </select>
 
-<div>
-    <select class="custom-select col-xs-12 col-md-6">
-        <option selected>Seleziona Appartamento</option>
 
-        {{-- Crea lista appartamenti --}}
-        @foreach ($apartments as $apartment)
-        <option value="{{$apartment->id}}">{{$apartment->title}}</option>
-            
-        @endforeach
-
-    </select>
-</div>
-
-{{-- TABS --}}
 <div class="container-fluid">
     
     <div class="row">
-            
-        {{-- CARD STAT : VISUALIZZAZIONI---- --}}
         <div class="col-lg-4 col-md-12">
             <div class="card card-stats">
                 <div class="card-body">
@@ -48,7 +42,7 @@
             </div>
         </div>
     
-        {{-- CARD STAT : MESSAGGI---- --}}
+     
         <div class="col-lg-4 col-md-12">
             <div class="card card-stats">
                 <div class="card-body">
@@ -76,7 +70,7 @@
     
         </div>
         
-        {{-- CARD STAT : SPESE---- --}}
+    
         <div class="col-lg-4 col-md-12">
             <div class="card card-stats">
                 <div class="card-body">
@@ -107,11 +101,11 @@
 
     <div class="row">
 
-        {{-- CHART ANDAMENTO Visualizzazioni--}}
+      
         <div class="col-12">
             <div class="card card-chart">
 
-                {{-- titolo Chart --}}
+               
                 <div class="card-header">
                     <h5 class="card-category">Visualizzazioni totali</h5>
                     <h3 class="card-title">
@@ -119,7 +113,7 @@
                     </h3>
                 </div>
 
-                {{-- body chart --}}
+               
                 <div class="card-body">
                     <div class="chart-area">
                         mettere chart
@@ -130,4 +124,5 @@
 
     </div>
 </div>
+
 @endsection

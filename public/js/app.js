@@ -39901,7 +39901,40 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(2)
+          _c(
+            "div",
+            {
+              staticClass: "form__field form__field--half form__field--guests"
+            },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.guests,
+                    expression: "guests"
+                  }
+                ],
+                staticClass: "form__input",
+                attrs: { id: "search-form-guests", type: "number" },
+                domProps: { value: _vm.guests },
+                on: {
+                  change: function($event) {
+                    return _vm.updateQuery()
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.guests = $event.target.value
+                  }
+                }
+              })
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form__group" }, [
@@ -40167,25 +40200,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticClass: "form__field form__field--half form__field--beds" },
+      "label",
+      {
+        staticClass: "form__label form__label--left",
+        attrs: { for: "search-form-guests" }
+      },
       [
-        _c(
-          "label",
-          {
-            staticClass: "form__label form__label--left",
-            attrs: { for: "search-form-beds" }
-          },
-          [
-            _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
-            _vm._v("Posti letto (min)")
-          ]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form__input",
-          attrs: { id: "search-form-beds", type: "number" }
-        })
+        _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
+        _vm._v("Ospiti")
       ]
     )
   }

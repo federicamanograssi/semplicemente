@@ -25,3 +25,7 @@ Route::post('/apartments/search','Api\ApartmentController@search');
 
 Route::get('/location','Api\ApartmentController@location');
 Route::get('/services','Api\ApartmentController@services');
+
+
+// - lista apt filtrati per user
+Route::get('/getAptUserList','Api\ApartmentController@getAptUserListt');

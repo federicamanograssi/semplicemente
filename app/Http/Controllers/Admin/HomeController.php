@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Apartment;
 use App\Http\Controllers\Controller;
+use App\View;
+use App\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -14,72 +19,43 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
-    }
+        $data = [
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            //prendere views di tutti gli apppartamenti dell'utente
+            'views' => View::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get(),
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            //prendere messaggi degli apppartamenti dell'utente
+            'messages' => Message::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get()
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('admin.dashboard.index',$data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+        //pagina statistiche
+    public function statistics()
     {
-        //
-    }
+        $data = [
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+
+            //prendere views di tutti gli apppartamenti dell'utente
+            'views' => View::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get(),
+
+            //prendere messaggi degli apppartamenti dell'utente
+            'messages' => Message::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get()
+        ];
+
+        return view('admin.statistics.index',$data);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Apartment;
 use App\Image;
@@ -23,6 +23,17 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments=Apartment::all();
+
+        return response()->json([
+            'success'=> true,
+            'results'=> $apartments
+        ]);
+    }
+
+    //  Mostra lista appartamenti filtrata per utente
+    public function getAptUserList()
+    {
+        $apartments=Apartment::where('user_id', Auth::id())->get();
 
         return response()->json([
             'success'=> true,

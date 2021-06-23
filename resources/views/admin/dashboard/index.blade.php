@@ -17,7 +17,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Appartamenti</p>
-                                <h3 class="card-title">numero</h3>
+                                <h3 class="card-title">{{$apartments->count()}}</h3>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Visualizzazioni</p>
-                                <h3 class="card-title">numero</h3>
+                                <h3 class="card-title">{{$views->count()}}</h3>
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Messaggi</p>
-                                <h3 class="card-title">numero</h3>
+                                <h3 class="card-title">{{$messages->count()}}</h3>
                             </div>
                         </div>
                     </div>
