@@ -6,7 +6,6 @@
             v-on:newQuery="getNewQuery($event)" 
             :currentQuery="currentQuery"
             :highestAptPrice="highestAptPrice"
-            :lowestAptPrice="lowestAptPrice"
             :servicesList="servicesList"
             >
 
@@ -61,8 +60,7 @@
 
                 servicesList : [],
 
-                highestAptPrice  : 300  ,
-                lowestAptPrice   :  0 ,
+                highestAptPrice  : 300  ,                
 
                 currentQuery : {
                     baseLocation     : this.destination  ,
@@ -202,8 +200,7 @@
                     apt.price < minPrice ? minPrice = apt.price : null;
                 });
 
-                this.highestAptPrice = Math.ceil(maxPrice);
-                this.lowestAptPrice  = Math.ceil(minPrice);
+                this.highestAptPrice = Math.ceil(maxPrice);                
 
             } ,
             search() {

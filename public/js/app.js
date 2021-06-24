@@ -2175,7 +2175,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['currentQuery', // array contenente tutte le informazioni relative alla ricerca
   'highestAptPrice', // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
-  'lowestAptPrice', // prezzo minimo [...] 
   'servicesList'],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
@@ -2252,7 +2251,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
@@ -2276,7 +2274,6 @@ __webpack_require__.r(__webpack_exports__);
       // Longituine località cercata
       servicesList: [],
       highestAptPrice: 300,
-      lowestAptPrice: 0,
       currentQuery: {
         baseLocation: this.destination,
         maxDistance: 40,
@@ -2438,7 +2435,6 @@ __webpack_require__.r(__webpack_exports__);
         apt.price < minPrice ? minPrice = apt.price : null;
       });
       this.highestAptPrice = Math.ceil(maxPrice);
-      this.lowestAptPrice = Math.ceil(minPrice);
     },
     search: function search() {
       console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
@@ -40482,7 +40478,6 @@ var render = function() {
         attrs: {
           currentQuery: _vm.currentQuery,
           highestAptPrice: _vm.highestAptPrice,
-          lowestAptPrice: _vm.lowestAptPrice,
           servicesList: _vm.servicesList
         },
         on: {
