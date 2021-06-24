@@ -30,6 +30,17 @@ class ApartmentController extends Controller
         ]);
     }
 
+
+    public function getAptSponsoredList()
+    {
+        $apartments=Apartment::all();
+
+        return response()->json([
+            'success'=> true,
+            'results'=> $apartments
+        ]);
+    }
+
     //  Mostra lista appartamenti filtrata per utente
     public function getAptUserList()
     {

@@ -29,3 +29,6 @@ Route::get('/services','Api\ApartmentController@services');
 
 // - lista apt filtrati per user
 Route::get('/getAptUserList','Api\ApartmentController@getAptUserListt');
+
+// - lista apt sponsorizzati
+Route::get('/getAptSponsoredList','Api\ApartmentController@getAptSponsoredList');
