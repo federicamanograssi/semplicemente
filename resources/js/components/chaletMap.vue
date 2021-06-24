@@ -37,8 +37,8 @@
             else if (this.radius >= 80) zoomLevel = 8;
             else zoomLevel = 9;
 
-
             this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
+
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -47,13 +47,26 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
             }).addTo(this.mymap);
+
+            this.markerIcon = L.icon({
+                iconUrl: 'img/greenMarker.png',
+                shadowUrl: 'img/markerShadow.png',
+
+                iconSize:     [30, 44], // size of the icon
+                shadowSize:   [60, 25], // size of the shadow
+                iconAnchor:   [15, 22], // point of the icon which will correspond to marker's location
+                shadowAnchor: [0, 0],  // the same for the shadow
+                popupAnchor:  [15, 0] // point from which the popup should open relative to the iconAnchor
+            });
+
         },
         data() {            
             return {                
                 mymap        : null ,
                 mapIsShown   : true ,
                 radiusCircle : null ,
-                markers      : null
+                markers      : null ,
+                markerIcon   : null ,
             }
         },
         props : ['baseLat' , 'baseLon' , 'apartments' , 'radius'] ,
@@ -120,7 +133,8 @@
                 // crea un marker nell'array e lo aggiunge alla mappa
                 
                 this.apartments.forEach(apt => {                    
-                    let newMarker = L.marker([apt.lat, apt.lon]);
+                    let newMarker = L.marker([apt.lat, apt.lon] , {icon : this.markerIcon});
+                    newMarker.bindPopup('<div class="chalet-popup'+ (apt.isSponsored ? ' chalet-popup--sponsored' : '') +'"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">'+ apt.price +'&euro;</span><a class="chalet-popup__link" href="/single/'+apt.id+'">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
                     this.markers.push(newMarker);
                     newMarker.addTo(this.mymap);
                 });
@@ -130,7 +144,7 @@
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
     @import "../../sass/variables";
 
@@ -138,7 +152,7 @@
         position: absolute;
         z-index: 2;
         right: $spacing-standard;
-        top: $height-section-medium;
+        top: $height-section-medium + $spacing-standard;
         width: calc(50% - 2 * #{$spacing-standard});
         height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
 
@@ -174,6 +188,82 @@
             @include shadow-standard;
             cursor: pointer;
         }
+
+    }
+
+    .chalet-popup {
+        width: auto;
+        max-height: $height-section-medium;
+        width: $height-section-small * 4 + $spacing-small;
+
+
+        @include clearfix;        
+        
+        &__image {
+            float: left;
+            width: $height-section-small;
+            height: $height-section-small;
+            margin-right: $spacing-small;
+            object-fit: cover;
+            object-position: center;
+            border-radius: $border-radius-standard;
+        }
+
+        &__name{
+            float: left;
+            width: $height-section-small * 3;
+            height: $height-section-small / 3 * 2;
+            line-height: $height-section-small / 3;
+            color: $color-primary;
+            clear: right;
+            font-size: 110%;
+            text-align: center;
+            }
+
+        &__price {
+            float: left;
+            height: $height-section-small / 3 * 1;                
+        }
+
+        &__link{
+            float: right;
+            height: $height-section-small / 3 * 1;
+            &:link,
+            &:active,
+            &:visited,
+            &:focus {
+                color: $color-secondary;
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: $color-secondary-dark;
+                text-decoration: underline;
+            }
+        }
+
+        &--sponsored {
+            position: relative;
+
+            &::before {
+                content: '\f164';
+                position: absolute;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                color: $color-secondary;
+                top: $spacing-tiny;
+                left: 0;
+                border: 1px solid $color-secondary;
+                transform: translate(-50% , -50%);
+                height: 2.5rem;
+                width: 2.5rem;
+                background-color: $white;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 2.5rem;
+            }
+        }
+
 
     }
 </style>

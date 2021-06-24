@@ -129,8 +129,8 @@
 
                 if (this.filteredApartments.length > 1) this.sortApartments();
 
-                // this.mapApartmens = [];
-                this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name}) => ({lat, lon , id , name}));
+                
+                this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name , price , isSponsored}) => ({lat, lon , id , name , price , isSponsored}));
 
                 this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, isSponsored, cover_img}) => ({id , name , price, dist, beds, rating, isSponsored, cover_img}));
 

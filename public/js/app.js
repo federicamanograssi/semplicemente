@@ -2344,18 +2344,21 @@ __webpack_require__.r(__webpack_exports__);
       } // main for
 
 
-      if (this.filteredApartments.length > 1) this.sortApartments(); // this.mapApartmens = [];
-
+      if (this.filteredApartments.length > 1) this.sortApartments();
       this.mapApartmens = this.filteredApartments.map(function (_ref) {
         var lat = _ref.lat,
             lon = _ref.lon,
             id = _ref.id,
-            name = _ref.name;
+            name = _ref.name,
+            price = _ref.price,
+            isSponsored = _ref.isSponsored;
         return {
           lat: lat,
           lon: lon,
           id: id,
-          name: name
+          name: name,
+          price: price,
+          isSponsored: isSponsored
         };
       });
       this.listApartments = this.filteredApartments.map(function (_ref2) {
@@ -3062,13 +3065,28 @@ __webpack_require__.r(__webpack_exports__);
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
     }).addTo(this.mymap);
+    this.markerIcon = L.icon({
+      iconUrl: 'img/greenMarker.png',
+      shadowUrl: 'img/markerShadow.png',
+      iconSize: [30, 44],
+      // size of the icon
+      shadowSize: [60, 25],
+      // size of the shadow
+      iconAnchor: [15, 22],
+      // point of the icon which will correspond to marker's location
+      shadowAnchor: [0, 0],
+      // the same for the shadow
+      popupAnchor: [15, 0] // point from which the popup should open relative to the iconAnchor
+
+    });
   },
   data: function data() {
     return {
       mymap: null,
       mapIsShown: true,
       radiusCircle: null,
-      markers: null
+      markers: null,
+      markerIcon: null
     };
   },
   props: ['baseLat', 'baseLon', 'apartments', 'radius'],
@@ -3131,7 +3149,10 @@ __webpack_require__.r(__webpack_exports__);
       // crea un marker nell'array e lo aggiunge alla mappa
 
       this.apartments.forEach(function (apt) {
-        var newMarker = L.marker([apt.lat, apt.lon]);
+        var newMarker = L.marker([apt.lat, apt.lon], {
+          icon: _this.markerIcon
+        });
+        newMarker.bindPopup('<div class="chalet-popup' + (apt.isSponsored ? ' chalet-popup--sponsored' : '') + '"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">' + apt.price + '&euro;</span><a class="chalet-popup__link" href="/single/' + apt.id + '">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
 
         _this.markers.push(newMarker);
 
@@ -7783,10 +7804,10 @@ exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7795,7 +7816,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".chalet-map[data-v-0a941ebc] {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 7rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 56.25em) {\n.chalet-map[data-v-0a941ebc] {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container[data-v-0a941ebc] {\n  display: none;\n}\n@media (max-width: 56.25em) {\n.chalet-map__button-container[data-v-0a941ebc] {\n    display: block;\n}\n}\n.chalet-map__button[data-v-0a941ebc] {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 555;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 56.25em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 56.25em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 555;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 110%;\n  text-align: center;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
 
 // exports
 
@@ -39247,15 +39268,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -40999,10 +41020,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& ***!
-  \************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc& ***!
+  \************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -54238,9 +54259,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& */ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&");
+/* harmony import */ var _chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=template&id=0a941ebc& */ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&");
 /* harmony import */ var _chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=script&lang=js& */ "./resources/js/components/chaletMap.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
+/* empty/unused harmony star reexport *//* harmony import */ var _chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./chaletMap.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -54252,11 +54273,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _chaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "0a941ebc",
+  null,
   null
   
 )
@@ -54282,35 +54303,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&":
-/*!*********************************************************************************************************!*\
-  !*** ./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& ***!
-  \*********************************************************************************************************/
+/***/ "./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&id=0a941ebc&scoped=true&lang=scss&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_id_0a941ebc_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& ***!
-  \******************************************************************************************/
+/***/ "./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc& ***!
+  \******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./chaletMap.vue?vue&type=template&id=0a941ebc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/chaletMap.vue?vue&type=template&id=0a941ebc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chaletMap_vue_vue_type_template_id_0a941ebc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
