@@ -1,7 +1,7 @@
 .standard-padding {
     padding: 0 $spacing-standard;
     @include responsive(phone) {
-        font-size: 0 $spacing-small;
+        padding: 0 $spacing-small;
     }
 }
 

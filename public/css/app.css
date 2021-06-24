@@ -401,7 +401,7 @@ h3 {
 
 @media (max-width: 35.5em) {
   .standard-padding {
-    font-size: 0 1rem;
+    padding: 0 1rem;
   }
 }
 
