@@ -51,5 +51,6 @@ Route::prefix('admin')
         Route::get('/', 'HomeController@index')->name('admin_homepage');
         Route::resource('/messages', 'MessageController');
         Route::resource('/apartments','ApartmentController');
-        Route::get('/statistics','HomeController@statistics')->name('admin.statistics.home');
+        Route::get('/statistics','HomeController@statistics')->name('admin.statistics.index');
+        Route::get('/sponsorships','HomeController@sponsorship')->name('admin.sponsorships.index');
     });

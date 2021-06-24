@@ -32,6 +32,7 @@ Vue.component('locations-list', require('./components/locationList.vue').default
 Vue.component('back-to-top', require('./components/backToTop.vue').default);
 Vue.component('advanced-search-page', require('./components/AdvancedSearchPage.vue').default);
 Vue.component('chalet-map', require('./components/chaletMap.vue').default);
+Vue.component('admin-stats-page', require('./components/AdminStatsPage.vue').default);
 
 
 /**

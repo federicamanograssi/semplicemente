@@ -37,6 +37,8 @@ class HomeController extends Controller
 
         return view('admin.dashboard.index',$data);
     }
+
+
         //pagina statistiche
     public function statistics()
     {
@@ -58,4 +60,18 @@ class HomeController extends Controller
 
         return view('admin.statistics.index',$data);
     }
+
+
+    //sezione sponsorizzate
+    public function sponsorship(){
+
+        $data = [
+
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+        ];
+
+        return view('admin.sponsorships.index',$data);
+    }
+    
 }
