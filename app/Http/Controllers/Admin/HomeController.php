@@ -6,6 +6,7 @@ use App\Apartment;
 use App\Http\Controllers\Controller;
 use App\View;
 use App\Message;
+use App\Sponsorship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,6 +70,7 @@ class HomeController extends Controller
 
             //prendere lista appartamenti user
             'apartments' => Apartment::where('user_id', Auth::id())->get(),
+            'sponsorships' => Sponsorship::all()
         ];
 
         return view('admin.sponsorships.index',$data);

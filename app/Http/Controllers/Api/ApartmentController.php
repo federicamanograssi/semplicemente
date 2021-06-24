@@ -40,6 +40,17 @@ class ApartmentController extends Controller
             'results'=> $apartments
         ]);
     }
+
+     //  Mostra lista appartamenti utente filtrata per sponsorizzazioni
+     public function getUserSponsoredAptList()
+     {
+        
+ 
+        //  return response()->json([
+        //      'success'=> true,
+        //      'results'=> $filteredApartments
+        //  ]);
+     }
     
     //  Ritorna lista servizi
     public function services()
@@ -51,15 +62,6 @@ class ApartmentController extends Controller
             'results'=> $services
         ]);
     }
-    // public function search()
-    // {
-    //     $apartments=Apartment::all();
-
-    //     return response()->json([
-    //         'success'=> true,
-    //         'results'=> 'ciao'
-    //     ]);
-    // }
 
     /**
      * RICERCA APT VISIBILI NEL DB 
@@ -160,69 +162,5 @@ class ApartmentController extends Controller
             'base_lon' => $lon
         ]);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

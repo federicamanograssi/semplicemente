@@ -2,9 +2,9 @@
 
 @section('content')
 
-
-
-<admin-sponsorships-page>
+<admin-sponsorships-page 
+:apartments="{{ $apartments }}"
+:sponsorships="{{ $sponsorships}}">
 </admin-sponsorships-page>
 
 

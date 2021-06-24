@@ -706,6 +706,7 @@ div[class$=-form] {
 .admin {
   background-color: #ffefd5;
   height: calc(100vh - 70px);
+  color: #5a5034;
 }
 
 .admin .row {

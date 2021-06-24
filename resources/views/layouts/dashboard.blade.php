@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
 
@@ -101,7 +103,7 @@
               </nav>
 
               {{-- MAIN CONTAINER -------------- --}}
-              <main role="main" class="admin col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
+              <main id="app" role="main" class="admin col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
                   @yield('content')
               </main>
             </div>
