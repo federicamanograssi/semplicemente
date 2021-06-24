@@ -56,7 +56,7 @@
                 shadowSize:   [60, 25], // size of the shadow
                 iconAnchor:   [15, 22], // point of the icon which will correspond to marker's location
                 shadowAnchor: [0, 0],  // the same for the shadow
-                popupAnchor:  [15, 0] // point from which the popup should open relative to the iconAnchor
+                popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
             });
 
         },
@@ -177,7 +177,7 @@
             line-height: $height-section-medium;
             width: $height-section-medium;
             transform: translateY(50%);
-            z-index: 555;            
+            z-index: 500;            
             background-color: $white;
             text-align: center;
             border-radius: 50%;
@@ -216,8 +216,8 @@
             line-height: $height-section-small / 3;
             color: $color-primary;
             clear: right;
-            font-size: 110%;
-            text-align: center;
+            font-size: 120%;
+            font-weight: bold;
             }
 
         &__price {
@@ -244,7 +244,6 @@
 
         &--sponsored {
             position: relative;
-
             &::before {
                 content: '\f164';
                 position: absolute;

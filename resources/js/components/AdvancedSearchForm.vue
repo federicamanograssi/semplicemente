@@ -269,7 +269,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             top: 100%;
             left: 0;
             width: 100%;
-            z-index: 5;
+            z-index: 600;
 
             .form__group {
                 padding-top: 0;

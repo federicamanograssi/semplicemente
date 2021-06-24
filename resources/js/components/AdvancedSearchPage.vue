@@ -275,3 +275,39 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+@import "../../sass/variables";
+    
+    .back-to-top {
+        display: none;
+    }
+
+    .main--advanced-search {
+        height: calc(100vh - #{$height-section-medium});
+        background-color: $bg-transparent;
+        max-width: $width-inner-content;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+
+        .apartments-list {
+            width: 100%;
+            padding: $spacing-standard;
+            padding-right: 50%;
+            height: calc(100vh - 2 * #{$height-section-medium});
+            overflow-x: auto;
+            overflow-y: auto;
+            @include responsive(tablet) {
+                // padding-right: $spacing-standard;
+                padding-right: 0;
+                padding-left: 0;
+                height: calc( 100% - #{$height-section-big} - #{$height-section-medium});
+            }
+
+            &--map-hidden {
+                height: calc(  100% - #{$height-section-medium}); 
+            }
+        }
+    }
+</style>

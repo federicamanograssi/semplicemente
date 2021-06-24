@@ -27,9 +27,9 @@
             <div class="single-apartment__services">
                 
                 <span class="single-apartment__rating"><i class="fas fa-star"></i>{{rating}}</span>
-                <span class="single-apartment__beds"><i class="fas fa-user"></i>{{beds}}</span>
+                <span class="single-apartment__beds hide-on-mobile"><i class="fas fa-user"></i>{{beds}}</span>
                 <!-- <span class="single-apartment__rating"><i class="fas fa-restroom"></i>2</span> -->
-                <span class="single-apartment__price"><strong>{{price}}€</strong> / notte</span>
+                <span class="single-apartment__price"><i class="fas fa-euro-sign"></i>{{price}}</span>
                 <span class="single-apartment__distance"><i class="fas fa-map-marker-alt"></i>{{Math.round(dist * 100) / 100}} Km</span>
                 
                 <!-- <a :href="'single/'+id" class="btn btn--secondary btn--small">Prenota</a> -->
@@ -148,10 +148,6 @@
             i {
                 margin-right: .5rem;            
                 font-size: 90%;
-                // opacity: .75;
-                transition: color $animation-time-slow;
-            }
-            strong {
                 transition: color $animation-time-slow;
             }
 
@@ -176,7 +172,7 @@
         left: $spacing-small;
         top: $spacing-small;
         background-color: $white;
-        z-index: 999;
+        z-index: 100;
         padding-left: $spacing-small;
         padding-right: $spacing-small;
         color: $color-secondary;

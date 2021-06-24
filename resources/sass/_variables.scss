@@ -82,7 +82,8 @@ $animation-time-very-slow : 1.2s;
     }
 
     @if $breakpoint == tablet {
-        @media (max-width: 56.25em) {    // 900px
+        @media (max-width: 64em) {    // 1024px            
+        // @media (max-width: 56.25em) {    // 900px
             @content
         };
     }
