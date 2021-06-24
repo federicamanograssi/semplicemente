@@ -175,6 +175,31 @@ class ApartmentController extends Controller
 
         }
 
+        $j = $data['n_img_now'];
+        $k = $data['n_img'];
+        $k++;
+        for($i=$k; $i<= $j; $i++) {
+                if (!empty($data['image'.$i])) {
+                    // salviamo l'img inserita nel form nella cartella storage/app/public/images
+                    $path = 'apt' .$apartment->id .'_photo' .$k .'.';
+                    $extension = $data['image'.$i]->extension();
+                    $name = $path .$extension;
+                    $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
+                    // creiamo una nuova istanza della classe images
+                    $new_image = New Image;
+                    // Compiliamo i dati della colonne immagine e apartment_id
+                    $new_image->img_path = $data['image'.$i];
+                    $new_image->img_description = $data['img_description'.$i];
+                    $new_image->apartment_id = $apartment->id;
+                    if ($data['is_cover'] == 'image'.$i) {
+                        $new_image->is_cover = 1;
+                    }
+                    // Salviamo l'immagine nel database
+                    $new_image->save();
+                    $k++;
+            }
+        }
+
         return redirect()->route('apartments.index', $apartment);
     }
 

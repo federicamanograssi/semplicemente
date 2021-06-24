@@ -184,7 +184,9 @@
                         
                     </div>
     
+                    <input type="hidden" name="n_img_now" id="n_img_now" value= "{{ $n_img }}">
                     <input type="hidden" name="n_img" id="n_img" value= "{{ $n_img }}">
+
 
 
                 <p>Visibile:</p>
@@ -233,7 +235,7 @@
 <script>
 
 
-var i = document.getElementById("n_img").value;
+var i = document.getElementById("n_img_now").value;
 
 $("#add").click(function(){
  if($('#img'+i).attr('src')!= "https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"){
@@ -241,7 +243,7 @@ $("#add").click(function(){
 
     $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><p>Copertina</p><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="is_cover" id="is_cover'+i+'" class="form-control @error('is_cover') is-invalid @enderror" value="image'+i+'" required></div><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
 
-    document.getElementById("n_img").setAttribute('value', i);
+    document.getElementById("n_img_now").setAttribute('value', i);
 
     function readURL(input) {
         if (input.files && input.files[0]) {
