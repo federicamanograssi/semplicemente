@@ -26,7 +26,9 @@
 @section('main')
 
 <!-- Search page component -->
+    
     <advanced-search-page destination="{{$destination}}">
-    </advanced-search-form>
+    </advanced-search-page>
+
 
 @endsection

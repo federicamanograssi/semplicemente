@@ -2,15 +2,15 @@
 
 @section('content')
 
-<admin-stats-page>
-</admin-stats-page>
+<admin-statistics-page>
+</admin-statistics-page>
 {{-- select --}}
-<select class="custom-select custom-select-lg mb-3">
+{{-- <select class="custom-select custom-select-lg mb-3">
     <option selected>Seleziona Appartamento</option>
     @foreach ($apartments as $apartment)
     <option value="{{$apartment->id}}">{{$apartment->title}}</option>
     @endforeach
-  </select>
+  </select> --}}
 
 
 <div class="container-fluid">
