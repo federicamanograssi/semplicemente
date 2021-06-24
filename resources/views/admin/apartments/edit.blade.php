@@ -161,28 +161,30 @@
                 <label>Immagini:</label>
                 <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
                     <div class="row" id="add_more">
-                        @foreach ($images as $image)
                         
+                        @for ($i = 0; $i < $n_img; $i++)
+                            
                         <div class= "col-2">
-                            <img id="img1" src={{ '/storage/' .$image->img_path }} />
-                            {{-- <input class='form-control-file' type="file" name="image1" id="img_input1">
-                            <input type="text" name="img_description1" placeholder="Descrizione">
+                            <img id="{{ 'img' .($i+1) }}" src={{ '/storage/' .$images[$i]->img_path }} />
+                            <input type="text" name="{{ 'img_description' .($i+1) }}" placeholder="Descrizione" value="{{ old('img_description' .($i+1), $images[$i]->img_description) }}">
                             <p>Copertina</p>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required> --}}
+                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
                             </div>
-                        @endforeach
-                        <div class="col-2">
+                        </div>
+                        @endfor
+                        {{-- <div class="col-2">
                             <img id="img1" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/>
                             <input class='form-control-file' type="file" name="image1" id="img_input1">
                             <input type="text" name="img_description1" placeholder="Descrizione">
                             <p>Copertina</p>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required>
-                        </div>
-                        </div>
+                        </div> --}}
+                        
                     </div>
     
+                    <input type="hidden" name="n_img" id="n_img" value= "{{ $n_img }}">
 
 
                 <p>Visibile:</p>
@@ -224,6 +226,50 @@
     }
 
 </style>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+
+var i = document.getElementById("n_img").value;
+
+$("#add").click(function(){
+ if($('#img'+i).attr('src')!= "https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"){
+    ++i; 
+
+    $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><p>Copertina</p><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="is_cover" id="is_cover'+i+'" class="form-control @error('is_cover') is-invalid @enderror" value="image'+i+'" required></div><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
+
+    document.getElementById("n_img").setAttribute('value', i);
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img'+i).attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#img_input"+i).change(function(){
+        readURL(this);
+    });
+ }
+});
+
+
+    $(document).on('click', '.remove-input', function(){  
+        $(this).parents('.remove-div').remove();
+        document.getElementById("is_cover1").checked=true;
+
+    });  
+
+
+
+</script>
 
 
 @endsection

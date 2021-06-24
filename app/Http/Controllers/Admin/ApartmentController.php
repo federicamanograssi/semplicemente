@@ -82,10 +82,11 @@ class ApartmentController extends Controller
         $new_apartment->save();
 
         $j = $data['n_img'];
+        $k = 1;
         for($i=1; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
-                    $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
+                    $path = 'apt' .$new_apartment->id .'_photo' .$k .'.';
                     $extension = $data['image'.$i]->extension();
                     $name = $path .$extension;
                     $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
@@ -100,6 +101,7 @@ class ApartmentController extends Controller
                     }
                     // Salviamo l'immagine nel database
                     $new_image->save();
+                    $k++;
             }
         }
         // if(array_key_exists('images',$data)){
@@ -146,7 +148,12 @@ class ApartmentController extends Controller
             'services'=> Service::all(),
             'images' => Image::where('apartment_id', $apartment->id)->get()
         ];
-        return view('admin.apartments.edit', $data);
+
+        $info = [
+            'n_img' => count($data['images'])
+        ];
+
+        return view('admin.apartments.edit', $data, $info);
     }
 
     /**
