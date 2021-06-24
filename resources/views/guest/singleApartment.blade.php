@@ -2,7 +2,7 @@
 @section('title', 'Single-Apartment | ChaletBnB')
 
 @section('main')
-    <main>
+    <main class="standard-padding">
 
         <div class="container">
             <section class="apartment-title">
@@ -214,7 +214,7 @@
 
         </main>
 
-        <section class="footer-top">
+        <section class="footer-top standard-padding">
             <div class="container">
                 <div class="sponsored-gallery">
                     

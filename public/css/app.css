@@ -395,6 +395,16 @@ h3 {
   }
 }
 
+.standard-padding {
+  padding: 0 2rem;
+}
+
+@media (max-width: 35.5em) {
+  .standard-padding {
+    font-size: 0 1rem;
+  }
+}
+
 .container {
   max-width: 160rem;
   margin: 0 auto;
