@@ -2044,9 +2044,11 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminStatisticsPage.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2056,6 +2058,135 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['apartments', 'views', 'messages'],
+  mounted: function mounted() {
+    console.log('ciao');
+  }
+});
 
 /***/ }),
 
@@ -39991,28 +40122,329 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-6" }, [
+          _c("h4", [
+            _vm._v("Seleziona un appartamento per le statistiche specifiche")
+          ]),
+          _vm._v(" "),
+          _c(
+            "select",
+            { staticClass: "custom-select custom-select-lg mb-3" },
+            [
+              _c("option", { attrs: { selected: "" } }, [
+                _vm._v("Tutti gli appartamenti")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.apartments, function(apartment) {
+                return _c(
+                  "option",
+                  { key: apartment.id, attrs: { value: "apartment.title" } },
+                  [_vm._v(_vm._s(apartment.title))]
+                )
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-4 col-md-12" }, [
+          _c("div", { staticClass: "card card-stats" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-5" }, [
+                  _c("div", { staticClass: "text-center" }, [
+                    _c(
+                      "svg",
+                      {
+                        staticStyle: {
+                          "-ms-transform": "rotate(360deg)",
+                          "-webkit-transform": "rotate(360deg)",
+                          transform: "rotate(360deg)"
+                        },
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "aria-hidden": "true",
+                          focusable: "false",
+                          width: "3em",
+                          height: "3em",
+                          preserveAspectRatio: "xMidYMid meet",
+                          viewBox: "0 0 24 24"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            attrs: {
+                              fill: "none",
+                              stroke: "#626262",
+                              "stroke-width": "2",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M1 12s4-8 11-8s11 8 11 8s-4 8-11 8s-11-8-11-8z"
+                              }
+                            }),
+                            _c("circle", {
+                              attrs: { cx: "12", cy: "12", r: "3" }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7" }, [
+                  _c("div", { staticClass: "numbers" }, [
+                    _c("p", { staticClass: "card-category" }, [
+                      _vm._v("Visualizzazioni")
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(_vm.views.length))
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-4 col-md-12" }, [
+          _c("div", { staticClass: "card card-stats" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-5" }, [
+                  _c("div", { staticClass: "text-center" }, [
+                    _c(
+                      "svg",
+                      {
+                        staticStyle: {
+                          "-ms-transform": "rotate(360deg)",
+                          "-webkit-transform": "rotate(360deg)",
+                          transform: "rotate(360deg)"
+                        },
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "aria-hidden": "true",
+                          focusable: "false",
+                          width: "3em",
+                          height: "3em",
+                          preserveAspectRatio: "xMidYMid meet",
+                          viewBox: "0 0 24 24"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            attrs: {
+                              fill: "none",
+                              stroke: "#626262",
+                              "stroke-width": "2",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                              }
+                            }),
+                            _c("path", { attrs: { d: "M22 6l-10 7L2 6" } })
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7" }, [
+                  _c("div", { staticClass: "numbers" }, [
+                    _c("p", { staticClass: "card-category" }, [
+                      _vm._v("Messaggi")
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(_vm.messages.length))
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-4 col-md-12" }, [
+          _c("div", { staticClass: "card card-stats" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-5" }, [
+                  _c("div", { staticClass: "text-center" }, [
+                    _c(
+                      "svg",
+                      {
+                        staticStyle: {
+                          "-ms-transform": "rotate(360deg)",
+                          "-webkit-transform": "rotate(360deg)",
+                          transform: "rotate(360deg)"
+                        },
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "aria-hidden": "true",
+                          focusable: "false",
+                          width: "3em",
+                          height: "3em",
+                          preserveAspectRatio: "xMidYMid meet",
+                          viewBox: "0 0 24 24"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            attrs: {
+                              fill: "none",
+                              stroke: "#626262",
+                              "stroke-width": "2",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round"
+                            }
+                          },
+                          [
+                            _c("path", { attrs: { d: "M12 1v22" } }),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(3)
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(4)
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(5)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "select",
-      { staticClass: "custom-select custom-select-lg mb-3" },
-      [
-        _c("option", { attrs: { selected: "" } }, [
-          _vm._v("Open this select menu")
-        ]),
+    return _c("div", { staticClass: "col-12" }, [
+      _c("h2", [_vm._v("Le tue statistiche")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("i", [_vm._v("Totali questo mese")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("i", [_vm._v("Totali ricevuti")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-7" }, [
+      _c("div", { staticClass: "numbers" }, [
+        _c("p", { staticClass: "card-category" }, [_vm._v("Spese")]),
         _vm._v(" "),
-        _c("option", { attrs: { value: "1" } }, [_vm._v("One")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "2" } }, [_vm._v("Two")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "3" } }, [_vm._v("Three")])
-      ]
-    )
+        _c("h3", { staticClass: "card-title" }, [_vm._v("numero")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "stats" }, [
+        _c("i", [_vm._v("Sponsorizzazione questo mese")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card card-chart" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h5", { staticClass: "card-category" }, [
+              _vm._v("Visualizzazioni totali")
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "card-title" }, [
+              _c("i", [_vm._v(" Numero +icona")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "chart-area" }, [
+              _vm._v(
+                "\r\n                        mettere chart\r\n                    "
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -53660,9 +54092,7 @@ component.options.__file = "resources/js/components/AdminStatisticsPage.vue"
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminStatisticsPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsPage.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

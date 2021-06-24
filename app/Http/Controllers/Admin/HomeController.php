@@ -56,7 +56,10 @@ class HomeController extends Controller
             //prendere messaggi degli apppartamenti dell'utente
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
-            })->get()
+            })->get(),
+
+            //prendere sponsorizzazioni degli apppartamenti dell'utente
+            'sponsorships' => Sponsorship::all()
         ];
 
         return view('admin.statistics.index',$data);
@@ -75,5 +78,4 @@ class HomeController extends Controller
 
         return view('admin.sponsorships.index',$data);
     }
-    
 }
