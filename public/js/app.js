@@ -2905,16 +2905,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.dist = Math.round(this.dist * 100) / 100;
   },
-  props: {
-    name: String,
-    imgSrc: String,
-    rating: Number,
-    id: Number,
-    price: Number,
-    beds: Number,
-    isSponsored: Boolean,
-    dist: Number
-  }
+  props: ['name', 'imgSrc', 'rating', 'id', 'price', 'beds', 'isSponsored', 'dist']
 });
 
 /***/ }),
@@ -7850,7 +7841,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  height: 20rem;\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 2rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n  opacity: 0.75;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  height: 20rem;\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n  opacity: 0.75;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
 
 // exports
 
@@ -41116,15 +41107,12 @@ var render = function() {
               _vm._v("\n            Nessuno Chalet Trovato\n        ")
             ]),
             _vm._v(" "),
-            _c("p", [
-              _vm._v("Non abbiamo trovato nessun risultato per questa ricerca.")
-            ]),
-            _vm._v(" "),
             _vm.foundApt != 0
               ? _c("p", [
                   _vm._v(
-                    _vm._s(_vm.foundApt) +
-                      " Chalet sono stati però nascosti in base ai filtri selezionati. \n            "
+                    "Nessun risultato disponibile, ma " +
+                      _vm._s(_vm.foundApt) +
+                      " chalet sono stati nascosti in base ai filtri selezionati. \n                "
                   ),
                   _c(
                     "span",
@@ -41136,17 +41124,21 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Clicca qui")]
+                    [_vm._v("\n                    Clicca qui")]
                   ),
-                  _vm._v(
-                    " \n            per ripristinare tutti i filtri e visualizzarli!\n        "
-                  )
+                  _vm._v(" per azzerare i filtri e visualizzarli!\n        ")
                 ])
               : _c("p", [
                   _vm._v(
-                    "Prova a cercare un'altra località, oppure lasciati ispirare dai nostri chalet in evidenza in ogni zona d'Italia!"
+                    "Nessun risultato disponibile per questa ricerca; prova a scegliere un'altra località!"
                   )
-                ])
+                ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Oppure, lasciati ispirare dai nostri chalet in evidenza presenti in ogni zona d'Italia!"
+              )
+            ])
           ])
         : _vm._e(),
       _vm._v(" "),

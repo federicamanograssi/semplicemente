@@ -8,15 +8,15 @@
                 Nessuno Chalet Trovato
             </h3>
 
-            <p>Non abbiamo trovato nessun risultato per questa ricerca.</p>
-
-            <p v-if="foundApt!=0">{{foundApt}} Chalet sono stati però nascosti in base ai filtri selezionati. 
-                <span class="no-results__reset"
-                @click="$emit('resetFilters')">Clicca qui</span> 
-                per ripristinare tutti i filtri e visualizzarli!
+            <p v-if="foundApt!=0">Nessun risultato disponibile, ma {{foundApt}} chalet sono stati nascosti in base ai filtri selezionati. 
+                    <span class="no-results__reset"
+                        @click="$emit('resetFilters')">
+                        Clicca qui</span> per azzerare i filtri e visualizzarli!
             </p>
 
-            <p v-else>Prova a cercare un'altra località, oppure lasciati ispirare dai nostri chalet in evidenza in ogni zona d'Italia!</p>
+            <p v-else>Nessun risultato disponibile per questa ricerca; prova a scegliere un'altra località!</p>
+                
+            <p>Oppure, lasciati ispirare dai nostri chalet in evidenza presenti in ogni zona d'Italia!</p>
 
         </div>
 
@@ -157,15 +157,11 @@
 
     &__icon {
         position: absolute;
-        top: $spacing-standard;
+        top: $spacing-small;
         right: $spacing-standard;
         font-size: 5rem;
         color: $orange;
         opacity: .75;
-    }
-
-    &__text {
-
     }
 
     &__reset {

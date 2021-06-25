@@ -99,7 +99,21 @@ class ApartmentController extends Controller
                     ->where('apartment_id',$apartment['id'])
                     ->get();
 
-                    
+    
+                    // Controllo Eventuale Sponsorizzazione Attiva
+
+                $currentDate = date("Y-m-d H:i:s");
+
+                $checkSponsor = DB::table('apartment_sponsorship')
+                ->where([
+                    ['apartment_id',$apartment['id']] ,
+                    ['status' , 1]
+                    ])
+                ->whereDate('end_date' , '>' , $currentDate)
+                ->first();
+                
+                $is_sponsored = $checkSponsor ? true : false;
+
                 //- crea array con i dati necessari per stampa e filtri    
 
                 $newChalet = array(
@@ -115,7 +129,12 @@ class ApartmentController extends Controller
                     'price' => $apartment['price_per_night'],
                     'rating' => $apartment['rating'],
                     'services' => $services ,
-                    'id' =>    $apartment['id']
+                    'id' =>    $apartment['id'],
+                    // 'is_sponsored' => $is_sponsored,
+                    // 'current_date' => $currentDate ,
+                    // 'sponsorExp'    => $sponsorShipExpiration ,
+                    'is_sponsored'  => $is_sponsored
+                    // 'try' => $checkSponsor
                 );
 
                 //- salvare l'array dell'apt nell'array di risultati da restituire

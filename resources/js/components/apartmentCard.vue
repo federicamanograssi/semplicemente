@@ -45,16 +45,7 @@
         mounted() {
             this.dist = Math.round(this.dist * 100) / 100;
         },
-        props : {
-            name    : String,
-            imgSrc  : String,
-            rating  : Number,
-            id      : Number ,
-            price   : Number,
-            beds    : Number,
-            isSponsored: Boolean ,
-            dist : Number ,
-        }
+        props : ['name' , 'imgSrc' , 'rating' , 'id' , 'price' , 'beds' , 'isSponsored' , 'dist'] ,
     }
 </script>
 
