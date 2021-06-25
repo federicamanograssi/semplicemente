@@ -117,7 +117,7 @@
                
                 <div class="card-body">
                     <div class="chart-area">
-                        mettere chart
+                        <admin-statistics-chart></admin-statistics-chart>
                     </div>
                 </div>
             </div>
