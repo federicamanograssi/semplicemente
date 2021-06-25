@@ -2,22 +2,26 @@
     <section class="apartments-list"
     :class="mapIsShown ? null : 'apartments-list--map-hidden'">
 
-        <div v-if="apartments.length==0" class="no-results">
+        <div v-if="(apartments.length==0) && foundApt!==undefined" class="no-results">
+            <i class="no-results__icon fas fa-exclamation-circle"></i>
             <h3 class="no-results__title">
                 Nessuno Chalet Trovato
             </h3>
 
-            <p v-if="foundApt!=0">{{foundApt}} Chalet sono stati nascosti in base ai filtri selezionati. 
-                <span 
-                @click="$emit('resetFilters')"
-                style="color:black;cursor:pointer;">Clicca qui</span> 
-                per resettare tutti i filtri.
+            <p>Non abbiamo trovato nessun risultato per questa ricerca.</p>
+
+            <p v-if="foundApt!=0">{{foundApt}} Chalet sono stati però nascosti in base ai filtri selezionati. 
+                <span class="no-results__reset"
+                @click="$emit('resetFilters')">Clicca qui</span> 
+                per ripristinare tutti i filtri e visualizzarli!
             </p>
+
+            <p v-else>Prova a cercare un'altra località, oppure lasciati ispirare dai nostri chalet in evidenza in ogni zona d'Italia!</p>
 
         </div>
 
         <apartment-card 
-                v-for="(apartment , index) in apartments" 
+            v-for="(apartment , index) in outputApt"
             :key="index" 
             :name="apartment.name" 
             :imgSrc="'storage/' + apartment.cover_img"
@@ -39,15 +43,38 @@
 <script>
     export default {
         mounted() {
-            if(this.apartments){
-                //
-            }
-            else this.apartments = this.defaultApartments;
+
+            this.loadSponsored();
+            this.setOutputArray();
         },
-        props : ['apartments' , 'mapIsShown' , 'foundApt'],
+        props : [
+            'apartments' ,  // Array di appartamenti da mostrare
+            'mapIsShown' ,  // Booleano che indica se la mappa è visibile
+            'foundApt' ,      // Numero di appartamenti esistenti per la località, compresi quelli esclusi dal filtraggio
+            ],
+        watch: {    
+            apartments: {                
+                handler: function() {
+                    this.setOutputArray();
+                    }
+                }
+            },
         data() {
             return {
-                'defaultApartments' : [
+                outputApt    : null,    // Array di appartamenti che sarà effettivamente renderizzato
+                sponsoredApt : [],      // Array di apt Sponsorizzati
+                showSponsored: false,   // Mostrare apt Sponsorizzati (in assenza di quelli relativi alla ricerca?)
+            }
+        },
+        methods : {
+            //  Metodo che stabilisce se visualizzare apt Sponsorizzati in caso di assenza risultati
+
+            setOutputArray(){
+                if(this.apartments.length > 0) this.outputApt = this.apartments;
+                else this.outputApt = this.sponsoredApt;
+            },
+            loadSponsored(){
+                this.sponsoredApt = [
                     {
                         'name' : 'Mountain Chalet Milly' ,
                         'imgSrc' : 'img/sampleApartments/01/94264560.jpg' ,
@@ -114,23 +141,41 @@
     }
 
     .no-results {
-    background-color: red;
     height: $height-section-big;
     width: 100%;
+    background-color: $white;
     margin-bottom: $spacing-more;
     border-radius: $border-radius-standard;
     padding: $spacing-standard;
+    border: 1px dashed $orange;
+    position: relative;
 
     &__title {
+        color: $orange;
+        margin-bottom: $spacing-standard;
+    }
 
+    &__icon {
+        position: absolute;
+        top: $spacing-standard;
+        right: $spacing-standard;
+        font-size: 5rem;
+        color: $orange;
+        opacity: .75;
     }
 
     &__text {
 
     }
 
-    &__actions {
+    &__reset {
+        color: $color-primary;
+        text-decoration: underline;
+        cursor: pointer;
+    }
 
+    p {
+        margin-bottom: $spacing-standard;
     }
 }
 

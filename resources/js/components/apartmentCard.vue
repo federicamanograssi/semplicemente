@@ -30,7 +30,7 @@
                 <span class="single-apartment__beds hide-on-mobile"><i class="fas fa-user"></i>{{beds}}</span>
                 <!-- <span class="single-apartment__rating"><i class="fas fa-restroom"></i>2</span> -->
                 <span class="single-apartment__price"><i class="fas fa-euro-sign"></i>{{price}}</span>
-                <span class="single-apartment__distance"><i class="fas fa-map-marker-alt"></i>{{Math.round(dist * 100) / 100}} Km</span>
+                <span v-if="dist" fclass="single-apartment__distance"><i class="fas fa-map-marker-alt"></i>{{Math.round(dist * 100) / 100}} Km</span>
                 
                 <!-- <a :href="'single/'+id" class="btn btn--secondary btn--small">Prenota</a> -->
 

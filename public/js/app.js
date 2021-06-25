@@ -2235,9 +2235,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    // Valori di Default da utilizzare per la prima ricerca
-    this.currentQuery.baseLocation = this.destination, this.currentQuery.maxDistance = 20, this.currentQuery.guests = 1, this.currentQuery.minRating = 1, this.currentQuery.minRooms = 1, this.currentQuery.highestAptPrice = null, this.currentQuery.maxPrice = null, this.currentQuery.selectedServices = [], this.getServicesList();
-    this.search();
+    this.resetFilters(false); // Imposta filtri per Query di partenza
+
+    this.currentQuery.baseLocation = this.destination; // Location di partenza
+
+    this.currentQuery.maxDistance = 20; // Raggio di ricerca di default
+
+    this.getServicesList(); // Compila lista servizi
+
+    this.search(); // Esegue la prima ricerca
   },
   data: function data() {
     return {
@@ -2286,14 +2292,14 @@ __webpack_require__.r(__webpack_exports__);
   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
     //  Metodo che imposta sui valori più permissivi tutti i filtri (tranne quelli gestiti separatamente)
-    resetFilters: function resetFilters() {
+    resetFilters: function resetFilters(needToFilter) {
       this.currentQuery.maxDistance = 60;
       this.currentQuery.guests = 1;
       this.currentQuery.minRating = 1;
       this.currentQuery.minRooms = 1;
       this.currentQuery.selectedServices = [];
       this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
-      this.filterResults();
+      if (needToFilter) this.filterResults();
     },
     // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
     toggleMap: function toggleMap() {
@@ -2960,15 +2966,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    if (this.apartments) {//
-    } else this.apartments = this.defaultApartments;
+    this.loadSponsored();
+    this.setOutputArray();
   },
-  props: ['apartments', 'mapIsShown', 'foundApt'],
+  props: ['apartments', // Array di appartamenti da mostrare
+  'mapIsShown', // Booleano che indica se la mappa è visibile
+  'foundApt' // Numero di appartamenti esistenti per la località, compresi quelli esclusi dal filtraggio
+  ],
+  watch: {
+    apartments: {
+      handler: function handler() {
+        this.setOutputArray();
+      }
+    }
+  },
   data: function data() {
     return {
-      'defaultApartments': [{
+      outputApt: null,
+      // Array di appartamenti che sarà effettivamente renderizzato
+      sponsoredApt: [],
+      // Array di apt Sponsorizzati
+      showSponsored: false // Mostrare apt Sponsorizzati (in assenza di quelli relativi alla ricerca?)
+
+    };
+  },
+  methods: {
+    //  Metodo che stabilisce se visualizzare apt Sponsorizzati in caso di assenza risultati
+    setOutputArray: function setOutputArray() {
+      if (this.apartments.length > 0) this.outputApt = this.apartments;else this.outputApt = this.sponsoredApt;
+    },
+    loadSponsored: function loadSponsored() {
+      this.sponsoredApt = [{
         'name': 'Mountain Chalet Milly',
         'imgSrc': 'img/sampleApartments/01/94264560.jpg',
         'rating': '4'
@@ -2988,8 +3022,8 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'Ledro Mountain Chalet',
         'imgSrc': 'img/sampleApartments/05/294869423.jpg',
         'rating': '5'
-      }]
-    };
+      }];
+    }
   }
 });
 
@@ -7721,7 +7755,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".back-to-top[data-v-5e5b5f44] {\n  display: none;\n}\n.main--advanced-search[data-v-5e5b5f44] {\n  height: calc(100vh - 7rem);\n  background-color: rgba(255, 255, 255, 0.8);\n  max-width: 160rem;\n  margin-left: auto;\n  margin-right: auto;\n  position: relative;\n}\n.main--advanced-search .apartments-list[data-v-5e5b5f44] {\n  width: 100%;\n  padding: 2rem;\n  padding-right: 50%;\n  height: calc(100vh - 2 * 7rem);\n  overflow-x: auto;\n  overflow-y: auto;\n}\n@media (max-width: 64em) {\n.main--advanced-search .apartments-list[data-v-5e5b5f44] {\n    padding-right: 0;\n    padding-left: 0;\n    height: calc( 100% - 20rem - 7rem);\n}\n}\n.main--advanced-search .apartments-list--map-hidden[data-v-5e5b5f44] {\n  height: calc( 100% - 7rem);\n}", ""]);
+exports.push([module.i, ".main--advanced-search[data-v-5e5b5f44] {\n  height: calc(100vh - 7rem);\n  background-color: rgba(255, 255, 255, 0.8);\n  max-width: 160rem;\n  margin-left: auto;\n  margin-right: auto;\n  position: relative;\n}\n.main--advanced-search .apartments-list[data-v-5e5b5f44] {\n  width: 100%;\n  padding: 2rem;\n  padding-right: 50%;\n  height: calc(100vh - 2 * 7rem);\n  overflow-x: auto;\n  overflow-y: auto;\n}\n@media (max-width: 64em) {\n.main--advanced-search .apartments-list[data-v-5e5b5f44] {\n    padding-right: 2rem;\n    height: calc( 100% - 20rem - 7rem);\n}\n}\n.main--advanced-search .apartments-list--map-hidden[data-v-5e5b5f44] {\n  height: calc( 100% - 7rem);\n}", ""]);
 
 // exports
 
@@ -7816,7 +7850,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  background-color: red;\n  height: 20rem;\n  width: 100%;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  height: 20rem;\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 2rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n  opacity: 0.75;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
 
 // exports
 
@@ -40554,7 +40588,7 @@ var render = function() {
             },
             on: {
               resetFilters: function($event) {
-                return _vm.resetFilters()
+                return _vm.resetFilters(true)
               }
             }
           })
@@ -41019,10 +41053,12 @@ var render = function() {
             _vm._v(_vm._s(_vm.price))
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "single-apartment__distance" }, [
-            _c("i", { staticClass: "fas fa-map-marker-alt" }),
-            _vm._v(_vm._s(Math.round(_vm.dist * 100) / 100) + " Km")
-          ])
+          _vm.dist
+            ? _c("span", { attrs: { fclass: "single-apartment__distance" } }, [
+                _c("i", { staticClass: "fas fa-map-marker-alt" }),
+                _vm._v(_vm._s(Math.round(_vm.dist * 100) / 100) + " Km")
+              ])
+            : _vm._e()
         ])
       ])
     ]
@@ -41070,22 +41106,30 @@ var render = function() {
       class: _vm.mapIsShown ? null : "apartments-list--map-hidden"
     },
     [
-      _vm.apartments.length == 0
+      _vm.apartments.length == 0 && _vm.foundApt !== undefined
         ? _c("div", { staticClass: "no-results" }, [
+            _c("i", {
+              staticClass: "no-results__icon fas fa-exclamation-circle"
+            }),
+            _vm._v(" "),
             _c("h3", { staticClass: "no-results__title" }, [
               _vm._v("\n            Nessuno Chalet Trovato\n        ")
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Non abbiamo trovato nessun risultato per questa ricerca.")
             ]),
             _vm._v(" "),
             _vm.foundApt != 0
               ? _c("p", [
                   _vm._v(
                     _vm._s(_vm.foundApt) +
-                      " Chalet sono stati nascosti in base ai filtri selezionati. \n            "
+                      " Chalet sono stati però nascosti in base ai filtri selezionati. \n            "
                   ),
                   _c(
                     "span",
                     {
-                      staticStyle: { color: "black", cursor: "pointer" },
+                      staticClass: "no-results__reset",
                       on: {
                         click: function($event) {
                           return _vm.$emit("resetFilters")
@@ -41095,14 +41139,18 @@ var render = function() {
                     [_vm._v("Clicca qui")]
                   ),
                   _vm._v(
-                    " \n            per resettare tutti i filtri.\n        "
+                    " \n            per ripristinare tutti i filtri e visualizzarli!\n        "
                   )
                 ])
-              : _vm._e()
+              : _c("p", [
+                  _vm._v(
+                    "Prova a cercare un'altra località, oppure lasciati ispirare dai nostri chalet in evidenza in ogni zona d'Italia!"
+                  )
+                ])
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.apartments, function(apartment, index) {
+      _vm._l(_vm.outputApt, function(apartment, index) {
         return _c("apartment-card", {
           key: index,
           attrs: {

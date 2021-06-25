@@ -20,7 +20,7 @@
             :apartments="listApartments" 
             :mapIsShown="mapIsShown"
             :foundApt="apartments.length"
-            v-on:resetFilters="resetFilters()"
+            v-on:resetFilters="resetFilters(true)"
              class="apartments-list--full-width">
 
             <!-- Lista degli appartamenti -->
@@ -47,21 +47,15 @@
     export default {
 
         mounted() {
+            this.resetFilters(false);   // Imposta filtri per Query di partenza
 
-            // Valori di Default da utilizzare per la prima ricerca
-            this.currentQuery.baseLocation     = this.destination ,
-            this.currentQuery.maxDistance      = 20 ,
-            this.currentQuery.guests           = 1 ,
-            this.currentQuery.minRating        = 1 ,
-            this.currentQuery.minRooms         = 1 ,
-            this.currentQuery.highestAptPrice  = null ,
-            this.currentQuery.maxPrice         = null ,
-            this.currentQuery.selectedServices = []  ,
+            this.currentQuery.baseLocation = this.destination;  // Location di partenza
+            this.currentQuery.maxDistance  = 20;                // Raggio di ricerca di default
 
-            this.getServicesList();
-            this.search();
+            this.getServicesList();     // Compila lista servizi
+            this.search();              // Esegue la prima ricerca
         },
-        data() {            
+        data() {
             return {
                 
                 dataIsReady : false,            // flag: mostra i componenti solo quando sarà = true
@@ -96,7 +90,7 @@
         methods : {
 
             //  Metodo che imposta sui valori più permissivi tutti i filtri (tranne quelli gestiti separatamente)
-            resetFilters(){
+            resetFilters(needToFilter){
                     
                 this.currentQuery.maxDistance      = 60;
                 this.currentQuery.guests           = 1;
@@ -105,7 +99,7 @@
                 this.currentQuery.selectedServices = [];
                 this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
 
-                this.filterResults();
+                if(needToFilter) this.filterResults();
             },
 
             // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
@@ -293,11 +287,8 @@
 </script>
 
 <style scoped lang="scss">
+
 @import "../../sass/variables";
-    
-    .back-to-top {
-        display: none;
-    }
 
     .main--advanced-search {
         height: calc(100vh - #{$height-section-medium});
@@ -315,9 +306,9 @@
             overflow-x: auto;
             overflow-y: auto;
             @include responsive(tablet) {
-                // padding-right: $spacing-standard;
-                padding-right: 0;
-                padding-left: 0;
+                padding-right: $spacing-standard;
+                // padding-right: 0;
+                // padding-left: 0;
                 height: calc( 100% - #{$height-section-big} - #{$height-section-medium});
             }
 
