@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
 use App\Image;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -203,10 +203,11 @@ class ApartmentController extends Controller
         return redirect()->route('apartments.index', $apartment);
     }
 
-    public function removeImages (Image $image) {
-        
+    public function removeImages ($id) {
+
+        $image = Image::find($id);
         $image->delete();
-        return redirect()->route('apartments.edit');
+        return redirect()->route('apartments.index');
     }
     /**
      * Remove the specified resource from storage.

@@ -51,11 +51,12 @@ Auth::routes();
 ------------------------------------------------------*/
 
 Route::prefix('admin')
-    ->namespace('Admin')
-    ->middleware('auth')
-    ->group(function () {
-        Route::get('/', 'HomeController@index')->name('admin_homepage');
-        Route::resource('/messages', 'MessageController');
-        Route::resource('/apartments','ApartmentController');
-        Route::delete('/images/{image}', 'ApartmentController@removeImages')->name('remove.images');
+->namespace('Admin')
+->middleware('auth')
+->group(function () {
+    Route::get('/', 'HomeController@index')->name('admin_homepage');
+    Route::resource('/messages', 'MessageController');
+    Route::resource('/apartments','ApartmentController');
+    Route::get('delete{id}', 'ApartmentController@removeImages')->name('remove.images');
+    
     });
