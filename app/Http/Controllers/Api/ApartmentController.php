@@ -34,7 +34,9 @@ class ApartmentController extends Controller
 
     public function services()
     {
-        $services=Service::all();
+        $services=DB::table('services')
+        ->select('service_name' , 'id')
+        ->get();
 
         return response()->json([
             'success'=> true,
@@ -44,45 +46,64 @@ class ApartmentController extends Controller
 
     /*
      * RESTITUISCE ARRAY DI APPARTAMENTI SPONSORIZZATI
-     *
-     *
+     * Richiede come parametro nOfItems, equivalente al numero di apt richiest
+     * se nOfItems == 0, verranno restituiti TUTTI gli apt
      */
 
-    public function getSponsoredApt(Request $request) {
+    public function getSponsoredApt(Request $request) {        
         
-
-        $nOfItems = $request->input('nOfItems');    // Numero di Apt eventualmente richiesti        
-
         $currentDate = date("Y-m-d H:i:s");
-
+        
         $sponsorships = DB::table('apartment_sponsorship')
         ->select('apartment_id')
         ->where('status' , 1)
         ->whereDate('end_date' , '>' , $currentDate)
         ->get();
-
+        
         
         $sponsoredAptIDS = []; // lista degli ID di ***tutti*** gli appartamenti attualmente sponsorizzati
-
+        
         foreach ($sponsorships as $sponsorship) {
             if(!in_array($sponsorship->apartment_id , $sponsoredAptIDS))
             array_push($sponsoredAptIDS , $sponsorship->apartment_id );
         }
-
+        
         $sponsoredAptAll = []; // array contenente **tutti** gli apt sponsorizzati presenti nel DB
-
+        
         foreach ($sponsoredAptIDS as $aptID) {
             $apt =  DB::table('apartments')
+            ->select('id' , 'price_per_night' , 'beds_n' , 'rating' , 'title')
             ->where('id',$aptID)
             ->first();
+            
+            $cover_img = DB::table('images')->where(
+                [
+                    ['apartment_id', '=' , $aptID] ,
+                    ['is_cover' ,    '=' , '1']
+                ]
+                )->first()->img_path;
+            
+            // Dall'array ottenuto filtra solo le proprietà che ci interessano ai fini della visualizzazione
 
-            array_push($sponsoredAptAll , $apt);
+            $filteredApt = array( 
+                'name' => $apt->title,
+                'id' => $apt->id , 
+                'price' => $apt->price_per_night ,
+                'beds' => $apt->beds_n , 
+                'rating' => $apt->rating ,
+                'cover_img' => $cover_img 
+             );
+
+            array_push($sponsoredAptAll , $filteredApt);
         }
 
-        if($nOfItems > count($sponsoredAptAll))
-        $nOfItems = count($sponsoredAptAll);
-
         $sponsoredApt = [];
+
+        $nOfItems = $request->input('nOfItems');    // Numero di Apt  richiesti
+        
+        if($nOfItems > count($sponsoredAptAll) || $nOfItems == 0)
+            $nOfItems = count($sponsoredAptAll);
+
 
         for ($i=0; $i < $nOfItems; $i++) { 
             array_push($sponsoredApt , $sponsoredAptAll[$i]);

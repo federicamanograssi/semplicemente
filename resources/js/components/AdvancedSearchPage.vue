@@ -132,7 +132,7 @@
                         // *********************************************
                         // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
                         // (Benché ciò dovrebbe avvenire lato server...)
-                        response.data.results.forEach(apt => {                            
+                        response.data.results.forEach(apt => {
                             if(apt.services.length>0){                                
                                 let tmpArray=[];                                
                                 apt.services.forEach(service => {
