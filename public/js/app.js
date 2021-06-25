@@ -2154,23 +2154,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
-  },
   data: function data() {
     return {
-      baseLocation: this.currentQuery.baseLocation,
-      maxDistance: Number(this.currentQuery.maxDistance),
-      minRating: Number(this.currentQuery.minRating),
-      maxPrice: Number(this.currentQuery.maxPrice),
-      minRooms: Number(this.currentQuery.minRooms),
-      guests: Number(this.currentQuery.guests),
-      selectedServices: this.currentQuery.selectedServices,
-      isFiltersBoxOpen: false // servicesList : []   // lista di tutti i servizi supportati dall'applicazione
-
+      isFiltersBoxOpen: false
     };
   },
   props: ['currentQuery', // array contenente tutte le informazioni relative alla ricerca
@@ -2181,22 +2169,11 @@ __webpack_require__.r(__webpack_exports__);
       // Gestione del box con i filtri avanzati
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
-    updateQuery: function updateQuery() {
-      // Metodo richiamato ogni volta che un qualsiasi campo viene modificato.
-      // Quali siano le operazioni da eseguire in base alle modifiche effettuate
-      // lo stabilirà il parent component (AdvancedSearchPage) attraverso il metodo getNewQuery()
-      var newQuery = {
-        baseLocation: this.baseLocation,
-        maxDistance: Number(this.maxDistance),
-        guests: Number(this.guests),
-        minRating: Number(this.minRating),
-        minRooms: Number(this.minRooms),
-        maxPrice: Number(this.maxPrice),
-        selectedServices: this.selectedServices
-      };
-      console.log("Occhio, Sto mandando una nuova query:");
-      console.log(newQuery);
-      this.$emit('newQuery', newQuery); // Evento raccolto dal componente genitore
+    updateLocation: function updateLocation() {
+      this.$emit('updateLocation');
+    },
+    updateFilters: function updateFilters() {
+      this.$emit('updateFilters');
     }
   }
 });
@@ -2251,14 +2228,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
-    this.getServicesList();
+    // Valori di Default da utilizzare per la prima ricerca
+    this.currentQuery.baseLocation = this.destination, this.currentQuery.maxDistance = 20, this.currentQuery.guests = 1, this.currentQuery.minRating = 1, this.currentQuery.minRooms = 1, this.currentQuery.highestAptPrice = null, this.currentQuery.maxPrice = null, this.currentQuery.selectedServices = [], this.getServicesList();
     this.search();
   },
   data: function data() {
     return {
+      dataIsReady: false,
+      // flag: mostra i componenti solo quando sarà = true
+      mapIsShown: true,
+      // true se la mappa è visualizzata, false se l'utente l'ha nascosta
       // Liste di Appartamenti
       apartments: [],
       // Lista Generale con tutti i risultati trovati
@@ -2268,32 +2253,111 @@ __webpack_require__.r(__webpack_exports__);
       // Array ottimizzato per il component apartmentList
       mapApartmens: [],
       // Array ottimizzato per il component chaletMap
+      // Coordinate Località ricercata
       baseLat: 0,
-      // latitudine località cercata
+      // latitudine
       baseLon: 0,
-      // Longituine località cercata
-      servicesList: [],
-      highestAptPrice: 300,
+      // Longituine
+      // Query di ricerca dell'utente
       currentQuery: {
-        baseLocation: this.destination,
-        maxDistance: 40,
-        guests: 2,
-        minRating: 1,
-        minRooms: 1,
+        baseLocation: null,
+        // Località o indirizzo cercato dall'utente
+        maxDistance: null,
+        // Raggio entro il quale effettuare il filtraggio
+        highestAptPrice: null,
+        // Prezzo più alto fra quelli di tutti gli appartamenti corrisponenti alla località
         maxPrice: null,
-        selectedServices: []
+        // Prezzo massimo definito dall'utente
+        guests: null,
+        // Numero di Ospiti per il quale è stata effettuata la ricerca
+        minRating: null,
+        // Punteggio minimo dell'appartamento definito dall'utente
+        minRooms: null,
+        // Minimo numero di camere richieste dall'utente
+        selectedServices: null // Lista dei servizi richiesti dall'utente
+
       },
-      mapIsShown: true
+      servicesList: [] // Array di tutti i possibili servizi presenti sul db
+
     };
   },
   props: ['destination'],
   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
+    // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
+    toggleMap: function toggleMap() {
+      this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
+    },
+    // Metodo che richiede la lista complessiva dei servizi al database tramite chiamata API
+    getServicesList: function getServicesList() {
+      var _this = this;
+
+      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
+        _this.servicesList = servicesList.data.results;
+      });
+    },
+    // Metodo che si occupa di cercare sul database gli appartamenti presenti entro 60Km dalla località cercata
+    search: function search() {
+      console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
+      self = this; // alias
+
+      axios.get('http://127.0.0.1:8000/api/location', {
+        params: {
+          location: this.currentQuery.baseLocation,
+          radius: 60 // max radius                
+
+        }
+      }).then(function (response) {
+        // *********************************************
+        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
+        // (Benché ciò dovrebbe avvenire lato server...)
+        response.data.results.forEach(function (apt) {
+          if (apt.services.length > 0) {
+            var tmpArray = [];
+            apt.services.forEach(function (service) {
+              service.service_id ? tmpArray.push(service.service_id) : null;
+            });
+            apt.services = tmpArray;
+          }
+        }); // Fine Conversione
+        // *********************************************
+
+        self.apartments = response.data.results; // Salva l'array degli apt ottenuti nella variabile apartments
+
+        self.baseLat = response.data.base_lat; // latitudine  località cercata dall'utente
+
+        self.baseLon = response.data.base_lon; // Longitudine località cercata dall'utente
+
+        self.filterResults(); // Filtra Dati appena ottenuti in base alle richieste dell'utente
+
+        self.dataIsReady = true; // trigger flag: alla prima ricerca effettuata mostretà searchForm, Map e AptList                        
+      });
+    },
+    //  Questo metodo esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
+    getHighestPrice: function getHighestPrice() {
+      if (!this.currentQuery.highestAptPrice) this.currentQuery.highestAptPrice = 299;
+      if (this.apartments.length == 0) return; // Se la lista di appartamenti è vuota abbandona la fuzione
+
+      var tmpHighestPrice = this.apartments[0].price;
+      this.apartments.forEach(function (apt) {
+        apt.price > tmpHighestPrice ? tmpHighestPrice = apt.price : null;
+      });
+      this.currentQuery.highestAptPrice = Math.ceil(tmpHighestPrice);
+    },
+    //  Metodo che si occupa di filtrare l'array di apt restituito dal db in base ai filtri applicati dall'utente
     filterResults: function filterResults() {
-      this.filteredApartments = []; // Resetta lista appartamenti filtrati
-      // Facciamo riferimento alla lista degli appartamenti generale
-      // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-      // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
+      // Resetta tutte le liste di apt tranne quella 'grezza' che utilizzeremo per il filtraggio
+      this.filteredApartments = [];
+      this.listApartments = [];
+      this.mapApartmens = [];
+      this.getHighestPrice(); // Richiede prezzo più alto fra apt presenti in array generale
+      // Imposta prezzo massimo su quello più elevato fra gli apt in array nel caso in cui l'utente non... 
+      // ...lo avesse ancora definito o questo fosse superiore a quello più elevato fra gli apt in array
+
+      if (!this.currentQuery.maxPrice || this.currentQuery.maxPrice > this.currentQuery.highestAptPrice) this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
+      if (this.apartments.length == 0) return; // se l'array degli apt è vuoto abbandona la funzione
+      // Per l'effettivo filtraggio viene utilizzato for 
+      // (preferito al foreach per la possibilità di usare 'continue')
 
       mainFor: for (var i = 0; i < this.apartments.length; i++) {
         var apt = this.apartments[i]; // Alias
@@ -2331,17 +2395,21 @@ __webpack_require__.r(__webpack_exports__);
           } // outer for
 
         } // else
+        // *****************************************************************
         // Assegna casualmente una sponsorizzazione ad un apparamento su 3
         // (Soluzione temporanea prima di ottenere l'informazione dal server)
 
 
         var rNum = Math.floor(Math.random() * 3) + 1;
-        rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
-        this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array             
+        rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false; // *****************************************************************
+
+        this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array degli apt filtrati            
       } // main for
 
 
-      if (this.filteredApartments.length > 1) this.sortApartments();
+      if (this.filteredApartments.length > 1) this.sortApartments(); // Se il filtraggio restituisce più di un apt, lancia metodo di ordinamento
+      //  array ottimizzato per visualizzazione su mappa 
+
       this.mapApartmens = this.filteredApartments.map(function (_ref) {
         var lat = _ref.lat,
             lon = _ref.lon,
@@ -2357,7 +2425,8 @@ __webpack_require__.r(__webpack_exports__);
           price: price,
           isSponsored: isSponsored
         };
-      });
+      }); //  array ottimizzato per visualizzazionen card apt
+
       this.listApartments = this.filteredApartments.map(function (_ref2) {
         var id = _ref2.id,
             name = _ref2.name,
@@ -2378,18 +2447,14 @@ __webpack_require__.r(__webpack_exports__);
           cover_img: cover_img
         };
       });
-      console.log("Lista appartamenti da passare alla mappa");
-      console.log(this.mapApartmens);
     },
+    // Metodo che si occupa di ordinare gli apt filtrati in mase all'eventuale sponsorizzazione ed alla distanza dalla località cercata dall'utente
     sortApartments: function sortApartments() {
-      // Ordina gli appartamenti per distanza rispetto alla località cercata dall'utente
-      // in seguito porta comunque gli appartamenti sponsorizzati nelle prime posizioni
       var sortedApt = []; //  Predispongo array
 
       while (this.filteredApartments.length > 1) {
-        var minDist = this.filteredApartments[0].dist; // Valore iniziale distanza minima impostata sul primio elemento
-
-        var closerApt = 0; //elemento la cui distanza è quella inferiore
+        var minDist = this.filteredApartments[0].dist;
+        var closerApt = 0;
 
         for (var i = 0; i < this.filteredApartments.length; i++) {
           var apt = this.filteredApartments[i]; // Alias
@@ -2408,85 +2473,16 @@ __webpack_require__.r(__webpack_exports__);
       sortedApt.push(this.filteredApartments[0]); // pusha l'ultimo apt rimasto nell'array principale (non gestito dal while)
 
       this.filteredApartments = []; // A questo punto filteredApartments è vuoto mentre sortApartments contiene tutti gli apt già ordinati
-      // Devo adesso inserire nelle prime posizioni gli apt sponsorizzati
-      // Ricreo l'array principale inserrendo ai primi posti gli apt sponsorizzati
+      // Ricreo l'array filteredApartments inserrendo ai primi posti gli apt sponsorizzati
 
       for (var _i2 = 0; _i2 < sortedApt.length; _i2++) {
         if (sortedApt[_i2].isSponsored) this.filteredApartments.push(sortedApt[_i2]);
-      } // Dopo gli apt sponsorizzati inserisco quelli rimanenti                
+      } // Dopo gli apt sponsorizzati inserisco quelli rimanenti
 
 
       for (var _i3 = 0; _i3 < sortedApt.length; _i3++) {
         if (!sortedApt[_i3].isSponsored) this.filteredApartments.push(sortedApt[_i3]);
       }
-    },
-    toggleMap: function toggleMap() {
-      this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
-    },
-    getaptListInfo: function getaptListInfo() {
-      if (this.apartments.length == 0) return; // Se la lista di appartamenti è vuota abbandona la fuzione
-      // Definizione di prezzo minimo e massimo fra tutti gli
-      // appartamenti presenti nell'array (filtrati e non)
-
-      var maxPrice = this.apartments[0].price;
-      var minPrice = this.apartments[0].price;
-      this.apartments.forEach(function (apt) {
-        apt.price > maxPrice ? maxPrice = apt.price : null;
-        apt.price < minPrice ? minPrice = apt.price : null;
-      });
-      this.highestAptPrice = Math.ceil(maxPrice);
-    },
-    search: function search() {
-      console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
-      self = this; // alias
-
-      axios.get('http://127.0.0.1:8000/api/location', {
-        params: {
-          location: this.currentQuery.baseLocation,
-          radius: this.currentQuery.maxDistance
-        }
-      }).then(function (response) {
-        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
-        // (Benché ciò dovrebbe avvenire lato server...)
-        response.data.results.forEach(function (apt) {
-          if (apt.services.length > 0) {
-            var tmpArray = [];
-            apt.services.forEach(function (service) {
-              service.service_id ? tmpArray.push(service.service_id) : null;
-            });
-            apt.services = tmpArray;
-          }
-        }); // Fine Conversione
-
-        self.apartments = response.data.results;
-        self.baseLat = response.data.base_lat; // latitudine  località cercata dall'utente
-
-        self.baseLon = response.data.base_lon; // Longitudine località cercata dall'utente
-
-        self.getaptListInfo();
-        self.filterResults();
-      });
-    },
-    getNewQuery: function getNewQuery(newQuery) {
-      var newSearchIsNeeded = false;
-      var oldQuery = this.currentQuery; // alias
-
-      if (oldQuery.baseLocation != newQuery.baseLocation || oldQuery.maxDistance < newQuery.maxDistance) {
-        newSearchIsNeeded = true; // flag: se è cambiata la località o è aumentato il raggio serve una nuova ricerca nel DB
-      }
-
-      this.currentQuery = newQuery; // sovrascrive la vecchia query con quella nuova
-
-      if (newSearchIsNeeded) this.search(); // lancia una nuova ricerca nel DB se necessaio (il successivo filtraggio sarà richiamato dal metodo search() )
-      else this.filterResults(); // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
-    },
-    getServicesList: function getServicesList() {
-      var _this = this;
-
-      // Chiamata API che restituisce la lista complessiva dei servizi
-      axios.get('http://127.0.0.1:8000/api/services').then(function (servicesList) {
-        _this.servicesList = servicesList.data.results;
-      });
     }
   }
 });
@@ -3075,6 +3071,8 @@ __webpack_require__.r(__webpack_exports__);
       popupAnchor: [0, -22] // point from which the popup should open relative to the iconAnchor
 
     });
+    this.updateCoordinates();
+    this.updateMarkers();
   },
   data: function data() {
     return {
@@ -3133,7 +3131,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
-      // Se sono presenti dei marker precedenti li rimuove dalla mappa
+      // Se sono presenti dei marker precedenti li rimuove dalla mappa                
       if (this.markers) {
         this.markers.forEach(function (marker) {
           marker.remove();
@@ -39992,23 +39990,23 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.baseLocation,
-                expression: "baseLocation"
+                value: _vm.currentQuery.baseLocation,
+                expression: "currentQuery.baseLocation"
               }
             ],
             key: "",
             staticClass: "form__input",
             attrs: { type: "text" },
-            domProps: { value: _vm.baseLocation },
+            domProps: { value: _vm.currentQuery.baseLocation },
             on: {
               change: function($event) {
-                return _vm.updateQuery()
+                return _vm.updateLocation()
               },
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.baseLocation = $event.target.value
+                _vm.$set(_vm.currentQuery, "baseLocation", $event.target.value)
               }
             }
           })
@@ -40075,33 +40073,37 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.maxDistance,
-                      expression: "maxDistance"
+                      value: _vm.currentQuery.maxDistance,
+                      expression: "currentQuery.maxDistance"
                     }
                   ],
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
                     min: "20",
-                    max: "100",
+                    max: "60",
                     value: "40",
                     step: "20",
                     id: "search-form-distance"
                   },
-                  domProps: { value: _vm.maxDistance },
+                  domProps: { value: _vm.currentQuery.maxDistance },
                   on: {
                     change: function($event) {
-                      return _vm.updateQuery()
+                      return _vm.updateFilters()
                     },
                     __r: function($event) {
-                      _vm.maxDistance = $event.target.value
+                      return _vm.$set(
+                        _vm.currentQuery,
+                        "maxDistance",
+                        $event.target.value
+                      )
                     }
                   }
                 })
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "form__slider__value" }, [
-                _vm._v(_vm._s(_vm.maxDistance) + " Km")
+                _vm._v(_vm._s(_vm.currentQuery.maxDistance) + " Km")
               ])
             ]
           )
@@ -40119,22 +40121,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.minRooms,
-                    expression: "minRooms"
+                    value: _vm.currentQuery.minRooms,
+                    expression: "currentQuery.minRooms"
                   }
                 ],
                 staticClass: "form__input",
                 attrs: { id: "search-form-rooms", type: "number" },
-                domProps: { value: _vm.minRooms },
+                domProps: { value: _vm.currentQuery.minRooms },
                 on: {
                   change: function($event) {
-                    return _vm.updateQuery()
+                    return _vm.updateFilters()
                   },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.minRooms = $event.target.value
+                    _vm.$set(_vm.currentQuery, "minRooms", $event.target.value)
                   }
                 }
               })
@@ -40154,22 +40156,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.guests,
-                    expression: "guests"
+                    value: _vm.currentQuery.guests,
+                    expression: "currentQuery.guests"
                   }
                 ],
                 staticClass: "form__input",
                 attrs: { id: "search-form-guests", type: "number" },
-                domProps: { value: _vm.guests },
+                domProps: { value: _vm.currentQuery.guests },
                 on: {
                   change: function($event) {
-                    return _vm.updateQuery()
+                    return _vm.updateFilters()
                   },
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.guests = $event.target.value
+                    _vm.$set(_vm.currentQuery, "guests", $event.target.value)
                   }
                 }
               })
@@ -40197,25 +40199,29 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.maxPrice,
-                      expression: "maxPrice"
+                      value: _vm.currentQuery.maxPrice,
+                      expression: "currentQuery.maxPrice"
                     }
                   ],
                   staticClass: "form__slider",
                   attrs: {
                     type: "range",
                     min: "0",
-                    max: _vm.highestAptPrice,
+                    max: _vm.currentQuery.highestAptPrice,
                     step: "1",
                     id: "search-form-price"
                   },
-                  domProps: { value: _vm.maxPrice },
+                  domProps: { value: _vm.currentQuery.maxPrice },
                   on: {
                     change: function($event) {
-                      return _vm.updateQuery()
+                      return _vm.updateFilters()
                     },
                     __r: function($event) {
-                      _vm.maxPrice = $event.target.value
+                      return _vm.$set(
+                        _vm.currentQuery,
+                        "maxPrice",
+                        $event.target.value
+                      )
                     }
                   }
                 })
@@ -40224,7 +40230,7 @@ var render = function() {
               _c("span", { staticClass: "form__slider__value" }, [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(_vm.maxPrice) +
+                    _vm._s(_vm.currentQuery.maxPrice) +
                     "\n                     "
                 ),
                 _c("i", { staticClass: "fas fa-euro-sign" })
@@ -40253,8 +40259,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.minRating,
-                      expression: "minRating"
+                      value: _vm.currentQuery.minRating,
+                      expression: "currentQuery.minRating"
                     }
                   ],
                   staticClass: "form__slider",
@@ -40265,13 +40271,17 @@ var render = function() {
                     value: "3",
                     id: "search-form-rating"
                   },
-                  domProps: { value: _vm.minRating },
+                  domProps: { value: _vm.currentQuery.minRating },
                   on: {
                     change: function($event) {
-                      return _vm.updateQuery()
+                      return _vm.updateFilters()
                     },
                     __r: function($event) {
-                      _vm.minRating = $event.target.value
+                      return _vm.$set(
+                        _vm.currentQuery,
+                        "minRating",
+                        $event.target.value
+                      )
                     }
                   }
                 })
@@ -40280,7 +40290,7 @@ var render = function() {
               _c("span", { staticClass: "form__slider__value" }, [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(_vm.minRating) +
+                    _vm._s(_vm.currentQuery.minRating) +
                     " \n                    "
                 ),
                 _c("i", { staticClass: "fas fa-star" })
@@ -40320,8 +40330,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.selectedServices,
-                              expression: "selectedServices"
+                              value: _vm.currentQuery.selectedServices,
+                              expression: "currentQuery.selectedServices"
                             }
                           ],
                           staticClass: "checkbox__field",
@@ -40332,14 +40342,19 @@ var render = function() {
                           },
                           domProps: {
                             value: service.id,
-                            checked: Array.isArray(_vm.selectedServices)
-                              ? _vm._i(_vm.selectedServices, service.id) > -1
-                              : _vm.selectedServices
+                            checked: Array.isArray(
+                              _vm.currentQuery.selectedServices
+                            )
+                              ? _vm._i(
+                                  _vm.currentQuery.selectedServices,
+                                  service.id
+                                ) > -1
+                              : _vm.currentQuery.selectedServices
                           },
                           on: {
                             change: [
                               function($event) {
-                                var $$a = _vm.selectedServices,
+                                var $$a = _vm.currentQuery.selectedServices,
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
@@ -40347,19 +40362,31 @@ var render = function() {
                                     $$i = _vm._i($$a, $$v)
                                   if ($$el.checked) {
                                     $$i < 0 &&
-                                      (_vm.selectedServices = $$a.concat([$$v]))
+                                      _vm.$set(
+                                        _vm.currentQuery,
+                                        "selectedServices",
+                                        $$a.concat([$$v])
+                                      )
                                   } else {
                                     $$i > -1 &&
-                                      (_vm.selectedServices = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
+                                      _vm.$set(
+                                        _vm.currentQuery,
+                                        "selectedServices",
+                                        $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1))
+                                      )
                                   }
                                 } else {
-                                  _vm.selectedServices = $$c
+                                  _vm.$set(
+                                    _vm.currentQuery,
+                                    "selectedServices",
+                                    $$c
+                                  )
                                 }
                               },
                               function($event) {
-                                return _vm.updateQuery()
+                                return _vm.updateFilters()
                               }
                             ]
                           }
@@ -40474,37 +40501,49 @@ var render = function() {
     "main",
     { staticClass: "main main--advanced-search" },
     [
-      _c("advanced-search-form", {
-        attrs: {
-          currentQuery: _vm.currentQuery,
-          highestAptPrice: _vm.highestAptPrice,
-          servicesList: _vm.servicesList
-        },
-        on: {
-          newQuery: function($event) {
-            return _vm.getNewQuery($event)
-          }
-        }
-      }),
+      _vm.dataIsReady
+        ? _c("advanced-search-form", {
+            attrs: {
+              currentQuery: _vm.currentQuery,
+              highestAptPrice: _vm.currentQuery.highestAptPrice,
+              servicesList: _vm.servicesList
+            },
+            on: {
+              updateFilters: function($event) {
+                return _vm.filterResults()
+              },
+              updateLocation: function($event) {
+                return _vm.search()
+              }
+            }
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _c("apartments-list", {
-        staticClass: "apartments-list--full-width",
-        attrs: { apartments: _vm.listApartments, mapIsShown: _vm.mapIsShown }
-      }),
+      _vm.dataIsReady
+        ? _c("apartments-list", {
+            staticClass: "apartments-list--full-width",
+            attrs: {
+              apartments: _vm.listApartments,
+              mapIsShown: _vm.mapIsShown
+            }
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _c("chalet-map", {
-        attrs: {
-          baseLon: _vm.baseLon,
-          baseLat: _vm.baseLat,
-          apartments: _vm.mapApartmens,
-          radius: _vm.currentQuery.maxDistance
-        },
-        on: {
-          mapToggled: function($event) {
-            return _vm.toggleMap()
-          }
-        }
-      })
+      _vm.dataIsReady
+        ? _c("chalet-map", {
+            attrs: {
+              baseLon: _vm.baseLon,
+              baseLat: _vm.baseLat,
+              apartments: _vm.mapApartmens,
+              radius: _vm.currentQuery.maxDistance
+            },
+            on: {
+              mapToggled: function($event) {
+                return _vm.toggleMap()
+              }
+            }
+          })
+        : _vm._e()
     ],
     1
   )
