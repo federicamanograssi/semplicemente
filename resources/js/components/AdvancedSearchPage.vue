@@ -3,9 +3,11 @@
     <main class="main main--advanced-search">
 
         <advanced-search-form 
-            v-on:newQuery="getNewQuery($event)" 
+            v-if="dataIsReady"
+            v-on:updateFilters="filterResults()" 
+            v-on:updateLocation="search()"
             :currentQuery="currentQuery"
-            :highestAptPrice="highestAptPrice"
+            :highestAptPrice="currentQuery.highestAptPrice"
             :servicesList="servicesList"
             >
 
@@ -14,6 +16,7 @@
         </advanced-search-form>
 
         <apartments-list 
+            v-if="dataIsReady"
             :apartments="listApartments" 
             :mapIsShown="mapIsShown" 
              class="apartments-list--full-width">
@@ -23,6 +26,7 @@
         </apartments-list>
 
         <chalet-map 
+            v-if="dataIsReady"
             v-on:mapToggled="toggleMap()" 
             :baseLon="baseLon" 
             :baseLat="baseLat"
@@ -41,49 +45,142 @@
     export default {
 
         mounted() {
-            this.currentQuery.maxPrice ? null : this.currentQuery.maxPrice = this.highestAptPrice;
+
+            // Valori di Default da utilizzare per la prima ricerca
+            this.currentQuery.baseLocation     = this.destination ,
+            this.currentQuery.maxDistance      = 20 ,
+            this.currentQuery.guests           = 1 ,
+            this.currentQuery.minRating        = 1 ,
+            this.currentQuery.minRooms         = 1 ,
+            this.currentQuery.highestAptPrice  = null ,
+            this.currentQuery.maxPrice         = null ,
+            this.currentQuery.selectedServices = []  ,
+
             this.getServicesList();
             this.search();
         },
         data() {            
             return {
                 
+                dataIsReady : false,            // flag: mostra i componenti solo quando sarà = true
+                mapIsShown : true,              // true se la mappa è visualizzata, false se l'utente l'ha nascosta
+
                 // Liste di Appartamenti
+                apartments: [] ,                // Lista Generale con tutti i risultati trovati
+                filteredApartments : [] ,       // Appartamenti che soddisfano i filtri definiti dall'utente
+                listApartments : [],            // Array ottimizzato per il component apartmentList
+                mapApartmens : [],              // Array ottimizzato per il component chaletMap
 
-                apartments: [] ,            // Lista Generale con tutti i risultati trovati
-                filteredApartments : [] ,   // Appartamenti che soddisfano i filtri definiti dall'utente
-                listApartments : [],        // Array ottimizzato per il component apartmentList
-                mapApartmens : [],          // Array ottimizzato per il component chaletMap
+                // Coordinate Località ricercata
+                baseLat  : 0 ,                  // latitudine
+                baseLon : 0 ,                   // Longituine
 
-                baseLat  : 0 ,  // latitudine località cercata
-                baseLon : 0 ,   // Longituine località cercata
-
-                servicesList : [],
-
-                highestAptPrice  : 300  ,                
-
+                // Query di ricerca dell'utente
                 currentQuery : {
-                    baseLocation     : this.destination  ,
-                    maxDistance      : 40 ,
-                    guests           : 2 ,
-                    minRating        : 1 ,
-                    minRooms         : 1 ,
-                    maxPrice         : null ,
-                    selectedServices : []  ,
+                    baseLocation     : null ,   // Località o indirizzo cercato dall'utente
+                    maxDistance      : null ,   // Raggio entro il quale effettuare il filtraggio
+                    highestAptPrice  : null ,   // Prezzo più alto fra quelli di tutti gli appartamenti corrisponenti alla località
+                    maxPrice         : null ,   // Prezzo massimo definito dall'utente
+                    guests           : null ,   // Numero di Ospiti per il quale è stata effettuata la ricerca
+                    minRating        : null ,   // Punteggio minimo dell'appartamento definito dall'utente
+                    minRooms         : null ,   // Minimo numero di camere richieste dall'utente
+                    selectedServices : null ,   // Lista dei servizi richiesti dall'utente
                 } ,
 
-                mapIsShown : true
+                servicesList : [],              // Array di tutti i possibili servizi presenti sul db
             }
         },
         props : ['destination'] ,   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
         methods : {
+
+            // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
+            toggleMap(){
+                this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
+            },
+
+            // Metodo che richiede la lista complessiva dei servizi al database tramite chiamata API
+            getServicesList(){
+                axios
+                .get('http://127.0.0.1:8000/api/services')
+                .then((servicesList)=>{                    
+                    this.servicesList = servicesList.data.results;
+                });
+            },
+            
+            // Metodo che si occupa di cercare sul database gli appartamenti presenti entro 60Km dalla località cercata
+            search() {
+                console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
+                self = this;    // alias
+                axios
+                    .get('http://127.0.0.1:8000/api/location' , {
+                        params: {
+                            location    :   this.currentQuery.baseLocation ,
+                            radius      :   60  // max radius                
+                            }
+                        })
+                    .then((response)=>{
+
+                        // *********************************************
+                        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
+                        // (Benché ciò dovrebbe avvenire lato server...)
+                        response.data.results.forEach(apt => {                            
+                            if(apt.services.length>0){                                
+                                let tmpArray=[];                                
+                                apt.services.forEach(service => {
+                                    service.service_id ? tmpArray.push(service.service_id) : null;                                
+                                });
+                                apt.services = tmpArray;
+                            }
+                        }); // Fine Conversione
+                        // *********************************************
+
+                        self.apartments = response.data.results;    // Salva l'array degli apt ottenuti nella variabile apartments
+
+                        self.baseLat = response.data.base_lat;      // latitudine  località cercata dall'utente
+                        self.baseLon = response.data.base_lon;      // Longitudine località cercata dall'utente
+                        
+                        self.filterResults();                       // Filtra Dati appena ottenuti in base alle richieste dell'utente
+
+                        self.dataIsReady = true;                    // trigger flag: alla prima ricerca effettuata mostretà searchForm, Map e AptList                        
+                });
+            } ,
+
+            //  Questo metodo esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
+            getHighestPrice() {
+                
+                if(!this.currentQuery.highestAptPrice) this.currentQuery.highestAptPrice = 299;
+                
+                if (this.apartments.length == 0) return // Se la lista di appartamenti è vuota abbandona la fuzione
+
+                let tmpHighestPrice = this.apartments[0].price;
+                this.apartments.forEach(apt => {
+                    apt.price > tmpHighestPrice ? tmpHighestPrice = apt.price : null;
+                });
+
+                this.currentQuery.highestAptPrice = Math.ceil(tmpHighestPrice);
+
+            } ,
+
+            //  Metodo che si occupa di filtrare l'array di apt restituito dal db in base ai filtri applicati dall'utente
             filterResults(){
+                
+                // Resetta tutte le liste di apt tranne quella 'grezza' che utilizzeremo per il filtraggio
+                this.filteredApartments = [];   
+                this.listApartments = [];
+                this.mapApartmens = [];
+                
+                this.getHighestPrice();     // Richiede prezzo più alto fra apt presenti in array generale
+                
+                // Imposta prezzo massimo su quello più elevato fra gli apt in array nel caso in cui l'utente non... 
+                // ...lo avesse ancora definito o questo fosse superiore a quello più elevato fra gli apt in array
+                if(!this.currentQuery.maxPrice || this.currentQuery.maxPrice > this.currentQuery.highestAptPrice ) 
+                    this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
+                
+                if(this.apartments.length == 0) return;     // se l'array degli apt è vuoto abbandona la funzione
 
-                this.filteredApartments = [];   // Resetta lista appartamenti filtrati
-
-                // Facciamo riferimento alla lista degli appartamenti generale
-                // E filtriamo tutti quelli che corrispondono alle richieste dell'utente
-                // il tutto tramite un ciclo for (preferito al foreach per la possibilità di usare 'continue')
+                
+                // Per l'effettivo filtraggio viene utilizzato for 
+                // (preferito al foreach per la possibilità di usare 'continue')
                 
                 mainFor: for(let i = 0; i < this.apartments.length ; i++) {
 
@@ -115,44 +212,41 @@
                         }   // outer for
                     } // else
 
+
+                    // *****************************************************************
                     // Assegna casualmente una sponsorizzazione ad un apparamento su 3
                     // (Soluzione temporanea prima di ottenere l'informazione dal server)
-
                     let rNum = Math.floor(Math.random() * 3 ) + 1; 
                     rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
+                    // *****************************************************************
 
-                    this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array             
+
+                    this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array degli apt filtrati            
                                     
                 }  // main for
 
-                if (this.filteredApartments.length > 1) this.sortApartments();
-
+                if (this.filteredApartments.length > 1) this.sortApartments();  // Se il filtraggio restituisce più di un apt, lancia metodo di ordinamento
                 
+                //  array ottimizzato per visualizzazione su mappa 
                 this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name , price , isSponsored}) => ({lat, lon , id , name , price , isSponsored}));
 
+                //  array ottimizzato per visualizzazionen card apt
                 this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, isSponsored, cover_img}) => ({id , name , price, dist, beds, rating, isSponsored, cover_img}));
 
-
-
-                console.log("Lista appartamenti da passare alla mappa");
-                console.log(this.mapApartmens);
-
             },
+
+            // Metodo che si occupa di ordinare gli apt filtrati in mase all'eventuale sponsorizzazione ed alla distanza dalla località cercata dall'utente
             sortApartments(){
-                // Ordina gli appartamenti per distanza rispetto alla località cercata dall'utente
-                // in seguito porta comunque gli appartamenti sponsorizzati nelle prime posizioni
                 
                 let sortedApt = []; //  Predispongo array
                     
                 while(this.filteredApartments.length > 1) {
                     
-                    let minDist   = this.filteredApartments[0].dist;    // Valore iniziale distanza minima impostata sul primio elemento
-                    let closerApt = 0;  //elemento la cui distanza è quella inferiore
+                    let minDist   = this.filteredApartments[0].dist;
+                    let closerApt = 0;
 
-                    for(let i = 0; i < this.filteredApartments.length ; i++) {
-                        
+                    for(let i = 0; i < this.filteredApartments.length ; i++) {                        
                         const apt   = this.filteredApartments[i];   // Alias
-
                         if(apt.dist <= minDist) {
                             minDist  = apt.dist;
                             closerApt = i;                            
@@ -160,7 +254,6 @@
                     }
 
                     sortedApt.push(this.filteredApartments[closerApt]); // aggiunge l'apt la cui distanza è quella minima all'array degli apt ordinati
-
                     this.filteredApartments.splice(closerApt , 1);  // Rimuove l'apt appena aggiunto dall'array principale per escluderlo dalle verifiche successive
 
                 }
@@ -170,105 +263,16 @@
                 this.filteredApartments = [];
 
                 // A questo punto filteredApartments è vuoto mentre sortApartments contiene tutti gli apt già ordinati
-                // Devo adesso inserire nelle prime posizioni gli apt sponsorizzati
                 
-                // Ricreo l'array principale inserrendo ai primi posti gli apt sponsorizzati
+                // Ricreo l'array filteredApartments inserrendo ai primi posti gli apt sponsorizzati
                 for(let i = 0; i < sortedApt.length ; i++)
                     if(sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
 
-                // Dopo gli apt sponsorizzati inserisco quelli rimanenti                
+                // Dopo gli apt sponsorizzati inserisco quelli rimanenti
                 for(let i = 0; i < sortedApt.length ; i++)
                     if(!sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
 
             },
-            toggleMap(){
-                this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
-            },
-            getaptListInfo() {
-                                                
-
-                if (this.apartments.length == 0) return // Se la lista di appartamenti è vuota abbandona la fuzione
-
-                // Definizione di prezzo minimo e massimo fra tutti gli
-                // appartamenti presenti nell'array (filtrati e non)
-
-                let maxPrice = this.apartments[0].price;
-                let minPrice = this.apartments[0].price;
-
-                this.apartments.forEach(apt => {
-                    apt.price > maxPrice ? maxPrice = apt.price : null;
-                    apt.price < minPrice ? minPrice = apt.price : null;
-                });
-
-                this.highestAptPrice = Math.ceil(maxPrice);                
-
-            } ,
-            search() {
-                console.log("Occhio: Sto per lanciare una nuova richiesa al server!");
-                self = this;    // alias
-                axios
-                    .get('http://127.0.0.1:8000/api/location' , {
-                        params: {
-                            location    :   this.currentQuery.baseLocation ,
-                            radius      :   this.currentQuery.maxDistance
-                
-                }
-                        })
-                    .then((response)=>{
-
-                        // Trasformo la lista dei servizi da array di oggetti ad array di stringhe
-                        // (Benché ciò dovrebbe avvenire lato server...)
-
-                        response.data.results.forEach(apt => {
-                            
-                            if(apt.services.length>0){
-                                
-                                let tmpArray=[];
-                                
-                                apt.services.forEach(service => {
-                                    service.service_id ? tmpArray.push(service.service_id) : null;                                
-                                });
-
-                                apt.services = tmpArray;
-                            }
-                        }); // Fine Conversione
-
-                        self.apartments = response.data.results;
-
-                        self.baseLat = response.data.base_lat;  // latitudine  località cercata dall'utente
-                        self.baseLon = response.data.base_lon;  // Longitudine località cercata dall'utente
-
-                        self.getaptListInfo();
-                        self.filterResults();
-                });
-            } ,
-            getNewQuery(newQuery){
-
-                let newSearchIsNeeded = false;
-
-                const oldQuery = this.currentQuery; // alias
-                
-                if((oldQuery.baseLocation != newQuery.baseLocation) || (oldQuery.maxDistance < newQuery.maxDistance) ){
-                    newSearchIsNeeded = true;   // flag: se è cambiata la località o è aumentato il raggio serve una nuova ricerca nel DB
-                }
-
-                this.currentQuery = newQuery;           // sovrascrive la vecchia query con quella nuova
-
-                if(newSearchIsNeeded) this.search();    // lancia una nuova ricerca nel DB se necessaio (il successivo filtraggio sarà richiamato dal metodo search() )
-                             
-                else this.filterResults();              // Se non è necessaria una nuova ricerca nel DB si limita a filtrare
-                
-            },
-                getServicesList(){
-
-                // Chiamata API che restituisce la lista complessiva dei servizi
-
-                axios
-                .get('http://127.0.0.1:8000/api/services')
-                .then((servicesList)=>{                    
-                    this.servicesList = servicesList.data.results;
-                });
-            }    
         }
     }
 </script>

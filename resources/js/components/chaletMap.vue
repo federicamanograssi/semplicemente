@@ -58,6 +58,8 @@
                 shadowAnchor: [0, 0],  // the same for the shadow
                 popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
             });
+            this.updateCoordinates();
+            this.updateMarkers();
 
         },
         data() {            
@@ -119,8 +121,7 @@
             updateMarkers(){                
                 // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
 
-                // Se sono presenti dei marker precedenti li rimuove dalla mappa
-                
+                // Se sono presenti dei marker precedenti li rimuove dalla mappa                
                 if(this.markers){
                     this.markers.forEach(marker => {
                         marker.remove();
