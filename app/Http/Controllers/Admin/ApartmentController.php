@@ -204,10 +204,10 @@ class ApartmentController extends Controller
     }
 
     public function removeImages ($id) {
-
         $image = Image::find($id);
+        $ap = Apartment::where('id', $image->apartment_id)->first();
         $image->delete();
-        return redirect()->route('apartments.index');
+        return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
     }
     /**
      * Remove the specified resource from storage.
