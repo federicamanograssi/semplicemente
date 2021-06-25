@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApartmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,4 +57,5 @@ Route::prefix('admin')
         Route::get('/', 'HomeController@index')->name('admin_homepage');
         Route::resource('/messages', 'MessageController');
         Route::resource('/apartments','ApartmentController');
+        Route::delete('/images/{image}', 'ApartmentController@removeImages')->name('remove.images');
     });

@@ -203,6 +203,11 @@ class ApartmentController extends Controller
         return redirect()->route('apartments.index', $apartment);
     }
 
+    public function removeImages (Image $image) {
+        
+        $image->delete();
+        return redirect()->route('apartments.edit');
+    }
     /**
      * Remove the specified resource from storage.
      *

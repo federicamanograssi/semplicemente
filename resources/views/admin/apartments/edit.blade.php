@@ -170,6 +170,14 @@
                             <p>Copertina</p>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
+
+                                <form class="d-inline-block" action="{{ route('remove.images',['image' => $images[$i]->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" value="delete">
+                                        Remove image 
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         @endfor
