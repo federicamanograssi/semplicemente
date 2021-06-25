@@ -24,4 +24,7 @@ Route::get('/apartments','Api\ApartmentController@index');
 Route::post('/apartments/search','Api\ApartmentController@search');
 
 Route::get('/location','Api\ApartmentController@location');
+
 Route::get('/services','Api\ApartmentController@services');
+
+Route::get('/getSponsoredApt','Api\ApartmentController@getSponsoredApt');

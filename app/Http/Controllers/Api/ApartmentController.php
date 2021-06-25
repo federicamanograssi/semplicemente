@@ -42,10 +42,65 @@ class ApartmentController extends Controller
         ]);
     }
 
+    /*
+     * RESTITUISCE ARRAY DI APPARTAMENTI SPONSORIZZATI
+     *
+     *
+     */
+
+    public function getSponsoredApt(Request $request) {
+        
+
+        $nOfItems = $request->input('nOfItems');    // Numero di Apt eventualmente richiesti        
+
+        $currentDate = date("Y-m-d H:i:s");
+
+        $sponsorships = DB::table('apartment_sponsorship')
+        ->select('apartment_id')
+        ->where('status' , 1)
+        ->whereDate('end_date' , '>' , $currentDate)
+        ->get();
+
+        
+        $sponsoredAptIDS = []; // lista degli ID di ***tutti*** gli appartamenti attualmente sponsorizzati
+
+        foreach ($sponsorships as $sponsorship) {
+            if(!in_array($sponsorship->apartment_id , $sponsoredAptIDS))
+            array_push($sponsoredAptIDS , $sponsorship->apartment_id );
+        }
+
+        $sponsoredAptAll = []; // array contenente **tutti** gli apt sponsorizzati presenti nel DB
+
+        foreach ($sponsoredAptIDS as $aptID) {
+            $apt =  DB::table('apartments')
+            ->where('id',$aptID)
+            ->first();
+
+            array_push($sponsoredAptAll , $apt);
+        }
+
+        if($nOfItems > count($sponsoredAptAll))
+        $nOfItems = count($sponsoredAptAll);
+
+        $sponsoredApt = [];
+
+        for ($i=0; $i < $nOfItems; $i++) { 
+            array_push($sponsoredApt , $sponsoredAptAll[$i]);
+        }
+        
+        return response()->json([
+            'success'=> true,
+            'results'=> $sponsoredApt
+        ]);
+
+    }
+
+
     /**
      * RICERCA APT VISIBILI NEL DB 
      * ALL'INTERNO DI UN DETERMINATO RAGGIO 
      * A PARTIRE DAL PUNTO DI RICERCA INSERITO */
+    
     public function location(Request $request)
     {
         /*
@@ -130,11 +185,7 @@ class ApartmentController extends Controller
                     'rating' => $apartment['rating'],
                     'services' => $services ,
                     'id' =>    $apartment['id'],
-                    // 'is_sponsored' => $is_sponsored,
-                    // 'current_date' => $currentDate ,
-                    // 'sponsorExp'    => $sponsorShipExpiration ,
                     'is_sponsored'  => $is_sponsored
-                    // 'try' => $checkSponsor
                 );
 
                 //- salvare l'array dell'apt nell'array di risultati da restituire
