@@ -2,22 +2,36 @@
     <section class="apartments-list"
     :class="mapIsShown ? null : 'apartments-list--map-hidden'">
 
-            <apartment-card 
-                 v-for="(apartment , index) in apartments" 
-                :key="index" 
-                :name="apartment.name" 
-                :imgSrc="'storage/' + apartment.cover_img"
-                :rating="apartment.rating"
-                :id="apartment.id"
-                :price="apartment.price"
-                :beds="apartment.beds"
-                :isSponsored="apartment.isSponsored"
-                :dist="apartment.dist"
-                >
+        <div v-if="apartments.length==0" class="no-results">
+            <h3 class="no-results__title">
+                Nessuno Chalet Trovato
+            </h3>
 
-                <!-- Apartment Card Component -->
+            <p v-if="foundApt!=0">{{foundApt}} Chalet sono stati nascosti in base ai filtri selezionati. 
+                <span 
+                @click="$emit('resetFilters')"
+                style="color:black;cursor:pointer;">Clicca qui</span> 
+                per resettare tutti i filtri.
+            </p>
 
-            </apartment-card>
+        </div>
+
+        <apartment-card 
+                v-for="(apartment , index) in apartments" 
+            :key="index" 
+            :name="apartment.name" 
+            :imgSrc="'storage/' + apartment.cover_img"
+            :rating="apartment.rating"
+            :id="apartment.id"
+            :price="apartment.price"
+            :beds="apartment.beds"
+            :isSponsored="apartment.isSponsored"
+            :dist="apartment.dist"
+            >
+
+            <!-- Apartment Card Component -->
+
+        </apartment-card>
 
     </section>
 </template>
@@ -30,7 +44,7 @@
             }
             else this.apartments = this.defaultApartments;
         },
-        props : ['apartments' , 'mapIsShown'],
+        props : ['apartments' , 'mapIsShown' , 'foundApt'],
         data() {
             return {
                 'defaultApartments' : [
@@ -98,5 +112,26 @@
             }
         }
     }
+
+    .no-results {
+    background-color: red;
+    height: $height-section-big;
+    width: 100%;
+    margin-bottom: $spacing-more;
+    border-radius: $border-radius-standard;
+    padding: $spacing-standard;
+
+    &__title {
+
+    }
+
+    &__text {
+
+    }
+
+    &__actions {
+
+    }
+}
 
 </style>

@@ -18,7 +18,9 @@
         <apartments-list 
             v-if="dataIsReady"
             :apartments="listApartments" 
-            :mapIsShown="mapIsShown" 
+            :mapIsShown="mapIsShown"
+            :foundApt="apartments.length"
+            v-on:resetFilters="resetFilters()"
              class="apartments-list--full-width">
 
             <!-- Lista degli appartamenti -->
@@ -93,6 +95,19 @@
         props : ['destination'] ,   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
         methods : {
 
+            //  Metodo che imposta sui valori più permissivi tutti i filtri (tranne quelli gestiti separatamente)
+            resetFilters(){
+                    
+                this.currentQuery.maxDistance      = 60;
+                this.currentQuery.guests           = 1;
+                this.currentQuery.minRating        = 1;
+                this.currentQuery.minRooms         = 1;
+                this.currentQuery.selectedServices = [];
+                this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
+
+                this.filterResults();
+            },
+
             // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
             toggleMap(){
                 this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -145,7 +160,7 @@
                 });
             } ,
 
-            //  Questo metodo esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
+            //  Metodo che esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
             getHighestPrice() {
                 
                 if(!this.currentQuery.highestAptPrice) this.currentQuery.highestAptPrice = 299;

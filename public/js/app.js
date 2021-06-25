@@ -2161,8 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
       isFiltersBoxOpen: false
     };
   },
-  props: ['currentQuery', // array contenente tutte le informazioni relative alla ricerca
-  'highestAptPrice', // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
+  props: ['currentQuery', // tutte le informazioni relative alla ricerca                
   'servicesList'],
   methods: {
     toggleFilterBox: function toggleFilterBox() {
@@ -2189,6 +2188,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2284,6 +2285,16 @@ __webpack_require__.r(__webpack_exports__);
   props: ['destination'],
   // Arriva come parametro URL e deriva da uno dei link in home page oppure dalla località cha abbiamo scelo di default
   methods: {
+    //  Metodo che imposta sui valori più permissivi tutti i filtri (tranne quelli gestiti separatamente)
+    resetFilters: function resetFilters() {
+      this.currentQuery.maxDistance = 60;
+      this.currentQuery.guests = 1;
+      this.currentQuery.minRating = 1;
+      this.currentQuery.minRooms = 1;
+      this.currentQuery.selectedServices = [];
+      this.currentQuery.maxPrice = this.currentQuery.highestAptPrice;
+      this.filterResults();
+    },
     // Metodo che cambia la variabile flag all'apaprire o allo scomparire della mappa
     toggleMap: function toggleMap() {
       this.mapIsShown == false ? this.mapIsShown = true : this.mapIsShown = false;
@@ -2333,7 +2344,7 @@ __webpack_require__.r(__webpack_exports__);
         self.dataIsReady = true; // trigger flag: alla prima ricerca effettuata mostretà searchForm, Map e AptList                        
       });
     },
-    //  Questo metodo esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
+    //  Metodo che esamina l'array degli apt restituito dal db e trova il prezzo più alto fra tutti
     getHighestPrice: function getHighestPrice() {
       if (!this.currentQuery.highestAptPrice) this.currentQuery.highestAptPrice = 299;
       if (this.apartments.length == 0) return; // Se la lista di appartamenti è vuota abbandona la fuzione
@@ -2935,12 +2946,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     if (this.apartments) {//
     } else this.apartments = this.defaultApartments;
   },
-  props: ['apartments', 'mapIsShown'],
+  props: ['apartments', 'mapIsShown', 'foundApt'],
   data: function data() {
     return {
       'defaultApartments': [{
@@ -7791,7 +7816,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  background-color: red;\n  height: 20rem;\n  width: 100%;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n}", ""]);
 
 // exports
 
@@ -40524,7 +40549,13 @@ var render = function() {
             staticClass: "apartments-list--full-width",
             attrs: {
               apartments: _vm.listApartments,
-              mapIsShown: _vm.mapIsShown
+              mapIsShown: _vm.mapIsShown,
+              foundApt: _vm.apartments.length
+            },
+            on: {
+              resetFilters: function($event) {
+                return _vm.resetFilters()
+              }
             }
           })
         : _vm._e(),
@@ -41038,22 +41069,56 @@ var render = function() {
       staticClass: "apartments-list",
       class: _vm.mapIsShown ? null : "apartments-list--map-hidden"
     },
-    _vm._l(_vm.apartments, function(apartment, index) {
-      return _c("apartment-card", {
-        key: index,
-        attrs: {
-          name: apartment.name,
-          imgSrc: "storage/" + apartment.cover_img,
-          rating: apartment.rating,
-          id: apartment.id,
-          price: apartment.price,
-          beds: apartment.beds,
-          isSponsored: apartment.isSponsored,
-          dist: apartment.dist
-        }
+    [
+      _vm.apartments.length == 0
+        ? _c("div", { staticClass: "no-results" }, [
+            _c("h3", { staticClass: "no-results__title" }, [
+              _vm._v("\n            Nessuno Chalet Trovato\n        ")
+            ]),
+            _vm._v(" "),
+            _vm.foundApt != 0
+              ? _c("p", [
+                  _vm._v(
+                    _vm._s(_vm.foundApt) +
+                      " Chalet sono stati nascosti in base ai filtri selezionati. \n            "
+                  ),
+                  _c(
+                    "span",
+                    {
+                      staticStyle: { color: "black", cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("resetFilters")
+                        }
+                      }
+                    },
+                    [_vm._v("Clicca qui")]
+                  ),
+                  _vm._v(
+                    " \n            per resettare tutti i filtri.\n        "
+                  )
+                ])
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.apartments, function(apartment, index) {
+        return _c("apartment-card", {
+          key: index,
+          attrs: {
+            name: apartment.name,
+            imgSrc: "storage/" + apartment.cover_img,
+            rating: apartment.rating,
+            id: apartment.id,
+            price: apartment.price,
+            beds: apartment.beds,
+            isSponsored: apartment.isSponsored,
+            dist: apartment.dist
+          }
+        })
       })
-    }),
-    1
+    ],
+    2
   )
 }
 var staticRenderFns = []

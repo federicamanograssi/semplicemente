@@ -205,8 +205,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             }
         },
         props: [
-                'currentQuery' ,    // array contenente tutte le informazioni relative alla ricerca
-                'highestAptPrice' , // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
+                'currentQuery' ,    // tutte le informazioni relative alla ricerca                
                 'servicesList'
             ] ,
 
