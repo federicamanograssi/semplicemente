@@ -2051,20 +2051,43 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _statistic_data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../statistic-data.js */ "./resources/js/statistic-data.js");
 //
 //
 //
 //
 //
 //
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PlanetChart',
   data: function data() {
     return {
-      adminStatisticsChartData: _statistic_data_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+      adminStatisticsChartData: {
+        type: "line",
+        data: {
+          searchResult: [],
+          labels: ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"],
+          datasets: [{
+            label: "Numero di Visualizzazioni",
+            data: [0, 0, 1, 2, 3, 4, 5, 6],
+            backgroundColor: "rgba(54,73,93,.5)",
+            borderColor: "#36495d",
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          lineTension: 1,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                padding: 25
+              }
+            }]
+          }
+        }
+      }
     };
   },
   mounted: function mounted() {
@@ -93003,45 +93026,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_locationList_vue_vue_type_template_id_0e8c3f84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/statistic-data.js":
-/*!****************************************!*\
-  !*** ./resources/js/statistic-data.js ***!
-  \****************************************/
-/*! exports provided: adminStatisticsChartData, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adminStatisticsChartData", function() { return adminStatisticsChartData; });
-var adminStatisticsChartData = {
-  type: "bar",
-  data: {
-    labels: ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"],
-    datasets: [{
-      label: "Numero di Visualizzazioni",
-      data: [0, 0, 1, 2, 3, 4, 5, 6],
-      backgroundColor: "rgba(54,73,93,.5)",
-      borderColor: "#36495d",
-      borderWidth: 3
-    }]
-  },
-  options: {
-    responsive: true,
-    lineTension: 1,
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          padding: 25
-        }
-      }]
-    }
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (adminStatisticsChartData);
 
 /***/ }),
 
