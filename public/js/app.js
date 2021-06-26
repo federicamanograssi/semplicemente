@@ -2855,7 +2855,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -41529,9 +41528,8 @@ var render = function() {
                       ]
                     )
                   : _c("span", [
-                      _c("i", { class: item.icon }),
-                      _vm._v(" "),
                       _c("a", { attrs: { href: item.slug } }, [
+                        _c("i", { class: item.icon }),
                         _vm._v(_vm._s(item.label))
                       ])
                     ])
@@ -55562,8 +55560,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
