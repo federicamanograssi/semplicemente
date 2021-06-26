@@ -17,7 +17,6 @@ sistemare menu con differenze per auth --}}
     </head>
     <body>
         <div id="app" class="flex-center position-ref full-height">
-
             
             @if (Route::has('login'))
                 <div class="top-right links">

@@ -57,7 +57,7 @@ h3 {
   color: #105310;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .hide-on-tablet {
     display: none;
   }
@@ -89,6 +89,14 @@ h3 {
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.25s;
+}
+
+.btn:link,
+.btn:hover,
+.btn:visited,
+.btn:active,
+.btn:focus {
+  text-decoration: none;
 }
 
 .btn--small {
@@ -164,6 +172,7 @@ h3 {
   font-family: "Roboto", sans-serif;
   letter-spacing: 1px;
   line-height: 1.25;
+  color: #707070;
   transition: all 0.25s;
 }
 
@@ -203,14 +212,14 @@ h3 {
   background-color: rgba(255, 255, 255, 0.8);
   color: #105310;
   position: fixed;
-  z-index: 15;
+  z-index: 900;
   top: 0;
   left: 0;
   width: 100%;
   letter-spacing: 1px;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .header {
     position: absolute;
   }
@@ -252,10 +261,10 @@ h3 {
   cursor: pointer;
   display: none;
   position: relative;
-  z-index: 20;
+  z-index: 999;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .header__toggle-button {
     display: block;
   }
@@ -293,7 +302,7 @@ h3 {
   font-size: inherit;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .header__menu {
     display: none;
   }
@@ -301,7 +310,6 @@ h3 {
 
 .header__menu--mobile {
   position: fixed;
-  z-index: 15;
   height: 100vh;
   top: 0;
   left: 0;
@@ -365,7 +373,7 @@ h3 {
   background-color: white;
   z-index: 2;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.6s;
 }
 
 .become-host__background:hover::before {
@@ -384,7 +392,7 @@ h3 {
   position: relative;
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.75);
-  transition: all 0.5s;
+  transition: all 0.6s;
   border-radius: 15px;
 }
 
@@ -401,36 +409,7 @@ h3 {
   height: 100%;
   width: 100%;
   font-weight: bold;
-  transition: all 0.5s;
-}
-
-.main--advanced-search {
-  height: calc(100vh - 7rem);
-  background-color: rgba(255, 255, 255, 0.8);
-  max-width: 160rem;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-}
-
-.main--advanced-search .apartments-list {
-  width: 100%;
-  padding: 2rem;
-  padding-right: 50%;
-  height: calc(100vh - 2 * 7rem);
-  overflow-x: auto;
-  overflow-y: scroll;
-}
-
-@media (max-width: 56.25em) {
-  .main--advanced-search .apartments-list {
-    padding-right: 2rem;
-    height: calc( 100% - 20rem - 7rem);
-  }
-}
-
-.main--advanced-search .apartments-list--map-hidden {
-  height: calc( 100% - 7rem);
+  transition: all 0.6s;
 }
 
 .container {
@@ -546,7 +525,7 @@ h3 {
 }
 
 .container .form-container .right-container .contact-form form {
-  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
   background: #f39a34;
   width: 50%;
   margin: 0 auto;
@@ -667,7 +646,7 @@ h3 {
 
 .register-form,
 .login-form {
-  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
   width: 25%;
   margin: 0 auto;
   background: #f39a34;

@@ -10,6 +10,7 @@
         padding-left:  $spacing-standard;
         border-radius: $border-radius-standard;
         @include standard-tipography;
+        color: $color-text;
         transition: all $animation-time-standard;
         &:focus,
         &:active {

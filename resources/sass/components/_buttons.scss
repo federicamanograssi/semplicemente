@@ -1,6 +1,13 @@
 .btn {
     @include standard-tipography;
 
+    &:link ,
+    &:hover,
+    &:visited,
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
     padding: $spacing-small $spacing-standard;
     text-align: center;
     border-radius: $border-radius-standard;

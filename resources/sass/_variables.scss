@@ -26,6 +26,7 @@ $font-family-standard: 'Roboto', sans-serif;
 $white: white;
 $black: #000000;
 $gray: rgb(199, 199, 199);
+$orange: rgb(255, 142, 37);
 
 $color-primary: rgb(16, 83, 16);
 $color-primary-light: rgb(52, 133, 52);
@@ -42,8 +43,8 @@ $bg-transparent-light: rgba($white , .25);
 $color-text : rgb(112, 112, 112);
 
 $animation-time-standard : .25s;
-$animation-time-slow : .5s;
-$animation-time-very-slow : 1s;
+$animation-time-slow : .6s;
+$animation-time-very-slow : 1.2s;
 
 
 // MixIns
@@ -60,7 +61,7 @@ $animation-time-very-slow : 1s;
 }
 
 @mixin shadow-enhanced {
-    box-shadow: 0 0 2rem rgba($color-primary-dark , .4);
+    box-shadow: 0 0 2rem rgba($black , .3);
 }
 
 @mixin clearfix {
@@ -82,7 +83,8 @@ $animation-time-very-slow : 1s;
     }
 
     @if $breakpoint == tablet {
-        @media (max-width: 56.25em) {    // 900px
+        @media (max-width: 64em) {    // 1024px            
+        // @media (max-width: 56.25em) {    // 900px
             @content
         };
     }

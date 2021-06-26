@@ -3,7 +3,7 @@
     background-color: $bg-transparent;
     color: $color-primary;
     position: fixed;
-    z-index: 15;
+    z-index: 900;
     top: 0;
     left: 0;
     width: 100%;
@@ -54,7 +54,7 @@
         cursor: pointer;
         display: none;
         position: relative;
-        z-index: 20;
+        z-index: 999;
 
         @include responsive(tablet) {
             display: block;
@@ -102,7 +102,6 @@
 
         &--mobile {
             position: fixed;
-            z-index: 15;
             height: 100vh;
             top: 0;
             left: 0;

@@ -26,9 +26,19 @@
 
 <script>
     export default {
-
+        // 100Km --> zoom 8
+        // 60Km  --> zoom 9
+        // 20Km  --> zoom 10
         mounted() {
-            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], 11);
+
+            let zoomLevel = 0;
+            
+            if(this.radius <= 20) zoomLevel = 10;
+            else if (this.radius >= 80) zoomLevel = 8;
+            else zoomLevel = 9;
+
+            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
+
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -36,52 +46,106 @@
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
-        }).addTo(this.mymap);
+            }).addTo(this.mymap);
+
+            this.markerIcon = L.icon({
+                iconUrl: 'img/greenMarker.png',
+                shadowUrl: 'img/markerShadow.png',
+
+                iconSize:     [30, 44], // size of the icon
+                shadowSize:   [60, 25], // size of the shadow
+                iconAnchor:   [15, 22], // point of the icon which will correspond to marker's location
+                shadowAnchor: [0, 0],  // the same for the shadow
+                popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
+            });
+            this.updateCoordinates();
+            this.updateMarkers();
+
         },
         data() {            
             return {                
-                mymap : null ,
-                mapIsShown : true
+                mymap        : null ,
+                mapIsShown   : true ,
+                radiusCircle : null ,
+                markers      : null ,
+                markerIcon   : null ,
             }
         },
-        props : ['baseLat' , 'baseLon'] ,    
+        props : ['baseLat' , 'baseLon' , 'apartments' , 'radius'] ,
         watch: { 
             baseLat: {                
-                handler: function(val, oldVal) {
-                    console.log("La latitudine è passata da " + oldVal + ' a ' + val);
-                this.updateCoordinates();
-                },
+                handler: function() {
+                    this.updateCoordinates();
+                }
             } ,
-            baseLon: {                
-                handler: function(val, oldVal) {
-                this.updateCoordinates();
-                },
+            apartments: {                
+                handler: function() {
+                    this.updateMarkers();
+                }
+             } ,
+            radius: {                
+                handler: function() {
+                    this.updateCoordinates();
+                }
             } 
         },
         methods : {
             toggleMap() {
                 this.$emit('mapToggled');
                 
-                let mapClasses = document.getElementById("chalet-map").classList;
-                
-                this.mapIsShown ? mapClasses.add('hidden') : mapClasses.remove('hidden');
-                
+                let mapClasses = document.getElementById("chalet-map").classList;                
+                this.mapIsShown ? mapClasses.add('hidden') : mapClasses.remove('hidden');                
                 this.mymap.invalidateSize();    // Previene deformazione della mappa alla sua ricomparsa
-
                 this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
+
             } ,
             updateCoordinates(){
-                console.log("Aggiorno Centro Mappa");
-                console.log(this.baseLat + ' ' + this.baseLon);
-                
+                // Questo metodo esegue le operazioni necessarie al variare
+                // della destinazione ricercata dall'utente
+
+                // Centra la mappa sulla destinazione cercata
                 this.mymap.panTo([ this.baseLat , this.baseLon , {animate: true,} ]);
+
+                // Cancella il cerchio corrisponente al raggio precedente (se esistente)
+                if(this.radiusCircle) this.radiusCircle.remove();
+
+                // Crea un nuovo cerchio corrisponente al raggio di ricerca                
+                this.radiusCircle = L.circle([this.baseLat, this.baseLon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.05,
+                    radius: this.radius * 1000
+                }).addTo(this.mymap);
+
+            },
+            updateMarkers(){                
+                // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
+
+                // Se sono presenti dei marker precedenti li rimuove dalla mappa                
+                if(this.markers){
+                    this.markers.forEach(marker => {
+                        marker.remove();
+                    });
+                }
+
+                this.markers=[];    // Reset array
+
+                // Per ogni appartamento che ha superato la selezione 
+                // crea un marker nell'array e lo aggiunge alla mappa
+                
+                this.apartments.forEach(apt => {                    
+                    let newMarker = L.marker([apt.lat, apt.lon] , {icon : this.markerIcon});
+                    newMarker.bindPopup('<div class="chalet-popup'+ (apt.isSponsored ? ' chalet-popup--sponsored' : '') +'"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">'+ apt.price +'&euro;</span><a class="chalet-popup__link" href="/single/'+apt.id+'">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
+                    this.markers.push(newMarker);
+                    newMarker.addTo(this.mymap);
+                });
             }
         }
     }
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
     @import "../../sass/variables";
 
@@ -89,12 +153,11 @@
         position: absolute;
         z-index: 2;
         right: $spacing-standard;
-        top: $height-section-medium;
+        top: $height-section-medium + $spacing-standard;
         width: calc(50% - 2 * #{$spacing-standard});
         height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
 
         @include responsive(tablet) {
-            // position: relative;
             top: auto;
             right: auto;
             height: $height-section-big;
@@ -115,7 +178,7 @@
             line-height: $height-section-medium;
             width: $height-section-medium;
             transform: translateY(50%);
-            z-index: 555;            
+            z-index: 500;            
             background-color: $white;
             text-align: center;
             border-radius: 50%;
@@ -126,6 +189,81 @@
             @include shadow-standard;
             cursor: pointer;
         }
+
+    }
+
+    .chalet-popup {
+        width: auto;
+        max-height: $height-section-medium;
+        width: $height-section-small * 4 + $spacing-small;
+
+
+        @include clearfix;        
+        
+        &__image {
+            float: left;
+            width: $height-section-small;
+            height: $height-section-small;
+            margin-right: $spacing-small;
+            object-fit: cover;
+            object-position: center;
+            border-radius: $border-radius-standard;
+        }
+
+        &__name{
+            float: left;
+            width: $height-section-small * 3;
+            height: $height-section-small / 3 * 2;
+            line-height: $height-section-small / 3;
+            color: $color-primary;
+            clear: right;
+            font-size: 120%;
+            font-weight: bold;
+            }
+
+        &__price {
+            float: left;
+            height: $height-section-small / 3 * 1;                
+        }
+
+        &__link{
+            float: right;
+            height: $height-section-small / 3 * 1;
+            &:link,
+            &:active,
+            &:visited,
+            &:focus {
+                color: $color-secondary;
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: $color-secondary-dark;
+                text-decoration: underline;
+            }
+        }
+
+        &--sponsored {
+            position: relative;
+            &::before {
+                content: '\f164';
+                position: absolute;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                color: $color-secondary;
+                top: $spacing-tiny;
+                left: 0;
+                border: 1px solid $color-secondary;
+                transform: translate(-50% , -50%);
+                height: 2.5rem;
+                width: 2.5rem;
+                background-color: $white;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 2.5rem;
+            }
+        }
+
 
     }
 </style>

@@ -1,5 +1,16 @@
 <template>
-    <div class="single-apartment">
+    <a :href="'single/'+id" class="single-apartment"
+        :class="isSponsored ? 'single-apartment--sponsored' : null">
+
+        <div class="sponsored-box">
+            
+            <span class="sponsored-box__text">
+                In Evidenza
+            </span>
+
+            <i class="sponsored-box__icon far fa-thumbs-up"></i>
+
+        </div>
 
         <div class="single-apartment__image-container">
             <img :src="imgSrc" :alt="name"
@@ -7,40 +18,34 @@
         </div>
 
         <div class="single-apartment__data">
-            <h3 class="single-apartment__name heading--primary">{{name}}</h3>
+            <h3 class="single-apartment__name">{{name}}</h3>
             
             <p class="single-apartment__description">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
 
-            <button class="btn btn--secondary">Dettagli</button>
-
-
             <div class="single-apartment__services">
                 
                 <span class="single-apartment__rating"><i class="fas fa-star"></i>{{rating}}</span>
-                <span class="single-apartment__rating"><i class="fas fa-user"></i>5</span>
-                <span class="single-apartment__rating"><i class="fas fa-restroom"></i>2</span>
-                <span class="single-apartment__rating"><strong>€49</strong> / notte</span>
+                <span class="single-apartment__beds hide-on-mobile"><i class="fas fa-user"></i>{{beds}}</span>
+                <!-- <span class="single-apartment__rating"><i class="fas fa-restroom"></i>2</span> -->
+                <span class="single-apartment__price"><i class="fas fa-euro-sign"></i>{{price}}</span>
+                <span v-if="dist" fclass="single-apartment__distance"><i class="fas fa-map-marker-alt"></i>{{Math.round(dist * 100) / 100}} Km</span>
+                
+                <!-- <a :href="'single/'+id" class="btn btn--secondary btn--small">Prenota</a> -->
 
             </div>
         </div>
 
-    </div>
+    </a>
 </template>
 
 <script>
     export default {
         mounted() {
-            
+            this.dist = Math.round(this.dist * 100) / 100;
         },
-        props : {
-            name : String,
-            imgSrc : String,
-            rating : Number,
-            id:Number,
-            is_sponsored:Boolean
-        }
+        props : ['name' , 'imgSrc' , 'rating' , 'id' , 'price' , 'beds' , 'isSponsored' , 'dist'] ,
     }
 </script>
 
@@ -55,8 +60,20 @@
         display: flex;
         flex-direction: row;
         background-color: $white;
+        text-align: center;
+        transition: box-shadow $animation-time-slow;
+        // transition: color $animation-time-standard;
 
         @include shadow-standard;
+
+        &:link ,
+        &:hover,
+        &:visited,
+        &:active,
+        &:focus {
+            text-decoration: none;
+            color: inherit;
+        }
 
         &:hover {
 
@@ -64,6 +81,15 @@
 
             .single-apartment__image {
                 transform: scale(1.1);
+            }
+
+            .single-apartment__name {
+                color: $color-primary-light;
+            }
+
+            .single-apartment__services i ,
+            .single-apartment__services strong{
+                color: $color-primary-light;
             }
         }
 
@@ -86,12 +112,13 @@
 
         &__name {
             margin-bottom: 0;
+            transition: color $animation-time-slow;
+
         }
 
         &__data {
             flex: 0 0 50%;
             padding: $spacing-small;
-            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -99,7 +126,7 @@
         }
 
         &__description {
-            font-size: 85%;
+            // font-size: 80%;
         }
 
         &__services {
@@ -112,9 +139,37 @@
             i {
                 margin-right: .5rem;            
                 font-size: 90%;
-                opacity: .75;
+                transition: color $animation-time-slow;
             }
+
         }
 
+        .sponsored-box {
+            display: none;
+        }
+
+        &--sponsored {
+            position: relative;
+
+            .sponsored-box {
+                display: block;
+            }
+
+        }
     }
+
+    .sponsored-box {
+        position: absolute;
+        left: $spacing-small;
+        top: $spacing-small;
+        background-color: $white;
+        z-index: 100;
+        padding-left: $spacing-small;
+        padding-right: $spacing-small;
+        color: $color-secondary;
+        height: 3.5rem;
+        line-height: 3.5rem;
+        border-radius: $border-radius-standard;
+    }
+    
 </style>

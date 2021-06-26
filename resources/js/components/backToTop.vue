@@ -34,8 +34,8 @@
     .back-to-top {
         position: fixed;
         z-index: 4;
-        bottom: $spacing-more;
-        right: $spacing-more;
+        bottom: $spacing-standard;
+        right: $spacing-standard;
         background-color: $color-primary-light;
         text-align: center;
         border-radius: $border-radius-standard;

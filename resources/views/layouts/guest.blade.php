@@ -93,10 +93,6 @@
     {{-- Main Here --}}
     
     @yield('main')
-
-    {{-- Footer Here --}}
-
-    <back-to-top></back-to-top>
     
 </div>
     <script src="{{asset('js/app.js')}}"></script>

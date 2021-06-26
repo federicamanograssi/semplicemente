@@ -27,6 +27,6 @@
 
     <advanced-search-page destination="{{$destination}}">
         <!-- Search page component -->
-    </advanced-search-form>
+    </advanced-search-page>
 
 @endsection

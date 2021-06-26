@@ -12,7 +12,10 @@
             <h2 class="home-section__heading heading--primary">
                 Le nostre scelte Top
             </h2>
-            <apartments-list class="apartments-list--responsive"></apartments-list>
+            <apartments-list 
+                class="apartments-list--responsive"
+                :apartments="[]">
+            </apartments-list>
         </section>
         
         <section class="home-section become-host">
@@ -32,6 +35,8 @@
             <locations-list search-route="{{route('search')}}" class="locations-list--responsive"></locations-list>
             
         </section>
+
+        <back-to-top></back-to-top>
 
     </main>
 @endsection

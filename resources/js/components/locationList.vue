@@ -84,7 +84,7 @@
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
-
+        margin-bottom: -2rem;
     }
 
     .single-location {

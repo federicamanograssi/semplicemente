@@ -9,8 +9,8 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input  v-model="baseLocation" 
-                            @change="updateQuery()"
+                    <input  v-model="currentQuery.baseLocation"     
+                            @change="updateLocation()"                        
                             key=""
                             class="form__input" type="text">
                 </div>
@@ -19,11 +19,10 @@
 
                 <div v-if="!isFiltersBoxOpen"
                     class="form__field">       
-                    <button                     
+                    <button
                     type="button"
                     class="btn btn--primary-light"><span class="hide-on-tablet">Cerca </span><i class="fas fa-search"></i></button>
                 </div>
-
 
                 <!-- Filters Button -->
 
@@ -50,18 +49,18 @@
 
                         <div class="form__slider__container">
                             <input 
-                                v-model="maxDistance" 
-                                @change="updateQuery()" 
+                                v-model="currentQuery.maxDistance" 
+                                @change="updateFilters()" 
                                 type="range" 
                                 min="20" 
                                 max="60" 
-                                value="20" 
+                                value="40" 
                                 step="20" 
                                 class="form__slider" 
                                 id="search-form-distance">
                         </div>
 
-                        <span class="form__slider__value">{{maxDistance}} Km</span>
+                        <span class="form__slider__value">{{currentQuery.maxDistance}} Km</span>
 
                     </div>
                 </div>
@@ -73,8 +72,8 @@
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
                         <input 
-                            @change="updateQuery()" 
-                            v-model="minRooms" 
+                            @change="updateFilters()" 
+                            v-model="currentQuery.minRooms" 
                             id="search-form-rooms" 
                             class="form__input" 
                             type="number">
@@ -85,8 +84,8 @@
                     <div class="form__field form__field--half form__field--guests">
                         <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
                         <input 
-                            @change="updateQuery()" 
-                            v-model="guests" 
+                            @change="updateFilters()" 
+                            v-model="currentQuery.guests" 
                             id="search-form-guests" 
                             class="form__input" 
                             type="number">
@@ -101,17 +100,17 @@
                         <label class="form__label" for="search-form-price">Prezzo (max)</label>
                         <div class="form__slider__container">
                             <input 
-                            @change="updateQuery()" 
-                            v-model="maxPrice" 
+                            @change="updateFilters()" 
+                            v-model="currentQuery.maxPrice" 
                             type="range" 
-                            min="0" 
-                            :max="highestAptPrice" 
+                             min="0" 
+                            :max="currentQuery.highestAptPrice" 
                             class="form__slider"
                             step="1" 
                             id="search-form-price">
                         </div>
                         <span class="form__slider__value">
-                            {{maxPrice}}
+                            {{currentQuery.maxPrice}}
                              <i class="fas fa-euro-sign"></i></span>
                     </div>
 
@@ -121,8 +120,8 @@
                         <label class="form__label" for="search-form-rating">Valutazione (min)</label>
                         <div class="form__slider__container">
                             <input 
-                                @change="updateQuery()" 
-                                v-model="minRating" 
+                                @change="updateFilters()" 
+                                v-model="currentQuery.minRating" 
                                 type="range" 
                                 min="1" 
                                 max="5" 
@@ -131,7 +130,7 @@
                                 id="search-form-rating">
                         </div>
                         <span class="form__slider__value">
-                            {{minRating}} 
+                            {{currentQuery.minRating}} 
                             <i class="fas fa-star"></i>
                         </span>
                     </div>
@@ -154,7 +153,7 @@
                                     class="services-list__item">
 
                                     <label 
-                                        :for="'service-'+index"
+                                        :for="'service-' + index"
                                         class="checkbox__label">
 
                                         {{service.service_name}}
@@ -163,10 +162,10 @@
                                             :id="'service-'+index"
                                             type="checkbox"
                                             class="checkbox__field"
-                                            :value="service.service_name"
-                                            v-model="selectedServices"
+                                            :value="service.id"
+                                            v-model="currentQuery.selectedServices"
                                             checked="checked"
-                                            @change="updateQuery()">
+                                            @change="updateFilters()">
 
                                         <span class="checkbox__checkmark"></span>
 
@@ -200,29 +199,14 @@
 <script>
 import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
     export default {
-        mounted(){
-            this.getServicesList();
-            this.maxPrice ? null : this.maxPrice = this.highestAptPrice;
-        
-        },
         data() {
             return {
-                baseLocation        : this.currentQuery.baseLocation ,
-                maxDistance         : Number(this.currentQuery.maxDistance) ,
-                minRating           : Number(this.currentQuery.minRating) ,
-                maxPrice            : Number(this.currentQuery.maxPrice) ,
-                minRooms            : Number(this.currentQuery.minRooms) ,
-                guests              : Number(this.currentQuery.guests) ,
-                selectedServices    : this.currentQuery.selectedServices ,
-
                 isFiltersBoxOpen : false ,
-                servicesList : []   // lista di tutti i servizi supportati dall'applicazione
             }
         },
         props: [
-                'currentQuery' ,    // array contenente tutte le informazioni relative alla ricerca
-                'highestAptPrice' , // prezzo massimo fra tutti gli appartamenti presenti nella località cercata
-                'lowestAptPrice'    // prezzo minimo [...] 
+                'currentQuery' ,    // tutte le informazioni relative alla ricerca                
+                'servicesList'
             ] ,
 
         methods : {
@@ -230,36 +214,12 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 // Gestione del box con i filtri avanzati
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
-            updateQuery(){
-                
-                // Metodo richiamato ogni volta che un qualsiasi campo viene modificato.
-                // Quali siano le operazioni da eseguire in base alle modifiche effettuate
-                // lo stabilirà il parent component (AdvancedSearchPage) attraverso il metodo getNewQuery()
-
-                let newQuery = {
-                    baseLocation        : this.baseLocation,
-                    maxDistance         : Number(this.maxDistance),
-                    guests              : Number(this.guests),
-                    minRating           : Number(this.minRating),
-                    minRooms            : Number(this.minRooms),
-                    maxPrice            : Number(this.maxPrice),
-                    selectedServices    : this.selectedServices ,
-                }
-
-                console.log("Occhio, Sto mandando una nuova query:");
-                console.log(newQuery);
-                this.$emit('newQuery' , newQuery);  // Evento raccolto dal componente genitore
-
-            } ,
-            getServicesList(){
-
-                // Chiamata API che restituisce la lista complessiva dei servizi
-                axios
-                .get('http://127.0.0.1:8000/api/services')
-                .then((servicesList)=>{                    
-                    this.servicesList = servicesList.data.results;
-                });
-            }       
+            updateLocation(){
+                this.$emit('updateLocation');
+            },            
+            updateFilters(){
+                this.$emit('updateFilters');
+            },
         }       
     }
 </script>
@@ -279,7 +239,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             top: 100%;
             left: 0;
             width: 100%;
-            z-index: 5;
+            z-index: 600;
 
             .form__group {
                 padding-top: 0;
