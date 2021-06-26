@@ -690,7 +690,7 @@
             'img_path' => "apartment_images/apt15_photo10.jpg",
             'img_description' => "particolare appartamento",
             'is_cover' => 0
-        ]
+        ],
         
         [
             'apartment_id' => 16,

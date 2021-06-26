@@ -45,7 +45,7 @@
       ],
       [
          'apartment_id'=> 15,
-      ]
+      ],
      [
       'apartment_id'=> 16,
       ],

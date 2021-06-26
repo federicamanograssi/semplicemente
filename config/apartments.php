@@ -243,8 +243,6 @@
         'visible'=>'1',
         'price_per_night'=>1600.00,
         'rating'=>5,
-    ]
-    
     ],
     
 
