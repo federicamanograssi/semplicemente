@@ -1,33 +1,24 @@
 <template>
-<line-chart v-if="loaded" :chartdata="chartData" :options="chartOptions"/>
-    
-        
+  <div>
+    <canvas id="planet-chart" width="400" height="180"></canvas>
+  </div>
 </template>
 
 <script>
+import Chart from 'chart.js';
+import adminStatisticsChartData from '../statistic-data.js';
 
-import { Bar } from 'vue-chartjs'
 
 export default {
-  extends: Bar,
-  data: () => ({
-    chartdata: {
-      labels: ['January', 'February'],
-      datasets: [
-        {
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [40, 20]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
+  name: 'PlanetChart',
+  data() {
+    return {
+      adminStatisticsChartData: adminStatisticsChartData
     }
-  }),
-
-  mounted () {
-    this.renderChart(this.chartdata, this.options)
+  },
+  mounted() {
+    const ctx = document.getElementById('planet-chart');
+    new Chart(ctx, this.adminStatisticsChartData);
   }
 }
+</script>
