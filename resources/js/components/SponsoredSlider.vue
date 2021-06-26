@@ -122,6 +122,11 @@
 
 
 .container {
+  
+            @include responsive(phone) {
+                display: none;
+            }
+        
     max-width:$width-inner-content;
     margin: 0 auto;
     .slider-wrapper {

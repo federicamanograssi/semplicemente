@@ -412,6 +412,16 @@ h3 {
   transition: all 0.6s;
 }
 
+.standard-padding {
+  padding: 0 2rem;
+}
+
+@media (max-width: 35.5em) {
+  .standard-padding {
+    padding: 0 1rem;
+  }
+}
+
 .container {
   max-width: 160rem;
   margin: 0 auto;
@@ -419,6 +429,18 @@ h3 {
 
 .container i {
   padding-right: 0.5rem;
+}
+
+@media (max-width: 35.5em) {
+  .container i {
+    font-size: 150%;
+  }
+}
+
+@media (max-width: 35.5em) {
+  .container i.fa-star {
+    font-size: initial;
+  }
 }
 
 .container .apartment-title {
@@ -640,8 +662,47 @@ h3 {
   }
 }
 
+.container .hosted-by .redirect-btn .host-btn {
+  width: 80%;
+}
+
 .container .sponsored-gallery {
   padding: 7.5rem 0;
+}
+
+.container .sponsored-gallery .sponsored-slider-phone {
+  display: none;
+}
+
+@media (max-width: 35.5em) {
+  .container .sponsored-gallery .sponsored-slider-phone {
+    display: block;
+  }
+}
+
+.container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card {
+  width: 100%;
+  height: 30rem;
+  margin-bottom: 5rem;
+}
+
+.container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-img {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+}
+
+.container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-img img {
+  border-radius: 5px;
+  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-description {
+  padding-left: 1rem;
 }
 
 .register-form,
