@@ -203,23 +203,22 @@
                     if ( apt.rooms < query.minRooms )   continue;   // Filtro Camere
                     
                     // Controllo Servizi Aggiuntivi
-
-                    if (apt.services.length == 0){
-                        continue    // Se non ci sono servizi aggiuntivi l'appartamento è scartato a priori
-                    } else {
+                        
+                    if(query.selectedServices.length > 0){                  // Se sono stati richiesti servizi
+                        
                         for(let i=0; i<query.selectedServices.length; i++){ // Ciclo tutti i servizi richiesti dall'utente
-                            const reqServ = query.selectedServices[i];  // alias
-                            let found = false;  // flag
+                            const reqServ = query.selectedServices[i];      // alias
+                            let found = false;                              // flag
 
-                            for(let j=0; j<apt.services.length; j++){   // per ogni servizio richiesto controllo che sia presente fra quelli offerti dall'appartamento
+                            for(let j=0; j<apt.services.length; j++){       // per ogni servizio richiesto controllo che sia presente fra quelli offerti dall'appartamento
                                 const aptServ = apt.services[j];
-                                if(aptServ == reqServ) found = true;    // Se il servizio è present porto il flag a true
+                                if(aptServ == reqServ) found = true;        // Se il servizio è present porto il flag a true
                             }   // inner for
 
-                            if (found == false) continue mainFor;       // se anche un solo servizio richiesto non era presente l'appartamento è scartato
-      
-                        }   // outer for
-                    } // else
+                            if (found == false) continue mainFor;           // se anche un solo servizio richiesto non era presente l'appartamento è scartato
+                        }
+
+                    }
 
 
                     // *****************************************************************
@@ -228,7 +227,6 @@
                     let rNum = Math.floor(Math.random() * 3 ) + 1; 
                     rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
                     // *****************************************************************
-
 
                     this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array degli apt filtrati            
                                     
@@ -239,7 +237,7 @@
                 //  array ottimizzato per visualizzazione su mappa 
                 this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name , price , isSponsored}) => ({lat, lon , id , name , price , isSponsored}));
 
-                //  array ottimizzato per visualizzazionen card apt
+                //  array ottimizzato per visualizzazione card apt
                 this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, isSponsored, cover_img}) => ({id , name , price, dist, beds, rating, isSponsored, cover_img}));
 
             },

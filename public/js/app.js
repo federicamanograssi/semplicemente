@@ -2639,9 +2639,8 @@ __webpack_require__.r(__webpack_exports__);
         if (apt.rooms < query.minRooms) continue; // Filtro Camere
         // Controllo Servizi Aggiuntivi
 
-        if (apt.services.length == 0) {
-          continue; // Se non ci sono servizi aggiuntivi l'appartamento è scartato a priori
-        } else {
+        if (query.selectedServices.length > 0) {
+          // Se sono stati richiesti servizi
           for (var _i = 0; _i < query.selectedServices.length; _i++) {
             // Ciclo tutti i servizi richiesti dall'utente
             var reqServ = query.selectedServices[_i]; // alias
@@ -2656,10 +2655,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
             if (found == false) continue mainFor; // se anche un solo servizio richiesto non era presente l'appartamento è scartato
-          } // outer for
-
-        } // else
-        // *****************************************************************
+          }
+        } // *****************************************************************
         // Assegna casualmente una sponsorizzazione ad un apparamento su 3
         // (Soluzione temporanea prima di ottenere l'informazione dal server)
 
@@ -2689,7 +2686,7 @@ __webpack_require__.r(__webpack_exports__);
           price: price,
           isSponsored: isSponsored
         };
-      }); //  array ottimizzato per visualizzazionen card apt
+      }); //  array ottimizzato per visualizzazione card apt
 
       this.listApartments = this.filteredApartments.map(function (_ref2) {
         var id = _ref2.id,
