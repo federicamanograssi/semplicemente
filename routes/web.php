@@ -39,6 +39,11 @@ Route::get('/search', function () {
 -----------------------------------------------------------
 ----------------------------------------------------------*/
 
+Route::get('/payment/make','PaymentController@make')->name('payment.make');
+Route::get('/payment', function() {
+    return view('payment');
+});
+
 Auth::routes();
 
 /*ROTTE SEZIONE ADMIN

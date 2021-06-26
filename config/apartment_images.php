@@ -692,4 +692,232 @@
             'is_cover' => 0
         ]
         
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo1.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo3.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo4.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 16,
+            'img_path' => "apartment_images/apt16_photo6.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo1.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo3.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo4.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo6.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 17,
+            'img_path' => "apartment_images/apt17_photo7.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 18,
+            'img_path' => "apartment_images/apt18_photo1.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 18,
+            'img_path' => "apartment_images/apt18_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 18,
+            'img_path' => "apartment_images/apt18_photo3.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 18,
+            'img_path' => "apartment_images/apt18_photo4.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 18,
+            'img_path' => "apartment_images/apt18_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo1.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo3.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo4.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 19,
+            'img_path' => "apartment_images/apt19_photo6.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo1.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo3.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo4.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo6.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 20,
+            'img_path' => "apartment_images/apt20_photo7.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo1.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo2.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo3.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo4.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo5.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo6.jpg",
+            'img_description' => "",
+            'is_cover' => 0
+        ],
+        [
+            'apartment_id' => 21,
+            'img_path' => "apartment_images/apt21_photo7.jpg",
+            'img_description' => "immagine copertina",
+            'is_cover' => 0
+        ],
     ];
