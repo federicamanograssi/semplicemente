@@ -9,7 +9,8 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input  v-model="currentQuery.baseLocation"     
+
+                    <input  v-model="currentQuery.baseLocation"
                             @change="updateLocation()"                        
                             key=""
                             class="form__input" type="text">
@@ -72,11 +73,14 @@
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
                         <input 
+                            min=1
+                            max=9
                             @change="updateFilters()" 
-                            v-model="currentQuery.minRooms" 
+                            v-model="currentQuery.minRooms"
                             id="search-form-rooms" 
                             class="form__input" 
-                            type="number">
+                            type="number"
+                            >
                     </div>
 
                     <!-- Beds (i.e. max Guests) -->
@@ -85,6 +89,8 @@
                         <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
                         <input 
                             @change="updateFilters()" 
+                            min=1
+                            max=9
                             v-model="currentQuery.guests" 
                             id="search-form-guests" 
                             class="form__input" 
@@ -215,7 +221,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
             updateLocation(){
-                this.$emit('updateLocation');
+                if(this.currentQuery.baseLocation.length >= 3) this.$emit('updateLocation');
             },            
             updateFilters(){
                 this.$emit('updateFilters');

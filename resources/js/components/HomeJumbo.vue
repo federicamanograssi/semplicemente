@@ -19,7 +19,7 @@
                 <p class="jumbotron__text">Prenota subito la tua prossima avventura</p>
 
                 <form :action="searchRoute" method="get" class="form jumbotron__form">
-                    <input name="location" type="text" class="form__input jumbotron__input" placeholder="Prova con 'Cortina d'Ampezzo'">
+                    <input name="location" type="text" class="form__input jumbotron__input" placeholder="Prova con 'Cortina d'Ampezzo'" minlength="3">
                     <button type="submit" class="jumbotron__search-button btn btn--primary-light-inverse">Cerca</button>
                 </form>
 

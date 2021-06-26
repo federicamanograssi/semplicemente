@@ -2401,6 +2401,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2416,7 +2422,7 @@ __webpack_require__.r(__webpack_exports__);
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
     updateLocation: function updateLocation() {
-      this.$emit('updateLocation');
+      if (this.currentQuery.baseLocation.length >= 3) this.$emit('updateLocation');
     },
     updateFilters: function updateFilters() {
       this.$emit('updateFilters');
@@ -8133,7 +8139,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 2 * 2rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
 
 // exports
 
@@ -40963,7 +40969,12 @@ var render = function() {
                   }
                 ],
                 staticClass: "form__input",
-                attrs: { id: "search-form-rooms", type: "number" },
+                attrs: {
+                  min: "1",
+                  max: "9",
+                  id: "search-form-rooms",
+                  type: "number"
+                },
                 domProps: { value: _vm.currentQuery.minRooms },
                 on: {
                   change: function($event) {
@@ -40998,7 +41009,12 @@ var render = function() {
                   }
                 ],
                 staticClass: "form__input",
-                attrs: { id: "search-form-guests", type: "number" },
+                attrs: {
+                  min: "1",
+                  max: "9",
+                  id: "search-form-guests",
+                  type: "number"
+                },
                 domProps: { value: _vm.currentQuery.guests },
                 on: {
                   change: function($event) {
@@ -41623,7 +41639,8 @@ var render = function() {
                 attrs: {
                   name: "location",
                   type: "text",
-                  placeholder: "Prova con 'Cortina d'Ampezzo'"
+                  placeholder: "Prova con 'Cortina d'Ampezzo'",
+                  minlength: "3"
                 }
               }),
               _vm._v(" "),

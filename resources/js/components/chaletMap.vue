@@ -167,7 +167,7 @@
         right: $spacing-standard;
         top: $height-section-medium + $spacing-standard;
         width: calc(50% - 2 * #{$spacing-standard});
-        height: calc(100vh - 2 * #{$height-section-medium} - #{$spacing-more});
+        height: calc(100vh - 2 * #{$height-section-medium} - 2 * #{$spacing-standard});
 
         @include responsive(tablet) {
             top: auto;
