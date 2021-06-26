@@ -3267,6 +3267,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.loadSponsored();
@@ -3281,13 +3289,7 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler() {
         this.setOutputArray();
       }
-    } // sponsoredApt: {                
-    //     handler: function() {
-    //         // this.setOutputArray();
-    //         console.log("ciao")
-    //         }
-    //     }
-
+    }
   },
   data: function data() {
     return {
@@ -8150,7 +8152,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n  padding-right: 7rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.results-warning {\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.results-warning > :nth-child(2) {\n  padding-right: 7rem;\n}\n.results-warning__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.results-warning__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n}\n.results-warning__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.results-warning p:not(:last-child) {\n  margin-bottom: 2rem;\n}", ""]);
 
 // exports
 
@@ -42014,26 +42016,28 @@ var render = function() {
     },
     [
       _vm.apartments.length == 0 && _vm.foundApt !== undefined
-        ? _c("div", { staticClass: "no-results" }, [
+        ? _c("div", { staticClass: "results-warning" }, [
             _c("i", {
-              staticClass: "no-results__icon fas fa-exclamation-circle"
+              staticClass: "results-warning__icon fas fa-exclamation-circle"
             }),
             _vm._v(" "),
-            _c("h3", { staticClass: "no-results__title" }, [
+            _c("h3", { staticClass: "results-warning__title" }, [
               _vm._v("\n            Nessuno Chalet Trovato\n        ")
             ]),
             _vm._v(" "),
             _vm.foundApt != 0
               ? _c("p", [
-                  _vm._v(
-                    "Nessun risultato disponibile, ma " +
-                      _vm._s(_vm.foundApt) +
-                      " chalet sono stati nascosti in base ai filtri selezionati. \n                "
-                  ),
+                  _vm._v("Nessun risultato disponibile, ma "),
+                  _c("strong", [_vm._v(_vm._s(_vm.foundApt))]),
+                  _vm._v(" chalet della zona "),
+                  _vm.foundApt > 1
+                    ? _c("span", [_vm._v("sono stati nascosti")])
+                    : _c("span", [_vm._v("è stato nascosto")]),
+                  _vm._v(" in base ai filtri selezionati. \n                "),
                   _c(
                     "span",
                     {
-                      staticClass: "no-results__reset",
+                      staticClass: "results-warning__reset",
                       on: {
                         click: function($event) {
                           return _vm.$emit("resetFilters")
@@ -42042,7 +42046,11 @@ var render = function() {
                     },
                     [_vm._v("\n                    Clicca qui")]
                   ),
-                  _vm._v(" per azzerare i filtri e visualizzarli!\n        ")
+                  _vm._v(" per azzerare i filtri e visualizzarl"),
+                  _vm.foundApt > 1
+                    ? _c("span", [_vm._v("i")])
+                    : _c("span", [_vm._v("o")]),
+                  _vm._v("!\n        ")
                 ])
               : _c("p", [
                   _vm._v(
@@ -42054,6 +42062,35 @@ var render = function() {
               _vm._v(
                 "Oppure, lasciati ispirare dai nostri chalet in evidenza presenti in ogni zona d'Italia!"
               )
+            ])
+          ])
+        : _vm.apartments.length < _vm.foundApt
+        ? _c("div", { staticClass: "results-warning" }, [
+            _c("i", {
+              staticClass: "results-warning__icon fas fa-exclamation-circle"
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Stai visualizzando "),
+              _c("strong", [_vm._v(_vm._s(_vm.apartments.length))]),
+              _vm._v(" chalet dei "),
+              _c("strong", [_vm._v(_vm._s(_vm.foundApt))]),
+              _vm._v(
+                " disponibili in quest'area. Per resettare i filtri e visualizzare tutte le opzioni, fai "
+              ),
+              _c(
+                "span",
+                {
+                  staticClass: "results-warning__reset",
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("resetFilters")
+                    }
+                  }
+                },
+                [_vm._v("\n                    click qui")]
+              ),
+              _vm._v(",")
             ])
           ])
         : _vm._e(),
