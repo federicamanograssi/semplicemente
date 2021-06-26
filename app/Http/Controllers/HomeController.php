@@ -29,11 +29,17 @@ class HomeController extends Controller
     }
     public function show($id)
     {
+        // Trova appartamento il cui ID corrisponde a quello richiesto
+
+        $apartment = Apartment::where('id', $id)->first();
+
         $data = [
-            'apartments' => Apartment::where('id', $id)->get()
+            // 'apartment' => Apartment::where('id', $id)->first()
+            'apartment' => $apartment
         ];
 
         //crea nuova visualizzazione dell'appartamento
+
         $new_view = new View;
         $new_view->apartment_id = $id;
         $new_view->save();

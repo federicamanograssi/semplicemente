@@ -3,8 +3,8 @@
 
 @section('main')
     <main>
-        
-        @foreach ($apartments as $apartment)
+        {{-- @dd($apartment) --}}
+        {{-- @foreach ($apartments as $apartment) --}}
             
         
     <main class="standard-padding">
@@ -268,11 +268,7 @@
 
             </section>
 
-
-        
-
-
-            @endforeach
+            {{-- @endforeach --}}
         </main>
 
         <section class="footer-top standard-padding">
