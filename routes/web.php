@@ -34,16 +34,15 @@ Route::get('/search', function () {
 })->name('search');
 
 
-
-Route::get('/home', 'HomeController@index')->name('home');
-// questa è la view per chi si è logato con successo. in realtà dobbiamo spostarla e farla diventare direttamente dashboard
-Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+/*ROTTA PER AUTENTICAZIONE
+-----------------------------------------------------------
+----------------------------------------------------------*/
 
 Auth::routes();
 
 /*ROTTE SEZIONE ADMIN
-------------------------------------------------------
-------------------------------------------------------*/
+-------------------------------------------------------------
+------------------------------------------------------------*/
 
 Route::prefix('admin')
     ->namespace('Admin')
@@ -52,4 +51,6 @@ Route::prefix('admin')
         Route::get('/', 'HomeController@index')->name('admin_homepage');
         Route::resource('/messages', 'MessageController');
         Route::resource('/apartments','ApartmentController');
+        Route::get('/statistics','HomeController@statistics')->name('admin.statistics.index');
+        Route::get('/sponsorships','HomeController@sponsorship')->name('admin.sponsorships.index');
     });

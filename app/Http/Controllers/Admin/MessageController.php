@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
+use Illuminate\Support\Facades\DB;
 use App\Apartment;
 
 class MessageController extends Controller
@@ -17,12 +18,14 @@ class MessageController extends Controller
      */
     public function index()
     {
+
         $data = [
             // FILTRARE SOLO QUELLI DELL'UTENTE
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
             })->get()
         ];
+
 
         return view('admin.messages.index', $data);
     }
@@ -68,9 +71,8 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
     }
 
     /**

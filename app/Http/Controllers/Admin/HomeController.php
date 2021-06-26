@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Apartment;
 use App\Http\Controllers\Controller;
+use App\View;
+use App\Message;
+use App\Sponsorship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -14,72 +20,62 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data = [
+
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+
+            //prendere views di tutti gli apppartamenti dell'utente
+            'views' => View::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get(),
+
+            //prendere messaggi degli apppartamenti dell'utente
+            'messages' => Message::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get()
+        ];
+
+        return view('admin.dashboard.index',$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+        //pagina statistiche
+    public function statistics()
     {
-        //
+        $data = [
+
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+
+            //prendere views di tutti gli apppartamenti dell'utente
+            'views' => View::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get(),
+
+            //prendere messaggi degli apppartamenti dell'utente
+            'messages' => Message::whereHas('apartment', function($query){
+                $query->where('user_id', Auth::id());
+            })->get(),
+
+            //prendere sponsorizzazioni degli apppartamenti dell'utente
+            'sponsorships' => Sponsorship::all()
+        ];
+
+        return view('admin.statistics.index',$data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    //sezione sponsorizzate
+    public function sponsorship(){
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $data = [
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            //prendere lista appartamenti user
+            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+            'sponsorships' => Sponsorship::all()
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('admin.sponsorships.index',$data);
     }
 }

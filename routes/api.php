@@ -27,4 +27,9 @@ Route::get('/location','Api\ApartmentController@location');
 
 Route::get('/services','Api\ApartmentController@services');
 
-Route::get('/getSponsoredApt','Api\ApartmentController@getSponsoredApt');
+
+// - lista apt filtrati per user
+Route::get('/getAptUserList','Api\ApartmentController@getAptUserList');
+
+// - appartamenti utente filtrati per sponsorizzazione
+Route::get('/getUserSponsoredAptList','Api\ApartmentController@getUserSponsoredAptList');
