@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Service;
 use App\Image;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -82,10 +82,11 @@ class ApartmentController extends Controller
         $new_apartment->save();
 
         $j = $data['n_img'];
+        $k = 1;
         for($i=1; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
-                    $path = 'apt' .$new_apartment->id .'_photo' .$i .'.';
+                    $path = 'apt' .$new_apartment->id .'_photo' .$k .'.';
                     $extension = $data['image'.$i]->extension();
                     $name = $path .$extension;
                     $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
@@ -100,6 +101,7 @@ class ApartmentController extends Controller
                     }
                     // Salviamo l'immagine nel database
                     $new_image->save();
+                    $k++;
             }
         }
         // if(array_key_exists('images',$data)){
@@ -114,9 +116,6 @@ class ApartmentController extends Controller
         // $new_image->img_path = $data['images'];
         // $new_image->save();
         // };
-
-
-
 
         if(array_key_exists('services', $data)) {
             $new_apartment->services()->sync($data['services']);
@@ -146,9 +145,15 @@ class ApartmentController extends Controller
     {
         $data = [
             'apartment'=> $apartment,
-            'services'=> Service::all()
+            'services'=> Service::all(),
+            'images' => Image::where('apartment_id', $apartment->id)->get()
         ];
-        return view('admin.apartments.edit', $data);
+
+        $info = [
+            'n_img' => count($data['images'])
+        ];
+
+        return view('admin.apartments.edit', $data, $info);
     }
 
     /**
@@ -170,9 +175,40 @@ class ApartmentController extends Controller
 
         }
 
+        $j = $data['n_img_now'];
+        $k = $data['n_img'];
+        $k++;
+        for($i=$k; $i<= $j; $i++) {
+                if (!empty($data['image'.$i])) {
+                    // salviamo l'img inserita nel form nella cartella storage/app/public/images
+                    $path = 'apt' .$apartment->id .'_photo' .$k .'.';
+                    $extension = $data['image'.$i]->extension();
+                    $name = $path .$extension;
+                    $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
+                    // creiamo una nuova istanza della classe images
+                    $new_image = New Image;
+                    // Compiliamo i dati della colonne immagine e apartment_id
+                    $new_image->img_path = $data['image'.$i];
+                    $new_image->img_description = $data['img_description'.$i];
+                    $new_image->apartment_id = $apartment->id;
+                    if ($data['is_cover'] == 'image'.$i) {
+                        $new_image->is_cover = 1;
+                    }
+                    // Salviamo l'immagine nel database
+                    $new_image->save();
+                    $k++;
+            }
+        }
+
         return redirect()->route('apartments.index', $apartment);
     }
 
+    public function removeImages ($id) {
+        $image = Image::find($id);
+        $ap = Apartment::where('id', $image->apartment_id)->first();
+        $image->delete();
+        return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
+    }
     /**
      * Remove the specified resource from storage.
      *

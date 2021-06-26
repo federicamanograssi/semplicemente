@@ -169,6 +169,7 @@
 
                 <input type="hidden" name="n_img" id="n_img" value= "1">
 
+
                 <p>Visibile:</p>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="visible" id="1" class="form-control @error('visible') is-invalid @enderror" value="1"  checked required>
@@ -211,7 +212,6 @@
 <script>
 
 var i = 1;
-var j = 1;
     
 function readURL(input) {
         if (input.files && input.files[0]) {
@@ -231,12 +231,10 @@ function readURL(input) {
 $("#add").click(function(){
  if($('#img'+i).attr('src')!= "https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"){
     ++i;
-    ++j; 
 
     $("#add_more").append('<div class="col-2 remove-div"><img id="img'+i+'" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"/><input class="form-control-file" type="file" name="image'+i+'" id="img_input'+i+'"><input type="text" name="img_description'+i+'" placeholder="Descrizione"><p>Copertina</p><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="is_cover" id="is_cover'+i+'" class="form-control @error('is_cover') is-invalid @enderror" value="image'+i+'" required></div><button type="button" class="btn btn-danger remove-input">Remove</button></div>');
 
-    document.getElementById("n_img").setAttribute('value', j);
-
+    document.getElementById("n_img").setAttribute('value', i);
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
