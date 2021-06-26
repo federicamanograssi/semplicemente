@@ -29,14 +29,15 @@
             <div class="col-12">
                 <h2>Metti in evidenza un appartamento</h2>
 
+                <!-- INIZIO FORM PER SALVARE SPONSORIZZATA -->
 
                 <form action="">
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <select class="custom-select custom-select-lg mb-3">
-                                <option selected>Seleziona un appartamento</option>
+                            <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment">
+                                <option value="-1">Seleziona un appartamento</option>
                                 <option 
-                                    v-for="apartment in apartments" :key="apartment.id" value="apartment.title">{{apartment.title}}</option>
+                                    v-for="apartment in apartments" :key="apartment.id" :value="apartment.title">{{apartment.title}}</option>
                                 
                             </select>
 
@@ -45,8 +46,8 @@
                             <div class="form-check"
                             v-for="sponsorship in sponsorships" :key="sponsorship.id">
                                 <input class="form-check-input" type="radio" 
-                                name="sponsorship.name" value="sponsorship.name">
-                                <label class="form-check-label" for="sponsorship.name">{{ sponsorship.name }}</label> 
+                                :name="sponsorship.name" :value="sponsorship.name" v-model="selectedSponsorship">
+                                <label class="form-check-label" :for="sponsorship.name">{{ sponsorship.name }}</label> 
                             </div>
 
                         </div>
@@ -71,7 +72,9 @@
 
         data:function(){
             return {
-                filteredApartments:[]
+                filteredApartments:[],
+                selectedApartment:'-1',
+                selectedSponsorship:'',
             };
         },
         methods: {

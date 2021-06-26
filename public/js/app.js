@@ -2019,6 +2019,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'sponsorships'],
   mounted: function mounted() {
@@ -2026,7 +2027,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      filteredApartments: []
+      filteredApartments: [],
+      selectedApartment: '-1',
+      selectedSponsorship: ''
     };
   },
   methods: {
@@ -39991,9 +39994,34 @@ var render = function() {
               [
                 _c(
                   "select",
-                  { staticClass: "custom-select custom-select-lg mb-3" },
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedApartment,
+                        expression: "selectedApartment"
+                      }
+                    ],
+                    staticClass: "custom-select custom-select-lg mb-3",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selectedApartment = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
                   [
-                    _c("option", { attrs: { selected: "" } }, [
+                    _c("option", { attrs: { value: "-1" } }, [
                       _vm._v("Seleziona un appartamento")
                     ]),
                     _vm._v(" "),
@@ -40002,7 +40030,7 @@ var render = function() {
                         "option",
                         {
                           key: apartment.id,
-                          attrs: { value: "apartment.title" }
+                          domProps: { value: apartment.title }
                         },
                         [_vm._v(_vm._s(apartment.title))]
                       )
@@ -40019,11 +40047,27 @@ var render = function() {
                     { key: sponsorship.id, staticClass: "form-check" },
                     [
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedSponsorship,
+                            expression: "selectedSponsorship"
+                          }
+                        ],
                         staticClass: "form-check-input",
-                        attrs: {
-                          type: "radio",
-                          name: "sponsorship.name",
-                          value: "sponsorship.name"
+                        attrs: { type: "radio", name: sponsorship.name },
+                        domProps: {
+                          value: sponsorship.name,
+                          checked: _vm._q(
+                            _vm.selectedSponsorship,
+                            sponsorship.name
+                          )
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectedSponsorship = sponsorship.name
+                          }
                         }
                       }),
                       _vm._v(" "),
@@ -40031,7 +40075,7 @@ var render = function() {
                         "label",
                         {
                           staticClass: "form-check-label",
-                          attrs: { for: "sponsorship.name" }
+                          attrs: { for: sponsorship.name }
                         },
                         [_vm._v(_vm._s(sponsorship.name))]
                       )
@@ -53978,15 +54022,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!***********************************************************!*\
   !*** ./resources/js/components/AdminSponsorshipsPage.vue ***!
   \***********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminSponsorshipsPage_vue_vue_type_template_id_33bceda0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminSponsorshipsPage.vue?vue&type=template&id=33bceda0& */ "./resources/js/components/AdminSponsorshipsPage.vue?vue&type=template&id=33bceda0&");
 /* harmony import */ var _AdminSponsorshipsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminSponsorshipsPage.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminSponsorshipsPage.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AdminSponsorshipsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AdminSponsorshipsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54016,7 +54059,7 @@ component.options.__file = "resources/js/components/AdminSponsorshipsPage.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/components/AdminSponsorshipsPage.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54048,15 +54091,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/AdminStatisticsPage.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminStatisticsPage_vue_vue_type_template_id_53116634___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminStatisticsPage.vue?vue&type=template&id=53116634& */ "./resources/js/components/AdminStatisticsPage.vue?vue&type=template&id=53116634&");
 /* harmony import */ var _AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminStatisticsPage.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminStatisticsPage.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AdminStatisticsPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54086,7 +54128,7 @@ component.options.__file = "resources/js/components/AdminStatisticsPage.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/AdminStatisticsPage.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
