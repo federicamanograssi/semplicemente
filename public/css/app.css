@@ -365,6 +365,7 @@ h3 {
   background-position: center;
   border-radius: 5px;
   position: relative;
+  padding: 2rem;
 }
 
 .become-host__background::before {
@@ -398,13 +399,16 @@ h3 {
   background-color: rgba(255, 255, 255, 0.75);
   transition: all 0.6s;
   border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  max-width: 50rem;
 }
 
 .become-host__cta:link,
 .become-host__cta:hover,
 .become-host__cta:active,
 .become-host__cta:visited {
-  padding: 2rem 7.5rem;
+  padding: 2rem;
   text-decoration: none;
   color: #348534;
   font-size: 3.5rem;

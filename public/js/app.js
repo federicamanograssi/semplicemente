@@ -2906,14 +2906,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    if (screen.width <= 1024) this.isMobile = true;else return this.isMobile = false;
+  },
   mounted: function mounted() {
-    console.log(this.searchRoute);
+    this.dataIsReady = true;
   },
   props: ['search-route'],
   data: function data() {
     return {
-      'videoSrc': 'img/jumbo-vid.mp4'
+      'videoSrc': 'img/jumbo-vid.mp4',
+      'imgSrc': 'img/jumbo-img.jpg',
+      'dataIsReady': false,
+      'isMobile': null
     };
   }
 });
@@ -8011,7 +8019,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.25);\n  border-radius: 15px;\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 20%;\n}", ""]);
+exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n  padding: 2rem;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56], .jumbotron__bg-img[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 3rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__title[data-v-8ee49e56] {\n    font-size: 7rem;\n    letter-spacing: 7px;\n}\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__text[data-v-8ee49e56] {\n    margin-bottom: 3rem;\n    font-size: 3rem;\n}\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n@media (max-width: 35.5em) {\n.jumbotron__input[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n    margin-bottom: 2rem;\n}\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.2);\n  border-radius: 15px;\n}\n@media (max-width: 35.5em) {\n.jumbotron__form[data-v-8ee49e56] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    height: 100%;\n    padding: 5rem;\n}\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 25%;\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n.jumbotron__search-button[data-v-8ee49e56]::hover {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n}\n}", ""]);
 
 // exports
 
@@ -8087,7 +8095,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  height: 20rem;\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n  opacity: 0.75;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n  padding-right: 7rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
 
 // exports
 
@@ -41570,58 +41578,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c(
-      "video",
-      {
-        staticClass: "jumbotron__bg-video",
-        attrs: { autoplay: "", muted: "", loop: "" },
-        domProps: { muted: true }
-      },
-      [
-        _c("source", { attrs: { src: _vm.videoSrc, type: "video/mp4" } }),
-        _vm._v("\r\n                Browser non supportato!\r\n            ")
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "jumbotron__search-box" }, [
-      _c("h1", { staticClass: "jumbotron__title" }, [
-        _vm._v("Dove vuoi andare?")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "jumbotron__text" }, [
-        _vm._v("Prenota subito la tua prossima avventura")
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "form jumbotron__form",
-          attrs: { action: _vm.searchRoute, method: "get" }
-        },
-        [
-          _c("input", {
-            staticClass: "form__input jumbotron__input",
-            attrs: {
-              name: "location",
-              type: "text",
-              placeholder: "Prova con 'Cortina d'Ampezzo'"
-            }
-          }),
+  return _vm.dataIsReady
+    ? _c("div", { staticClass: "jumbotron" }, [
+        !_vm.isMobile
+          ? _c(
+              "video",
+              {
+                staticClass: "jumbotron__bg-video",
+                attrs: { autoplay: "", muted: "", loop: "" },
+                domProps: { muted: true }
+              },
+              [
+                _c("source", {
+                  attrs: { src: _vm.videoSrc, type: "video/mp4" }
+                }),
+                _vm._v(
+                  "\r\n                Browser non supportato!\r\n            "
+                )
+              ]
+            )
+          : _c("img", {
+              staticClass: "jumbotron__bg-img",
+              attrs: { src: _vm.imgSrc, alt: "ChaletBnb" }
+            }),
+        _vm._v(" "),
+        _c("div", { staticClass: "jumbotron__search-box" }, [
+          _c("h1", { staticClass: "jumbotron__title" }, [
+            _vm._v("Dove vuoi andare?")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "jumbotron__text" }, [
+            _vm._v("Prenota subito la tua prossima avventura")
+          ]),
           _vm._v(" "),
           _c(
-            "button",
+            "form",
             {
-              staticClass:
-                "jumbotron__search-button btn btn--primary-light-inverse",
-              attrs: { type: "submit" }
+              staticClass: "form jumbotron__form",
+              attrs: { action: _vm.searchRoute, method: "get" }
             },
-            [_vm._v("Cerca")]
+            [
+              _c("input", {
+                staticClass: "form__input jumbotron__input",
+                attrs: {
+                  name: "location",
+                  type: "text",
+                  placeholder: "Prova con 'Cortina d'Ampezzo'"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "jumbotron__search-button btn btn--primary-light-inverse",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Cerca")]
+              )
+            ]
           )
-        ]
-      )
-    ])
-  ])
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -128,7 +128,7 @@
     }
 
     .no-results {
-    height: $height-section-big;
+    // height: $height-section-big;
     width: 100%;
     background-color: $white;
     margin-bottom: $spacing-more;
@@ -140,6 +140,7 @@
     &__title {
         color: $orange;
         margin-bottom: $spacing-standard;
+        padding-right: $spacing-standard + 5rem;
     }
 
     &__icon {
@@ -148,7 +149,6 @@
         right: $spacing-standard;
         font-size: 5rem;
         color: $orange;
-        opacity: .75;
     }
 
     &__reset {

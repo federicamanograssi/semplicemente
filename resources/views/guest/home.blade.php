@@ -18,14 +18,6 @@
             </apartments-list>
         </section>
         
-        <section class="home-section become-host">
-            <div class="become-host__background">
-                <div class="become-host__text-box">
-                    <a class="become-host__cta" href="#">Diventa un Host</a>
-                </div>
-            </div>
-        </section>
-
         <section class="home-section featured-locations">
 
             <h2 class="home-section__heading heading--primary">
@@ -35,6 +27,15 @@
             <locations-list search-route="{{route('search')}}" class="locations-list--responsive"></locations-list>
             
         </section>
+        
+        <section class="home-section become-host">
+            <div class="become-host__background">
+                <div class="become-host__text-box">
+                    <a class="become-host__cta" href="#">Diventa un Host</a>
+                </div>
+            </div>
+        </section>
+
 
         <back-to-top></back-to-top>
 
