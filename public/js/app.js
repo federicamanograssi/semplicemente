@@ -3329,13 +3329,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // 100Km --> zoom 8
-  // 60Km  --> zoom 9
-  // 20Km  --> zoom 10
   mounted: function mounted() {
-    var zoomLevel = 0;
-    if (this.radius <= 20) zoomLevel = 10;else if (this.radius >= 80) zoomLevel = 8;else zoomLevel = 9;
-    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
+    // Inizializza Mappa
+    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], this.zoomLevel); // Aggiunge Layer grafico
+
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -3343,7 +3340,8 @@ __webpack_require__.r(__webpack_exports__);
       tileSize: 512,
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
-    }).addTo(this.mymap);
+    }).addTo(this.mymap); //  Crea Marker di Base
+
     this.markerIcon = L.icon({
       iconUrl: 'img/greenMarker.png',
       shadowUrl: 'img/markerShadow.png',
@@ -3358,8 +3356,11 @@ __webpack_require__.r(__webpack_exports__);
       popupAnchor: [0, -22] // point from which the popup should open relative to the iconAnchor
 
     });
-    this.updateCoordinates();
-    this.updateMarkers();
+    this.setZoom(); // regola lo zoom
+
+    this.updateCoordinates(); // centra su località cercata
+
+    this.updateMarkers(); // aggiunge markers
   },
   data: function data() {
     return {
@@ -3367,7 +3368,8 @@ __webpack_require__.r(__webpack_exports__);
       mapIsShown: true,
       radiusCircle: null,
       markers: null,
-      markerIcon: null
+      markerIcon: null,
+      zoomLevel: null
     };
   },
   props: ['baseLat', 'baseLon', 'apartments', 'radius'],
@@ -3384,11 +3386,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     radius: {
       handler: function handler() {
+        this.setZoom();
         this.updateCoordinates();
       }
     }
   },
   methods: {
+    //  Metodo che si occupa di mostrare o nascondere l'intera mappa
     toggleMap: function toggleMap() {
       this.$emit('mapToggled');
       var mapClasses = document.getElementById("chalet-map").classList;
@@ -3397,9 +3401,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
     },
+    // Questo metodo esegue le operazioni necessarie al variare
+    // della destinazione ricercata dall'utente
     updateCoordinates: function updateCoordinates() {
-      // Questo metodo esegue le operazioni necessarie al variare
-      // della destinazione ricercata dall'utente
       // Centra la mappa sulla destinazione cercata
       this.mymap.panTo([this.baseLat, this.baseLon, {
         animate: true
@@ -3414,10 +3418,15 @@ __webpack_require__.r(__webpack_exports__);
         radius: this.radius * 1000
       }).addTo(this.mymap);
     },
+    //  Metodo che regola lo zoom in base al raggio di ricerca impostato dall'utente
+    setZoom: function setZoom() {
+      if (this.radius <= 20) this.zoomLevel = 10;else if (this.radius >= 60) this.zoomLevel = 8;else this.zoomLevel = 9;
+      this.mymap.setZoom(this.zoomLevel);
+    },
+    // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
     updateMarkers: function updateMarkers() {
       var _this = this;
 
-      // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
       // Se sono presenti dei marker precedenti li rimuove dalla mappa                
       if (this.markers) {
         this.markers.forEach(function (marker) {

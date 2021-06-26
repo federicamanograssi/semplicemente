@@ -113,7 +113,8 @@ class ApartmentController extends Controller
                 'price' => $apt->price_per_night ,
                 'beds' => $apt->beds_n , 
                 'rating' => $apt->rating ,
-                'cover_img' => $cover_img 
+                'cover_img' => $cover_img ,
+                'isSponsored' => true
              );
 
             array_push($sponsoredAptAll , $filteredApt);

@@ -26,21 +26,15 @@
 
 <script>
     export default {
-        // 100Km --> zoom 8
-        // 60Km  --> zoom 9
-        // 20Km  --> zoom 10
+
         mounted() {
 
-            let zoomLevel = 0;
-            
-            if(this.radius <= 20) zoomLevel = 10;
-            else if (this.radius >= 80) zoomLevel = 8;
-            else zoomLevel = 9;
+            // Inizializza Mappa
+            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], this.zoomLevel);
 
-            this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
-
+            // Aggiunge Layer grafico
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             id: 'mapbox/light-v10',
             tileSize: 512,
@@ -48,18 +42,20 @@
             accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
             }).addTo(this.mymap);
 
+            //  Crea Marker di Base
             this.markerIcon = L.icon({
                 iconUrl: 'img/greenMarker.png',
                 shadowUrl: 'img/markerShadow.png',
-
                 iconSize:     [30, 44], // size of the icon
                 shadowSize:   [60, 25], // size of the shadow
                 iconAnchor:   [15, 22], // point of the icon which will correspond to marker's location
                 shadowAnchor: [0, 0],  // the same for the shadow
                 popupAnchor:  [0, -22] // point from which the popup should open relative to the iconAnchor
             });
-            this.updateCoordinates();
-            this.updateMarkers();
+
+            this.setZoom();             // regola lo zoom
+            this.updateCoordinates();   // centra su località cercata
+            this.updateMarkers();       // aggiunge markers
 
         },
         data() {            
@@ -69,6 +65,7 @@
                 radiusCircle : null ,
                 markers      : null ,
                 markerIcon   : null ,
+                zoomLevel    : null ,
             }
         },
         props : ['baseLat' , 'baseLon' , 'apartments' , 'radius'] ,
@@ -85,11 +82,14 @@
              } ,
             radius: {                
                 handler: function() {
+                    this.setZoom();
                     this.updateCoordinates();
                 }
             } 
         },
-        methods : {
+        methods : {            
+
+            //  Metodo che si occupa di mostrare o nascondere l'intera mappa
             toggleMap() {
                 this.$emit('mapToggled');
                 
@@ -99,9 +99,10 @@
                 this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
 
             } ,
+
+            // Questo metodo esegue le operazioni necessarie al variare
+            // della destinazione ricercata dall'utente
             updateCoordinates(){
-                // Questo metodo esegue le operazioni necessarie al variare
-                // della destinazione ricercata dall'utente
 
                 // Centra la mappa sulla destinazione cercata
                 this.mymap.panTo([ this.baseLat , this.baseLon , {animate: true,} ]);
@@ -115,11 +116,22 @@
                     fillColor: 'green',
                     fillOpacity: 0.05,
                     radius: this.radius * 1000
-                }).addTo(this.mymap);
+                }).addTo(this.mymap);                
 
             },
+
+            //  Metodo che regola lo zoom in base al raggio di ricerca impostato dall'utente
+            setZoom(){
+
+                if(this.radius <= 20) this.zoomLevel = 10;
+                    else if (this.radius >= 60) this.zoomLevel = 8;
+                    else this.zoomLevel = 9;
+                    this.mymap.setZoom(this.zoomLevel);
+
+            },
+
+            // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
             updateMarkers(){                
-                // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
 
                 // Se sono presenti dei marker precedenti li rimuove dalla mappa                
                 if(this.markers){
