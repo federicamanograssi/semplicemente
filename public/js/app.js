@@ -2407,6 +2407,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2417,6 +2439,25 @@ __webpack_require__.r(__webpack_exports__);
   props: ['currentQuery', // tutte le informazioni relative alla ricerca                
   'servicesList'],
   methods: {
+    // Metodo che si occupa dell'aggiornamento di alcune proprietà non direttamente controllate dall'onchange
+    changeValue: function changeValue(prop, value) {
+      var query = this.currentQuery;
+
+      switch (prop) {
+        case 'guests':
+          query.guests += value;
+          this.updateFilters();
+          break;
+
+        case 'rooms':
+          query.minRooms += value;
+          this.updateFilters();
+          break;
+
+        default:
+          break;
+      }
+    },
     toggleFilterBox: function toggleFilterBox() {
       // Gestione del box con i filtri avanzati
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
@@ -2425,6 +2466,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentQuery.baseLocation.length >= 3) this.$emit('updateLocation');
     },
     updateFilters: function updateFilters() {
+      var query = this.currentQuery; // Controlla validità guests 
+
+      if (query.guests > 9) query.guests = 9;
+      if (query.guests < 1) query.guests = 1; // Controlla validità rooms
+
+      if (query.minRooms > 9) query.minRooms = 9;
+      if (query.minRooms < 1) query.minRooms = 1; // Richiede filtraggio al component genitore
+
       this.$emit('updateFilters');
     }
   }
@@ -7987,7 +8036,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 600;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 64em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n  padding-top: 3rem;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox__container[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 3rem;\n  padding-bottom: 3rem;\n}\n.checkbox__container li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n}\n.checkbox__label[data-v-475ce6f9] {\n  display: block;\n  position: relative;\n  padding-left: 3rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.checkbox__label input:checked ~ .checkbox__checkmark[data-v-475ce6f9]:after {\n  display: block;\n}\n.checkbox__field[data-v-475ce6f9] {\n  position: absolute;\n  cursor: pointer;\n  opacity: 0;\n  height: 0;\n  width: 0;\n}\n.checkbox__checkmark[data-v-475ce6f9] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.2rem;\n  width: 2.2rem;\n  border: 1px solid #348534;\n  border-radius: 5px;\n}\n.checkbox__checkmark[data-v-475ce6f9]:after {\n  content: \"\\F078\";\n  position: absolute;\n  display: none;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  line-height: 2.2rem;\n  width: 100%;\n  text-align: center;\n  color: #348534;\n  font-size: 90%;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 600;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 64em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n  padding-top: 3rem;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__label--left + .formicon[data-v-475ce6f9] {\n  flex: 1 1 50%;\n  border: 1px solid #348534;\n  border-radius: 5px;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form .formicon[data-v-475ce6f9] {\n  overflow: hidden;\n  position: relative;\n}\n.form .formicon__input[data-v-475ce6f9] {\n  background-color: transparent;\n  width: 100%;\n  text-align: center;\n  border: none;\n  border-radius: 0;\n}\n.form .formicon__input[data-v-475ce6f9]:focus, .form .formicon__input[data-v-475ce6f9]:active, .form .formicon__input[data-v-475ce6f9]:hover {\n  border: none;\n  border-radius: 0;\n  color: #707070;\n}\n.form .formicon__input[type=number][data-v-475ce6f9] {\n  -moz-appearance: textfield;\n}\n.form .formicon__input[type=number][data-v-475ce6f9]::-webkit-outer-spin-button, .form .formicon__input[type=number][data-v-475ce6f9]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.form .formicon__icon[data-v-475ce6f9] {\n  position: absolute;\n  color: #348534;\n  transform: translateY(-50%);\n  top: 50%;\n  font-size: 2.5rem;\n  cursor: pointer;\n}\n.form .formicon__icon--less[data-v-475ce6f9] {\n  left: 1rem;\n}\n.form .formicon__icon--more[data-v-475ce6f9] {\n  right: 1rem;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox__container[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 3rem;\n  padding-bottom: 3rem;\n}\n.checkbox__container li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n}\n.checkbox__label[data-v-475ce6f9] {\n  display: block;\n  position: relative;\n  padding-left: 3rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.checkbox__label input:checked ~ .checkbox__checkmark[data-v-475ce6f9]:after {\n  display: block;\n}\n.checkbox__field[data-v-475ce6f9] {\n  position: absolute;\n  cursor: pointer;\n  opacity: 0;\n  height: 0;\n  width: 0;\n}\n.checkbox__checkmark[data-v-475ce6f9] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.2rem;\n  width: 2.2rem;\n  border: 1px solid #348534;\n  border-radius: 5px;\n}\n.checkbox__checkmark[data-v-475ce6f9]:after {\n  content: \"\\F078\";\n  position: absolute;\n  display: none;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  line-height: 2.2rem;\n  width: 100%;\n  text-align: center;\n  color: #348534;\n  font-size: 90%;\n}", ""]);
 
 // exports
 
@@ -40959,35 +41008,62 @@ var render = function() {
             [
               _vm._m(1),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentQuery.minRooms,
-                    expression: "currentQuery.minRooms"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: {
-                  min: "1",
-                  max: "9",
-                  id: "search-form-rooms",
-                  type: "number"
-                },
-                domProps: { value: _vm.currentQuery.minRooms },
-                on: {
-                  change: function($event) {
-                    return _vm.updateFilters()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "formicon" }, [
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--less fas fa-minus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("rooms", -1)
                     }
-                    _vm.$set(_vm.currentQuery, "minRooms", $event.target.value)
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.currentQuery.minRooms,
+                      expression: "currentQuery.minRooms",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "formicon__input form__input",
+                  attrs: { id: "search-form-rooms", type: "number" },
+                  domProps: { value: _vm.currentQuery.minRooms },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateFilters()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.currentQuery,
+                        "minRooms",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--more fas fa-plus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("rooms", 1)
+                    }
+                  }
+                })
+              ])
             ]
           ),
           _vm._v(" "),
@@ -40999,35 +41075,62 @@ var render = function() {
             [
               _vm._m(2),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentQuery.guests,
-                    expression: "currentQuery.guests"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: {
-                  min: "1",
-                  max: "9",
-                  id: "search-form-guests",
-                  type: "number"
-                },
-                domProps: { value: _vm.currentQuery.guests },
-                on: {
-                  change: function($event) {
-                    return _vm.updateFilters()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "formicon" }, [
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--less fas fa-minus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("guests", -1)
                     }
-                    _vm.$set(_vm.currentQuery, "guests", $event.target.value)
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.currentQuery.guests,
+                      expression: "currentQuery.guests",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "formicon__input form__input",
+                  attrs: { id: "search-form-guests", type: "number" },
+                  domProps: { value: _vm.currentQuery.guests },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateFilters()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.currentQuery,
+                        "guests",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--more fas fa-plus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("guests", 1)
+                    }
+                  }
+                })
+              ])
             ]
           )
         ]),
@@ -41121,7 +41224,6 @@ var render = function() {
                     type: "range",
                     min: "1",
                     max: "5",
-                    value: "3",
                     id: "search-form-rating"
                   },
                   domProps: { value: _vm.currentQuery.minRating },
@@ -41324,7 +41426,7 @@ var staticRenderFns = [
       },
       [
         _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
-        _vm._v("Ospiti")
+        _vm._v("Ospiti\n                ")
       ]
     )
   }
