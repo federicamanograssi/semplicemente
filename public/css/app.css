@@ -712,20 +712,32 @@ h3 {
 .register-form,
 .login-form {
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
-  width: 25%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 40rem;
   background: #f39a34;
-  padding: 1rem;
+  margin: 0 auto;
+  padding: 2rem 3rem;
   border-radius: 5px;
+  text-align: center;
+}
+
+.register-form .form__label,
+.register-form .form__label,
+.login-form .form__label,
+.login-form .form__label {
+  display: block;
+  margin-bottom: 1rem;
+  text-align: left;
 }
 
 .width_container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 7rem);
   display: flex;
   justify-content: center;
   align-items: center;
   background: #105310;
+  background-image: linear-gradient(to bottom right, #348534, #105310);
 }
 
 .input_width {
