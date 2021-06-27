@@ -2020,6 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'sponsorships'],
   mounted: function mounted() {
@@ -40368,11 +40369,7 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-xs-12 col-md-6" }, [
-              _vm._v(
-                "\n                        Metodo di Pagamento\n                    "
-              )
-            ])
+            _vm._m(1)
           ])
         ])
       ])
@@ -40422,6 +40419,21 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("td", { staticClass: "text-right" }, [_vm._v("quanto pagao")])
           ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-12 col-md-6" }, [
+      _vm._v(
+        "\n                        Metodo di Pagamento\n                        "
+      ),
+      _c("button", [
+        _c("a", { attrs: { href: "/admin/payment" } }, [
+          _vm._v("vai al pagamento")
         ])
       ])
     ])

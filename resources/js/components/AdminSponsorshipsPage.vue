@@ -53,6 +53,7 @@
                         </div>
                         <div class="col-xs-12 col-md-6">
                             Metodo di Pagamento
+                            <button><a href="/admin/payment">vai al pagamento</a></button>
                         </div>
                     </div>
                 </form>
