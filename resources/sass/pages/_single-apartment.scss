@@ -1,13 +1,14 @@
 .standard-padding {
     padding: 0 $spacing-standard;
     @include responsive(phone) {
-        padding: 0 $spacing-small;
+    padding: 0 $spacing-small;
     }
 }
 
 .container {
     max-width: $width-inner-content;
     margin: 0 auto;
+
     i {
         padding-right: $spacing-tiny;
         @include responsive(phone) {
@@ -127,19 +128,18 @@
             padding-bottom: $spacing-small;
         }
     }
+
     .chalet-map {
-        flex: 0 0 50%;
-        height: calc(100vh - 2 * #{$height-section-medium});
+        // flex: 0 0 50%;
+        
         @include responsive(tablet) {
-            position: static;
+            // position: static;
             height: $height-section-huge;
             width: 100%;
         }
-        @include responsive(phone) {
-            height: $height-section-huge;
-            width: 100%;
-        }
+
     }
+
     .hosted-by {
         display: flex;
         align-items: center;

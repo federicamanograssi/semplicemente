@@ -1,10 +1,20 @@
 @extends('layouts.guest')
 @section('title', 'Single-Apartment | ChaletBnB')
 
+@section('headPush')
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+@endsection
+
 @section('main')
-    <main>
+    {{-- <main> --}}
         
-        @dd($apartment);
     {{-- @foreach ($apartments as $apartment) --}}
                     
     <main class="standard-padding">
@@ -181,7 +191,7 @@
 
                             {{-- MAIL---------- --}}
                             <div class="form-group">
-                                <input type="email" name="email_sender" class="form-control @error('email_sender') is-invalid @enderror" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
                                 @error('email_sender')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -200,13 +210,6 @@
                                 <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
                             </div>
 
-                            {{-- <label class="form__label" for="name">Nome</label>
-                            <input class="form__input" id="name" name="name" type="text" placeholder="Inserisci il tuo nome">
-                            <label class="form__label" for="email">Email</label>
-                            <input class="form__input" id="email" name="email" type="email" placeholder="Inserisci la tua email">
-                            <label class="form__label" for="message">Messaggio</label>
-                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea> --}}
-
                            <button class="btn btn--primary" type="submit">Invia Messaggio</button>
 
                         </form>
@@ -217,6 +220,8 @@
             </div>
 
             <hr>
+            
+            {{-- @dd($apartment); --}}
 
             <section class="apartment-map">
                 <div class="map-title">
@@ -229,14 +234,21 @@
 
                 </div>
                 
+            <single-chalet-map
+                :longitude="{{$apartment->longitude}}" 
+                :latitude="{{$apartment->latitude}}">
+    
+                <!-- Mappa -->
+    
+            </single-chalet-map>
 
-                <section class="chalet-map">            
+                {{-- <section class="chalet-map">            
                     <!-- 
                         La mappa è provvisoriamente 
                         integrata da Google Maps 
                     -->
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54471.2440560787!2d12.052418201662949!3d46.66978139530556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47783435d247033f%3A0xdd3c30437b92e42b!2s32043%20Cortina%20d&#39;Ampezzo%20BL!5e1!3m2!1sit!2sit!4v1623660828144!5m2!1sit!2sit" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </section>
+                </section> --}}
 
                 {{-- inserire mappa appartamento --}}
             </section>
@@ -269,7 +281,7 @@
             </section>
 
             {{-- @endforeach --}}
-        </main>
+        {{-- </main> --}}
 
         <section class="footer-top standard-padding">
             <div class="container">
