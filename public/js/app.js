@@ -3275,6 +3275,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.loadSponsored();
@@ -42090,7 +42101,7 @@ var render = function() {
                 },
                 [_vm._v("\n                    click qui")]
               ),
-              _vm._v(",")
+              _vm._v(",\n        ")
             ])
           ])
         : _vm._e(),

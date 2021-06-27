@@ -4,6 +4,7 @@
 @section('main')
     <main>
         
+        @dd($apartment);
     {{-- @foreach ($apartments as $apartment) --}}
                     
     <main class="standard-padding">
