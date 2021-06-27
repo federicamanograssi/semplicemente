@@ -4,7 +4,8 @@
 
 <admin-sponsorships-page 
 :apartments="{{ $apartments }}"
-:sponsorships="{{ $sponsorships}}">
+:sponsored_apartments="{{ $sponsored_apartments}}"
+:sponsorships="{{$sponsorships}}">
 </admin-sponsorships-page>
 
 

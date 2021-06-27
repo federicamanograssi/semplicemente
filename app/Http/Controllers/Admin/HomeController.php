@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\View;
 use App\Message;
 use App\Sponsorship;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class HomeController extends Controller
@@ -44,7 +46,6 @@ class HomeController extends Controller
     public function statistics()
     {
         $data = [
-
             //prendere lista appartamenti user
             'apartments' => Apartment::where('user_id', Auth::id())->get(),
 
@@ -68,12 +69,18 @@ class HomeController extends Controller
 
     //sezione sponsorizzate
     public function sponsorship(){
-
         $data = [
-
-            //prendere lista appartamenti user
+            
+            //prendere lista appartamenti user e apt dell 'user sponsorizzati
             'apartments' => Apartment::where('user_id', Auth::id())->get(),
-            'sponsorships' => Sponsorship::all()
+            'sponsorships' => Sponsorship::all(),
+            // 'sponsored_apartments' => DB::table('apartment_sponsorship')
+            //     ->where('user_id', Auth::id())
+                // ->where('start_date','<=',$now)
+                // ->where('end_date','>=',$now)
+
+            'sponsored_apartments' => DB::table('apartment_sponsorship')
+                ->where('user_id', Auth::id())->get(),
         ];
 
         return view('admin.sponsorships.index',$data);

@@ -2022,7 +2022,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['apartments', 'sponsorships'],
+  props: ['apartments', 'sponsored_apartments', 'sponsorships'],
   mounted: function mounted() {
     this.filterApartments();
   },
@@ -40263,7 +40263,29 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("h2", [_vm._v("Le tue sponsorizzazioni")]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.sponsored_apartments, function(sponsored_apartment) {
+            return _c(
+              "tr",
+              { key: sponsored_apartment.id, attrs: { role: "row" } },
+              [
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(_vm._s(sponsored_apartment.id))
+                ])
+              ]
+            )
+          }),
+          0
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
@@ -40381,44 +40403,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("h2", [_vm._v("Le tue sponsorizzazioni")]),
-        _vm._v(" "),
-        _c("thead", { staticClass: "table-light" }, [
-          _c("tr", { attrs: { role: "row" } }, [
-            _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-              _vm._v("Appartamento")
-            ]),
-            _vm._v(" "),
-            _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-              _vm._v("Status sponsorizzazione")
-            ]),
-            _vm._v(" "),
-            _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-              _vm._v("Data fine")
-            ]),
-            _vm._v(" "),
-            _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-              _vm._v("Prezzo")
-            ])
-          ])
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", { attrs: { role: "row" } }, [
+        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
+          _vm._v("Appartamento")
         ]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", { attrs: { role: "row" } }, [
-            _c("td", { staticClass: "text-left" }, [
-              _vm._v("nome appartamento")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v("attivo/non attivo")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [_vm._v("data fine ")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [_vm._v("quanto pagao")])
-          ])
+        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
+          _vm._v("Data fine")
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
+          _vm._v("Prezzo")
         ])
       ])
     ])
