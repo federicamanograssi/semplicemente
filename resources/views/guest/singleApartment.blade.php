@@ -28,8 +28,20 @@
             </section>
         </div>
 
+{{-- @dd($apartment->images) --}}
 
-        <img-slider></img-slider>
+@php
+    $apt_images = $apartment->images;
+@endphp
+
+        {{-- @dd($apt_images); --}}
+
+        <img-slider :photos="{{json_encode($apt_images)}}">
+
+            {{-- slider immagini appartamento --}}
+
+        </img-slider>
+
 
         <div class="container">
             <div class="form-container">
@@ -167,15 +179,8 @@
                                     <span>Cucina</span>
                                 </div>
                             </div>
-                        </div>
-
-                            
-
-                        
+                        </div>                        
                     </section>
-
-
-                
 
                 </div>
 
