@@ -30,34 +30,6 @@
                 <h2>Metti in evidenza un appartamento</h2>
                 <button><a href="/admin/payment">vai al pagamento</a></button>
 
-                <!-- INIZIO FORM PER SALVARE SPONSORIZZATA
-
-                <form action="">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment">
-                                <option value="-1">Seleziona un appartamento</option>
-                                <option 
-                                    v-for="apartment in apartments" :key="apartment.id" :value="apartment.title">{{apartment.title}}</option>
-                                
-                            </select>
-
-                            <h2> Scegli la sponsorizzazione</h2>
-                           
-                            <div class="form-check"
-                            v-for="sponsorship in sponsorships" :key="sponsorship.id">
-                                <input class="form-check-input" type="radio" 
-                                :name="sponsorship.name" :value="sponsorship.name" v-model="selectedSponsorship">
-                                <label class="form-check-label" :for="sponsorship.name">{{ sponsorship.name }}</label> 
-                            </div>
-
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            Metodo di Pagamento
-                            <button><a href="/admin/payment">vai al pagamento</a></button>
-                        </div>
-                    </div>
-                </form> -->
             </div>
         </div>
 

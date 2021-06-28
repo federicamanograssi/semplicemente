@@ -25,7 +25,7 @@ class HomeController extends Controller
         $data = [
 
             //prendere lista appartamenti user
-            'apartments' => Apartment::where('user_id', Auth::id())->get(),
+            'apartments' => Apartment::where('user_id', Auth::id())->count(),
 
             //prendere views di tutti gli apppartamenti dell'utente
             'views' => View::whereHas('apartment', function($query){
@@ -35,7 +35,12 @@ class HomeController extends Controller
             //prendere messaggi degli apppartamenti dell'utente
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
-            })->get()
+            })->count(),
+
+            // prendere il t otale delle spese
+            'sponsored_apartments' => DB::table('apartment_sponsorship')
+                ->where('user_id', Auth::id())
+                ->where('status',1)->sum('amount')
         ];
 
         return view('admin.dashboard.index',$data);
@@ -59,8 +64,9 @@ class HomeController extends Controller
                 $query->where('user_id', Auth::id());
             })->get(),
 
-            //prendere sponsorizzazioni degli apppartamenti dell'utente
-            'sponsorships' => Sponsorship::all()
+            //prendere somma pagata eèr sponsorizzazioni degli apppartamenti dell'utente
+            'sponsorships' => DB::table('apartment_sponsorship')
+                ->where('user_id', Auth::id())->get(),
         ];
 
         return view('admin.statistics.index',$data);
