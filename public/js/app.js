@@ -1994,34 +1994,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'sponsored_apartments', 'sponsorships'],
   mounted: function mounted() {
@@ -2064,7 +2036,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: 'views',
   name: 'PlanetChart',
+  mounted: function mounted() {
+    var ctx = document.getElementById('planet-chart');
+    new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, this.adminStatisticsChartData);
+  },
   data: function data() {
     return {
       adminStatisticsChartData: {
@@ -2094,10 +2071,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
-  },
-  mounted: function mounted() {
-    var ctx = document.getElementById('planet-chart');
-    new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, this.adminStatisticsChartData);
   }
 });
 
@@ -2247,15 +2220,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['apartments', 'views', 'messages', 'sponsorships'],
   name: 'App',
   components: {
     AdminStatisticsChart: _AdminStatisticsChart_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['apartments', 'views', 'messages'],
+  data: function data() {
+    return {
+      sumSponsorship: 0,
+      viewsPerApt: this.views,
+      messagesPerApt: this.messages,
+      sponsorshipsPerApt: this.sponsorships,
+      selectedApartment: 'all'
+    };
+  },
   mounted: function mounted() {
-    console.log('ciao');
+    this.getTotalMoney();
+  },
+  methods: {
+    getTotalMoney: function getTotalMoney() {
+      this.sumSponsorship = 0;
+
+      for (var i = 0; i < this.sponsorshipsPerApt.length; i++) {
+        this.sumSponsorship += this.sponsorshipsPerApt[i].amount;
+      }
+    },
+    onChangeFilter: function onChangeFilter() {
+      if (this.selectedApartment == 'all') {
+        this.viewsPerApt = this.views;
+        this.messagesPerApt = this.messages;
+        this.sponsorshipsPerApt = this.sponsorships;
+        this.getTotalMoney();
+      } else {
+        this.getMessagesPerApt(this.selectedApartment);
+        this.getViewsPerApt(this.selectedApartment);
+        this.getSponsorshipsPerApt(this.selectedApartment);
+      }
+    },
+    getMessagesPerApt: function getMessagesPerApt(apt_id) {
+      this.messagesPerApt = [];
+
+      for (var i = 0; i < this.messages.length; i++) {
+        if (this.messages[i].apartment_id == apt_id) {
+          this.messagesPerApt.push(this.messages[i]);
+        }
+
+        ;
+      }
+    },
+    getViewsPerApt: function getViewsPerApt(apt_id) {
+      this.viewsPerApt = [];
+
+      for (var i = 0; i < this.views.length; i++) {
+        if (this.views[i].apartment_id == apt_id) {
+          this.viewsPerApt.push(this.views[i]);
+        }
+
+        ;
+      }
+    },
+    getSponsorshipsPerApt: function getSponsorshipsPerApt(apt_id) {
+      this.sponsorshipsPerApt = [];
+
+      for (var i = 0; i < this.sponsorships.length; i++) {
+        if (this.sponsorships[i].apartment_id == apt_id) {
+          this.sponsorshipsPerApt.push(this.sponsorships[i]);
+        }
+
+        ;
+      }
+
+      ;
+      this.getTotalMoney();
+    }
   }
 });
 
@@ -78426,16 +78466,46 @@ var render = function() {
           _vm._v(" "),
           _c(
             "select",
-            { staticClass: "custom-select custom-select-lg mb-3" },
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedApartment,
+                  expression: "selectedApartment"
+                }
+              ],
+              staticClass: "custom-select custom-select-lg mb-3",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selectedApartment = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    return _vm.onChangeFilter()
+                  }
+                ]
+              }
+            },
             [
-              _c("option", { attrs: { selected: "" } }, [
+              _c("option", { attrs: { selected: "", value: "all" } }, [
                 _vm._v("Tutti gli appartamenti")
               ]),
               _vm._v(" "),
               _vm._l(_vm.apartments, function(apartment) {
                 return _c(
                   "option",
-                  { key: apartment.id, attrs: { value: "apartment.title" } },
+                  { key: apartment.id, domProps: { value: apartment.id } },
                   [_vm._v(_vm._s(apartment.title))]
                 )
               })
@@ -78507,7 +78577,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h3", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(_vm.views.length))
+                      _vm._v(_vm._s(this.viewsPerApt.length))
                     ])
                   ])
                 ])
@@ -78577,7 +78647,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h3", { staticClass: "card-title" }, [
-                      _vm._v(_vm._s(_vm.messages.length))
+                      _vm._v(_vm._s(this.messagesPerApt.length))
                     ])
                   ])
                 ])
@@ -78640,11 +78710,21 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _c("div", { staticClass: "col-7" }, [
+                  _c("div", { staticClass: "numbers" }, [
+                    _c("p", { staticClass: "card-category" }, [
+                      _vm._v("Spese")
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(this.sumSponsorship))
+                    ])
+                  ])
+                ])
               ])
             ]),
             _vm._v(" "),
-            _vm._m(4)
+            _vm._m(3)
           ])
         ])
       ]),
@@ -78652,7 +78732,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-12" }, [
           _c("div", { staticClass: "card card-chart" }, [
-            _vm._m(5),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "chart-area" }, [
@@ -78687,7 +78767,7 @@ var staticRenderFns = [
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "stats" }, [
-        _c("i", [_vm._v("Totali questo mese")])
+        _c("i", [_vm._v("Visualizzazioni Totali")])
       ])
     ])
   },
@@ -78707,24 +78787,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-7" }, [
-      _c("div", { staticClass: "numbers" }, [
-        _c("p", { staticClass: "card-category" }, [_vm._v("Spese")]),
-        _vm._v(" "),
-        _c("h3", { staticClass: "card-title" }, [_vm._v("numero")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-footer" }, [
       _c("hr"),
       _vm._v(" "),
-      _c("div", { staticClass: "stats" }, [
-        _c("i", [_vm._v("Sponsorizzazione questo mese")])
-      ])
+      _c("div", { staticClass: "stats" }, [_c("i", [_vm._v("Totale Speso")])])
     ])
   },
   function() {
@@ -93825,8 +93891,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

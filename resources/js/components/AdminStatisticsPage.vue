@@ -9,9 +9,10 @@
             <!-- SELECT PER SCEGLIERE APPARTAMENTO -->
             <div class="col-6">
                 <h4>Seleziona un appartamento per le statistiche specifiche</h4>
-                <select class="custom-select custom-select-lg mb-3">
-                    <option selected>Tutti gli appartamenti</option>
-                    <option v-for="apartment in apartments" :key="apartment.id" value="apartment.title">{{ apartment.title }}</option>
+                <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment"
+                @change="onChangeFilter()">
+                    <option selected value="all">Tutti gli appartamenti</option>
+                    <option v-for="apartment in apartments" :key="apartment.id" :value="apartment.id">{{ apartment.title }}</option>
                 </select>
             </div>
         </div>
@@ -29,7 +30,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Visualizzazioni</p>
-                                <h3 class="card-title">{{views.length}}</h3>
+                                <h3 class="card-title">{{this.viewsPerApt.length}}</h3>
                             </div>
                         </div>
                     </div>
@@ -37,7 +38,7 @@
                 <div class="card-footer">
                     <hr>
                     <div class="stats">
-                        <i>Totali questo mese</i>
+                        <i>Visualizzazioni Totali</i>
                     </div>
                 </div>
             </div>
@@ -56,7 +57,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Messaggi</p>
-                                <h3 class="card-title">{{messages.length}}</h3>
+                                <h3 class="card-title">{{this.messagesPerApt.length}}</h3>
                             </div>
                         </div>
                     </div>
@@ -84,7 +85,7 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <p class="card-category">Spese</p>
-                                <h3 class="card-title">numero</h3>
+                                <h3 class="card-title">{{this.sumSponsorship}}</h3>
                             </div>
                         </div>
                     </div>
@@ -92,7 +93,7 @@
                 <div class="card-footer">
                     <hr>
                     <div class="stats">
-                        <i>Sponsorizzazione questo mese</i>
+                        <i>Totale Speso</i>
                     </div>
                 </div>
             </div>
@@ -135,11 +136,67 @@
 <script>
 import AdminStatisticsChart from './AdminStatisticsChart.vue';
     export default {
+        props:['apartments','views','messages','sponsorships'],
         name: 'App',
-  components: { AdminStatisticsChart },
-        props: ['apartments','views','messages'],
+        components: { AdminStatisticsChart },
+        data(){
+            return{
+                sumSponsorship:0,
+                viewsPerApt : this.views,
+                messagesPerApt : this.messages,
+                sponsorshipsPerApt : this.sponsorships,
+                selectedApartment:'all'
+            };
+        },
         mounted(){
-            console.log('ciao');
+            this.getTotalMoney();
+        },
+        methods:{
+            getTotalMoney(){
+                this.sumSponsorship=0
+                for (let i = 0; i < this.sponsorshipsPerApt.length; i++) {
+                    this.sumSponsorship += this.sponsorshipsPerApt[i].amount;
+                    
+                }
+            },
+            onChangeFilter(){
+                if(this.selectedApartment=='all'){
+                    this.viewsPerApt = this.views;
+                    this.messagesPerApt = this.messages;
+                    this.sponsorshipsPerApt = this.sponsorships;
+                    this.getTotalMoney();
+                }else{
+                    this.getMessagesPerApt(this.selectedApartment);
+                    this.getViewsPerApt(this.selectedApartment);
+                    this.getSponsorshipsPerApt(this.selectedApartment);
+                }
+            },
+            getMessagesPerApt(apt_id){
+                this.messagesPerApt=[];
+                for (let i = 0; i < this.messages.length; i++) {
+                    if(this.messages[i].apartment_id == apt_id){
+                        this.messagesPerApt.push(this.messages[i])
+                    };
+                }
+            },
+            getViewsPerApt(apt_id){
+                this.viewsPerApt=[];
+                for (let i = 0; i < this.views.length; i++) {
+                    if(this.views[i].apartment_id == apt_id){
+                        this.viewsPerApt.push(this.views[i])
+                    };
+                }
+            },
+            getSponsorshipsPerApt(apt_id){
+                this.sponsorshipsPerApt=[];
+                for (let i = 0; i < this.sponsorships.length; i++) {
+                    if(this.sponsorships[i].apartment_id == apt_id){
+                        this.sponsorshipsPerApt.push(this.sponsorships[i])
+                    };
+                };
+                
+                this.getTotalMoney();
+            },
         }
     }
     

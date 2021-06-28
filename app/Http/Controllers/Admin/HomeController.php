@@ -66,7 +66,8 @@ class HomeController extends Controller
 
             //prendere somma pagata eèr sponsorizzazioni degli apppartamenti dell'utente
             'sponsorships' => DB::table('apartment_sponsorship')
-                ->where('user_id', Auth::id())->get(),
+                ->where('user_id', Auth::id())->where('status',1)
+                ->get(),
         ];
 
         return view('admin.statistics.index',$data);
