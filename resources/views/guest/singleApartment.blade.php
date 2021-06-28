@@ -20,9 +20,9 @@
 
         <div class="container">
             <section class="apartment-title">
-                <h2>{{$apartment['title']}}</h2>
+                <h1 class="heading--primary">{{$apartment['title']}}</h1>
                 <div class="rating-location">
-                    <p> <i class="fas fa-star"></i> {{$apartment['rating']}} &#183 {{$apartment['address']}}</p>
+                    <p> {{$apartment['rating']}} <i class="fas fa-star"></i> &#183 {{$apartment['address']}}</p>
                 </div>
             </section>
         </div>
@@ -35,13 +35,13 @@
 
 
         <div class="container">
-            <div class="form-container" id="form-anchor">
+            <div class="form-container">
                 <div class="left-container">
 
                     <section class="type-host">
 
                         <div class="little-description">
-                            <h3>Intero Appartamento - Host: {{ $apartment['host']['name']}} {{ $apartment['host']['surname'] }} </h3>
+                            <h3 class="heading--primary">Host: {{ $apartment['host']['name']}} {{ $apartment['host']['surname'] }} </h3>
                             <p> 
                                 
                                 
@@ -146,7 +146,7 @@
 
                     <section class="additional-services">
 
-                        <h3>Servizi Inclusi</h3>
+                        <h3 class="heading--primary">Servizi Inclusi</h3>
                         <div class="service-list">
 
                             @foreach ($apartment['services'] as $service)
@@ -165,13 +165,13 @@
                 </div>
 
                 <div class="right-container">
-                    <div class="contact-form">
+                    <div id="form-anchor" class="contact-form">
 
                         {{-- FORM INVIO MESSAGGIO----------- --}}
                         <form action="{{ route('saveMessage') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
-                            <h3>Contatta l'host per conoscere i dettagli</h3>
+                            <h3 class="heading--primary">Contatta l'host per conoscere i dettagli</h3>
                             <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
                             {{-- MAIL---------- --}}
@@ -210,7 +210,7 @@
 
             <section class="apartment-map">
                 <div class="map-title">
-                    <h3>Posizione</h3>
+                    <h3 class="heading--primary">Posizione</h3>
 
                     <p>{{$apartment['address']}}</p>
                     <p>
@@ -232,6 +232,7 @@
             {{-- Piccola Sezione Host             --}}
 
             <section class="hosted-by">
+
                 <section class="type-host">
 
                     <div class="host-img">
@@ -246,6 +247,10 @@
                     
                 </section>
 
+                <section class="section-price">
+                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}} &euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
+                </section>
+
                 <section class="redirect-btn">
                     {{--Al click la pagina si ridireziona al form di inserimento messaggio --}}
 
@@ -256,13 +261,14 @@
 
             </section>
 
+
+
             {{-- Slider di apt sponsorizzati (da integrare se c'è tempo) --}}
 
-        {{-- <section class="footer-top standard-padding">
+        <section class="footer-top standard-padding">
             <div class="container">
                 <div class="sponsored-gallery">
-                    
-                    <h3>Gli alloggi sponsorizzati</h3>
+
                     <sponsored-slider></sponsored-slider>
                     <div class="sponsored-slider-phone">
                         <div class="slider-phone-cards">
@@ -327,7 +333,7 @@
                     </div>
                 </div>
             </div>   
-        </section> --}}
+        </section>
 
 
     </div>

@@ -60,10 +60,7 @@ class ApartmentController extends Controller
             'visible' => 'required',
             'price_per_night' => 'required|min:1'
         ]);
-        
-        
-
-        
+                
         // INDIRIZZO IN COORDINATE LAT LONG
         $address = $request->address;
         $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $address. '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
@@ -83,6 +80,7 @@ class ApartmentController extends Controller
 
         $j = $data['n_img'];
         $k = 1;
+
         for($i=1; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
@@ -90,15 +88,19 @@ class ApartmentController extends Controller
                     $extension = $data['image'.$i]->extension();
                     $name = $path .$extension;
                     $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
+                    
                     // creiamo una nuova istanza della classe images
                     $new_image = New Image;
+                    
                     // Compiliamo i dati della colonne immagine e apartment_id
                     $new_image->img_path = $data['image'.$i];
                     $new_image->img_description = $data['img_description'.$i];
                     $new_image->apartment_id = $new_apartment->id;
+
                     if ($data['is_cover'] == 'image'.$i) {
                         $new_image->is_cover = 1;
                     }
+
                     // Salviamo l'immagine nel database
                     $new_image->save();
                     $k++;

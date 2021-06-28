@@ -51,13 +51,7 @@
         data() {
             return {
                 active: "active",
-                counter: 0,
-                // photos: [
-                //         "https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?cs=srgb&dl=clouds-country-daylight-371633.jpg&fm=jpg",
-                //         "https://static.photocdn.pt/images/articles/2017/04/28/iStock-646511634.jpg",
-                //         "https://cdn.mos.cms.futurecdn.net/FUE7XiFApEqWZQ85wYcAfM.jpg",
-                //         "https://static.photocdn.pt/images/articles/2017/04/28/iStock-546424192.jpg"
-                // ],
+                counter: 0
             }
         },
         props : ['photos'],
@@ -122,6 +116,10 @@
         font-size: 8rem;
         opacity: .75;
         cursor: pointer;
+        
+        @include responsive(phone) {
+            display: none;
+        }
     }
 
     .prev {
@@ -136,9 +134,9 @@
 
 
     .nav {
-            @include responsive(phone) {
-                display: none;
-            }
+            // @include responsive(phone) {
+            //     display: none;
+            // }
         padding: $spacing-tiny;
         border-radius: $border-radius-standard;
         background: rgba(0, 0, 0, .7);

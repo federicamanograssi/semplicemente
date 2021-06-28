@@ -3041,13 +3041,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       active: "active",
-      counter: 0 // photos: [
-      //         "https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?cs=srgb&dl=clouds-country-daylight-371633.jpg&fm=jpg",
-      //         "https://static.photocdn.pt/images/articles/2017/04/28/iStock-646511634.jpg",
-      //         "https://cdn.mos.cms.futurecdn.net/FUE7XiFApEqWZQ85wYcAfM.jpg",
-      //         "https://static.photocdn.pt/images/articles/2017/04/28/iStock-546424192.jpg"
-      // ],
-
+      counter: 0
     };
   },
   props: ['photos'],
@@ -3131,16 +3125,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    self = this; // alias
+
+    axios.get('http://127.0.0.1:8000/api/getSponsoredApt', {
+      params: {
+        nOfItems: 6
+      }
+    }).then(function (response) {
+      self.apartments = response.data.results; // Salva l'array degli apt ottenuti nella variabile apartments                        
+    });
+  },
   data: function data() {
     return {
       active: "active",
       counter: 0,
       page: 1,
-      photos: ["https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg", "https://www.borgomaira.it/wp-content/uploads/2019/06/img-chalet-home-new3.jpg", "https://lh3.googleusercontent.com/proxy/VYlaBx3WgYi5dqhCgOtEMloUJ2I98eoQHg8nph6KnSwKVzPeROkWvFymycnkobixJ0bNhxSAcaKZyXN5L214-VWDOEqMUUgQ5R9IYvQJUA", "https://www.immobilien-consulting.at/wp-content/uploads/2021/02/IMG-20210402-WA0033.jpg", "https://www.catellanismith.com/app/uploads/2019/12/img-amb-chalet-3.jpg", "https://st.hzcdn.com/simgs/pictures/landscapes/chalet-architecture-ontario-canada-techo-bloc-img~b8c1b3b5022dd587_4-3335-1-6e31288.jpg", "https://www.altoadige-tirolo.com/media/medium/img,alpwell-chalet2_35466786.jpg", "https://www.lagederbau.it/cache/img-immobilien-chalet-st-ulrich-photo-2020-10-27-15-01-49-2-1200.jpg"],
-      title: ["Chalet Sponsorizzato 1", "Chalet Sponsorizzato 2", "Chalet Sponsorizzato 3", "Chalet Sponsorizzato 4", "Chalet Sponsorizzato 5", "Chalet Sponsorizzato 6", "Chalet Sponsorizzato 7", "Chalet Sponsorizzato 8"],
-      rating: [5, 1, 2, 3, 4, 3, 5, 5]
+      apartments: null
     };
   },
   methods: {
@@ -3579,17 +3584,17 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'Cortina d\'Ampezzo',
         'imgSrc': 'images/cortina.webp'
       }, {
-        'name': 'Etna',
-        'imgSrc': 'images/etna.jpg'
+        'name': 'Auronzo di Cadore',
+        'imgSrc': 'images/auronzo.jpg'
       }, {
-        'name': 'Saluzzo',
-        'imgSrc': 'images/saluzzo.jpg'
+        'name': 'Misurina',
+        'imgSrc': 'images/misurina.jpg'
       }, {
-        'name': 'Courmayeur',
-        'imgSrc': 'images/courmayeur.jpg'
+        'name': 'Rovereto',
+        'imgSrc': 'images/rovereto.jpg'
       }, {
-        'name': 'Cervinia',
-        'imgSrc': 'images/cervinia.jpg'
+        'name': 'Canazei',
+        'imgSrc': 'images/canazei.jpg'
       }, {
         'name': 'Madonna di Campiglio',
         'imgSrc': 'images/madonna-di-campiglio.jpg'
@@ -3597,11 +3602,11 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'San Candido',
         'imgSrc': 'images/san-candido.jpg'
       }, {
-        'name': 'Livigno',
-        'imgSrc': 'images/livigno.jpg'
+        'name': 'Brunico',
+        'imgSrc': 'images/brunico.jpg'
       }, {
-        'name': 'Sestriere',
-        'imgSrc': 'images/sestriere.jpg'
+        'name': 'Bressanone',
+        'imgSrc': 'images/bressanone.jpg'
       }]
     };
   }
@@ -8177,7 +8182,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: white;\n  top: calc( 50rem / 2);\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 8rem;\n  opacity: 0.75;\n  cursor: pointer;\n}\n.container .prev[data-v-2e3eb2ae] {\n  left: 2rem;\n  right: auto;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 2rem;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n}\n@media (max-width: 35.5em) {\n.container .nav[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n  cursor: pointer;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  border: 2px solid transparent;\n  transition: border-color 0.25s;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border-color: white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
+exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: white;\n  top: calc( 50rem / 2);\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 8rem;\n  opacity: 0.75;\n  cursor: pointer;\n}\n@media (max-width: 35.5em) {\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .prev[data-v-2e3eb2ae] {\n  left: 2rem;\n  right: auto;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 2rem;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n  cursor: pointer;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  border: 2px solid transparent;\n  transition: border-color 0.25s;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border-color: white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -8196,7 +8201,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n@media (max-width: 35.5em) {\n.container[data-v-676696df] {\n    display: none;\n}\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
+exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n@media (max-width: 35.5em) {\n.container[data-v-676696df] {\n    display: none;\n}\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n  position: relative;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df]:link, .container .slider-wrapper .cards .card[data-v-676696df]:visited, .container .slider-wrapper .cards .card[data-v-676696df]:active, .container .slider-wrapper .cards .card[data-v-676696df]:hover {\n  color: #105310;\n  text-decoration: none;\n}\n.container .slider-wrapper .cards .card__data[data-v-676696df] {\n  position: absolute;\n  height: 7rem;\n  bottom: 0;\n  width: calc(100% - 2 * 2rem);\n  left: 2rem;\n  background-color: white;\n}\n.container .slider-wrapper .cards .card__img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card__img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
 
 // exports
 
@@ -41875,7 +41880,8 @@ var render = function() {
                   name: "location",
                   type: "text",
                   placeholder: "Prova con 'Cortina d'Ampezzo'",
-                  minlength: "3"
+                  minlength: "3",
+                  required: ""
                 }
               }),
               _vm._v(" "),
@@ -41989,48 +41995,42 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "sponsored_slider" }, [
-    _c("div", { staticClass: "container", attrs: { id: "root" } }, [
+    _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "slider-wrapper" }, [
-        _c("div", { staticClass: "prev", on: { click: _vm.prevImage } }, [
-          _c("i", { staticClass: "fas fa-angle-left" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pages" }, [
-          _c("p", [_vm._v(_vm._s(_vm.page) + "/2")])
-        ]),
-        _vm._v(" "),
         _c(
           "div",
           { staticClass: "cards" },
-          _vm._l(_vm.photos, function(photo, index) {
-            return index < 4
-              ? _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-img" }, [
-                    _c("img", {
-                      staticClass: "img_slider",
-                      attrs: { src: _vm.photos[_vm.counter + index], alt: "" }
-                    })
+          _vm._l(_vm.apartments, function(apt, index) {
+            return _c(
+              "a",
+              {
+                key: index,
+                staticClass: "card",
+                attrs: { href: "/single/" + apt["id"] }
+              },
+              [
+                _c("div", { staticClass: "card__img" }, [
+                  _c("img", {
+                    staticClass: "img_slider",
+                    attrs: { src: "../storage/" + apt["cover_img"], alt: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card__data" }, [
+                  _c("h4", { staticClass: "card__title" }, [
+                    _vm._v(_vm._s(apt["name"]))
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "card-rating" }, [
-                    _c("span", [
-                      _c("i", { staticClass: "fas fa-star" }),
-                      _vm._v(_vm._s(_vm.rating[_vm.counter + index]))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-title" }, [
-                    _c("p", [_vm._v(_vm._s(_vm.title[_vm.counter + index]))])
+                  _c("span", { staticClass: "card__rating" }, [
+                    _vm._v(_vm._s(apt["rating"]) + " "),
+                    _c("i", { staticClass: "fas fa-star" })
                   ])
                 ])
-              : _vm._e()
+              ]
+            )
           }),
           0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "next", on: { click: _vm.nextImage } }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
+        )
       ])
     ])
   ])
