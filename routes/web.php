@@ -39,10 +39,6 @@ Route::get('/search', function () {
 -----------------------------------------------------------
 ----------------------------------------------------------*/
 
-Route::get('/payment/make','PaymentController@make')->name('payment.make');
-Route::get('/payment', function() {
-    return view('payment');
-});
 
 Auth::routes();
 
@@ -59,4 +55,11 @@ Route::prefix('admin')
         Route::resource('/apartments','ApartmentController');
         Route::get('/statistics','HomeController@statistics')->name('admin.statistics.index');
         Route::get('/sponsorships','HomeController@sponsorship')->name('admin.sponsorships.index');
+
+        // pagamenti
+        Route::get('/payment/make','PaymentController@make')->name('admin.payments.make');
+        Route::get('/payment','PaymentController@index')->name('admin.payments.index');
+
+        Route::get('/create-sponsorship/{apt_id}/{spons_id}/{status}','SponsorshipController@store')->name('admin.sponsorships.store');
+
     });
