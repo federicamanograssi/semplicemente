@@ -174,9 +174,19 @@ class ApartmentController extends Controller
             $apartment->services()->sync([]);
 
         }
-        dd($data['n_img_del']);
+
+        if(!empty($data['n_img_del'])) {
+
+            $img_del = explode(",", $data['n_img_del']);
+            for($i=0; $i<count($img_del); $i++){
+                $image = Image::find($img_del[$i]);
+                $image->delete();
+            }
+        }
+
         $j = $data['n_img_now'];
         $k = $data['n_img'];
+        // dd($j, $k);
         $k++;
         for($i=$k; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {

@@ -279,6 +279,7 @@ $("#add").click(function(){
         array.push(index);
         document.getElementById('n_img_del').setAttribute('value', array);
         $(this).parents('.remove-img').remove();
+        
     });  
 
 
