@@ -177,11 +177,11 @@
                         // se non vuoi usare alert ma altro messaggio, ricorda che puoi utilizzare setTimeout
                         if (response.success) {
                             alert('Payment successfull!');
-                            $(window.location).attr('href', "create-sponsorship/"+ apt_id+ "/"+spons_id);
+                            $(window.location).attr('href', "create-sponsorship/"+ apt_id+ "/"+spons_id+ "/"+1);
                       
                         } else {
                             alert('Payment failed'); 
-                            // $(window.location).attr('href', '{{ route('admin.sponsorships.index')}}');
+                            $(window.location).attr('href', "create-sponsorship/"+ apt_id+ "/"+spons_id+ "/"+0);
                         }
                     }, 'json');
                 });

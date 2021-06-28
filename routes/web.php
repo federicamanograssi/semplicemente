@@ -60,6 +60,6 @@ Route::prefix('admin')
         Route::get('/payment/make','PaymentController@make')->name('admin.payments.make');
         Route::get('/payment','PaymentController@index')->name('admin.payments.index');
 
-        Route::get('/create-sponsorship/{apt_id}/{spons_id}','SponsorshipController@store')->name('admin.sponsorships.store');
+        Route::get('/create-sponsorship/{apt_id}/{spons_id}/{status}','SponsorshipController@store')->name('admin.sponsorships.store');
 
     });

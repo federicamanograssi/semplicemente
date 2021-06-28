@@ -38,7 +38,7 @@ class SponsorshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($apt_id, $spons_id)
+    public function store($apt_id, $spons_id, $status)
     {
         $spons=Sponsorship::find($spons_id);
 
@@ -47,7 +47,7 @@ class SponsorshipController extends Controller
         $new_apt_spons->sponsorship_id = $spons_id;
         $new_apt_spons->user_id = Auth::id();
         $new_apt_spons->amount = $spons->amount;
-        $new_apt_spons->status = 1;
+        $new_apt_spons->status = $status;
         $new_apt_spons->start_date = Carbon::now();
         $new_apt_spons->end_date=Carbon::now()->addHours($spons->hours);
         $new_apt_spons->save();
