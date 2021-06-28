@@ -23,7 +23,10 @@ class MessageController extends Controller
             // FILTRARE SOLO QUELLI DELL'UTENTE
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
-            })->get()
+            })->get(),
+            'apartments' => Apartment::where('user_id', Auth::id())
+            ->select('title','id')
+            ->get(),
         ];
 
 
@@ -65,47 +68,4 @@ class MessageController extends Controller
         return redirect()->route('apartments.show',$data['apartment_id']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

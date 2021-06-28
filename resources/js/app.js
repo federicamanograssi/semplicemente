@@ -35,6 +35,7 @@ Vue.component('chalet-map', require('./components/chaletMap.vue').default);
 Vue.component('single-chalet-map', require('./components/singleChaletMap.vue').default);
 Vue.component('admin-statistics-page', require('./components/AdminStatisticsPage.vue').default);
 Vue.component('admin-sponsorships-page', require('./components/AdminSponsorshipsPage.vue').default);
+Vue.component('admin-messages-page', require('./components/AdminMessagesPage.vue').default);
 Vue.component('admin-statistics-chart', require('./components/AdminStatisticsChart.vue').default);
 
 

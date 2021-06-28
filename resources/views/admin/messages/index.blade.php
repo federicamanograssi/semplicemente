@@ -1,7 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
+
+<admin-messages-page
+:apartments= "{{$apartments}}"
+:messages="{{$messages}}"
+/>
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -10,7 +15,7 @@
 
             <table class="table w-100 table-responsive">
 
-                {{-- titoli colonne --}}
+                
                 <thead class="table-light">
                     <tr role="row">
                         <th tabindex="0" rowspan="1" colspan="1">Appartamento</th>
@@ -24,7 +29,7 @@
                     
                     @foreach ($messages as $message)
                         
-                    {{-- riga appartamento --}}
+                    
                     <tr role="row">
                         <td class="text-left">{{ $message->apartment->title }}</td>
                         <td class="text-right"><a href="mailto:{{ $message->email_sender }}">{{ $message->email_sender }}</a></td>
@@ -38,6 +43,6 @@
             </table>
         </div>
     </div>
-</div>
+</div> --}}
 
 @endsection
