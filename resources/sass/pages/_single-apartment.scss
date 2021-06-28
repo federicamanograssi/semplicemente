@@ -1,13 +1,12 @@
-.standard-padding {
-    padding: 0 $spacing-standard;
-    @include responsive(phone) {
-    padding: 0 $spacing-small;
-    }
+hr {
+    border-top-width: 0;
+    border-color: $gray;
 }
-
 .container {
+    padding: 0 $spacing-standard;
     max-width: $width-inner-content;
     margin: 0 auto;
+    background-color: $white;
 
     i {
         padding-right: $spacing-tiny;
@@ -33,13 +32,17 @@
             display: block;
         }
         .left-container {
-            width: 60%;
+            width: 65%;
+            padding-right: $spacing-more;
+
             @include responsive(tablet) {
                 width: 40%;
             }
             @include responsive(phone) {
+                padding-right: 0;
                 width: 100%;
             }
+
             .type-host {
                 display: flex;
                 justify-content: space-between;
@@ -78,34 +81,48 @@
                 }
             }
         }
+
         .right-container {
-            width: 50%;
+            width: 35%;
             @include responsive(tablet) {
                 width: 60%;
             }
             @include responsive(phone) {
                 width: 100%;
             }
+
             .contact-form {
                 position: sticky;
                 top: calc(#{$height-section-medium} + 2rem);
+
+                .form__input {
+                    margin-bottom: $spacing-more;
+                }
+
                 form {
+                    background: $color-secondary;
+                    width: calc(100% - 2 * #{$spacing-standard});
+                    margin: 0 auto;
+                    padding: $spacing-standard;
+                    border-radius: $border-radius-standard;
+                    @include shadow-enhanced;
+
                     @include responsive(tablet) {
                         width: 80%;
                     }
+
                     @include responsive(phone) {
                         width: 100%;
                     }
-                    @include shadow-enhanced;
-                    background: $color-secondary;
-                    width: 50%;
-                    margin: 0 auto;
-                    padding: $spacing-small;
-                    border-radius: $border-radius-standard;
                 }
                 p,
-                input {
-                    margin-bottom: $spacing-tiny;
+                h3 {
+                    margin-bottom: $spacing-small;
+                }
+
+                h3 {
+                    font-size: 2rem;
+                    line-height: 3rem;
                 }
                 .btn {
                     margin: $spacing-small 0;
