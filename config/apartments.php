@@ -4,7 +4,7 @@
     [
         'title'=> 'Mountain Chalet Milly',
         'address'=> 'Via di Carpeà, Ledro, TN',
-        'user_id'=>2,
+        'user_id'=>3,
         'rooms_n'=>4,
         'beds_n'=>2,
         'bathroom_n'=>1,
@@ -24,7 +24,7 @@
     [
         'title'=> 'La Baita Case Suite',
         'address'=>'Via di Castello, Baselga di Piné, TN',
-        'user_id'=>1,
+        'user_id'=>3,
         'rooms_n'=>3,
         'beds_n'=>2,
         'bathroom_n'=>1,
@@ -40,7 +40,7 @@
     [
         'title'=> 'Loft Caterina',
         'address'=>'Via del Casel, 12, 37010 San Zeno di Montagna VR',
-        'user_id'=>2,
+        'user_id'=>3,
         'rooms_n'=>4,
         'beds_n'=>5,
         'bathroom_n'=>2,
@@ -76,7 +76,7 @@
     [
         'title'=> 'Ledro Mountain Chalet',
         'address'=>'Via Montecucco, 10, 25083 Gardone Riviera BS',
-        'user_id'=>2,
+        'user_id'=>3,
         'rooms_n'=>6,
         'beds_n'=>3,
         'bathroom_n'=>2,
@@ -91,7 +91,7 @@
     [
         'title'=> 'Sweet Cristallo',
         'address'=>'Corso Italia, 146, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>3,
         'rooms_n'=>1,
         'beds_n'=>1,
         'bathroom_n'=>1,
@@ -109,7 +109,7 @@
     [
         'title'=> 'Comodo chalet nel centro',
         'address'=>'Via dello Stadio, 7/A, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>3,
         'rooms_n'=>2,
         'beds_n'=>4,
         'bathroom_n'=>1,
@@ -125,7 +125,7 @@
     [
         'title'=> 'La Mansarda',
         'address'=>'SR48, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>3,
         'beds_n'=>2,
         'bathroom_n'=>1,
@@ -140,7 +140,7 @@
     [
         'title'=> 'Design chalet',
         'address'=>'Via Roma, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>2,
         'beds_n'=>2,
         'bathroom_n'=>2,
@@ -156,7 +156,7 @@
     [
         'title'=> 'Villa MariaLuisa',
         'address'=>'Via P. F. Calvi, 29, 32046 San Vito di Cadore BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>3,
         'beds_n'=>8,
         'bathroom_n'=>3,
@@ -171,7 +171,7 @@
     [
         'title'=> 'Antique Chalet',
         'address'=>'Strada Statale 51 di Alemagna, 32043 Fiames BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>1,
         'beds_n'=>1,
         'bathroom_n'=>3,
@@ -186,7 +186,7 @@
     [
         'title'=> 'Elegant Chalet',
         'address'=>'Località Dibona, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>10,
         'beds_n'=>7,
         'bathroom_n'=>3,
@@ -201,7 +201,7 @@
     [
         'title'=> 'Rosa Alpina',
         'address'=>'SR48, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>1,
         'beds_n'=>1,
         'bathroom_n'=>1,
@@ -217,7 +217,7 @@
     [
         'title'=> 'Cortina Luxury Chalet',
         'address'=>'SR48, 32043 Cortina d\'Ampezzo BL',
-        'user_id'=>1,
+        'user_id'=>2,
         'rooms_n'=>7,
         'beds_n'=>4,
         'bathroom_n'=>3,

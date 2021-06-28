@@ -466,7 +466,7 @@ h3 {
   width: 60%;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .container .form-container .left-container {
     width: 40%;
   }
@@ -529,7 +529,7 @@ h3 {
   width: 50%;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .container .form-container .right-container {
     width: 60%;
   }
@@ -555,7 +555,7 @@ h3 {
   border-radius: 5px;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .container .form-container .right-container .contact-form form {
     width: 80%;
   }
@@ -600,7 +600,7 @@ h3 {
   height: calc(100vh - 2 * 7rem);
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 64em) {
   .container .chalet-map {
     position: static;
     height: 50rem;
@@ -683,7 +683,7 @@ h3 {
 .container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card {
   width: 100%;
   height: 30rem;
-  margin-bottom: 5rem;
+  margin-bottom: 7.5rem;
 }
 
 .container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-img {
@@ -694,7 +694,7 @@ h3 {
 
 .container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-img img {
   border-radius: 5px;
-  box-shadow: 0 0 2rem rgba(5, 48, 5, 0.4);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.3);
   height: 100%;
   width: 100%;
   -o-object-fit: cover;

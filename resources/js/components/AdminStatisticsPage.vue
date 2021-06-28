@@ -117,7 +117,9 @@
                
                 <div class="card-body">
                     <div class="chart-area">
-                        mettere chart
+                        <div id="app">
+                            <admin-statistics-chart/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,7 +133,10 @@
 </template>
 
 <script>
+import AdminStatisticsChart from './AdminStatisticsChart.vue';
     export default {
+        name: 'App',
+  components: { AdminStatisticsChart },
         props: ['apartments','views','messages'],
         mounted(){
             console.log('ciao');

@@ -1,6 +1,8 @@
 {
     "private": true,
     "scripts": {
+        "serve": "vue-cli-service serve",
+        "start": "node your-script.js",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -24,6 +26,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@tomtom-international/web-sdk-maps": "^6.13.0"
+        "@tomtom-international/web-sdk-maps": "^6.13.0",
+        "chart.js": "^2.9.4",
+        "vue-chartjs": "^3.5.1"
     }
 }
