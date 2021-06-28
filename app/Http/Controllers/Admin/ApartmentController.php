@@ -174,7 +174,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync([]);
 
         }
-
+        dd($data['n_img_del']);
         $j = $data['n_img_now'];
         $k = $data['n_img'];
         $k++;
@@ -203,12 +203,12 @@ class ApartmentController extends Controller
         return redirect()->route('apartments.index', $apartment);
     }
 
-    public function removeImages ($id) {
-        $image = Image::find($id);
-        $ap = Apartment::where('id', $image->apartment_id)->first();
-        $image->delete();
-        return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
-    }
+    // public function removeImages ($id) {
+    //     $image = Image::find($id);
+    //     $ap = Apartment::where('id', $image->apartment_id)->first();
+    //     $image->delete();
+    //     return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
+    // }
     /**
      * Remove the specified resource from storage.
      *
