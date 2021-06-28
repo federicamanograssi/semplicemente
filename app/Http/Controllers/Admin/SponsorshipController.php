@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\ApartmentSponsorship;
+use Illuminate\Support\Facades\Auth;
+use App\Sponsorship;
+use Illuminate\Support\Facades\Date;
+use Carbon\Carbon;
 
 class SponsorshipController extends Controller
 {
@@ -35,8 +40,19 @@ class SponsorshipController extends Controller
      */
     public function store($apt_id, $spons_id)
     {
-        dd($apt_id,$spons_id);
-        // return 'ciao';
+        $spons=Sponsorship::find($spons_id);
+
+        $new_apt_spons = new ApartmentSponsorship();
+        $new_apt_spons->apartment_id = $apt_id;
+        $new_apt_spons->sponsorship_id = $spons_id;
+        $new_apt_spons->user_id = Auth::id();
+        $new_apt_spons->amount = $spons->amount;
+        $new_apt_spons->status = 1;
+        $new_apt_spons->start_date = Carbon::now();
+        $new_apt_spons->end_date=Carbon::now()->addHours($spons->hours);
+        $new_apt_spons->save();
+
+        return redirect()->route('admin.sponsorships.index');
     }
 
     /**
