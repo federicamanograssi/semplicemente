@@ -420,6 +420,23 @@ h3 {
   transition: all 0.6s;
 }
 
+.service-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.single-service {
+  flex: 1 0 calc(100% /4);
+  margin-bottom: 2rem;
+}
+
+.single-service__icon {
+  color: #105310;
+  margin-right: 2rem;
+  font-size: 2rem;
+}
+
 hr {
   border-top-width: 0;
   border-color: #c7c7c7;
