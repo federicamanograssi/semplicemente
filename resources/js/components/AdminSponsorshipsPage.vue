@@ -28,8 +28,9 @@
         <div class="row">
             <div class="col-12">
                 <h2>Metti in evidenza un appartamento</h2>
+                <button><a href="/admin/payment">vai al pagamento</a></button>
 
-                <!-- INIZIO FORM PER SALVARE SPONSORIZZATA -->
+                <!-- INIZIO FORM PER SALVARE SPONSORIZZATA
 
                 <form action="">
                     <div class="row">
@@ -42,7 +43,7 @@
                             </select>
 
                             <h2> Scegli la sponsorizzazione</h2>
-                            <!-- seleziona sponsorizzazione da attribuire -->
+                           
                             <div class="form-check"
                             v-for="sponsorship in sponsorships" :key="sponsorship.id">
                                 <input class="form-check-input" type="radio" 
@@ -56,7 +57,7 @@
                             <button><a href="/admin/payment">vai al pagamento</a></button>
                         </div>
                     </div>
-                </form>
+                </form> -->
             </div>
         </div>
 

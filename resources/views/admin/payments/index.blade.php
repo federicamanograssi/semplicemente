@@ -110,8 +110,40 @@
               <main id="app" role="main" class="admin col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
                   
                 {{-- FORM PAGAMENTO --}}
-                <div id="dropin-container"></div>
-                <button id="submit-button">Request payment method</button>
+                <h2>Sponsorizza il tuo Appartamento</h2>
+                <form action="">
+                  <div class="form-group col-md-4">
+                    <label for="apartmentChoice">Scegli un appartamento</label>
+                    <select id="apartmentChoice" class="form-control" onchange="valApt()">
+                      <option selected>Scegli...</option>
+                      @foreach ($apartments as $apartment)
+                          <option value="{{$apartment->id}}">{{$apartment->title}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="sponsorshipChoice">Scegli quanto sponsorizzare</label>
+                    <select id="sponsorshipChoice" class="form-control" onchange="valSpn()">
+                      <option selected>Scegli...</option>
+                      @foreach ($sponsorships as $sponsorship)
+                          <option value="{{$sponsorship->id}}">{{$sponsorship->name}} (</option>
+                      @endforeach
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-4" >
+                    <label for="status">Inserisci dati pagamento</label>
+                    <div id="dropin-container"></div>
+                  </div>
+                </form>
+                <button type="submit" id="submit-button" class="btn btn-primary">Paga ora</button>
+                
+
+
+
+
+                {{-- <div id="dropin-container"></div>
+                <button id="submit-button">Request payment method</button> --}}
               </main>
             </div>
     
@@ -121,6 +153,16 @@
     {{-- SCRIPT PER FAR FUNZIONARE PAGAMENTO
     dovuto togliere app.js perchè in conflitto --}}
     <script>
+      var apt_id;
+      var spons_id;
+      function valApt(){
+        apt_id= document.getElementById('apartmentChoice').value;
+        console.log(apt_id);
+      }
+      function valSpn(){
+        spons_id= document.getElementById('sponsorshipChoice').value;
+        console.log(spons_id);
+      }
         var button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
@@ -135,11 +177,11 @@
                         // se non vuoi usare alert ma altro messaggio, ricorda che puoi utilizzare setTimeout
                         if (response.success) {
                             alert('Payment successfull!');
-                            $(window.location).attr('href', '{{ route('admin.sponsorships.index')}}');
+                            $(window.location).attr('href', "create-sponsorship/"+ apt_id+ "/"+spons_id);
                       
                         } else {
                             alert('Payment failed'); 
-                            $(window.location).attr('href', '{{ route('admin.sponsorships.index')}}');
+                            // $(window.location).attr('href', '{{ route('admin.sponsorships.index')}}');
                         }
                     }, 'json');
                 });

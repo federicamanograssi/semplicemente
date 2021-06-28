@@ -2021,6 +2021,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'sponsored_apartments', 'sponsorships'],
   mounted: function mounted() {
@@ -40287,115 +40288,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("h2", [_vm._v("Metti in evidenza un appartamento")]),
-        _vm._v(" "),
-        _c("form", { attrs: { action: "" } }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-xs-12 col-md-6" },
-              [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedApartment,
-                        expression: "selectedApartment"
-                      }
-                    ],
-                    staticClass: "custom-select custom-select-lg mb-3",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selectedApartment = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "-1" } }, [
-                      _vm._v("Seleziona un appartamento")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.apartments, function(apartment) {
-                      return _c(
-                        "option",
-                        {
-                          key: apartment.id,
-                          domProps: { value: apartment.title }
-                        },
-                        [_vm._v(_vm._s(apartment.title))]
-                      )
-                    })
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _c("h2", [_vm._v(" Scegli la sponsorizzazione")]),
-                _vm._v(" "),
-                _vm._l(_vm.sponsorships, function(sponsorship) {
-                  return _c(
-                    "div",
-                    { key: sponsorship.id, staticClass: "form-check" },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedSponsorship,
-                            expression: "selectedSponsorship"
-                          }
-                        ],
-                        staticClass: "form-check-input",
-                        attrs: { type: "radio", name: sponsorship.name },
-                        domProps: {
-                          value: sponsorship.name,
-                          checked: _vm._q(
-                            _vm.selectedSponsorship,
-                            sponsorship.name
-                          )
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.selectedSponsorship = sponsorship.name
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-check-label",
-                          attrs: { for: sponsorship.name }
-                        },
-                        [_vm._v(_vm._s(sponsorship.name))]
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _vm._m(1)
-          ])
-        ])
-      ])
-    ])
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -40427,13 +40320,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 col-md-6" }, [
-      _vm._v(
-        "\n                        Metodo di Pagamento\n                        "
-      ),
-      _c("button", [
-        _c("a", { attrs: { href: "/admin/payment" } }, [
-          _vm._v("vai al pagamento")
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("h2", [_vm._v("Metti in evidenza un appartamento")]),
+        _vm._v(" "),
+        _c("button", [
+          _c("a", { attrs: { href: "/admin/payment" } }, [
+            _vm._v("vai al pagamento")
+          ])
         ])
       ])
     ])
