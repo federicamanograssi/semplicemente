@@ -133,7 +133,7 @@
                         {{-- SERVIZI ------ --}}
                         @foreach ($services as $service)
                             <div class="col-3 form-check @error('services') is-invalid @enderror">
-                                <input name="services[]" class="form-check-input" type="checkbox" value="{{ $service->id }}"
+                                <input name="services[]" class="form-check-input" id="services" type="checkbox" value="{{ $service->id }}"
                                 {{ $apartment->services->contains($service) ? 'checked=checked' : '' }}>
                                 <label class="form-check-label">
                                     {{ $service->service_name }}
@@ -164,14 +164,16 @@
                         
                         @for ($i = 0; $i < $n_img; $i++)
                             
-                        <div class= "col-2">
+                        <div class= "col-2 remove-img">
                             <img id="{{ 'img' .($i+1) }}" src={{ '/storage/' .$images[$i]->img_path }} />
                             <input type="text" name="{{ 'img_description' .($i+1) }}" placeholder="Descrizione" value="{{ old('img_description' .($i+1), $images[$i]->img_description) }}">
                             <p>Copertina</p>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="image1"  checked required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
-
-                                    <a href="{{ route('remove.images', ['id' => $images[$i]->id]) }}"><button type="button" class="btn-danger">Delete</a>
+                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="{{ 'image' .($i+1) }}"  checked required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
+                                <input type="hidden" id="id_img" value="{{ $images[$i]->id }}">
+                                <button type="button" class="btn btn-danger remove-img-btn">Rimuovi immagine</button>
+                                    {{-- <a href="{{ route('remove.images', ['id' => $images[$i]->id]) }}"><button type="button" class="btn-danger">Delete</a> --}}
+                                
                                     
                             </div>
                         </div>
@@ -189,7 +191,7 @@
     
                     <input type="hidden" name="n_img_now" id="n_img_now" value= "{{ $n_img }}">
                     <input type="hidden" name="n_img" id="n_img" value= "{{ $n_img }}">
-
+                    <input type="hidden" name="n_img_del" id="n_img_del" value="">
 
 
                 <p>Visibile:</p>
@@ -239,7 +241,7 @@
 
 
 var i = document.getElementById("n_img_now").value;
-
+var array = [];
 $("#add").click(function(){
  if($('#img'+i).attr('src')!= "https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg"){
     ++i; 
@@ -270,6 +272,14 @@ $("#add").click(function(){
         $(this).parents('.remove-div').remove();
         document.getElementById("is_cover1").checked=true;
 
+    });  
+
+    $(document).on('click', '.remove-img-btn', function(){  
+        var index = document.getElementById('id_img').value;
+        array.push(index);
+        document.getElementById('n_img_del').setAttribute('value', array);
+        $(this).parents('.remove-img').remove();
+        
     });  
 
 

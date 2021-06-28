@@ -175,8 +175,18 @@ class ApartmentController extends Controller
 
         }
 
+        if(!empty($data['n_img_del'])) {
+
+            $img_del = explode(",", $data['n_img_del']);
+            for($i=0; $i<count($img_del); $i++){
+                $image = Image::find($img_del[$i]);
+                $image->delete();
+            }
+        }
+
         $j = $data['n_img_now'];
         $k = $data['n_img'];
+        // dd($j, $k);
         $k++;
         for($i=$k; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
@@ -203,12 +213,12 @@ class ApartmentController extends Controller
         return redirect()->route('apartments.index', $apartment);
     }
 
-    public function removeImages ($id) {
-        $image = Image::find($id);
-        $ap = Apartment::where('id', $image->apartment_id)->first();
-        $image->delete();
-        return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
-    }
+    // public function removeImages ($id) {
+    //     $image = Image::find($id);
+    //     $ap = Apartment::where('id', $image->apartment_id)->first();
+    //     $image->delete();
+    //     return redirect()->route('apartments.edit', ['apartment' => $ap->id]);
+    // }
     /**
      * Remove the specified resource from storage.
      *
