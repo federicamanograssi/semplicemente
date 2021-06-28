@@ -2469,6 +2469,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2479,14 +2507,41 @@ __webpack_require__.r(__webpack_exports__);
   props: ['currentQuery', // tutte le informazioni relative alla ricerca                
   'servicesList'],
   methods: {
+    // Metodo che si occupa dell'aggiornamento di alcune proprietà non direttamente controllate dall'onchange
+    changeValue: function changeValue(prop, value) {
+      var query = this.currentQuery;
+
+      switch (prop) {
+        case 'guests':
+          query.guests += value;
+          this.updateFilters();
+          break;
+
+        case 'rooms':
+          query.minRooms += value;
+          this.updateFilters();
+          break;
+
+        default:
+          break;
+      }
+    },
     toggleFilterBox: function toggleFilterBox() {
       // Gestione del box con i filtri avanzati
       this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
     },
     updateLocation: function updateLocation() {
-      this.$emit('updateLocation');
+      if (this.currentQuery.baseLocation.length >= 3) this.$emit('updateLocation');
     },
     updateFilters: function updateFilters() {
+      var query = this.currentQuery; // Controlla validità guests 
+
+      if (query.guests > 9) query.guests = 9;
+      if (query.guests < 1) query.guests = 1; // Controlla validità rooms
+
+      if (query.minRooms > 9) query.minRooms = 9;
+      if (query.minRooms < 1) query.minRooms = 1; // Richiede filtraggio al component genitore
+
       this.$emit('updateFilters');
     }
   }
@@ -2707,9 +2762,8 @@ __webpack_require__.r(__webpack_exports__);
         if (apt.rooms < query.minRooms) continue; // Filtro Camere
         // Controllo Servizi Aggiuntivi
 
-        if (apt.services.length == 0) {
-          continue; // Se non ci sono servizi aggiuntivi l'appartamento è scartato a priori
-        } else {
+        if (query.selectedServices.length > 0) {
+          // Se sono stati richiesti servizi
           for (var _i = 0; _i < query.selectedServices.length; _i++) {
             // Ciclo tutti i servizi richiesti dall'utente
             var reqServ = query.selectedServices[_i]; // alias
@@ -2724,10 +2778,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
             if (found == false) continue mainFor; // se anche un solo servizio richiesto non era presente l'appartamento è scartato
-          } // outer for
-
-        } // else
-        // *****************************************************************
+          }
+        } // *****************************************************************
         // Assegna casualmente una sponsorizzazione ad un apparamento su 3
         // (Soluzione temporanea prima di ottenere l'informazione dal server)
 
@@ -2757,7 +2809,7 @@ __webpack_require__.r(__webpack_exports__);
           price: price,
           isSponsored: isSponsored
         };
-      }); //  array ottimizzato per visualizzazionen card apt
+      }); //  array ottimizzato per visualizzazione card apt
 
       this.listApartments = this.filteredApartments.map(function (_ref2) {
         var id = _ref2.id,
@@ -2923,7 +2975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
@@ -2978,14 +3029,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    if (screen.width <= 1024) this.isMobile = true;else return this.isMobile = false;
+  },
   mounted: function mounted() {
-    console.log(this.searchRoute);
+    this.dataIsReady = true;
   },
   props: ['search-route'],
   data: function data() {
     return {
-      'videoSrc': 'img/jumbo-vid.mp4'
+      'videoSrc': 'img/jumbo-vid.mp4',
+      'imgSrc': 'img/jumbo-img.jpg',
+      'dataIsReady': false,
+      'isMobile': null
     };
   }
 });
@@ -3037,15 +3096,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   data: function data() {
     return {
       active: "active",
-      counter: 0,
-      photos: ["https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?cs=srgb&dl=clouds-country-daylight-371633.jpg&fm=jpg", "https://static.photocdn.pt/images/articles/2017/04/28/iStock-646511634.jpg", "https://cdn.mos.cms.futurecdn.net/FUE7XiFApEqWZQ85wYcAfM.jpg", "https://static.photocdn.pt/images/articles/2017/04/28/iStock-546424192.jpg"]
+      counter: 0
     };
   },
+  props: ['photos'],
   methods: {
     prevImage: function prevImage() {
       this.counter--;
@@ -3126,16 +3193,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    self = this; // alias
+
+    axios.get('http://127.0.0.1:8000/api/getSponsoredApt', {
+      params: {
+        nOfItems: 6
+      }
+    }).then(function (response) {
+      self.apartments = response.data.results; // Salva l'array degli apt ottenuti nella variabile apartments                        
+    });
+  },
   data: function data() {
     return {
       active: "active",
       counter: 0,
       page: 1,
-      photos: ["https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg", "https://www.borgomaira.it/wp-content/uploads/2019/06/img-chalet-home-new3.jpg", "https://lh3.googleusercontent.com/proxy/VYlaBx3WgYi5dqhCgOtEMloUJ2I98eoQHg8nph6KnSwKVzPeROkWvFymycnkobixJ0bNhxSAcaKZyXN5L214-VWDOEqMUUgQ5R9IYvQJUA", "https://www.immobilien-consulting.at/wp-content/uploads/2021/02/IMG-20210402-WA0033.jpg", "https://www.catellanismith.com/app/uploads/2019/12/img-amb-chalet-3.jpg", "https://st.hzcdn.com/simgs/pictures/landscapes/chalet-architecture-ontario-canada-techo-bloc-img~b8c1b3b5022dd587_4-3335-1-6e31288.jpg", "https://www.altoadige-tirolo.com/media/medium/img,alpwell-chalet2_35466786.jpg", "https://www.lagederbau.it/cache/img-immobilien-chalet-st-ulrich-photo-2020-10-27-15-01-49-2-1200.jpg"],
-      title: ["Chalet Sponsorizzato 1", "Chalet Sponsorizzato 2", "Chalet Sponsorizzato 3", "Chalet Sponsorizzato 4", "Chalet Sponsorizzato 5", "Chalet Sponsorizzato 6", "Chalet Sponsorizzato 7", "Chalet Sponsorizzato 8"],
-      rating: [5, 1, 2, 3, 4, 3, 5, 5]
+      apartments: null
     };
   },
   methods: {
@@ -3276,6 +3354,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.loadSponsored();
@@ -3290,13 +3387,7 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler() {
         this.setOutputArray();
       }
-    } // sponsoredApt: {                
-    //     handler: function() {
-    //         // this.setOutputArray();
-    //         console.log("ciao")
-    //         }
-    //     }
-
+    }
   },
   data: function data() {
     return {
@@ -3401,13 +3492,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // 100Km --> zoom 8
-  // 60Km  --> zoom 9
-  // 20Km  --> zoom 10
   mounted: function mounted() {
-    var zoomLevel = 0;
-    if (this.radius <= 20) zoomLevel = 10;else if (this.radius >= 80) zoomLevel = 8;else zoomLevel = 9;
-    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], zoomLevel);
+    // Inizializza Mappa
+    this.mymap = L.map('chalet-map').setView([this.baseLat, this.baseLon], this.zoomLevel); // Aggiunge Layer grafico
+
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -3415,7 +3503,8 @@ __webpack_require__.r(__webpack_exports__);
       tileSize: 512,
       zoomOffset: -1,
       accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
-    }).addTo(this.mymap);
+    }).addTo(this.mymap); //  Crea Marker di Base
+
     this.markerIcon = L.icon({
       iconUrl: 'img/greenMarker.png',
       shadowUrl: 'img/markerShadow.png',
@@ -3430,8 +3519,11 @@ __webpack_require__.r(__webpack_exports__);
       popupAnchor: [0, -22] // point from which the popup should open relative to the iconAnchor
 
     });
-    this.updateCoordinates();
-    this.updateMarkers();
+    this.setZoom(); // regola lo zoom
+
+    this.updateCoordinates(); // centra su località cercata
+
+    this.updateMarkers(); // aggiunge markers
   },
   data: function data() {
     return {
@@ -3439,7 +3531,8 @@ __webpack_require__.r(__webpack_exports__);
       mapIsShown: true,
       radiusCircle: null,
       markers: null,
-      markerIcon: null
+      markerIcon: null,
+      zoomLevel: null
     };
   },
   props: ['baseLat', 'baseLon', 'apartments', 'radius'],
@@ -3456,11 +3549,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     radius: {
       handler: function handler() {
+        this.setZoom();
         this.updateCoordinates();
       }
     }
   },
   methods: {
+    //  Metodo che si occupa di mostrare o nascondere l'intera mappa
     toggleMap: function toggleMap() {
       this.$emit('mapToggled');
       var mapClasses = document.getElementById("chalet-map").classList;
@@ -3469,9 +3564,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.mapIsShown ? this.mapIsShown = false : this.mapIsShown = true;
     },
+    // Questo metodo esegue le operazioni necessarie al variare
+    // della destinazione ricercata dall'utente
     updateCoordinates: function updateCoordinates() {
-      // Questo metodo esegue le operazioni necessarie al variare
-      // della destinazione ricercata dall'utente
       // Centra la mappa sulla destinazione cercata
       this.mymap.panTo([this.baseLat, this.baseLon, {
         animate: true
@@ -3486,10 +3581,15 @@ __webpack_require__.r(__webpack_exports__);
         radius: this.radius * 1000
       }).addTo(this.mymap);
     },
+    //  Metodo che regola lo zoom in base al raggio di ricerca impostato dall'utente
+    setZoom: function setZoom() {
+      if (this.radius <= 20) this.zoomLevel = 10;else if (this.radius >= 60) this.zoomLevel = 8;else this.zoomLevel = 9;
+      this.mymap.setZoom(this.zoomLevel);
+    },
+    // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
     updateMarkers: function updateMarkers() {
       var _this = this;
 
-      // Questo metodo si occupa di aggiornare i marker visibili sulla mappa
       // Se sono presenti dei marker precedenti li rimuove dalla mappa                
       if (this.markers) {
         this.markers.forEach(function (marker) {
@@ -3552,17 +3652,17 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'Cortina d\'Ampezzo',
         'imgSrc': 'images/cortina.webp'
       }, {
-        'name': 'Etna',
-        'imgSrc': 'images/etna.jpg'
+        'name': 'Auronzo di Cadore',
+        'imgSrc': 'images/auronzo.jpg'
       }, {
-        'name': 'Saluzzo',
-        'imgSrc': 'images/saluzzo.jpg'
+        'name': 'Misurina',
+        'imgSrc': 'images/misurina.jpg'
       }, {
-        'name': 'Courmayeur',
-        'imgSrc': 'images/courmayeur.jpg'
+        'name': 'Rovereto',
+        'imgSrc': 'images/rovereto.jpg'
       }, {
-        'name': 'Cervinia',
-        'imgSrc': 'images/cervinia.jpg'
+        'name': 'Canazei',
+        'imgSrc': 'images/canazei.jpg'
       }, {
         'name': 'Madonna di Campiglio',
         'imgSrc': 'images/madonna-di-campiglio.jpg'
@@ -3570,14 +3670,71 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'San Candido',
         'imgSrc': 'images/san-candido.jpg'
       }, {
-        'name': 'Livigno',
-        'imgSrc': 'images/livigno.jpg'
+        'name': 'Brunico',
+        'imgSrc': 'images/brunico.jpg'
       }, {
-        'name': 'Sestriere',
-        'imgSrc': 'images/sestriere.jpg'
+        'name': 'Bressanone',
+        'imgSrc': 'images/bressanone.jpg'
       }]
     };
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    // Inizializza Mappa
+    this.mymap = L.map('apt-on-map').setView([this.latitude, this.longitude], 10); // Aggiunge Layer grafico
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox/light-v10',
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: 'pk.eyJ1IjoibWF1cml6aW8tZ3Jhc3NvIiwiYSI6ImNrbjBhcHYyOTBhd3AydmxyeHE2dm9pMWQifQ.W2n4tefi_FBnxWHAbz_yxA'
+    }).addTo(this.mymap); //  Crea Marker di Base
+
+    this.markerIcon = L.icon({
+      iconUrl: '../img/greenMarker.png',
+      shadowUrl: '../img/markerShadow.png',
+      iconSize: [30, 44],
+      // size of the icon
+      shadowSize: [60, 25],
+      // size of the shadow
+      iconAnchor: [15, 22],
+      // point of the icon which will correspond to marker's location
+      shadowAnchor: [0, 0],
+      // the same for the shadow
+      popupAnchor: [0, -22] // point from which the popup should open relative to the iconAnchor
+
+    });
+    var newMarker = L.marker([this.latitude, this.longitude], {
+      icon: this.markerIcon
+    });
+    newMarker.addTo(this.mymap);
+  },
+  data: function data() {
+    return {
+      mymap: null,
+      markerIcon: null
+    };
+  },
+  props: ['latitude', 'longitude']
 });
 
 /***/ }),
@@ -24218,7 +24375,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 600;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 64em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n  padding-top: 3rem;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox__container[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 3rem;\n  padding-bottom: 3rem;\n}\n.checkbox__container li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n}\n.checkbox__label[data-v-475ce6f9] {\n  display: block;\n  position: relative;\n  padding-left: 3rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.checkbox__label input:checked ~ .checkbox__checkmark[data-v-475ce6f9]:after {\n  display: block;\n}\n.checkbox__field[data-v-475ce6f9] {\n  position: absolute;\n  cursor: pointer;\n  opacity: 0;\n  height: 0;\n  width: 0;\n}\n.checkbox__checkmark[data-v-475ce6f9] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.2rem;\n  width: 2.2rem;\n  border: 1px solid #348534;\n  border-radius: 5px;\n}\n.checkbox__checkmark[data-v-475ce6f9]:after {\n  content: \"\\F078\";\n  position: absolute;\n  display: none;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  line-height: 2.2rem;\n  width: 100%;\n  text-align: center;\n  color: #348534;\n  font-size: 90%;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.form[data-v-475ce6f9] {\n  position: relative;\n  flex: 0 0 100%;\n}\n.form__filters[data-v-475ce6f9] {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  width: 100%;\n  z-index: 600;\n}\n.form__filters .form__group[data-v-475ce6f9] {\n  padding-top: 0;\n}\n@media (max-width: 64em) {\n.form__filters .form__group[data-v-475ce6f9] {\n    flex-wrap: wrap;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field--half[data-v-475ce6f9] {\n    flex: 0 0 100%;\n}\n}\n@media (max-width: 64em) {\n.form__filters .form__field[data-v-475ce6f9]:not(:last-child) {\n    margin-bottom: 0.5rem;\n}\n}\n.form__group[data-v-475ce6f9] {\n  display: flex;\n  background-color: #348534;\n  padding: 0.5rem;\n}\n.form__field[data-v-475ce6f9] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  flex: 1 1 auto;\n  text-align: center;\n  padding: 1rem;\n  height: calc(7rem - 2 * 0.5rem);\n}\n.form__field > *[data-v-475ce6f9] {\n  flex: 1 1 50%;\n}\n.form__field[data-v-475ce6f9]:not(:last-child) {\n  margin-right: 0.5rem;\n}\n.form__field--full[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 100%;\n}\n.form__field--half[data-v-475ce6f9] {\n  padding: 2rem;\n  flex: 0 0 calc((100% - 0.5rem) / 2);\n}\n.form__field--big[data-v-475ce6f9] {\n  height: auto;\n  flex-direction: column;\n  padding-top: 3rem;\n}\n.form__field--location[data-v-475ce6f9] {\n  flex-shrink: 1;\n}\n.form__field--location .form__input[data-v-475ce6f9] {\n  flex: 1 0 50%;\n}\n.form__field--location .form__label[data-v-475ce6f9] {\n  flex: 0 1 50%;\n}\n.form__input[data-v-475ce6f9] {\n  width: 0;\n}\n.form__label[data-v-475ce6f9] {\n  color: #348534;\n  letter-spacing: 1px;\n}\n.form__label--left[data-v-475ce6f9] {\n  margin-right: 0;\n  padding: 1rem;\n  border: 1px solid #348534;\n  border-right: none;\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.form__label--left + .form__input[data-v-475ce6f9] {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form__label--left + .form__input[data-v-475ce6f9]:focus {\n  background-color: #348534;\n  border-color: #105310;\n}\n.form__label--left + .formicon[data-v-475ce6f9] {\n  flex: 1 1 50%;\n  border: 1px solid #348534;\n  border-radius: 5px;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n  background-color: rgba(16, 83, 16, 0.1);\n  border-color: #348534;\n}\n.form .formicon[data-v-475ce6f9] {\n  overflow: hidden;\n  position: relative;\n}\n.form .formicon__input[data-v-475ce6f9] {\n  background-color: transparent;\n  width: 100%;\n  text-align: center;\n  border: none;\n  border-radius: 0;\n}\n.form .formicon__input[data-v-475ce6f9]:focus, .form .formicon__input[data-v-475ce6f9]:active, .form .formicon__input[data-v-475ce6f9]:hover {\n  border: none;\n  border-radius: 0;\n  color: #707070;\n}\n.form .formicon__input[type=number][data-v-475ce6f9] {\n  -moz-appearance: textfield;\n}\n.form .formicon__input[type=number][data-v-475ce6f9]::-webkit-outer-spin-button, .form .formicon__input[type=number][data-v-475ce6f9]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.form .formicon__icon[data-v-475ce6f9] {\n  position: absolute;\n  color: #348534;\n  transform: translateY(-50%);\n  top: 50%;\n  font-size: 2.5rem;\n  cursor: pointer;\n}\n.form .formicon__icon--less[data-v-475ce6f9] {\n  left: 1rem;\n}\n.form .formicon__icon--more[data-v-475ce6f9] {\n  right: 1rem;\n}\n.form__slider[data-v-475ce6f9] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n       appearance: none;\n  width: 100%;\n  height: 0.5rem;\n  background-color: #c7c7c7;\n  border-radius: 5px;\n  outline: none;\n}\n.form__slider[data-v-475ce6f9]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n          appearance: none;\n  width: 2rem;\n  height: 25px;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider[data-v-475ce6f9]::-moz-range-thumb {\n  -webkit-appearance: none;\n  width: 2rem;\n  height: 2rem;\n  border-radius: 50%;\n  background-color: #348534;\n  border: none;\n  outline: none;\n  cursor: pointer;\n}\n.form__slider__container[data-v-475ce6f9] {\n  flex-grow: 3;\n}\n.form__slider__value[data-v-475ce6f9] {\n  color: #348534;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin-left: 1rem;\n}\n.checkbox__container[data-v-475ce6f9] {\n  list-style-type: none;\n  display: flex;\n  flex-wrap: wrap;\n  flex-direction: row;\n  justify-content: space-evenly;\n  max-width: calc(160rem / 2);\n  padding-top: 3rem;\n  padding-bottom: 3rem;\n}\n.checkbox__container li[data-v-475ce6f9] {\n  margin-right: 2rem;\n  margin-bottom: 2rem;\n}\n.checkbox__label[data-v-475ce6f9] {\n  display: block;\n  position: relative;\n  padding-left: 3rem;\n  cursor: pointer;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.checkbox__label input:checked ~ .checkbox__checkmark[data-v-475ce6f9]:after {\n  display: block;\n}\n.checkbox__field[data-v-475ce6f9] {\n  position: absolute;\n  cursor: pointer;\n  opacity: 0;\n  height: 0;\n  width: 0;\n}\n.checkbox__checkmark[data-v-475ce6f9] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 2.2rem;\n  width: 2.2rem;\n  border: 1px solid #348534;\n  border-radius: 5px;\n}\n.checkbox__checkmark[data-v-475ce6f9]:after {\n  content: \"\\F078\";\n  position: absolute;\n  display: none;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  line-height: 2.2rem;\n  width: 100%;\n  text-align: center;\n  color: #348534;\n  font-size: 90%;\n}", ""]);
 
 // exports
 
@@ -24256,7 +24413,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.25);\n  border-radius: 15px;\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 20%;\n}", ""]);
+exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n  padding: 2rem;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56], .jumbotron__bg-img[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 3rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__title[data-v-8ee49e56] {\n    font-size: 7rem;\n    letter-spacing: 7px;\n}\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__text[data-v-8ee49e56] {\n    margin-bottom: 3rem;\n    font-size: 3rem;\n}\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n@media (max-width: 35.5em) {\n.jumbotron__input[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n    margin-bottom: 2rem;\n}\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.2);\n  border-radius: 15px;\n}\n@media (max-width: 35.5em) {\n.jumbotron__form[data-v-8ee49e56] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    height: 100%;\n    padding: 5rem;\n}\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 25%;\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n.jumbotron__search-button[data-v-8ee49e56]::hover {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n}\n}", ""]);
 
 // exports
 
@@ -24275,7 +24432,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 0;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  cursor: pointer;\n}\n@media (max-width: 35.5em) {\n.container .nav[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 1rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border: 3px solid white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
+exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: white;\n  top: calc( 50rem / 2);\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 8rem;\n  opacity: 0.75;\n  cursor: pointer;\n}\n@media (max-width: 35.5em) {\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .prev[data-v-2e3eb2ae] {\n  left: 2rem;\n  right: auto;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 2rem;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n  cursor: pointer;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  border: 2px solid transparent;\n  transition: border-color 0.25s;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border-color: white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -24294,7 +24451,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n@media (max-width: 35.5em) {\n.container[data-v-676696df] {\n    display: none;\n}\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card .card-img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card .card-img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .slider-wrapper .cards .card .card-rating[data-v-676696df] {\n  padding-top: 1rem;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
+exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n@media (max-width: 35.5em) {\n.container[data-v-676696df] {\n    display: none;\n}\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n  position: relative;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df]:link, .container .slider-wrapper .cards .card[data-v-676696df]:visited, .container .slider-wrapper .cards .card[data-v-676696df]:active, .container .slider-wrapper .cards .card[data-v-676696df]:hover {\n  color: #105310;\n  text-decoration: none;\n}\n.container .slider-wrapper .cards .card__data[data-v-676696df] {\n  position: absolute;\n  height: 7rem;\n  bottom: 0;\n  width: calc(100% - 2 * 2rem);\n  left: 2rem;\n  background-color: white;\n}\n.container .slider-wrapper .cards .card__img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card__img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
 
 // exports
 
@@ -24332,7 +24489,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.no-results {\n  height: 20rem;\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.no-results__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.no-results__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n  opacity: 0.75;\n}\n.no-results__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.no-results p {\n  margin-bottom: 2rem;\n}", ""]);
+exports.push([module.i, ".apartments-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  align-content: flex-start;\n}\n.apartments-list--full-width .single-apartment {\n  flex: 0 0 100%;\n}\n.apartments-list--responsive .single-apartment {\n  flex: 0 0 calc((100% - 2rem) / 2);\n}\n@media (max-width: 64em) {\n.apartments-list--responsive .single-apartment {\n    flex: 0 0 100%;\n}\n}\n.results-warning {\n  width: 100%;\n  background-color: white;\n  margin-bottom: 3rem;\n  border-radius: 5px;\n  padding: 2rem;\n  border: 1px dashed #ff8e25;\n  position: relative;\n}\n.results-warning > :nth-child(2) {\n  padding-right: 7rem;\n}\n.results-warning__title {\n  color: #ff8e25;\n  margin-bottom: 2rem;\n}\n.results-warning__icon {\n  position: absolute;\n  top: 1rem;\n  right: 2rem;\n  font-size: 5rem;\n  color: #ff8e25;\n}\n.results-warning__reset {\n  color: #105310;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.results-warning p:not(:last-child) {\n  margin-bottom: 2rem;\n}", ""]);
 
 // exports
 
@@ -24370,7 +24527,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 3rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 2 * 2rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
 
 // exports
 
@@ -24390,6 +24547,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  margin-bottom: -2rem;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.6s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 64em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 35.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 64em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 35.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.6s;\n  border-radius: 5px;\n}\n@media (max-width: 64em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.6s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 64em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".apt-on-map[data-v-04189b7a] {\n  height: 20rem;\n}", ""]);
 
 // exports
 
@@ -77483,6 +77659,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -78703,30 +78909,62 @@ var render = function() {
             [
               _vm._m(1),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentQuery.minRooms,
-                    expression: "currentQuery.minRooms"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: { id: "search-form-rooms", type: "number" },
-                domProps: { value: _vm.currentQuery.minRooms },
-                on: {
-                  change: function($event) {
-                    return _vm.updateFilters()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "formicon" }, [
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--less fas fa-minus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("rooms", -1)
                     }
-                    _vm.$set(_vm.currentQuery, "minRooms", $event.target.value)
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.currentQuery.minRooms,
+                      expression: "currentQuery.minRooms",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "formicon__input form__input",
+                  attrs: { id: "search-form-rooms", type: "number" },
+                  domProps: { value: _vm.currentQuery.minRooms },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateFilters()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.currentQuery,
+                        "minRooms",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--more fas fa-plus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("rooms", 1)
+                    }
+                  }
+                })
+              ])
             ]
           ),
           _vm._v(" "),
@@ -78738,30 +78976,62 @@ var render = function() {
             [
               _vm._m(2),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.currentQuery.guests,
-                    expression: "currentQuery.guests"
-                  }
-                ],
-                staticClass: "form__input",
-                attrs: { id: "search-form-guests", type: "number" },
-                domProps: { value: _vm.currentQuery.guests },
-                on: {
-                  change: function($event) {
-                    return _vm.updateFilters()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "formicon" }, [
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--less fas fa-minus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("guests", -1)
                     }
-                    _vm.$set(_vm.currentQuery, "guests", $event.target.value)
                   }
-                }
-              })
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.currentQuery.guests,
+                      expression: "currentQuery.guests",
+                      modifiers: { number: true }
+                    }
+                  ],
+                  staticClass: "formicon__input form__input",
+                  attrs: { id: "search-form-guests", type: "number" },
+                  domProps: { value: _vm.currentQuery.guests },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateFilters()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.currentQuery,
+                        "guests",
+                        _vm._n($event.target.value)
+                      )
+                    },
+                    blur: function($event) {
+                      return _vm.$forceUpdate()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "formicon__icon formicon__icon--more fas fa-plus-square",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.changeValue("guests", 1)
+                    }
+                  }
+                })
+              ])
             ]
           )
         ]),
@@ -78855,7 +79125,6 @@ var render = function() {
                     type: "range",
                     min: "1",
                     max: "5",
-                    value: "3",
                     id: "search-form-rating"
                   },
                   domProps: { value: _vm.currentQuery.minRating },
@@ -79058,7 +79327,7 @@ var staticRenderFns = [
       },
       [
         _c("span", { staticClass: "hide-on-mobile" }, [_vm._v("Numero ")]),
-        _vm._v("Ospiti")
+        _vm._v("Ospiti\n                ")
       ]
     )
   }
@@ -79292,9 +79561,8 @@ var render = function() {
                       ]
                     )
                   : _c("span", [
-                      _c("i", { class: item.icon }),
-                      _vm._v(" "),
                       _c("a", { attrs: { href: item.slug } }, [
+                        _c("i", { class: item.icon }),
                         _vm._v(_vm._s(item.label))
                       ])
                     ])
@@ -79329,58 +79597,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c(
-      "video",
-      {
-        staticClass: "jumbotron__bg-video",
-        attrs: { autoplay: "", muted: "", loop: "" },
-        domProps: { muted: true }
-      },
-      [
-        _c("source", { attrs: { src: _vm.videoSrc, type: "video/mp4" } }),
-        _vm._v("\r\n                Browser non supportato!\r\n            ")
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "jumbotron__search-box" }, [
-      _c("h1", { staticClass: "jumbotron__title" }, [
-        _vm._v("Dove vuoi andare?")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "jumbotron__text" }, [
-        _vm._v("Prenota subito la tua prossima avventura")
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "form jumbotron__form",
-          attrs: { action: _vm.searchRoute, method: "get" }
-        },
-        [
-          _c("input", {
-            staticClass: "form__input jumbotron__input",
-            attrs: {
-              name: "location",
-              type: "text",
-              placeholder: "Prova con 'Cortina d'Ampezzo'"
-            }
-          }),
+  return _vm.dataIsReady
+    ? _c("div", { staticClass: "jumbotron" }, [
+        !_vm.isMobile
+          ? _c(
+              "video",
+              {
+                staticClass: "jumbotron__bg-video",
+                attrs: { autoplay: "", muted: "", loop: "" },
+                domProps: { muted: true }
+              },
+              [
+                _c("source", {
+                  attrs: { src: _vm.videoSrc, type: "video/mp4" }
+                }),
+                _vm._v(
+                  "\r\n                Browser non supportato!\r\n            "
+                )
+              ]
+            )
+          : _c("img", {
+              staticClass: "jumbotron__bg-img",
+              attrs: { src: _vm.imgSrc, alt: "ChaletBnb" }
+            }),
+        _vm._v(" "),
+        _c("div", { staticClass: "jumbotron__search-box" }, [
+          _c("h1", { staticClass: "jumbotron__title" }, [
+            _vm._v("Dove vuoi andare?")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "jumbotron__text" }, [
+            _vm._v("Prenota subito la tua prossima avventura")
+          ]),
           _vm._v(" "),
           _c(
-            "button",
+            "form",
             {
-              staticClass:
-                "jumbotron__search-button btn btn--primary-light-inverse",
-              attrs: { type: "submit" }
+              staticClass: "form jumbotron__form",
+              attrs: { action: _vm.searchRoute, method: "get" }
             },
-            [_vm._v("Cerca")]
+            [
+              _c("input", {
+                staticClass: "form__input jumbotron__input",
+                attrs: {
+                  name: "location",
+                  type: "text",
+                  placeholder: "Prova con 'Cortina d'Ampezzo'",
+                  minlength: "3",
+                  required: ""
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "jumbotron__search-button btn btn--primary-light-inverse",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Cerca")]
+              )
+            ]
           )
-        ]
-      )
-    ])
-  ])
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -79414,7 +79695,10 @@ var render = function() {
         _c("div", { staticClass: "images" }, [
           _c("img", {
             staticClass: "img_slider",
-            attrs: { src: _vm.photos[_vm.counter], alt: "" }
+            attrs: {
+              src: "../storage/" + _vm.photos[_vm.counter]["img_path"],
+              alt: ""
+            }
           }),
           _vm._v(" "),
           _c(
@@ -79424,6 +79708,7 @@ var render = function() {
               return _c(
                 "div",
                 {
+                  key: index,
                   staticClass: "img_preview",
                   class: index == _vm.counter ? _vm.active : null,
                   on: {
@@ -79432,7 +79717,11 @@ var render = function() {
                     }
                   }
                 },
-                [_c("img", { attrs: { src: photo, alt: "" } })]
+                [
+                  _c("img", {
+                    attrs: { src: "../storage/" + photo["img_path"], alt: "" }
+                  })
+                ]
               )
             }),
             0
@@ -79469,48 +79758,42 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "sponsored_slider" }, [
-    _c("div", { staticClass: "container", attrs: { id: "root" } }, [
+    _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "slider-wrapper" }, [
-        _c("div", { staticClass: "prev", on: { click: _vm.prevImage } }, [
-          _c("i", { staticClass: "fas fa-angle-left" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pages" }, [
-          _c("p", [_vm._v(_vm._s(_vm.page) + "/2")])
-        ]),
-        _vm._v(" "),
         _c(
           "div",
           { staticClass: "cards" },
-          _vm._l(_vm.photos, function(photo, index) {
-            return index < 4
-              ? _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-img" }, [
-                    _c("img", {
-                      staticClass: "img_slider",
-                      attrs: { src: _vm.photos[_vm.counter + index], alt: "" }
-                    })
+          _vm._l(_vm.apartments, function(apt, index) {
+            return _c(
+              "a",
+              {
+                key: index,
+                staticClass: "card",
+                attrs: { href: "/single/" + apt["id"] }
+              },
+              [
+                _c("div", { staticClass: "card__img" }, [
+                  _c("img", {
+                    staticClass: "img_slider",
+                    attrs: { src: "../storage/" + apt["cover_img"], alt: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card__data" }, [
+                  _c("h4", { staticClass: "card__title" }, [
+                    _vm._v(_vm._s(apt["name"]))
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "card-rating" }, [
-                    _c("span", [
-                      _c("i", { staticClass: "fas fa-star" }),
-                      _vm._v(_vm._s(_vm.rating[_vm.counter + index]))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-title" }, [
-                    _c("p", [_vm._v(_vm._s(_vm.title[_vm.counter + index]))])
+                  _c("span", { staticClass: "card__rating" }, [
+                    _vm._v(_vm._s(apt["rating"]) + " "),
+                    _c("i", { staticClass: "fas fa-star" })
                   ])
                 ])
-              : _vm._e()
+              ]
+            )
           }),
           0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "next", on: { click: _vm.nextImage } }, [
-          _c("i", { staticClass: "fas fa-angle-right" })
-        ])
+        )
       ])
     ])
   ])
@@ -79635,26 +79918,28 @@ var render = function() {
     },
     [
       _vm.apartments.length == 0 && _vm.foundApt !== undefined
-        ? _c("div", { staticClass: "no-results" }, [
+        ? _c("div", { staticClass: "results-warning" }, [
             _c("i", {
-              staticClass: "no-results__icon fas fa-exclamation-circle"
+              staticClass: "results-warning__icon fas fa-exclamation-circle"
             }),
             _vm._v(" "),
-            _c("h3", { staticClass: "no-results__title" }, [
+            _c("h3", { staticClass: "results-warning__title" }, [
               _vm._v("\n            Nessuno Chalet Trovato\n        ")
             ]),
             _vm._v(" "),
             _vm.foundApt != 0
               ? _c("p", [
-                  _vm._v(
-                    "Nessun risultato disponibile, ma " +
-                      _vm._s(_vm.foundApt) +
-                      " chalet sono stati nascosti in base ai filtri selezionati. \n                "
-                  ),
+                  _vm._v("Nessun risultato disponibile, ma "),
+                  _c("strong", [_vm._v(_vm._s(_vm.foundApt))]),
+                  _vm._v(" chalet della zona "),
+                  _vm.foundApt > 1
+                    ? _c("span", [_vm._v("sono stati nascosti")])
+                    : _c("span", [_vm._v("è stato nascosto")]),
+                  _vm._v(" in base ai filtri selezionati. \n                "),
                   _c(
                     "span",
                     {
-                      staticClass: "no-results__reset",
+                      staticClass: "results-warning__reset",
                       on: {
                         click: function($event) {
                           return _vm.$emit("resetFilters")
@@ -79663,7 +79948,11 @@ var render = function() {
                     },
                     [_vm._v("\n                    Clicca qui")]
                   ),
-                  _vm._v(" per azzerare i filtri e visualizzarli!\n        ")
+                  _vm._v(" per azzerare i filtri e visualizzarl"),
+                  _vm.foundApt > 1
+                    ? _c("span", [_vm._v("i")])
+                    : _c("span", [_vm._v("o")]),
+                  _vm._v("!\n        ")
                 ])
               : _c("p", [
                   _vm._v(
@@ -79675,6 +79964,35 @@ var render = function() {
               _vm._v(
                 "Oppure, lasciati ispirare dai nostri chalet in evidenza presenti in ogni zona d'Italia!"
               )
+            ])
+          ])
+        : _vm.apartments.length < _vm.foundApt
+        ? _c("div", { staticClass: "results-warning" }, [
+            _c("i", {
+              staticClass: "results-warning__icon fas fa-exclamation-circle"
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Stai visualizzando "),
+              _c("strong", [_vm._v(_vm._s(_vm.apartments.length))]),
+              _vm._v(" chalet dei "),
+              _c("strong", [_vm._v(_vm._s(_vm.foundApt))]),
+              _vm._v(
+                " disponibili in quest'area. Per resettare i filtri e visualizzare tutte le opzioni, fai "
+              ),
+              _c(
+                "span",
+                {
+                  staticClass: "results-warning__reset",
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("resetFilters")
+                    }
+                  }
+                },
+                [_vm._v("\n                    click qui")]
+              ),
+              _vm._v(",\n        ")
             ])
           ])
         : _vm._e(),
@@ -79845,6 +80163,30 @@ var render = function() {
     }),
     0
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "apt-on-map", attrs: { id: "apt-on-map" } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -92102,6 +92444,7 @@ Vue.component('locations-list', __webpack_require__(/*! ./components/locationLis
 Vue.component('back-to-top', __webpack_require__(/*! ./components/backToTop.vue */ "./resources/js/components/backToTop.vue")["default"]);
 Vue.component('advanced-search-page', __webpack_require__(/*! ./components/AdvancedSearchPage.vue */ "./resources/js/components/AdvancedSearchPage.vue")["default"]);
 Vue.component('chalet-map', __webpack_require__(/*! ./components/chaletMap.vue */ "./resources/js/components/chaletMap.vue")["default"]);
+Vue.component('single-chalet-map', __webpack_require__(/*! ./components/singleChaletMap.vue */ "./resources/js/components/singleChaletMap.vue")["default"]);
 Vue.component('admin-statistics-page', __webpack_require__(/*! ./components/AdminStatisticsPage.vue */ "./resources/js/components/AdminStatisticsPage.vue")["default"]);
 Vue.component('admin-sponsorships-page', __webpack_require__(/*! ./components/AdminSponsorshipsPage.vue */ "./resources/js/components/AdminSponsorshipsPage.vue")["default"]);
 Vue.component('admin-statistics-chart', __webpack_require__(/*! ./components/AdminStatisticsChart.vue */ "./resources/js/components/AdminStatisticsChart.vue")["default"]);
@@ -93377,6 +93720,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/singleChaletMap.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/singleChaletMap.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true& */ "./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true&");
+/* harmony import */ var _singleChaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./singleChaletMap.vue?vue&type=script&lang=js& */ "./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& */ "./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _singleChaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "04189b7a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/singleChaletMap.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./singleChaletMap.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=style&index=0&id=04189b7a&scoped=true&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_style_index_0_id_04189b7a_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/singleChaletMap.vue?vue&type=template&id=04189b7a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_singleChaletMap_vue_vue_type_template_id_04189b7a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -93395,8 +93825,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

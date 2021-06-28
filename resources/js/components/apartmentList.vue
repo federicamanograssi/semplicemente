@@ -2,21 +2,40 @@
     <section class="apartments-list"
     :class="mapIsShown ? null : 'apartments-list--map-hidden'">
 
-        <div v-if="(apartments.length==0) && foundApt!==undefined" class="no-results">
-            <i class="no-results__icon fas fa-exclamation-circle"></i>
-            <h3 class="no-results__title">
+
+        <!-- Box mostrato se non ci sono chalet da mostrare  -->
+
+        <div v-if="(apartments.length==0) && foundApt!==undefined" class="results-warning">
+            
+            <i class="results-warning__icon fas fa-exclamation-circle"></i>
+            <h3 class="results-warning__title">
                 Nessuno Chalet Trovato
             </h3>
 
-            <p v-if="foundApt!=0">Nessun risultato disponibile, ma {{foundApt}} chalet sono stati nascosti in base ai filtri selezionati. 
-                    <span class="no-results__reset"
+            <!-- Se tuttavia esistono degli chalet esclusi dai filtri -->
+
+            <p v-if="foundApt!=0">Nessun risultato disponibile, ma <strong>{{foundApt}}</strong> chalet della zona <span v-if="foundApt>1">sono stati nascosti</span><span v-else>è stato nascosto</span> in base ai filtri selezionati. 
+                    <span class="results-warning__reset"
                         @click="$emit('resetFilters')">
-                        Clicca qui</span> per azzerare i filtri e visualizzarli!
+                        Clicca qui</span> per azzerare i filtri e visualizzarl<span v-if="foundApt>1">i</span><span v-else>o</span>!
             </p>
 
-            <p v-else>Nessun risultato disponibile per questa ricerca; prova a scegliere un'altra località!</p>
-                
+            <!-- Se nemmeno con i filtri azzerati esistono chalet disponibili per la località  -->
+
+            <p v-else>Nessun risultato disponibile per questa ricerca; prova a scegliere un'altra località!</p>                
             <p>Oppure, lasciati ispirare dai nostri chalet in evidenza presenti in ogni zona d'Italia!</p>
+
+        </div>
+
+        <!-- Box mostrato nel caso in cui, pur mostrando alcuni chalet, altri rimancono nascosti in base ai filtri applicati -->
+
+        <div v-else-if="(apartments.length < foundApt)" class="results-warning">
+            <i class="results-warning__icon fas fa-exclamation-circle"></i>
+
+            <p>Stai visualizzando <strong>{{apartments.length}}</strong> chalet dei <strong>{{foundApt}}</strong> disponibili in quest'area. Per resettare i filtri e visualizzare tutte le opzioni, fai <span class="results-warning__reset"
+                        @click="$emit('resetFilters')">
+                        click qui</span>,
+            </p>
 
         </div>
 
@@ -56,15 +75,9 @@
             apartments: {                
                 handler: function() {
                     this.setOutputArray();
-                    }
-                },
-            // sponsoredApt: {                
-            //     handler: function() {
-            //         // this.setOutputArray();
-            //         console.log("ciao")
-            //         }
-            //     }
-            },
+                }
+            }
+        },
         data() {
             return {
                 outputApt    : null,    // Array di appartamenti che sarà effettivamente renderizzato
@@ -127,8 +140,7 @@
         }
     }
 
-    .no-results {
-    height: $height-section-big;
+    .results-warning {
     width: 100%;
     background-color: $white;
     margin-bottom: $spacing-more;
@@ -136,6 +148,10 @@
     padding: $spacing-standard;
     border: 1px dashed $orange;
     position: relative;
+
+    &>:nth-child(2) {
+        padding-right: $spacing-standard + 5rem;
+    }
 
     &__title {
         color: $orange;
@@ -148,7 +164,6 @@
         right: $spacing-standard;
         font-size: 5rem;
         color: $orange;
-        opacity: .75;
     }
 
     &__reset {
@@ -157,7 +172,7 @@
         cursor: pointer;
     }
 
-    p {
+    p:not(:last-child) {
         margin-bottom: $spacing-standard;
     }
 }

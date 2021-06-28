@@ -1,25 +1,38 @@
 @extends('layouts.guest')
 @section('title', 'Single-Apartment | ChaletBnB')
 
+@section('headPush')
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+@endsection
+
+{{-- @dump($apartment) --}}
+
 @section('main')
-    <main>
-        
-        @foreach ($apartments as $apartment)
-            
-        
+                    
     <main class="standard-padding">
 
         <div class="container">
             <section class="apartment-title">
-                <h2>{{$apartment->title}}</h2>
+                <h1 class="heading--primary">{{$apartment['title']}}</h1>
                 <div class="rating-location">
-                    <p> <i class="fas fa-star"></i> {{$apartment->rating}} &#183 {{$apartment->address}}</p>
+                    <p> {{$apartment['rating']}} <i class="fas fa-star"></i> &#183 {{$apartment['address']}}</p>
                 </div>
             </section>
         </div>
 
+        <img-slider :photos="{{json_encode($apartment['images'])}}">
 
-        <img-slider></img-slider>
+            {{-- slider immagini appartamento --}}
+
+        </img-slider>
+
 
         <div class="container">
             <div class="form-container">
@@ -28,25 +41,37 @@
                     <section class="type-host">
 
                         <div class="little-description">
-                            <h3>Intero Appartamento - Host: Zia Pina </h3>
-                            <p> {{$apartment->rooms_n}} stanze &#183 
+                            <h3 class="heading--primary">Host: {{ $apartment['host']['name']}} {{ $apartment['host']['surname'] }} </h3>
+                            <p> 
+                                
+                                
+                                @if($apartment['rooms_n'] ==1) 
+                                    1 Camera 
+                                @else 
+                                    {{$apartment['rooms_n']}} Camere
+                                @endif
+                                &#183
+
                                 @if($apartment['beds_n'] ==1) 
                                     1 Letto 
                                 @else 
-                                    {{$apartment->beds_n}} Letti
+                                    {{$apartment['beds_n']}} Letti
                                 @endif
-                                &#183 
+                                &#183
+
                                 @if($apartment['bathroom_n'] ==1) 
                                     1 Bagno 
                                 @else 
-                                    {{$apartment->bathroom_n}} Bagni
+                                    {{$apartment['bathroom_n']}} Bagni
                                 @endif
                             </p>
+
                         </div>
                         <div class="host-img">
                             <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
                                 alt="host-img">
                         </div>
+
                     </section>
 
                     <hr>
@@ -71,14 +96,14 @@
                                     @if($apartment['beds_n'] ==1) 
                                     1 Ospite
                                     @else 
-                                        {{$apartment->beds_n}} Ospiti
+                                        {{$apartment['beds_n']}} Ospiti
                                     @endif
                                 </p>
                                 <p>Capienza fino a
                                     @if($apartment['beds_n'] ==1) 
                                     1 Ospite
                                     @else 
-                                        {{$apartment->beds_n}} Ospiti
+                                        {{$apartment['beds_n']}} Ospiti
                                     @endif
                                 </p>
                             </div>
@@ -103,7 +128,7 @@
                                     @if($apartment['bathroom_n'] ==1) 
                                     1 Bagno
                                     @else 
-                                        {{$apartment->beds_n}} Bagni
+                                        {{$apartment['beds_n']}} Bagni
                                     @endif
                                 </p>
                                 <p>Asciugamani e prodotti per la pulizia inclusi.</p>
@@ -114,74 +139,44 @@
                     <hr>
 
                     <section class="apartment-description">
-                        <p>{{$apartment->description}}</p>
+                        <p>{{$apartment['description']}}</p>
                     </section>
 
                     <hr>
 
                     <section class="additional-services">
-                        <h3>Servizi Inclusi</h3>
-                        <div class="row">
-                            <div class="ad-service-card">
-                                <div class="ad-service-icon">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <div class="ad-service-description">
-                                    <span>Cucina</span>
-                                </div>
-                            </div>
-                            <div class="ad-service-card">
-                                <div class="ad-service-icon">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <div class="ad-service-description">
-                                    <span>Cucina</span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="ad-service-card">
-                                <div class="ad-service-icon">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <div class="ad-service-description">
-                                    <span>Cucina</span>
-                                </div>
-                            </div>
-                            <div class="ad-service-card">
-                                <div class="ad-service-icon">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <div class="ad-service-description">
-                                    <span>Cucina</span>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="heading--primary">Servizi Inclusi</h3>
+                        <div class="service-list">
 
+                            @foreach ($apartment['services'] as $service)
                             
+                                <div class="single-service">
+                                    <i class="single-service__icon fas fa-{{$service['service_icon']}}"></i>
+                                    <span class="single-service__name">{{$service['service_name']}}</span>
+                                </div>                            
+                            
+                            @endforeach
+                            
+                        </div>
 
-                        
                     </section>
-
-
-                
 
                 </div>
 
                 <div class="right-container">
-                    <div class="contact-form">
+                    <div id="form-anchor" class="contact-form">
 
                         {{-- FORM INVIO MESSAGGIO----------- --}}
                         <form action="{{ route('saveMessage') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
-                            <h3>Contatta l'host per conoscere i dettagli</h3>
+                            <h3 class="heading--primary">Contatta l'host per conoscere i dettagli</h3>
                             <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
                             {{-- MAIL---------- --}}
                             <div class="form-group">
-                                <input type="email" name="email_sender" class="form-control @error('email_sender') is-invalid @enderror" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
                                 @error('email_sender')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -197,15 +192,8 @@
 
                             {{-- ID APT---------- --}}
                             <div class="form-group">
-                                <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
+                                <input type="hidden" name="apartment_id" value="{{ $apartment['id'] }}">
                             </div>
-
-                            {{-- <label class="form__label" for="name">Nome</label>
-                            <input class="form__input" id="name" name="name" type="text" placeholder="Inserisci il tuo nome">
-                            <label class="form__label" for="email">Email</label>
-                            <input class="form__input" id="email" name="email" type="email" placeholder="Inserisci la tua email">
-                            <label class="form__label" for="message">Messaggio</label>
-                            <textarea class="form__input" name="message" id="message" name="message" placeholder="Inserisci il messaggio per il venditore"></textarea> --}}
 
                            <button class="btn btn--primary" type="submit">Invia Messaggio</button>
 
@@ -217,33 +205,34 @@
             </div>
 
             <hr>
+            
+            {{-- Mappa appartamento --}}
 
             <section class="apartment-map">
                 <div class="map-title">
-                    <h3>Posizione</h3>
+                    <h3 class="heading--primary">Posizione</h3>
 
-                    <p>{{$apartment->address}}</p>
+                    <p>{{$apartment['address']}}</p>
                     <p>
-                        <span><strong>Lat:</strong>{{$apartment->latitude}}</span> <span><strong>Lon:</strong>{{$apartment->longitude}}</span>
+                        <span><strong>Lat:</strong>{{$apartment['latitude']}}</span> <span><strong>Lon:</strong>{{$apartment['longitude']}}</span>
                     </p>
 
                 </div>
                 
+            <single-chalet-map
+                :longitude="{{$apartment['longitude']}}" 
+                :latitude="{{$apartment['latitude']}}">
+    
+                <!-- Mappa -->
+    
+            </single-chalet-map>
 
-                <section class="chalet-map">            
-                    <!-- 
-                        La mappa è provvisoriamente 
-                        integrata da Google Maps 
-                    -->
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54471.2440560787!2d12.052418201662949!3d46.66978139530556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47783435d247033f%3A0xdd3c30437b92e42b!2s32043%20Cortina%20d&#39;Ampezzo%20BL!5e1!3m2!1sit!2sit!4v1623660828144!5m2!1sit!2sit" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </section>
-
-                {{-- inserire mappa appartamento --}}
             </section>
 
-            <hr>
+            {{-- Piccola Sezione Host             --}}
 
             <section class="hosted-by">
+
                 <section class="type-host">
 
                     <div class="host-img">
@@ -252,34 +241,34 @@
                     </div>
 
                     <div class="little-description">
-                        <h3>Host: Zia Pina </h3>
+                        <h3>Host: {{ $apartment['host']['name']}} {{ $apartment['host']['surname'] }} </h3>
                         <p> Membro da gennaio 2015</p>
                     </div>
                     
                 </section>
 
+                <section class="section-price">
+                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}} &euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
+                </section>
+
                 <section class="redirect-btn">
                     {{--Al click la pagina si ridireziona al form di inserimento messaggio --}}
 
-                    <button class="btn btn--primary host-btn">
+                    <a href="#form-anchor" class="btn btn--primary host-btn">
                         Contatta l'host ora
-                    </button>
+                    </a>
                 </section>
 
             </section>
 
 
-        
 
-
-            @endforeach
-        </main>
+            {{-- Slider di apt sponsorizzati (da integrare se c'è tempo) --}}
 
         <section class="footer-top standard-padding">
             <div class="container">
                 <div class="sponsored-gallery">
-                    
-                    <h3>Gli alloggi sponsorizzati</h3>
+
                     <sponsored-slider></sponsored-slider>
                     <div class="sponsored-slider-phone">
                         <div class="slider-phone-cards">

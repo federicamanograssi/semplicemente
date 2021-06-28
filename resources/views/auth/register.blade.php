@@ -8,7 +8,7 @@
                 <div class="card-header"><h3>Registrati adesso!</h3></div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form class="form" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="name-form">
@@ -43,7 +43,8 @@
                             <label for="date_of_birth" class="col-md-4 form__label text-md-right">{{ __('Data di Nascita') }}</label>
 
                             <div class="date-input">
-                                <input id="date_of_birth" placeholder="Inserisci la tua data di nascita" type="text" class="form__input input_width form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus>
+                                {{-- <input id="date_of_birth" placeholder="Inserisci la tua data di nascita" type="text" class="form__input input_width form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus> --}}
+                                <input id="date_of_birth" placeholder="Inserisci la tua data di nascita" type="date" class="form__input input_width form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus>
 
                                 @error('date_of_birth')
                                     <span class="invalid-feedback" role="alert">

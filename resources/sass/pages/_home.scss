@@ -16,7 +16,7 @@
 
 .become-host {
     height: $height-section-huge;
-
+    
     &__background {
         display: flex;
         align-items: center;
@@ -27,7 +27,8 @@
         background-position: center;
         border-radius: $border-radius-standard;
         position: relative;
-
+        padding: $spacing-standard;
+        
         &::before {
             content: '';
             position: absolute;
@@ -54,6 +55,7 @@
             .become-host__cta {
                 color: $white;
             }
+
         }
     }
 
@@ -63,6 +65,9 @@
         background-color: rgba($white , .75);
         transition: all $animation-time-slow;
         border-radius: $border-radius-more;
+        text-align: center;
+        width: 100%;
+        max-width: 50rem;
     }
     
     &__cta {
@@ -70,7 +75,7 @@
         &:hover , 
         &:active ,
         &:visited {
-            padding: $spacing-standard $spacing-huge;
+            padding: $spacing-standard;
             text-decoration: none;
             color: $color-primary-light;
             font-size: 3.5rem;

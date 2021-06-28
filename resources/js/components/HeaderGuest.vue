@@ -45,9 +45,8 @@
                                     </button>
                             </form>
 
-                            <span  v-else>
-                                <i :class="item.icon"></i> 
-                                <a :href="item.slug">{{item.label}}</a>
+                            <span  v-else>                                 
+                                <a :href="item.slug"><i :class="item.icon"></i>{{item.label}}</a>
                             </span>
                         </li>
 

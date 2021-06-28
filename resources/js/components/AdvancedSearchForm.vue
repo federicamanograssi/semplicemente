@@ -9,7 +9,8 @@
                 <div class="form__field form__field--location"
                     :class="isFiltersBoxOpen ? 'form__field--full' : 'form__field--half'">
                     <label class="form__label form__label--left">Località</label>
-                    <input  v-model="currentQuery.baseLocation"     
+
+                    <input  v-model="currentQuery.baseLocation"
                             @change="updateLocation()"                        
                             key=""
                             class="form__input" type="text">
@@ -71,25 +72,53 @@
 
                     <div class="form__field form__field--half form__field--rooms">
                         <label for="search-form-rooms" class="form__label form__label--left">Camere <span class="hide-on-mobile">da letto </span>(min)</label>
-                        <input 
+                        
+                        <div class="formicon">
+                            
+                            <span @click.stop="changeValue('rooms' , -1)" class="formicon__icon formicon__icon--less fas fa-minus-square"></span>
+                        
+                        <input
                             @change="updateFilters()" 
-                            v-model="currentQuery.minRooms" 
+                            v-model.number="currentQuery.minRooms"
                             id="search-form-rooms" 
-                            class="form__input" 
-                            type="number">
+                            class="formicon__input form__input" 
+                            type="number"
+                            >
+
+                            <span @click.stop="changeValue('rooms' , 1)" class="formicon__icon formicon__icon--more fas fa-plus-square"></span>
+
+                        </div>
+
                     </div>
+
 
                     <!-- Beds (i.e. max Guests) -->
 
+
                     <div class="form__field form__field--half form__field--guests">
-                        <label for="search-form-guests" class="form__label form__label--left"><span class="hide-on-mobile">Numero </span>Ospiti</label>
-                        <input 
-                            @change="updateFilters()" 
-                            v-model="currentQuery.guests" 
-                            id="search-form-guests" 
-                            class="form__input" 
-                            type="number">
+                        
+                        <label for="search-form-guests" class="form__label form__label--left">
+                            <span class="hide-on-mobile">Numero </span>Ospiti
+                        </label>
+
+                        <div class="formicon">
+                            
+                            <span @click.stop="changeValue('guests' , -1)" class="formicon__icon formicon__icon--less fas fa-minus-square"></span>
+                            
+                            <input 
+                                @change="updateFilters()"
+                                v-model.number="currentQuery.guests" 
+                                id="search-form-guests" 
+                                class="formicon__input form__input" 
+                                type="number">
+                        
+                            <span @click.stop="changeValue('guests' , 1)" class="formicon__icon formicon__icon--more fas fa-plus-square"></span>
+
+                        </div>
+
                     </div>
+
+
                 </div>
 
                 <div class="form__group">                    
@@ -120,13 +149,12 @@
                         <label class="form__label" for="search-form-rating">Valutazione (min)</label>
                         <div class="form__slider__container">
                             <input 
+                                class="form__slider" 
                                 @change="updateFilters()" 
                                 v-model="currentQuery.minRating" 
                                 type="range" 
                                 min="1" 
                                 max="5" 
-                                value="3" 
-                                class="form__slider" 
                                 id="search-form-rating">
                         </div>
                         <span class="form__slider__value">
@@ -210,14 +238,44 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             ] ,
 
         methods : {
+            // Metodo che si occupa dell'aggiornamento di alcune proprietà non direttamente controllate dall'onchange
+            changeValue(prop , value){
+                const query = this.currentQuery;
+                
+                switch (prop) {
+                    case 'guests':
+                            query.guests += value;
+                            this.updateFilters();                      
+                        break;
+
+                    case 'rooms' :
+                            query.minRooms += value;
+                            this.updateFilters();                      
+                        break;
+                    
+                    default:
+                        break;
+                }
+            },
             toggleFilterBox() {
                 // Gestione del box con i filtri avanzati
                 this.isFiltersBoxOpen == true ? this.isFiltersBoxOpen = false : this.isFiltersBoxOpen = true;
             } ,
             updateLocation(){
-                this.$emit('updateLocation');
+                if(this.currentQuery.baseLocation.length >= 3) this.$emit('updateLocation');
             },            
             updateFilters(){
+                const query = this.currentQuery;
+                
+                // Controlla validità guests 
+                if (query.guests > 9) query.guests = 9;
+                if (query.guests < 1) query.guests = 1;
+
+                // Controlla validità rooms
+                if (query.minRooms > 9) query.minRooms = 9;
+                if (query.minRooms < 1) query.minRooms = 1;
+                
+                // Richiede filtraggio al component genitore
                 this.$emit('updateFilters');
             },
         }       
@@ -269,7 +327,6 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             display: flex;
             background-color: $color-primary-light;
             padding: $spacing-tiny;
-
         }
 
         // Form Field
@@ -285,7 +342,6 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
             height: calc(#{$height-section-medium} - 2 * #{$spacing-tiny});
             
             > * {
-                // flex-grow: 1;
                 flex: 1 1 50%;
             }
 
@@ -364,8 +420,74 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
                         border-color: $color-primary;
                     }                    
                 }
+
+                & + .formicon {
+                    flex: 1 1 50%;
+                    border: 1px solid $color-primary-light;
+                    border-radius: $border-radius-standard;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    border-left: none;                    
+                    background-color: rgba($color-primary , .1);
+                    border-color: $color-primary-light;
+
+                    input{
+                    }
+
+                }
             }
         }
+
+        .formicon {
+            overflow: hidden;
+            position: relative;
+
+            &__input {
+                background-color: transparent;
+                width: 100%;
+                text-align: center;
+                border: none;
+                border-radius: 0;
+                &:focus,
+                &:active,
+                &:hover {
+                    border: none;
+                    border-radius: 0;
+                    color: $color-text;
+                }
+
+                &[type=number] {
+                    
+                    // firefox
+                    -moz-appearance: textfield;
+                    
+                    // chrome and Safari
+                    &::-webkit-outer-spin-button,
+                    &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+                }
+            }
+
+            &__icon {
+                position: absolute;
+                color: $color-primary-light;
+                transform: translateY(-50%);
+                top: 50%;
+                font-size: 2.5rem;
+                cursor: pointer;
+
+                &--less {
+                    left: $spacing-small;
+                }
+                &--more {
+                    right: $spacing-small;
+
+                }
+            }
+        }
+
 
         &__slider{
             -webkit-appearance: none;

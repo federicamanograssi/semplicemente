@@ -1,13 +1,41 @@
-.standard-padding {
-    padding: 0 $spacing-standard;
-    @include responsive(phone) {
-        padding: 0 $spacing-small;
+h1 {
+    font-size: 4rem;
+    line-height: 5rem;
+}
+.service-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.single-service {
+    flex: 1 0 calc(100% /3);
+
+    @include responsive(tablet) {
+        flex: 1 0 calc(100% /2);
+    }
+
+
+    margin-bottom: $spacing-standard;
+
+    &__icon {
+        color: $color-primary;
+        margin-right: $spacing-standard;
+        font-size: 2rem;
     }
 }
 
+hr {
+    border-top-width: 0;
+    border-color: $gray;
+}
 .container {
+    padding: 0 $spacing-standard;
     max-width: $width-inner-content;
     margin: 0 auto;
+    background-color: $white;
+
     i {
         padding-right: $spacing-tiny;
         @include responsive(phone) {
@@ -28,17 +56,24 @@
     .form-container {
         display: flex;
         padding: $spacing-more 0;
-        @include responsive(phone) {
+        @include responsive(tablet) {
             display: block;
         }
         .left-container {
-            width: 60%;
-            @include responsive(tablet) {
-                width: 40%;
+            width: 65%;
+            padding-right: $spacing-huge;
+
+            section {
+                margin-bottom: $spacing-more;
+                @include responsive(tablet) {
+                    margin-bottom: $spacing-standard;
+                }
             }
-            @include responsive(phone) {
+
+            @include responsive(tablet) {
                 width: 100%;
             }
+
             .type-host {
                 display: flex;
                 justify-content: space-between;
@@ -57,6 +92,16 @@
                 .service-card {
                     padding: $spacing-small 0;
                     display: flex;
+                    
+                    &:not(:last-child){
+                        margin-bottom: $spacing-standard;
+                    }
+                    
+                    .service-icon {
+                        color: $color-primary;
+                        font-size: 2rem;
+                        margin-right: $spacing-standard;
+                    }
                 }
             }
             .apartment-description {
@@ -77,34 +122,45 @@
                 }
             }
         }
+
         .right-container {
-            width: 50%;
+            width: 35%;
+            padding-top: $height-section-medium;
             @include responsive(tablet) {
-                width: 60%;
-            }
-            @include responsive(phone) {
                 width: 100%;
+                padding-top: 0;
             }
+
             .contact-form {
                 position: sticky;
                 top: calc(#{$height-section-medium} + 2rem);
+                @include responsive(tablet) {
+                    position: static;
+                }
+                .form__input {
+                    margin-bottom: $spacing-more;
+                }
+
                 form {
+                    background: $color-secondary;
+                    width: calc(100% - 2 * #{$spacing-standard});
+                    margin: 0 auto;
+                    padding: $spacing-standard;
+                    border-radius: $border-radius-standard;
+                    @include shadow-enhanced;
+
                     @include responsive(tablet) {
-                        width: 80%;
-                    }
-                    @include responsive(phone) {
                         width: 100%;
                     }
-                    @include shadow-enhanced;
-                    background: $color-secondary;
-                    width: 50%;
-                    margin: 0 auto;
-                    padding: $spacing-small;
-                    border-radius: $border-radius-standard;
                 }
                 p,
-                input {
-                    margin-bottom: $spacing-tiny;
+                h3 {
+                    margin-bottom: $spacing-small;
+                }
+
+                h3 {
+                    font-size: 2rem;
+                    line-height: 3rem;
                 }
                 .btn {
                     margin: $spacing-small 0;
@@ -114,6 +170,9 @@
                 .btn {
                     display: block;
                     width: 100%;
+                }
+                textarea {
+                    min-height: $height-section-big;
                 }
                 textarea {
                     resize: none;
@@ -127,46 +186,60 @@
             padding-bottom: $spacing-small;
         }
     }
+
     .chalet-map {
-        flex: 0 0 50%;
-        height: calc(100vh - 2 * #{$height-section-medium});
+        // flex: 0 0 50%;
+        
         @include responsive(tablet) {
-            position: static;
+            // position: static;
             height: $height-section-huge;
             width: 100%;
         }
-        @include responsive(phone) {
-            height: $height-section-huge;
-            width: 100%;
-        }
+
     }
+
     .hosted-by {
         display: flex;
         align-items: center;
         padding: $spacing-standard 0;
-        @include responsive(phone) {
+
+
+        @include responsive(tablet) {
             display: block;
+            text-align: center;
         }
-        .type-host {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            @include responsive(phone) {
-                width: 100%;
-                margin-bottom: $spacing-standard;
+        
+        & > section {
+            flex: 0 0 calc(100% / 3);
+            p {
+                line-height: 2.5rem;
             }
+            @include responsive(tablet) {
+                flex: none;
+                margin-bottom: $spacing-more;
+            }
+        }
+
+        .type-host {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            @include responsive(tablet) {
+                justify-content: center;
+            }
+
             .host-img {
                 width: $spacing-huge;
+                margin-right: $spacing-standard;
                 img {
-                    padding-right: $spacing-tiny;
+                    padding-right: $spacing-standard;
                     width: 100%;
                     border-radius: 50%;
                 }
             }
         }
         .redirect-btn {
-            width: 50%;
             text-align: center;
             @include responsive(phone) {
                 width: 100%;

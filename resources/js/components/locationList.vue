@@ -30,24 +30,24 @@
                     } ,                    
                                
                     {
-                        'name' : 'Etna' ,
-                        'imgSrc': 'images/etna.jpg'
+                        'name' : 'Auronzo di Cadore' ,
+                        'imgSrc': 'images/auronzo.jpg'
                     } ,
                     
                     
                     {
-                        'name' : 'Saluzzo' ,
-                        'imgSrc': 'images/saluzzo.jpg'
+                        'name' : 'Misurina' ,
+                        'imgSrc': 'images/misurina.jpg'
                     } ,
                     
                     {
-                        'name' : 'Courmayeur' ,
-                        'imgSrc': 'images/courmayeur.jpg'
+                        'name' : 'Rovereto' ,
+                        'imgSrc': 'images/rovereto.jpg'
                     } ,
                     
                     {
-                        'name' : 'Cervinia' ,
-                        'imgSrc': 'images/cervinia.jpg'
+                        'name' : 'Canazei' ,
+                        'imgSrc': 'images/canazei.jpg'
                     } ,                    
                     
                     {
@@ -61,13 +61,13 @@
                     } ,
                     
                     {
-                        'name' : 'Livigno',
-                        'imgSrc': 'images/livigno.jpg'
+                        'name' : 'Brunico',
+                        'imgSrc': 'images/brunico.jpg'
                     } ,
 
                     {
-                        'name' : 'Sestriere',
-                        'imgSrc': 'images/sestriere.jpg'
+                        'name' : 'Bressanone',
+                        'imgSrc': 'images/bressanone.jpg'
                     }
                 ]
             }

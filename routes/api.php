@@ -23,12 +23,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/apartments','Api\ApartmentController@index');
 Route::post('/apartments/search','Api\ApartmentController@search');
 
+// - Tutti gli apt disponibili per una data località ed un dato raggio
 Route::get('/location','Api\ApartmentController@location');
 
+// - Lista di tutti i servizi esistenti
 Route::get('/services','Api\ApartmentController@services');
 
+// - Tutti gli apt sponsorizzati
 Route::get('/getSponsoredApt','Api\ApartmentController@getSponsoredApt');
-
 
 // - lista apt filtrati per user
 Route::get('/getAptUserList','Api\ApartmentController@getAptUserList');

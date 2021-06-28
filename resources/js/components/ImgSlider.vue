@@ -5,21 +5,29 @@
     <div class="img_slider">
 
         <div id="root" class="container">
+
                 <div class="slider-wrapper">
+
                     <div @click="prevImage" class="prev">
                         <i class="fas fa-angle-left"></i>
                     </div>
+
                     <div class="images">
-                        <img v-bind:src="photos[counter]" class="img_slider" alt="">
-                        <div class="nav">
-                            <div :class="(index==counter) ? active : null" class="img_preview" @click="circleClick(index)" v-for="(photo,index) in photos">
-                                <img v-bind:src="photo" alt="">
+                        
+                        <img :src="'../storage/' + photos[counter]['img_path']" class="img_slider" alt="">
+
+                        <div class="nav">                            
+                            <div 
+                                 v-for="(photo , index) in photos" :key="index"
+                                :class="(index==counter) ? active : null" 
+                                 class="img_preview" 
+                                 @click="circleClick(index)">
+
+                                <img :src="'../storage/' + photo['img_path']" alt="">
+
                             </div>
-                        
-                            <!-- <i :class="(index==counter) ? active : null" @click="circleClick(index)" class="fas fa-circle" v-for="(photo,index) in photos"></i> -->
-                        
-                        
                         </div>
+
                     </div>
 
                     <div @click="nextImage" class="next">
@@ -43,15 +51,10 @@
         data() {
             return {
                 active: "active",
-                counter: 0,
-                photos: [
-                        "https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg?cs=srgb&dl=clouds-country-daylight-371633.jpg&fm=jpg",
-                        "https://static.photocdn.pt/images/articles/2017/04/28/iStock-646511634.jpg",
-                        "https://cdn.mos.cms.futurecdn.net/FUE7XiFApEqWZQ85wYcAfM.jpg",
-                        "https://static.photocdn.pt/images/articles/2017/04/28/iStock-546424192.jpg"
-                ],
+                counter: 0
             }
         },
+        props : ['photos'],
         methods : {
             prevImage: function() {
             this.counter--;
@@ -88,15 +91,17 @@
         position: relative;
         margin: auto;
         width: 100%;
+
             .images {
                 height: 100%;
                 text-align: center;
                 img.active {
                 display: inline-block;
                 }
+
                 .img_slider {
                     width: 100%;
-                    height: 50rem;
+                    height: $height-section-huge;
                     border-radius: $border-radius-standard;
                     object-fit: cover;
                 }
@@ -105,44 +110,58 @@
     .prev,
     .next {
         position: absolute;
-        color: #565a5c;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        font-size: 4rem;
+        color: $white;
+        top:calc( #{$height-section-huge} / 2);
+        transform: translateY(-50%) scaleY(1.5);
+        font-size: 8rem;
+        opacity: .75;
         cursor: pointer;
+        
+        @include responsive(phone) {
+            display: none;
+        }
+    }
+
+    .prev {
+        left: $spacing-standard;
+        right: auto;
     }
 
     .next {
         left: auto;
-        right: 0;
+        right: $spacing-standard;
     }
 
+
     .nav {
-            @include responsive(phone) {
-                display: none;
-            }
+            // @include responsive(phone) {
+            //     display: none;
+            // }
         padding: $spacing-tiny;
         border-radius: $border-radius-standard;
         background: rgba(0, 0, 0, .7);
-        cursor: pointer;
     }
 
     .img_preview {
-        padding:$spacing-small;
+        padding:$spacing-tiny;
         display: inline-block;
         width: 10rem;
         height: 10rem;
+        cursor: pointer;
+
+
         img{
             width: 100%;
             border-radius: $border-radius-standard;
             object-fit: cover;
             height:100%;
+            border: 2px solid transparent;
+            transition: border-color $animation-time-standard;
         }
     }
     .img_preview.active{
         img{
-            border:3px solid $white;
+            border-color: $white;
         }
     }
     .slider-wrapper.none {

@@ -45,7 +45,6 @@ class ApartmentController extends Controller
      public function getUserSponsoredAptList()
      {
         
- 
         //  return response()->json([
         //      'success'=> true,
         //      'results'=> $filteredApartments
@@ -67,6 +66,60 @@ class ApartmentController extends Controller
     }
 
     /*
+    **  Dato l'ID di un Appartamento
+    **  controlla se ci sono sponsorizzazioni attive
+    */
+
+    public function checkSponsorship($aptID)
+    {
+        $currentDate = date("Y-m-d H:i:s");
+        $checkSponsor = DB::table('apartment_sponsorship')
+        ->where([
+            ['apartment_id',$aptID] ,
+            ['status' , 1]
+            ])
+        ->whereDate('end_date' , '>' , $currentDate)
+        ->first();
+        
+        $is_sponsored = $checkSponsor ? true : false;
+        return $is_sponsored;
+    }
+
+    /*
+    **  Dato l'ID di un Appartamento
+    **  ne restituisce la list di servizi
+    */
+
+    public function getAptServiceList($aptID)
+    {
+        $services = DB::table('apartment_service')
+        ->select('service_id')
+        ->where('apartment_id',$aptID)
+        ->get();
+        return $services;
+    }
+    
+    /*
+    **  Dato l'ID di un Appartamento
+    **  ne restituisce l'img di copertina
+    */
+
+    public function getAptCoverImg($aptID)
+    {
+        $cover_img = DB::table('images')->where(
+            [
+                ['apartment_id', '=' , $aptID] ,
+                ['is_cover' ,    '=' , '1']
+            ]
+            )->first();
+            
+            // Se trova l'immagine di copertina ne ricava il path, altrimenti imposta il path su una stringa vuota                    
+            $cover_img ? $cover_img = $cover_img->img_path : $cover_img = '';
+
+            return $cover_img;
+    } 
+
+    /*
      * RESTITUISCE ARRAY DI APPARTAMENTI SPONSORIZZATI
      * Richiede come parametro nOfItems, equivalente al numero di apt richiest
      * se nOfItems == 0, verranno restituiti TUTTI gli apt
@@ -76,15 +129,16 @@ class ApartmentController extends Controller
         
         $currentDate = date("Y-m-d H:i:s");
         
+        //  Cerca tutte le sponsorizzazioni attive
         $sponsorships = DB::table('apartment_sponsorship')
         ->select('apartment_id')
         ->where('status' , 1)
         ->whereDate('end_date' , '>' , $currentDate)
         ->get();
-        
-        
-        $sponsoredAptIDS = []; // lista degli ID di ***tutti*** gli appartamenti attualmente sponsorizzati
-        
+                
+        $sponsoredAptIDS = [];
+        //  Cicla tutte le sponsorizzazioni attive ed aggiunge il corrispondente Id dell'appartamento
+        //  all'Array $sponsoredAptIDS, il quale, al termine del foreach conterrà gli ID di tutti gli apt sponsorizzati
         foreach ($sponsorships as $sponsorship) {
             if(!in_array($sponsorship->apartment_id , $sponsoredAptIDS))
             array_push($sponsoredAptIDS , $sponsorship->apartment_id );
@@ -92,20 +146,16 @@ class ApartmentController extends Controller
         
         $sponsoredAptAll = []; // array contenente **tutti** gli apt sponsorizzati presenti nel DB
         
+        //  Dall'array di Id degli apt sponsorizzati ricava le effettive informazioni relative all'apt
         foreach ($sponsoredAptIDS as $aptID) {
             $apt =  DB::table('apartments')
             ->select('id' , 'price_per_night' , 'beds_n' , 'rating' , 'title')
             ->where('id',$aptID)
             ->first();
-            
-            $cover_img = DB::table('images')->where(
-                [
-                    ['apartment_id', '=' , $aptID] ,
-                    ['is_cover' ,    '=' , '1']
-                ]
-                )->first()->img_path;
-            
-            // Dall'array ottenuto filtra solo le proprietà che ci interessano ai fini della visualizzazione
+
+            $cover_img = $this->getAptCoverImg($aptID);
+     
+            // Salva le informazioni ottenute in un nuovo array, pushato poi in $filteredApt
 
             $filteredApt = array( 
                 'name' => $apt->title,
@@ -113,7 +163,8 @@ class ApartmentController extends Controller
                 'price' => $apt->price_per_night ,
                 'beds' => $apt->beds_n , 
                 'rating' => $apt->rating ,
-                'cover_img' => $cover_img 
+                'cover_img' => $cover_img ,
+                'isSponsored' => true
              );
 
             array_push($sponsoredAptAll , $filteredApt);
@@ -126,18 +177,18 @@ class ApartmentController extends Controller
         if($nOfItems > count($sponsoredAptAll) || $nOfItems == 0)
             $nOfItems = count($sponsoredAptAll);
 
-
         for ($i=0; $i < $nOfItems; $i++) { 
             array_push($sponsoredApt , $sponsoredAptAll[$i]);
         }
+
+        //  Compila l'array finale $sponsoredApt in base al numero di apt richiesti nella chiamata API
+        //  e finalmente lo restituisce
         
         return response()->json([
             'success'=> true,
             'results'=> $sponsoredApt
         ]);
-
     }
-
 
     /**
      * RICERCA APT VISIBILI NEL DB 
@@ -146,12 +197,7 @@ class ApartmentController extends Controller
     
     public function location(Request $request)
     {
-        /*
-            Formula distanza fra due punti
-            dist = arccos(sin(lat1) · sin(lat2) + cos(lat1) · cos(lat2) · cos(lon1 - lon2)) · R
-            PHP: acos( sin($radLat1) * sin($lat2) + cos($radLat1) * cos($lat2) * cos($radLon1 - $lon2) );
-        */
-
+        //  Richiede al db tutti gli apt visibili
         $apartments=Apartment::where('visible','1')->get();
         
         $location = $request->input('location');    // Query Location
@@ -159,11 +205,11 @@ class ApartmentController extends Controller
 
         // Chiamata a TomTom per ottenere coordinate di $location
         $response = Http::withOptions(['verify' => false])->get('https://api.tomtom.com/search/2/geocode/' . $location . '.json?limit=1&key=qISPPmwNd3vUBqM2P2ONkZuJGTaaQEmb')->json();
+        
         $lat = $response['results'][0]['position']['lat'];
         $lon = $response['results'][0]['position']['lon'];
         
-        // Coordinate (conversione da decimali a radianti)
-        
+        // Coordinate (conversione da decimali a radianti)        
         $radLat1 =   (M_PI / 180) * $lat;
         $radLon1 =   (M_PI / 180) * $lon;
 
@@ -181,44 +227,19 @@ class ApartmentController extends Controller
 
             if ($dist <= $radius) {
 
-                // - prendere img di copertina
-                $cover_img = DB::table('images')->where(
-                    [
-                        ['apartment_id', '=' , $apartment['id']] ,
-                        ['is_cover' ,    '=' , '1']
-                    ]
-                    )->first()->img_path;
-
-
-                    // - prendere servizi correlati
-    
-                $services = DB::table('apartment_service')
-                    ->select('service_id')
-                    ->where('apartment_id',$apartment['id'])
-                    ->get();
-
-    
-                    // Controllo Eventuale Sponsorizzazione Attiva
-
-                $currentDate = date("Y-m-d H:i:s");
-
-                $checkSponsor = DB::table('apartment_sponsorship')
-                ->where([
-                    ['apartment_id',$apartment['id']] ,
-                    ['status' , 1]
-                    ])
-                ->whereDate('end_date' , '>' , $currentDate)
-                ->first();
+                //  Richiede img di copertina apt
+                $cover_img = $this->getAptCoverImg($apartment['id']);
                 
-                $is_sponsored = $checkSponsor ? true : false;
+                //  Richiede lista servizi
+                $services = $this->getAptServiceList($apartment['id']);
+                    
+                // Controllo Eventuale Sponsorizzazione Attiva
+                $is_sponsored = $this->checkSponsorship($apartment['id']);
 
-                //- crea array con i dati necessari per stampa e filtri    
-
+                // Crea array con i dati necessari per stampa e filtri    
                 $newChalet = array(
                     'id' => $apartment['id'] ,
                     'name' => $apartment['title'] ,
-                    // 'lat'  => (M_PI / 180) * $apartment['latitude'] ,
-                    // 'lon'  => (M_PI / 180) * $apartment['longitude'] ,
                     'lat'  => $apartment['latitude'] ,
                     'lon'  => $apartment['longitude'] ,
                     'dist' => $dist ,
@@ -232,12 +253,10 @@ class ApartmentController extends Controller
                     'is_sponsored'  => $is_sponsored
                 );
 
-                //- salvare l'array dell'apt nell'array di risultati da restituire
+                //  Pusha dati apt nell'array dei risultati
                 array_push($chalets , $newChalet);
-
             }
         }
-
         
         return response()->json([
             'success'=> true,
@@ -245,6 +264,5 @@ class ApartmentController extends Controller
             'base_lat' => $lat ,
             'base_lon' => $lon
         ]);
-    }
-    
+    }    
 }

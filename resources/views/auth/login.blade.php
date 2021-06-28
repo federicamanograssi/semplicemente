@@ -43,9 +43,9 @@
                         <div class="remember-form">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    <input class="form__input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
+                                    
                                     <label class="form__label" for="remember">
+                                        <input class="form__input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                         {{ __('Ricordami') }}
                                     </label>
                                 </div>
@@ -53,16 +53,21 @@
                         </div>
 
                         <div class="submit-botton">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn--primary btn--log">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                            <div class="col">
+                                
+                                <div>
+                                    <button type="submit" class="btn btn--primary btn--log">
+                                        {{ __('Login') }}
+                                    </button>
+                                </div>
+                                
+                                <div>
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </form>
