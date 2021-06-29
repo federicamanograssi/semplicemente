@@ -19,13 +19,13 @@
                 <thead>
                     <tr role="row">
                         <th tabindex="0" rowspan="1" colspan="1" aria-sort="ascending">Titolo</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Località</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Dimensioni</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Prezzo</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Stanze</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Letti</th>
+                        <th class="d-none d-sm-table-cell" tabindex="0" rowspan="1" colspan="1">Località</th>
+                        <th class="d-none d-sm-table-cell" tabindex="0" rowspan="1" colspan="1">Dimensioni</th>
+                        <th class="d-none d-sm-table-cell" tabindex="0" rowspan="1" colspan="1">Prezzo</th>
+                        <th class="d-none d-sm-table-cell" tabindex="0" rowspan="1" colspan="1">Stanze</th>
+                        <th class="d-none d-sm-table-cell" tabindex="0" rowspan="1" colspan="1">Letti</th>
                         {{-- <th tabindex="0" rowspan="1" colspan="1">Bagni</th> --}}
-                        <th tabindex="0" rowspan="1" colspan="1">Visibile</th>
+                        <th class="d-none d-sm-table-cell"tabindex="0" rowspan="1" colspan="1">Visibile</th>
                         <th rowspan="1" colspan="1" class="action-bigger">Azioni</th>
                     </tr>
                 </thead>
@@ -50,19 +50,18 @@
                                 @endfor
                             </p>
                         </td>
-                        <td class="text-left">{{ $apartment->address }}</td>
-                        <td class="text-right">{{ $apartment->dimensions }} m<sup>2</sup></td>
-                        <td class="text-right">{{ $apartment->price_per_night }} €</td>
-                        <td class="text-right">{{ $apartment->rooms_n }}</td>
-                        <td class="text-right">{{ $apartment->beds_n }}</td>
+                        <td class="d-none d-sm-table-cell text-left">{{ $apartment->address }}</td>
+                        <td class="d-none d-sm-table-cell text-right">{{ $apartment->dimensions }} m<sup>2</sup></td>
+                        <td class="d-none d-sm-table-cell text-right">{{ $apartment->price_per_night }} €</td>
+                        <td class="d-none d-sm-table-cell text-right">{{ $apartment->rooms_n }}</td>
+                        <td class="d-none d-sm-table-cell text-right">{{ $apartment->beds_n }}</td>
                         {{-- <td class="text-right">{{ $apartment->bathroom_n }}</td> --}}
-                        <td class="text-right">
+                        <td class="d-none d-sm-table-cell text-right">
                             @if ( $apartment['visible'] == 1)
                                 sì
                             @else
                                 no   
                             @endif
-                        </td>
                         <td class="text-center">
                             {{-- EDIT --}}
                             <a href="{{ route('apartments.edit', $apartment->id) }}">
