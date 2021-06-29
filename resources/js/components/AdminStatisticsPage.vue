@@ -7,7 +7,7 @@
             </div>
 
             <!-- SELECT PER SCEGLIERE APPARTAMENTO -->
-            <div class="col-6">
+            <div class="col-sm-6">
                 <h4>Seleziona un appartamento per le statistiche specifiche</h4>
                 <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment"
                 @change="onChangeFilter()">

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="tab-title">Metti in evidenza un appartamento</h1>
-                <a href="/admin/payment" class="btn btn-our-btn">Sponsorizza</a>
+                <a href="/admin/payment" class="btn btn-our-btn">Metti in evidenza</a>
 
             </div>
         </div>
@@ -17,17 +17,20 @@
                 <table class="table table-borderless">
                     <thead>
                         <tr role="row">
-                            <th scope="col">Appartamento</th>
-                            <th scope="col">Inizio</th>
-                            <th scope="col">Fine</th>
+                            <!-- per cell -->
+                            <th scope="col" class="text-left d-block d-sm-none">Apt</th>
+
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Appartamento</th>
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Inizio</th>
+                            <th scope="col" class="text-left">Termine</th>
                             <!-- <th scope="col">Attivo</th> -->
-                            <th scope="col">Spesa</th>
+                            <th scope="col" class="text-left">Spesa</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="sponsored_apartment in sponsored_apartments" :key="sponsored_apartment.id">
                             <td class="text-left">{{sponsored_apartment.id}}</td>
-                            <td class="text-left">{{sponsored_apartment.start_date}}</td>
+                            <td class="text-left d-none d-sm-table-cell">{{sponsored_apartment.start_date}}</td>
                             <td class="text-left">{{sponsored_apartment.end_date}}</td>
                             <!-- <td class="text-left">SI/NO</td> -->
                             <td class="text-left">{{sponsored_apartment.amount}} €</td>
@@ -47,17 +50,21 @@
                 <table class="table table-borderless">
                     <thead>
                         <tr role="row">
-                            <th scope="col">Appartamento</th>
-                            <th scope="col">Data</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Importo</th>
+                            <!-- per cell -->
+                            <th scope="col" class="text-left d-block d-sm-none">Apt</th>
+
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Appartamento</th>
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Data</th>
+                            <th scope="col" class="text-left">Status</th>
+                            <th scope="col" class="text-left">Importo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="sponsored_apartment in sponsored_apartments" :key="sponsored_apartment.id">
                             <td class="text-left">{{sponsored_apartment.id}}</td>
-                            <td class="text-left">{{sponsored_apartment.start_date}}</td>
-                            <td class="text-left">{{sponsored_apartment.status}}</td>
+                            <td class="text-left d-none d-sm-table-cell">{{sponsored_apartment.start_date}}</td>
+                            <td class="text-left" v-if="(sponsored_apartment.status==1)">Success</td>
+                            <td class="text-left" v-else>Failed</td>
                             <td class="text-left">{{sponsored_apartment.amount}} €</td>
                         </tr>
                     </tbody>

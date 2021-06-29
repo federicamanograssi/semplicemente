@@ -2127,6 +2127,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'sponsored_apartments', 'sponsorships'],
   mounted: function mounted() {
@@ -24976,7 +24983,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* table{\n    background-color: #d8af7f;\n    border-radius: .25rem;\n    width: 100%;\n    overflow-x: auto;\n}\nthead{\n    background-color: rgba(0,0,0,.03);\n    font-size: 1.7rem;\n}\nth,td{\n    padding:10px 20px;\n}\n@media (max-width: 768px){\n    table{\n        display: block;\n    }\n} */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* table{\n    background-color: #d8af7f;\n    border-radius: .25rem;\n    width: 100%;\n    overflow-x: auto;\n}\nthead{\n    background-color: rgba(0,0,0,.03);\n    font-size: 1.7rem;\n}\nth,td{\n    padding:10px 20px;\n}\n@media (max-width: 768px){\n    table{\n        display: block;\n    }\n} */\n", ""]);
 
 // exports
 
@@ -78895,7 +78902,7 @@ var render = function() {
                   _vm._v(_vm._s(sponsored_apartment.id))
                 ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-left" }, [
+                _c("td", { staticClass: "text-left d-none d-sm-table-cell" }, [
                   _vm._v(_vm._s(sponsored_apartment.start_date))
                 ]),
                 _vm._v(" "),
@@ -78931,13 +78938,13 @@ var render = function() {
                   _vm._v(_vm._s(sponsored_apartment.id))
                 ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-left" }, [
+                _c("td", { staticClass: "text-left d-none d-sm-table-cell" }, [
                   _vm._v(_vm._s(sponsored_apartment.start_date))
                 ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-left" }, [
-                  _vm._v(_vm._s(sponsored_apartment.status))
-                ]),
+                sponsored_apartment.status == 1
+                  ? _c("td", { staticClass: "text-left" }, [_vm._v("Success")])
+                  : _c("td", { staticClass: "text-left" }, [_vm._v("Failed")]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-left" }, [
                   _vm._v(_vm._s(sponsored_apartment.amount) + " €")
@@ -78965,7 +78972,7 @@ var staticRenderFns = [
         _c(
           "a",
           { staticClass: "btn btn-our-btn", attrs: { href: "/admin/payment" } },
-          [_vm._v("Sponsorizza")]
+          [_vm._v("Metti in evidenza")]
         )
       ])
     ])
@@ -78976,13 +78983,40 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { attrs: { role: "row" } }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Appartamento")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-block d-sm-none",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Apt")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Inizio")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-none d-sm-table-cell",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Appartamento")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fine")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-none d-sm-table-cell",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Inizio")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Spesa")])
+        _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+          _vm._v("Termine")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+          _vm._v("Spesa")
+        ])
       ])
     ])
   },
@@ -78992,13 +79026,40 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { attrs: { role: "row" } }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Appartamento")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-block d-sm-none",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Apt")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Data")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-none d-sm-table-cell",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Appartamento")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-left d-none d-sm-table-cell",
+            attrs: { scope: "col" }
+          },
+          [_vm._v("Data")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Importo")])
+        _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+          _vm._v("Importo")
+        ])
       ])
     ])
   }
@@ -79099,7 +79160,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "col-6" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
           _c("h4", [
             _vm._v("Seleziona un appartamento per le statistiche specifiche")
           ]),
