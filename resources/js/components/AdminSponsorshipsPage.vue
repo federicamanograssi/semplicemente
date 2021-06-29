@@ -1,11 +1,18 @@
 <template>
 
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h2>Metti in evidenza un appartamento</h2>
+                <button class="btn btn-warning btn-lg"><a href="/admin/payment">Sponsorizza</a></button>
+
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-12">
                 <h2>Le tue sponsorizzazioni</h2>
-                <h4>Qui puoi visualizzare tutte le tue sponsorizzazioni </h4>
+                <p>Qui puoi visualizzare tutte le tue sponsorizzazioni </p>
 
                 <table class="table table-borderless">
                     <thead>
@@ -31,17 +38,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <h2>Metti in evidenza un appartamento</h2>
-                <button class="btn btn-warning btn-lg"><a href="/admin/payment">Sponsorizza</a></button>
-
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-12">
                 <h2>Le tue transazioni</h2>
+                <p>Qui puoi visualizzare tutte le tue transazioni</p>
 
                 <table class="table table-borderless">
                     <thead>
@@ -96,13 +97,11 @@
 
 </script>
 <style scoped>
-    table{
+    /* table{
         background-color: #d8af7f;
         border-radius: .25rem;
         width: 100%;
-        /* max-height: 25rem; */
         overflow-x: auto;
-        /* overflow-y: auto; */
     }
     thead{
         background-color: rgba(0,0,0,.03);
@@ -115,6 +114,6 @@
         table{
             display: block;
         }
-    }
+    } */
 </style>
 

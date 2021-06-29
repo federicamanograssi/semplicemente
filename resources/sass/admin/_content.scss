@@ -49,4 +49,27 @@
     .svg {
         color: inherit;
     }
+    table{
+      margin-top: 10px;
+      background-color: #d8ae7fad;
+      border-radius: .25rem;
+      width: 100%;
+      border-radius: 5px;
+      overflow-x: auto;
+      /* overflow-y: auto; */
+
+      thead{
+        background-color: #d8af7f;
+        // background-color: rgba(0,0,0,.03);
+        font-size: 1.7rem;
+      }
+      th,td{
+          padding:10px 20px;
+      }
+      @media (max-width: 768px){
+          table{
+              display: block;
+          }
+      }
+    }
 }

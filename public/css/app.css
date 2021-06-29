@@ -865,6 +865,32 @@ div[class$=-form] {
   color: inherit;
 }
 
+.admin table {
+  margin-top: 10px;
+  background-color: #d8ae7fad;
+  border-radius: 0.25rem;
+  width: 100%;
+  border-radius: 5px;
+  overflow-x: auto;
+  /* overflow-y: auto; */
+}
+
+.admin table thead {
+  background-color: #d8af7f;
+  font-size: 1.7rem;
+}
+
+.admin table th,
+.admin table td {
+  padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+  .admin table table {
+    display: block;
+  }
+}
+
 .nav_layout {
   background-color: #385744;
   color: #ffefd5;

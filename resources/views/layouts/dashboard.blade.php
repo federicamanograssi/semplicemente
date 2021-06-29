@@ -21,7 +21,7 @@
     <div class="nav_layout h-100">
         
         <nav class="nav_header navbar flex-md-nowrap pl-3 px-3 pr-3">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">BoolChalet</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{route('guest-home')}}">BoolChalet</a>
             <ul class="navbar-nav px-3">
                 
               <li class="nav-item text-nowrap">
