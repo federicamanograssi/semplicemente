@@ -166,10 +166,10 @@
                             
                         <div class= "col-2 remove-img">
                             <img id="{{ 'img' .($i+1) }}" src={{ '/storage/' .$images[$i]->img_path }} />
-                            <input type="text" name="{{ 'img_description' .($i+1) }}" placeholder="Descrizione" value="{{ old('img_description' .($i+1), $images[$i]->img_description) }}">
+                            <input type="text" name="{{ 'img_description' .$images[$i]->id }}" placeholder="Descrizione" value="{{ old('img_description' .$images[$i]->id, $images[$i]->img_description) }}">
                             <p>Copertina</p>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="is_cover" id="is_cover1" class="form-control @error('is_cover') is-invalid @enderror" value="{{ 'image' .($i+1) }}"  checked required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
+                                <input class="form-check-input" type="radio" name="is_cover" id="{{'is_cover' .($i+1)}}" class="form-control @error('is_cover') is-invalid @enderror" value="{{ $images[$i]->id }}" required {{ $images[$i]->is_cover == '1' ? 'checked=checked' : '' }}>
                                 <input type="hidden" id="id_img" value="{{ $images[$i]->id }}">
                                 <button type="button" class="btn btn-danger remove-img-btn">Rimuovi immagine</button>
                                     {{-- <a href="{{ route('remove.images', ['id' => $images[$i]->id]) }}"><button type="button" class="btn-danger">Delete</a> --}}
@@ -279,7 +279,6 @@ $("#add").click(function(){
         array.push(index);
         document.getElementById('n_img_del').setAttribute('value', array);
         $(this).parents('.remove-img').remove();
-        
     });  
 
 
