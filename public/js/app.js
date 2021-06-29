@@ -2135,24 +2135,46 @@ __webpack_require__.r(__webpack_exports__);
     parentData: Array
   },
   name: "PlanetChart",
+  watch: {
+    parentData: function parentData(newVal, oldVal) {
+      this.adminStatisticsChartData.data.parentDataData = this.parentData;
+      this.adminStatisticsChartData.data.AptCounter = 0;
+      this.viewCounter();
+      this.adminStatisticsChartData.data.labels = [];
+      this.createdAt();
+      this.adminStatisticsChartData.data.datasets[0].data = [];
+      this.insertView();
+    }
+  },
   mounted: function mounted() {
     var ctx = document.getElementById("planet-chart");
     new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, this.adminStatisticsChartData);
     this.viewCounter();
+    this.createdAt();
+    this.insertView();
+    console.log(this.views);
   },
   data: function data() {
     return {
       adminStatisticsChartData: {
-        type: "line",
+        type: "bar",
         data: {
           AptCounter: 0,
           parentDataData: this.parentData,
           //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
           searchResult: [],
-          labels: ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"],
+          labels: [// "Lunedì",
+            // "Martedì",
+            // "Mercoledì",
+            // "Giovedì",
+            // "Venerdì",
+            // "Sabato",
+            // "Domenica",
+          ],
           datasets: [{
             label: "Numero di Visualizzazioni",
-            data: [0, 0, 1, 2, 3, 4, 5, 6],
+            // data: [0, 0, 1, 2, 3, 4, 5, 6],
+            data: [],
             backgroundColor: "rgba(54,73,93,.5)",
             borderColor: "#36495d",
             borderWidth: 3
@@ -2179,14 +2201,168 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.parentData.forEach(function (element) {
-        _this.AptCounter = _this.AptCounter + 1;
-        return console.log(_this.AptCounter);
+        _this.adminStatisticsChartData.data.AptCounter = _this.adminStatisticsChartData.data.AptCounter + 1;
+        return console.log(_this.adminStatisticsChartData.data.AptCounter);
+      });
+    },
+    createdAt: function createdAt() {
+      var _this2 = this;
+
+      this.parentData.forEach(function (element) {
+        var date = new Date(element.created_at);
+        var day = date.getDate();
+
+        if (!_this2.adminStatisticsChartData.data.labels.includes(day)) {
+          _this2.adminStatisticsChartData.data.labels.push(day);
+        }
+      });
+    },
+    insertView: function insertView() {
+      var _this3 = this;
+
+      for (var i = 0; i < this.adminStatisticsChartData.data.labels.length; i++) {
+        this.adminStatisticsChartData.data.datasets[0].data[i] = 0;
+      }
+
+      this.parentData.forEach(function (element) {
+        var date = new Date(element.created_at);
+        var day = date.getDate();
+
+        for (var _i = 0; _i < _this3.adminStatisticsChartData.data.labels.length; _i++) {
+          if (day == _this3.adminStatisticsChartData.data.labels[_i]) {
+            // console.log(this.adminStatisticsChartData.data.datasets[0].data)
+            _this3.adminStatisticsChartData.data.datasets[0].data[_i]++;
+          }
+        }
       });
     }
-    /* onChange(){
-              return this.parentDataData= this.parentData; 
-            }, */
+  }
+});
 
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['views'],
+  name: "PlanetChart",
+  watch: {
+    parentData: function parentData(newVal, oldVal) {
+      this.adminStatisticsChartData.data.parentDataData = this.parentData;
+      this.adminStatisticsChartData.data.AptCounter = 0;
+      this.viewCounter();
+      this.adminStatisticsChartData.data.labels = [];
+      this.createdAt();
+      this.adminStatisticsChartData.data.datasets[0].data = [];
+      this.insertView();
+    }
+  },
+  mounted: function mounted() {
+    var ctx = document.getElementById("planet-chart");
+    new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, this.adminStatisticsChartData);
+    this.viewCounter();
+    this.createdAt();
+    this.insertView();
+    console.log(this.views);
+  },
+  data: function data() {
+    return {
+      adminStatisticsChartData: {
+        type: "bar",
+        data: {
+          AptCounter: 0,
+          parentDataData: this.parentData,
+          //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
+          searchResult: [],
+          labels: [// "Lunedì",
+            // "Martedì",
+            // "Mercoledì",
+            // "Giovedì",
+            // "Venerdì",
+            // "Sabato",
+            // "Domenica",
+          ],
+          datasets: [{
+            label: "Numero di Visualizzazioni",
+            // data: [0, 0, 1, 2, 3, 4, 5, 6],
+            data: [],
+            backgroundColor: "rgba(54,73,93,.5)",
+            borderColor: "#36495d",
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          lineTension: 1,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                padding: 25
+              }
+            }]
+          }
+        }
+      }
+    };
+  },
+  methods: {
+    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di parentData
+    viewCounter: function viewCounter() {
+      var _this = this;
+
+      this.parentData.forEach(function (element) {
+        _this.adminStatisticsChartData.data.AptCounter = _this.adminStatisticsChartData.data.AptCounter + 1;
+        return console.log(_this.adminStatisticsChartData.data.AptCounter);
+      });
+    },
+    createdAt: function createdAt() {
+      var _this2 = this;
+
+      this.parentData.forEach(function (element) {
+        var date = new Date(element.created_at);
+        var day = date.getDate();
+
+        if (!_this2.adminStatisticsChartData.data.labels.includes(day)) {
+          _this2.adminStatisticsChartData.data.labels.push(day);
+        }
+      });
+    },
+    insertView: function insertView() {
+      var _this3 = this;
+
+      for (var i = 0; i < this.adminStatisticsChartData.data.labels.length; i++) {
+        this.adminStatisticsChartData.data.datasets[0].data[i] = 0;
+      }
+
+      this.parentData.forEach(function (element) {
+        var date = new Date(element.created_at);
+        var day = date.getDate();
+
+        for (var _i = 0; _i < _this3.adminStatisticsChartData.data.labels.length; _i++) {
+          if (day == _this3.adminStatisticsChartData.data.labels[_i]) {
+            // console.log(this.adminStatisticsChartData.data.datasets[0].data)
+            _this3.adminStatisticsChartData.data.datasets[0].data[_i]++;
+          }
+        }
+      });
+    }
   }
 });
 
@@ -78710,6 +78886,41 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("canvas", {
+        attrs: { id: "planet-chart", width: "400", height: "180" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsPage.vue?vue&type=template&id=53116634&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminStatisticsPage.vue?vue&type=template&id=53116634& ***!
@@ -79953,7 +80164,7 @@ var render = function() {
                   attrs: { src: _vm.videoSrc, type: "video/mp4" }
                 }),
                 _vm._v(
-                  "\r\n                Browser non supportato!\r\n            "
+                  "\n                Browser non supportato!\n            "
                 )
               ]
             )
@@ -92790,6 +93001,7 @@ Vue.component('admin-statistics-page', __webpack_require__(/*! ./components/Admi
 Vue.component('admin-sponsorships-page', __webpack_require__(/*! ./components/AdminSponsorshipsPage.vue */ "./resources/js/components/AdminSponsorshipsPage.vue")["default"]);
 Vue.component('admin-messages-page', __webpack_require__(/*! ./components/AdminMessagesPage.vue */ "./resources/js/components/AdminMessagesPage.vue")["default"]);
 Vue.component('admin-statistics-chart', __webpack_require__(/*! ./components/AdminStatisticsChart.vue */ "./resources/js/components/AdminStatisticsChart.vue")["default"]);
+Vue.component('admin-statistics-chart-all', __webpack_require__(/*! ./components/AdminStatisticsChartAll.vue */ "./resources/js/components/AdminStatisticsChartAll.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -93049,6 +93261,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChart_vue_vue_type_template_id_24a43c17___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChart_vue_vue_type_template_id_24a43c17___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminStatisticsChartAll.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/AdminStatisticsChartAll.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c& */ "./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c&");
+/* harmony import */ var _AdminStatisticsChartAll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminStatisticsChartAll.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdminStatisticsChartAll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminStatisticsChartAll.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChartAll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminStatisticsChartAll.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChartAll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminStatisticsChartAll.vue?vue&type=template&id=40c6c48c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminStatisticsChartAll_vue_vue_type_template_id_40c6c48c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -94236,8 +94517,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
