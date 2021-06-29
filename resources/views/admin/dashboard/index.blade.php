@@ -132,8 +132,8 @@
                 {{-- body chart --}}
                 <div class="card-body">
                     <div class="chart-area">
-                        <admin-statistics-chart
-                            :views=$views
+                        <admin-statistics-chart-all
+                            :views={{$views}}
                         />
                     </div>
                 </div>

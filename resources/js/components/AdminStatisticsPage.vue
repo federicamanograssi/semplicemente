@@ -119,7 +119,7 @@
                 <div class="card-body">
                     <div class="chart-area">
                         <div id="app">
-                            <admin-statistics-chart/>
+                            <admin-statistics-chart :parentData="viewsPerApt"></admin-statistics-chart>
                         </div>
                     </div>
                 </div>
@@ -208,6 +208,15 @@ import AdminStatisticsChart from './AdminStatisticsChart.vue';
                 
                 this.getTotalMoney();
             },
+            data(){
+                return myData = {
+                sumSponsorship:0,
+                viewsPerApt : this.views,
+                messagesPerApt : this.messages,
+                sponsorshipsPerApt : this.sponsorships,
+                selectedApartment:'all'
+                }
+            }
         }
     }
     

@@ -8,13 +8,11 @@
 import Chart from "chart.js";
 
 export default {
-  props: {
-    parentData: Array,
-  },
+  props: ['views'],
   name: "PlanetChart",
   watch: {
-        parentData: function (newVal, oldVal) {
-          this.adminStatisticsChartData.data.parentDataData = this.parentData;
+        views: function (newVal, oldVal) {
+          this.adminStatisticsChartData.data.viewsData = this.views;
           this.adminStatisticsChartData.data.AptCounter = 0;
           this.viewCounter();
           this.adminStatisticsChartData.data.labels = [];
@@ -30,6 +28,7 @@ export default {
     this.createdAt();
     this.insertView();
     console.log(this.views);
+    
   },
   data() {
     return {
@@ -37,7 +36,7 @@ export default {
         type: "bar",
         data: {
           AptCounter: 0,
-          parentDataData: this.parentData, //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
+          viewsData: this.views, //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
           searchResult: [],
           labels: [
             // "Lunedì",
@@ -77,15 +76,15 @@ export default {
     };
   },
   methods: {
-    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di parentData
+    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di views
     viewCounter: function () {
-      this.parentData.forEach((element) => {
+      this.views.forEach((element) => {
         this.adminStatisticsChartData.data.AptCounter=this.adminStatisticsChartData.data.AptCounter+1;
         return console.log(this.adminStatisticsChartData.data.AptCounter);
       });
     },
     createdAt: function () {
-      this.parentData.forEach((element) => {
+      this.views.forEach((element) => {
         var date = new Date (element.created_at);
         var day = date.getDate();
         if(!this.adminStatisticsChartData.data.labels.includes(day)){
@@ -98,7 +97,7 @@ export default {
        for(let i=0; i<this.adminStatisticsChartData.data.labels.length; i++){
          this.adminStatisticsChartData.data.datasets[0].data[i] = 0;
        }
-      this.parentData.forEach((element) => {
+      this.views.forEach((element) => {
         var date =  new Date (element.created_at);
         var day = date.getDate();
 
