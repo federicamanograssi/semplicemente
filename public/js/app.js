@@ -2131,17 +2131,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: 'views',
-  name: 'PlanetChart',
+  props: {
+    parentData: Array
+  },
+  name: "PlanetChart",
   mounted: function mounted() {
-    var ctx = document.getElementById('planet-chart');
+    var ctx = document.getElementById("planet-chart");
     new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, this.adminStatisticsChartData);
+    this.viewCounter();
   },
   data: function data() {
     return {
       adminStatisticsChartData: {
         type: "line",
         data: {
+          AptCounter: 0,
+          parentDataData: this.parentData,
+          //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
           searchResult: [],
           labels: ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"],
           datasets: [{
@@ -2166,6 +2172,21 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
+  },
+  methods: {
+    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di parentData
+    viewCounter: function viewCounter() {
+      var _this = this;
+
+      this.parentData.forEach(function (element) {
+        _this.AptCounter = _this.AptCounter + 1;
+        return console.log(_this.AptCounter);
+      });
+    }
+    /* onChange(){
+              return this.parentDataData= this.parentData; 
+            }, */
+
   }
 });
 
@@ -2390,6 +2411,15 @@ __webpack_require__.r(__webpack_exports__);
 
       ;
       this.getTotalMoney();
+    },
+    data: function data() {
+      return myData = {
+        sumSponsorship: 0,
+        viewsPerApt: this.views,
+        messagesPerApt: this.messages,
+        sponsorshipsPerApt: this.sponsorships,
+        selectedApartment: 'all'
+      };
     }
   }
 });
@@ -78980,7 +79010,11 @@ var render = function() {
                 _c(
                   "div",
                   { attrs: { id: "app" } },
-                  [_c("admin-statistics-chart")],
+                  [
+                    _c("admin-statistics-chart", {
+                      attrs: { parentData: _vm.viewsPerApt }
+                    })
+                  ],
                   1
                 )
               ])
@@ -94202,8 +94236,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
