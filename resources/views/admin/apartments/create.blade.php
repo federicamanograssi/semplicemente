@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -10,6 +10,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Torna ai tuoi appartamenti
                 </a>
             </div>
+        </div>
+    </div>
+    {{-- ROW FORM--------- --}}
+    <div class="row">
+        <div class="col-12">
+
+            {{-- GESTIONE ERRORI --}}
             <div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -26,26 +33,26 @@
             {{-- enctype="multipart/form-data" serve epr caricare le img --}}
             <form action="{{ route('apartments.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-
+        
                 {{-- TITOLO ---- --}}
                 <div class="form-group">
                     <label>Titolo</label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Inserisci titolo" value="{{ old('title') }}" required>
+                    <input type="text" name="title" class="form-control form-control-lg @error('title') is-invalid @enderror" placeholder="Inserisci titolo" value="{{ old('title') }}" required>
                     @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+        
                 {{-- INDIRIZZO ---- --}}
                 <div class="form-group">
                     <label>Indirizzo</label>
-                    <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Inserisci indirizzo" value="{{ old('address') }}" required>
+                    <input type="text" name="address" class="form-control form-control-lg @error('address') is-invalid @enderror" placeholder="Inserisci indirizzo" value="{{ old('address') }}" required>
                     @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-{{--                
+                {{-- NEL CASO DOVESSIMO FAR AGGIUNGERE LAT E LONG 
                 <div class="row">
 
                   
@@ -73,7 +80,7 @@
                     {{-- PREZZO--- --}}
                     <div class="form-group col">
                         <label>Prezzo/notte €</label>
-                        <input type="number" name="price_per_night" min="0" class="form-control @error('price_per_night') is-invalid @enderror" value="{{ old('price_per_night') }}" placeholder="Inserisci prezzo" required>
+                        <input type="number" name="price_per_night" min="0" class="form-control form-control-lg @error('price_per_night') is-invalid @enderror" value="{{ old('price_per_night') }}" placeholder="Inserisci prezzo" required>
                         @error('price_per_night')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -82,34 +89,34 @@
                     {{-- DIMENSIONI APPARTAMENTO------ --}}
                     <div class="form-group col">
                         <label>Dimensioni m<sup>2</sup></label>
-                        <input type="number" name="dimensions" min="0" class="form-control @error('dimensions') is-invalid @enderror" value="{{ old('dimensions') }}" placeholder="Inserisci dimensioni" required>
+                        <input type="number" name="dimensions" min="0" class="form-control form-control-lg @error('dimensions') is-invalid @enderror" value="{{ old('dimensions') }}" placeholder="Inserisci dimensioni" required>
                         @error('dimensions')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- STANZE------- --}}
-                    <div class="form-group col">
+                    <div class="form-group col-4 col-sm-2">
                         <label>N° stanze</label>
-                        <input type="number" name="rooms_n" min="0" class="form-control @error('rooms_n') is-invalid @enderror" value="{{ old('rooms_n') }}" placeholder="Inserisci stanze" required>
+                        <input type="number" name="rooms_n" min="0" class="form-control form-control-lg @error('rooms_n') is-invalid @enderror" value="{{ old('rooms_n') }}" placeholder="Inserisci stanze" required>
                         @error('rooms_n')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- LETTI------ --}}
-                    <div class="form-group col">
-                        <label>N° letti</label>
-                        <input type="number" name="beds_n" min="0" class="form-control @error('beds_n') is-invalid @enderror" value="{{ old('beds_n') }}" placeholder="Inserisci letti"required>
+                    <div class="form-group col-4 col-sm-2">
+                        <label>N° posti letto</label>
+                        <input type="number" name="beds_n" min="0" class="form-control form-control-lg @error('beds_n') is-invalid @enderror" value="{{ old('beds_n') }}" placeholder="Inserisci letti"required>
                         @error('beds_n')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     {{-- BAGNI-------- --}}
-                    <div class="form-group col">
+                    <div class="form-group col-4 col-sm-2">
                         <label>N° bagni</label>
-                        <input type="number" name="bathroom_n" min="0" class="form-control @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n') }}" placeholder="Inserisci bagni"required>
+                        <input type="number" name="bathroom_n" min="0" class="form-control form-control-lg @error('bathroom_n') is-invalid @enderror" value="{{ old('bathroom_n') }}" placeholder="Inserisci bagni"required>
                         @error('bathroom_n')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -129,12 +136,12 @@
                 <div class="form-group">
                     <p>Seleziona i servizi:</p>
 
-                    <div class="row">
+                    <div class="row ml-2 md-ml-3">
                         @foreach ($services as $service)
-                            <div class="col-3 form-check @error('services') is-invalid @enderror">
+                            <div class="col-6 col-sm-3 form-check @error('services') is-invalid @enderror">
                                 <input name="services[]" class="form-check-input" type="checkbox" value="{{ $service->id }}"
                                 {{ in_array($service->id, old('services', [])) ? 'checked=checked' : '' }}>
-                                <label class="form-check-label">
+                                <label class="form-check-label ml-3">
                                     {{ $service->service_name }}
                                 </label>
                             </div>
@@ -145,16 +152,10 @@
                     @enderror
                 </div>
 
-                {{-- IMMAGINI----- --}}
-                {{-- <div class="form-group"> --}}
-                    {{-- <label>Immagini</label> --}}
-                    {{-- multiple serve per mettere più immagini --}}
-                    {{-- <input class='form-control-file' type="file" name="images[]" multiple>
-                </div> --}}
 
             {{-- PROVA PIU' INPUT IMMAGINI --}}
-            <label>Immagini:</label>
-            <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+                <label>Immagini:</label>
+                <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
                 <div class="row" id="add_more">
                     <div class= "col-2">
                         <img id="img1" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg" />

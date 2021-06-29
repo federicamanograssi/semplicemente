@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row d-flex justify-content-between">
+    <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <h1 class="tab-title">Modifica ' {{ $apartment->title }} '</h1>
         </div>
