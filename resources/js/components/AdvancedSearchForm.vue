@@ -240,6 +240,7 @@ import AdvancedSearchPageVue from './AdvancedSearchPage.vue';
         methods : {
             // Metodo che si occupa dell'aggiornamento di alcune proprietà non direttamente controllate dall'onchange
             changeValue(prop , value){
+                
                 const query = this.currentQuery;
                 
                 switch (prop) {

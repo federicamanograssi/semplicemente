@@ -64,6 +64,8 @@
                                 @else 
                                     {{$apartment['bathroom_n']}} Bagni
                                 @endif
+                                &#183   
+                                {{$apartment['dimensions']}}m<sup>2</sup>
                             </p>
 
                         </div>
@@ -164,6 +166,9 @@
 
                 </div>
 
+
+
+
                 <div class="right-container">
                     <div id="form-anchor" class="contact-form">
 
@@ -175,8 +180,13 @@
                             <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
                             {{-- MAIL---------- --}}
+                            @php
+                                use Illuminate\Support\Facades\Auth;
+                                $isLoggedIn = Auth::check() ? true : false;
+                            @endphp
+
                             <div class="form-group">
-                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{$isLoggedIn ? Auth::user()->email : null }}" required>
                                 @error('email_sender')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -228,7 +238,9 @@
             </single-chalet-map>
 
             </section>
-
+            
+            <hr>
+            
             {{-- Piccola Sezione Host             --}}
 
             <section class="hosted-by">
@@ -262,77 +274,18 @@
             </section>
 
 
+        <hr>
 
-            {{-- Slider di apt sponsorizzati (da integrare se c'è tempo) --}}
+            {{-- Slider di apt sponsorizzati --}}
 
-        <section class="footer-top standard-padding">
-            <div class="container">
-                <div class="sponsored-gallery">
+        <section class="sponsored-apt-section">
+            
+            <h3 class="heading--primary">Altri chalet in evidenza</h3>
 
-                    <sponsored-slider></sponsored-slider>
-                    <div class="sponsored-slider-phone">
-                        <div class="slider-phone-cards">
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 1
-                                    </div>
-                                </div>
-                            </div>
+            <p>Non sei del tutto sicuro? Da' un'occhiata anche a questi chalet, selezionati fra le migliori opzioni oggi esistenti in Italia!</p>
 
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 2
-                                    </div>
-                                </div>
-                            </div>
+                <sponsored-slider></sponsored-slider>
 
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 3
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 4
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                        </div>                        
-                    </div>
-                </div>
-            </div>   
         </section>
 
 

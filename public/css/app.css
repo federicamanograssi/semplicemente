@@ -63,7 +63,7 @@ h3 {
   }
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .hide-on-mobile {
     display: none;
   }
@@ -73,7 +73,7 @@ h3 {
   display: none;
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .show-on-mobile {
     display: initial;
   }
@@ -420,6 +420,10 @@ h3 {
   transition: all 0.6s;
 }
 
+#form-anchor {
+  padding-top: 7rem;
+}
+
 h1 {
   font-size: 4rem;
   line-height: 5rem;
@@ -452,6 +456,7 @@ h1 {
 hr {
   border-top-width: 0;
   border-color: #c7c7c7;
+  margin-bottom: 2rem;
 }
 
 .container {
@@ -465,13 +470,13 @@ hr {
   padding-right: 0.5rem;
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .container i {
     font-size: 150%;
   }
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .container i.fa-star {
     font-size: initial;
   }
@@ -576,7 +581,6 @@ hr {
 
 .container .form-container .right-container {
   width: 35%;
-  padding-top: 7rem;
 }
 
 @media (max-width: 64em) {
@@ -715,7 +719,7 @@ hr {
   text-align: center;
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .container .hosted-by .redirect-btn {
     width: 100%;
   }
@@ -733,7 +737,7 @@ hr {
   display: none;
 }
 
-@media (max-width: 35.5em) {
+@media (max-width: 37.5em) {
   .container .sponsored-gallery .sponsored-slider-phone {
     display: block;
   }
@@ -762,6 +766,14 @@ hr {
 
 .container .sponsored-gallery .sponsored-slider-phone .slider-phone-cards .slider-phone-card .slider-phone-description {
   padding-left: 1rem;
+}
+
+.sponsored-apt-section {
+  padding-bottom: 3rem;
+}
+
+.sponsored-apt-section p {
+  margin-bottom: 2rem;
 }
 
 .register-form,

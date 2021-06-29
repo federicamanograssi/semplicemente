@@ -220,14 +220,6 @@
 
                     }
 
-
-                    // *****************************************************************
-                    // Assegna casualmente una sponsorizzazione ad un apparamento su 3
-                    // (Soluzione temporanea prima di ottenere l'informazione dal server)
-                    let rNum = Math.floor(Math.random() * 3 ) + 1; 
-                    rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false;
-                    // *****************************************************************
-
                     this.filteredApartments.push(apt);   // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array degli apt filtrati            
                                     
                 }  // main for
@@ -235,10 +227,10 @@
                 if (this.filteredApartments.length > 1) this.sortApartments();  // Se il filtraggio restituisce più di un apt, lancia metodo di ordinamento
                 
                 //  array ottimizzato per visualizzazione su mappa 
-                this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name , price , isSponsored}) => ({lat, lon , id , name , price , isSponsored}));
+                this.mapApartmens = this.filteredApartments.map(({lat, lon , id , name , price , is_sponsored}) => ({lat, lon , id , name , price , is_sponsored}));
 
                 //  array ottimizzato per visualizzazione card apt
-                this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, isSponsored, cover_img}) => ({id , name , price, dist, beds, rating, isSponsored, cover_img}));
+                this.listApartments = this.filteredApartments.map(({id , name , price, dist, beds, rating, is_sponsored, cover_img , excerpt}) => ({id , name , price, dist, beds, rating, is_sponsored, cover_img , excerpt}));
 
             },
 
@@ -273,11 +265,11 @@
                 
                 // Ricreo l'array filteredApartments inserrendo ai primi posti gli apt sponsorizzati
                 for(let i = 0; i < sortedApt.length ; i++)
-                    if(sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
+                    if(sortedApt[i].is_sponsored) this.filteredApartments.push(sortedApt[i]);
 
                 // Dopo gli apt sponsorizzati inserisco quelli rimanenti
                 for(let i = 0; i < sortedApt.length ; i++)
-                    if(!sortedApt[i].isSponsored) this.filteredApartments.push(sortedApt[i]);
+                    if(!sortedApt[i].is_sponsored) this.filteredApartments.push(sortedApt[i]);
 
             },
         }
