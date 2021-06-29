@@ -4,12 +4,10 @@
 <div class="container-fluid apartment-form-container">
     <div class="row">
         <div class="col-12 col-sm-8">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1>Inserisci un nuovo appartamento</h1>
-            </div>
+            <h1 class="tab-title">Inserisci un nuovo appartamento</h1>
         </div>
         <div class="col-12 col-sm-4">
-            <a href="{{ route('apartments.index') }}" class="btn btn-sm btn-outline-primary mb-3">
+            <a href="{{ route('apartments.index') }}" class="btn btn-sm btn-outline-primary mb-3 mb-sm-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> o Torna Indietro
             </a>
         </div>
