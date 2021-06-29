@@ -11,7 +11,7 @@
                 <h4>Seleziona un appartamento per le statistiche specifiche</h4>
                 <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment"
                 @change="onChangeFilter()">
-                    <option selected value="all">Tutti gli appartamenti</option>
+                    <option selected value="-1">Tutti gli appartamenti</option>
                     <option v-for="apartment in apartments" :key="apartment.id" :value="apartment.id">{{ apartment.title }}</option>
                 </select>
             </div>
@@ -136,7 +136,7 @@
 <script>
 import AdminStatisticsChart from './AdminStatisticsChart.vue';
     export default {
-        props:['apartments','views','messages','sponsorships'],
+        props:['apartments','views','messages','sponsorships', 'id_apt'],
         name: 'App',
         components: { AdminStatisticsChart },
         data(){
@@ -145,11 +145,22 @@ import AdminStatisticsChart from './AdminStatisticsChart.vue';
                 viewsPerApt : this.views,
                 messagesPerApt : this.messages,
                 sponsorshipsPerApt : this.sponsorships,
-                selectedApartment:'all'
+                selectedApartment: String,
+                selectedApartment: this.id_apt
             };
         },
         mounted(){
             this.getTotalMoney();
+            if(this.selectedApartment=='-1'){
+                    this.viewsPerApt = this.views;
+                    this.messagesPerApt = this.messages;
+                    this.sponsorshipsPerApt = this.sponsorships;
+                    this.getTotalMoney();
+                }else{
+                    this.getMessagesPerApt(this.selectedApartment);
+                    this.getViewsPerApt(this.selectedApartment);
+                    this.getSponsorshipsPerApt(this.selectedApartment);
+                }
         },
         methods:{
             getTotalMoney(){
@@ -160,7 +171,7 @@ import AdminStatisticsChart from './AdminStatisticsChart.vue';
                 }
             },
             onChangeFilter(){
-                if(this.selectedApartment=='all'){
+                if(this.selectedApartment=='-1'){
                     this.viewsPerApt = this.views;
                     this.messagesPerApt = this.messages;
                     this.sponsorshipsPerApt = this.sponsorships;

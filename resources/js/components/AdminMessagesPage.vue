@@ -5,13 +5,13 @@
             <div class="col-12">
                 <h2>I tuoi Messaggi</h2>
             </div>
-
+            
             <!-- SELECT PER SCEGLIERE APPARTAMENTO -->
             <div class="col-6">
                 <h4>Seleziona un appartamento per i messaggi specifici</h4>
                 <select class="custom-select custom-select-lg mb-3" v-model="selectedApartment"
                 @change="onChangeFilter()">
-                    <option selected value="all">Tutti gli appartamenti</option>
+                    <option selected value="-1">Tutti gli appartamenti</option>
                     <option v-for="apartment in apartments" :key="apartment.id" :value="apartment.id">{{ apartment.title }}</option>
                 </select>
             </div>
@@ -53,19 +53,24 @@
 
 <script>
     export default {
-        props:['apartments','messages'],
+        props:['apartments','messages', 'id_apt'],
         data(){
             return{
                 messagesPerApt : this.messages,
-                selectedApartment:'all'
+                selectedApartment: String,
+                selectedApartment: this.id_apt
             };
         },
         mounted(){
-           
+           if(this.selectedApartment=='-1'){
+                    this.messagesPerApt = this.messages;
+                }else{
+                    this.getMessagesPerApt(this.selectedApartment);
+                }
         },
         methods:{
             onChangeFilter(){
-                if(this.selectedApartment=='all'){
+                if(this.selectedApartment=='-1'){
                     this.messagesPerApt = this.messages;
                 }else{
                     this.getMessagesPerApt(this.selectedApartment);

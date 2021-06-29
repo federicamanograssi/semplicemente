@@ -48,7 +48,7 @@ class HomeController extends Controller
 
 
         //pagina statistiche
-    public function statistics()
+    public function statistics($id_apt)
     {
         $data = [
             //prendere lista appartamenti user
@@ -71,6 +71,8 @@ class HomeController extends Controller
                 ->where('user_id', Auth::id())->where('status',1)
                 ->select('apartment_id','amount')
                 ->get(),
+            
+            'id_apt' => $id_apt
         ];
 
         return view('admin.statistics.index',$data);

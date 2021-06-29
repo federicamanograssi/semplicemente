@@ -16,10 +16,9 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_apt)
     {
-
-        $data = [
+            $data = [
             // FILTRARE SOLO QUELLI DELL'UTENTE
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
@@ -27,6 +26,7 @@ class MessageController extends Controller
             'apartments' => Apartment::where('user_id', Auth::id())
             ->select('title','id')
             ->get(),
+            'id_apt' => $id_apt
         ];
 
 

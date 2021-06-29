@@ -5,6 +5,7 @@
 <admin-messages-page
 :apartments= "{{$apartments}}"
 :messages="{{$messages}}"
+:id_apt="{{$id_apt}}"
 />
 {{-- <div class="container">
     <div class="row justify-content-center">
