@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
+    
 @endsection
 
 {{-- @dump($apartment) --}}
@@ -224,7 +225,7 @@
 
                     <p>{{$apartment['address']}}</p>
                     <p>
-                        <span><strong>Lat:</strong>{{$apartment['latitude']}}</span> <span><strong>Lon:</strong>{{$apartment['longitude']}}</span>
+                        <span><strong class="color-primary">Lat:</strong>{{$apartment['latitude']}}</span> <span><strong class="color-primary">Lon:</strong>{{$apartment['longitude']}}</span>
                     </p>
 
                 </div>
@@ -290,5 +291,7 @@
 
 
     </div>
+    
+    <back-to-top></back-to-top>
 
 @endsection

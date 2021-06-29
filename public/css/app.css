@@ -18,6 +18,16 @@ body {
   background-color: rgba(16, 83, 16, 0.05);
 }
 
+::-moz-selection {
+  background-color: #348534;
+  color: white;
+}
+
+::selection {
+  background-color: #348534;
+  color: white;
+}
+
 body {
   font-size: 1.6rem;
   font-family: "Roboto", sans-serif;
