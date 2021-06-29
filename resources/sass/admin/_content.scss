@@ -107,4 +107,34 @@
         }
       }
   }
+  .popup-box-delete-apt {
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: #d8ae7fd2;
+
+    .popup-block{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 5px;
+      padding: 5px;
+      height: 20rem;
+      width: 25rem;
+      background-color:#385744;
+      color: #ffefd5;
+      
+      .popup-text-block{
+        position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      }
+    }
+}
 }
