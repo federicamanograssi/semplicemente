@@ -2007,9 +2007,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'messages', 'id_apt'],
   data: function data() {
@@ -2554,8 +2551,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['apartments', 'views', 'messages', 'sponsorships', 'id_apt'],
@@ -2605,6 +2600,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.getViewsPerApt(this.selectedApartment);
         this.getSponsorshipsPerApt(this.selectedApartment);
       }
+
+      ;
     },
     getMessagesPerApt: function getMessagesPerApt(apt_id) {
       this.messagesPerApt = [];
@@ -78732,93 +78729,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6" }, [
-          _c("h4", [
-            _vm._v("Seleziona un appartamento per i messaggi specifici")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedApartment,
-                  expression: "selectedApartment"
-                }
-              ],
-              staticClass: "custom-select custom-select-lg mb-3",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selectedApartment = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    return _vm.onChangeFilter()
-                  }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { selected: "", value: "-1" } }, [
-                _vm._v("Tutti gli appartamenti")
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.apartments, function(apartment) {
-                return _c(
-                  "option",
-                  { key: apartment.id, domProps: { value: apartment.id } },
-                  [_vm._v(_vm._s(apartment.title))]
-                )
-              })
-            ],
-            2
-          )
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-6" }, [
+        _c("h4", [
+          _vm._v("Seleziona un appartamento per i messaggi specifici")
         ]),
         _vm._v(" "),
-        _c("table", { staticClass: "table w-100 table-responsive" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(this.messagesPerApt, function(message) {
-              return _c("tr", { key: message.id, attrs: { role: "row" } }, [
-                _c("td", { staticClass: "text-left" }),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _c("a", { attrs: { href: "mailto" } }, [
-                    _vm._v(_vm._s(message.email_sender))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(message.message_text))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(message.created_at))
-                ])
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedApartment,
+                expression: "selectedApartment"
+              }
+            ],
+            staticClass: "custom-select custom-select-lg mb-3",
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selectedApartment = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                function($event) {
+                  return _vm.onChangeFilter()
+                }
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { selected: "", value: "-1" } }, [
+              _vm._v("Tutti gli appartamenti")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.apartments, function(apartment) {
+              return _c(
+                "option",
+                { key: apartment.id, domProps: { value: apartment.id } },
+                [_vm._v(_vm._s(apartment.title))]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(this.messagesPerApt, function(message) {
+            return _c("tr", { key: message.id, attrs: { role: "row" } }, [
+              _c("td", { staticClass: "text-left" }, [
+                _vm._v(_vm._s(message.apartment_id))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-left" }, [
+                _vm._v(_vm._s(message.email_sender))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-left" }, [
+                _vm._v(_vm._s(message.message_text))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-left" }, [
+                _vm._v(_vm._s(message.created_at))
               ])
-            }),
-            0
-          )
-        ])
+            ])
+          }),
+          0
+        )
       ])
     ])
   ])
@@ -78829,7 +78824,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("h2", [_vm._v("I tuoi Messaggi")])
+      _c("h1", { staticClass: "tab-title" }, [_vm._v("I tuoi Messaggi")])
     ])
   },
   function() {
@@ -78839,7 +78834,7 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "table-light" }, [
       _c("tr", { attrs: { role: "row" } }, [
         _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-          _vm._v("Appartamento")
+          _vm._v("Apt Id")
         ]),
         _vm._v(" "),
         _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
@@ -79158,12 +79153,12 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row card-row" }, [
         _c("div", { staticClass: "col-lg-4 col-md-12" }, [
           _c("div", { staticClass: "card card-stats" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-5" }, [
+                _c("div", { staticClass: "col-4" }, [
                   _c("div", { staticClass: "text-center" }, [
                     _c(
                       "svg",
@@ -79213,7 +79208,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-7" }, [
+                _c("div", { staticClass: "col-8" }, [
                   _c("div", { staticClass: "numbers" }, [
                     _c("p", { staticClass: "card-category" }, [
                       _vm._v("Visualizzazioni")
@@ -79235,7 +79230,7 @@ var render = function() {
           _c("div", { staticClass: "card card-stats" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-5" }, [
+                _c("div", { staticClass: "col-4" }, [
                   _c("div", { staticClass: "text-center" }, [
                     _c(
                       "svg",
@@ -79283,7 +79278,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-7" }, [
+                _c("div", { staticClass: "col-8" }, [
                   _c("div", { staticClass: "numbers" }, [
                     _c("p", { staticClass: "card-category" }, [
                       _vm._v("Messaggi")
@@ -79305,7 +79300,7 @@ var render = function() {
           _c("div", { staticClass: "card card-stats" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-5" }, [
+                _c("div", { staticClass: "col-4" }, [
                   _c("div", { staticClass: "text-center" }, [
                     _c(
                       "svg",
@@ -79353,7 +79348,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-7" }, [
+                _c("div", { staticClass: "col-8" }, [
                   _c("div", { staticClass: "numbers" }, [
                     _c("p", { staticClass: "card-category" }, [
                       _vm._v("Spese")
@@ -79375,7 +79370,17 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-12" }, [
           _c("div", { staticClass: "card card-chart" }, [
-            _vm._m(4),
+            _c("div", { staticClass: "card-header" }, [
+              _c("h5", { staticClass: "card-category" }, [
+                _vm._v("Visualizzazioni ")
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "card-title" }, [
+                _c("i", [
+                  _vm._v(_vm._s(this.viewsPerApt.length) + " questo mese")
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "chart-area" }, [
@@ -79403,7 +79408,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("h2", [_vm._v("Le tue statistiche")])
+      _c("h1", { staticClass: "tab-title" }, [_vm._v("Le tue statistiche")])
     ])
   },
   function() {
@@ -79438,20 +79443,6 @@ var staticRenderFns = [
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "stats" }, [_c("i", [_vm._v("Totale Speso")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "card-category" }, [
-        _vm._v("Visualizzazioni totali")
-      ]),
-      _vm._v(" "),
-      _c("h3", { staticClass: "card-title" }, [
-        _c("i", [_vm._v(" Numero +icona")])
-      ])
     ])
   }
 ]
@@ -80325,7 +80316,7 @@ var render = function() {
                   attrs: { src: _vm.videoSrc, type: "video/mp4" }
                 }),
                 _vm._v(
-                  "\n                Browser non supportato!\n            "
+                  "\r\n                Browser non supportato!\r\n            "
                 )
               ]
             )
@@ -94696,8 +94687,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/yumi/Documents/Boolean /Progetto Finale/semplicemente/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

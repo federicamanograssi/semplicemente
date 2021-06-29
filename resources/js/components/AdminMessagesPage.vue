@@ -1,9 +1,8 @@
 <template>
-<div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h2>I tuoi Messaggi</h2>
+                <h1 class="tab-title">I tuoi Messaggi</h1>
             </div>
             
             <!-- SELECT PER SCEGLIERE APPARTAMENTO -->
@@ -16,12 +15,12 @@
                 </select>
             </div>
 
-            <table class="table w-100 table-responsive">
+            <table class="table table-striped">
 
                 <!-- titoli colonne -->
                 <thead class="table-light">
                     <tr role="row">
-                        <th tabindex="0" rowspan="1" colspan="1">Appartamento</th>
+                        <th tabindex="0" rowspan="1" colspan="1">Apt Id</th>
                         <th tabindex="0" rowspan="1" colspan="1">Contatto</th>
                         <th tabindex="0" rowspan="1" colspan="1">Testo del messaggio</th>
                         <th tabindex="0" rowspan="1" colspan="1">Data</th>
@@ -33,10 +32,10 @@
                     
                     <!-- riga appartamento -->
                     <tr role="row" v-for="message in this.messagesPerApt" :key="message.id">
-                        <td class="text-left"></td>
-                        <td class="text-right"><a href="mailto">{{message.email_sender}}</a></td>
-                        <td class="text-right">{{message.message_text}}</td>
-                        <td class="text-right">{{message.created_at}}</td>
+                        <td class="text-left">{{message.apartment_id}}</td>
+                        <td class="text-left">{{message.email_sender}}</td>
+                        <td class="text-left">{{message.message_text}}</td>
+                        <td class="text-left">{{message.created_at}}</td>
                     </tr>
 
                     <!-- @endforeach -->
@@ -46,8 +45,6 @@
         </div>
 
     </div>
-
-</div>
         
 </template>
 

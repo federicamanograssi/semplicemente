@@ -2,20 +2,20 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1>Tutti i tuoi appartamenti</h1>
-                    <p>Qui puoi visualizzare, modificare o cancellare i tuoi appartamenti</p>
-                </div>
+            <h1 class="tab-title">Appartamenti</h1>
+            <p>Qui puoi visualizzare, modificare o cancellare i tuoi appartamenti</p>
+        </div>
 
-                <a href="{{ route('apartments.create') }}" class="btn btn-warning">
-                    Inserisci nuovo appartamento
-                </a>
-            </div>
-
-            <table class="table table-borderless">
+        <div class="col-12 text-right">
+            <a href="{{ route('apartments.create') }}" class="btn btn-new-apt">
+                Inserisci nuovo appartamento
+            </a>
+        </div>
+        <div class="col-12">
+            <h3>Lista appartamenti</h3>
+            <table class="table table-striped">
                 <thead>
                     <tr role="row">
                         <th tabindex="0" rowspan="1" colspan="1" aria-sort="ascending">Titolo</th>
@@ -24,9 +24,9 @@
                         <th tabindex="0" rowspan="1" colspan="1">Prezzo</th>
                         <th tabindex="0" rowspan="1" colspan="1">Stanze</th>
                         <th tabindex="0" rowspan="1" colspan="1">Letti</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Bagni</th>
+                        {{-- <th tabindex="0" rowspan="1" colspan="1">Bagni</th> --}}
                         <th tabindex="0" rowspan="1" colspan="1">Visibile</th>
-                        <th rowspan="1" colspan="1">Azioni</th>
+                        <th rowspan="1" colspan="1" class="action-bigger">Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +55,7 @@
                         <td class="text-right">{{ $apartment->price_per_night }} €</td>
                         <td class="text-right">{{ $apartment->rooms_n }}</td>
                         <td class="text-right">{{ $apartment->beds_n }}</td>
-                        <td class="text-right">{{ $apartment->bathroom_n }}</td>
+                        {{-- <td class="text-right">{{ $apartment->bathroom_n }}</td> --}}
                         <td class="text-right">
                             @if ( $apartment['visible'] == 1)
                                 sì
@@ -64,9 +64,11 @@
                             @endif
                         </td>
                         <td class="text-center">
+                            {{-- EDIT --}}
                             <a href="{{ route('apartments.edit', $apartment->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
                             </a>
+                            {{-- MESSAGES --}}
                             <a href="{{route('messages.index', $apartment->id)}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -74,6 +76,7 @@
                                     
                                 </svg>
                             </a>
+                            {{-- STATISTICS --}}
                             <a href="{{ route('admin.statistics.index', $apartment->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                                     <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -81,12 +84,16 @@
                                     <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </a>
+                            {{-- DELETE --}}
+                            <a onclick="confirmDelete()" style="cursor:pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </a>
                             {{-- <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
                                 @csrf
                                 @method('DELETE') --}}
-                                <button onclick="confirmDelete()" >
+                                {{-- <button onclick="confirmDelete()" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
+                                </button> --}}
                             {{-- </form> --}}
                         </td>
                     </tr>

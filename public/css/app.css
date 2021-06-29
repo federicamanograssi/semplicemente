@@ -863,13 +863,78 @@ div[class$=-form] {
   }
 }
 
-.navbar {
+#general-container main h1,
+#general-container main h2,
+#general-container main h3 {
+  margin-bottom: 2rem;
+}
+
+#general-container main h1.tab-title,
+#general-container main h2.tab-title,
+#general-container main h3.tab-title {
+  margin-top: 2rem;
+}
+
+#general-container main .card-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+#general-container main .card-row {
+  margin-bottom: 3rem;
+}
+
+#general-container main .card {
+  background-color: #d8af7f;
+  color: #5a5034;
+  margin-bottom: 10px;
+}
+
+#general-container main a.btn-new-apt {
+  background-color: #f7a64a;
+}
+
+#general-container .navbar {
   height: 50px;
 }
 
-.bg-green {
+#general-container .bg-green {
   background-color: #385744;
   color: #ffefd5;
+}
+
+#general-container table {
+  margin-top: 30px;
+  background-color: #d8ae7fad;
+  border-radius: 0.25rem;
+  width: 100%;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+#general-container table thead {
+  background-color: #d8af7f;
+  font-size: 1.7rem;
+}
+
+#general-container table th,
+#general-container table td {
+  padding: 10px 20px;
+}
+
+#general-container table th .action-bigger,
+#general-container table td .action-bigger {
+  width: 200px;
+}
+
+#general-container table a {
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  #general-container table table {
+    display: block;
+  }
 }
 
 nav .sidebar-sticky {
