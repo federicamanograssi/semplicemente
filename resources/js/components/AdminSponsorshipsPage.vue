@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="tab-title">Metti in evidenza un appartamento</h1>
-                <button class="btn btn-warning btn-lg"><a href="/admin/payment">Sponsorizza</a></button>
+                <a href="/admin/payment" class="btn btn-our-btn">Sponsorizza</a>
 
             </div>
         </div>

@@ -9,7 +9,7 @@
         </div>
 
         <div class="col-12 text-right">
-            <a href="{{ route('apartments.create') }}" class="btn btn-new-apt">
+            <a href="{{ route('apartments.create') }}" class="btn btn-our-btn">
                 Inserisci nuovo appartamento
             </a>
         </div>

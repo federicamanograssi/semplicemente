@@ -78962,11 +78962,11 @@ var staticRenderFns = [
           _vm._v("Metti in evidenza un appartamento")
         ]),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-warning btn-lg" }, [
-          _c("a", { attrs: { href: "/admin/payment" } }, [
-            _vm._v("Sponsorizza")
-          ])
-        ])
+        _c(
+          "a",
+          { staticClass: "btn btn-our-btn", attrs: { href: "/admin/payment" } },
+          [_vm._v("Sponsorizza")]
+        )
       ])
     ])
   },

@@ -890,7 +890,7 @@ div[class$=-form] {
   margin-bottom: 10px;
 }
 
-#general-container main a.btn-new-apt {
+#general-container main a.btn-our-btn {
   background-color: #f7a64a;
 }
 
@@ -920,11 +920,6 @@ div[class$=-form] {
 #general-container table th,
 #general-container table td {
   padding: 10px 20px;
-}
-
-#general-container table th .action-bigger,
-#general-container table td .action-bigger {
-  width: 200px;
 }
 
 #general-container table a {
