@@ -66,36 +66,44 @@
                             <a href="{{ route('apartments.edit', $apartment->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
                             </a>
-                            <a href="">
+                            <a href="{{route('messages.index', $apartment->id)}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                     <path d="M22 6l-10 7L2 6"></path>
                                     
                                 </svg>
                             </a>
-                            <a href={{route('messages.index',$apartment->id)}}>
+                            <a href="{{ route('admin.statistics.index', $apartment->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                                     <line x1="18" y1="20" x2="18" y2="10"></line>
                                     <line x1="12" y1="20" x2="12" y2="4"></line>
                                     <line x1="6" y1="20" x2="6" y2="14"></line>
                                 </svg>
                             </a>
-                            <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
+                            {{-- <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit">
+                                @method('DELETE') --}}
+                                <button onclick="confirmDelete()" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 </button>
-                            </form>
+                            {{-- </form> --}}
                         </td>
                     </tr>
-
+            
                     @endforeach
-
+                    
                 </tbody>
             </table>
 
-
+            <div class="popup-box" id="popup-box">
+                <p>Confermi l'eliminazione?</p>
+                <button onclick="chiudi()">No</button>
+                <form class="d-inline-block" action="{{ route('apartments.destroy',$apartment->id) }}" method="post">
+                    @csrf
+                    @method('DELETE') 
+                <button class="btn-danger" type="submit">Sì</button>
+                </form>
+            </div>
 
                     {{-- @foreach ($apartments as $apartment)
                             <h3>{{ $apartment->images->first()->img_path}}</h3>
@@ -129,3 +137,35 @@
 </div>
 
 @endsection
+<style>
+    .popup-box {
+        visibility: hidden;
+        position: absolute;
+        text-align: center;
+        padding: 5px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 80px;
+        width: 230px;
+        background-color:#385744;
+        color: #ffefd5;
+    }
+
+</style>
+<script>
+
+function chiudi() {
+    document.getElementById('popup-box').style.visibility="hidden";
+    
+}
+
+function confirmDelete() {
+    document.getElementById('popup-box').style.visibility="visible";
+}
+
+
+
+
+
+</script>

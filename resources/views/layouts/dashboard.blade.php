@@ -68,7 +68,7 @@
                     </li>
                     {{-- Messaggi--- --}}
                     <li class="nav-item">
-                      <a class="nav-link" href={{ route('messages.index')}}>
+                      <a class="nav-link" href={{ route('messages.index', ['id_apt' => '-1'])}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <path d="M22 6l-10 7L2 6"></path>
@@ -79,7 +79,7 @@
                     </li>
                     {{-- Statistiche--- --}}
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ route('admin.statistics.index')}}">
+                      <a class="nav-link" href={{ route('admin.statistics.index' , ['id_apt' => '-1'])}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                             <line x1="18" y1="20" x2="18" y2="10"></line>
                             <line x1="12" y1="20" x2="12" y2="4"></line>

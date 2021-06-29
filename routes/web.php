@@ -52,8 +52,9 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', 'HomeController@index')->name('admin_homepage');
         Route::resource('/messages', 'MessageController');
+        Route::get('/messages/list/{id_apt}', 'MessageController@index')->name('messages.index');
         Route::resource('/apartments','ApartmentController');
-        Route::get('/statistics','HomeController@statistics')->name('admin.statistics.index');
+        Route::get('/statistics/{id_apt}','HomeController@statistics')->name('admin.statistics.index');
         Route::get('/sponsorships','HomeController@sponsorship')->name('admin.sponsorships.index');
 
         // pagamenti
