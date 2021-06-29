@@ -2263,8 +2263,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['views'],
   name: "PlanetChart",
   watch: {
-    parentData: function parentData(newVal, oldVal) {
-      this.adminStatisticsChartData.data.parentDataData = this.parentData;
+    views: function views(newVal, oldVal) {
+      this.adminStatisticsChartData.data.viewsData = this.views;
       this.adminStatisticsChartData.data.AptCounter = 0;
       this.viewCounter();
       this.adminStatisticsChartData.data.labels = [];
@@ -2287,7 +2287,7 @@ __webpack_require__.r(__webpack_exports__);
         type: "bar",
         data: {
           AptCounter: 0,
-          parentDataData: this.parentData,
+          viewsData: this.views,
           //prova di trasferimento dati da props a data -- sembra non aggiornarsi all'aggiornare del props
           searchResult: [],
           labels: [// "Lunedì",
@@ -2323,11 +2323,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di parentData
+    //metodo che aggiunge +1 al contatore per ogni appartamento all'interno di views
     viewCounter: function viewCounter() {
       var _this = this;
 
-      this.parentData.forEach(function (element) {
+      this.views.forEach(function (element) {
         _this.adminStatisticsChartData.data.AptCounter = _this.adminStatisticsChartData.data.AptCounter + 1;
         return console.log(_this.adminStatisticsChartData.data.AptCounter);
       });
@@ -2335,7 +2335,7 @@ __webpack_require__.r(__webpack_exports__);
     createdAt: function createdAt() {
       var _this2 = this;
 
-      this.parentData.forEach(function (element) {
+      this.views.forEach(function (element) {
         var date = new Date(element.created_at);
         var day = date.getDate();
 
@@ -2351,7 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
         this.adminStatisticsChartData.data.datasets[0].data[i] = 0;
       }
 
-      this.parentData.forEach(function (element) {
+      this.views.forEach(function (element) {
         var date = new Date(element.created_at);
         var day = date.getDate();
 

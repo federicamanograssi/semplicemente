@@ -37,6 +37,8 @@ Vue.component('admin-statistics-page', require('./components/AdminStatisticsPage
 Vue.component('admin-sponsorships-page', require('./components/AdminSponsorshipsPage.vue').default);
 Vue.component('admin-messages-page', require('./components/AdminMessagesPage.vue').default);
 Vue.component('admin-statistics-chart', require('./components/AdminStatisticsChart.vue').default);
+Vue.component('admin-statistics-chart-all', require('./components/AdminStatisticsChartAll.vue').default);
+
 
 
 /**
