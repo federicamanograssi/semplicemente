@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h2>Metti in evidenza un appartamento</h2>
+                <h1 class="tab-title">Metti in evidenza un appartamento</h1>
                 <button class="btn btn-warning btn-lg"><a href="/admin/payment">Sponsorizza</a></button>
 
             </div>

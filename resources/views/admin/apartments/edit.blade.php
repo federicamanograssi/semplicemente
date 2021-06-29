@@ -1,15 +1,16 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1>Modifica appartamento ' {{ $apartment->title }} '</h1>
-                <a href="{{ route('apartments.index') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Torna ai tuoi appartamenti
-                </a>
-            </div>
+<div class="container-fluid">
+    <div class="row d-flex justify-content-between">
+        <div class="col-12 col-md-6">
+            <h1 class="tab-title">Modifica ' {{ $apartment->title }} '</h1>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{{ route('apartments.index') }}" class="btn btn-sm btn-outline-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Torna ai tuoi appartamenti
+            </a>
+        </div>
             <div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

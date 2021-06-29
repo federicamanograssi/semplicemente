@@ -78958,7 +78958,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
-        _c("h2", [_vm._v("Metti in evidenza un appartamento")]),
+        _c("h1", { staticClass: "tab-title" }, [
+          _vm._v("Metti in evidenza un appartamento")
+        ]),
         _vm._v(" "),
         _c("button", { staticClass: "btn btn-warning btn-lg" }, [
           _c("a", { attrs: { href: "/admin/payment" } }, [
