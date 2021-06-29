@@ -17,7 +17,7 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 
     {{-- tolto main js perchè entrava in conflitto con modulo pagamenti --}}
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
   
@@ -184,7 +184,7 @@
       </nav>
 
               {{-- MAIN CONTAINER -------------- --}}
-      <main id="app" role="main" class="admin col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
+      <main id="app" role="main" class="admin col-md-9 ml-sm-auto col-lg-10 px-4 py-4 overflow-auto">
           <div class="container-fluid">
             <div class="row">
               <div class="col-12">
@@ -199,7 +199,7 @@
               <form action="">
                 <div class="form-group col-md-4">
                   <label for="apartmentChoice">Scegli un appartamento</label>
-                  <select id="apartmentChoice" class="form-control" onchange="valApt()">
+                  <select id="apartmentChoice" class="form-control form-control-lg" onchange="valApt()">
                     <option selected>Scegli un'opzione</option>
                     @foreach ($apartments as $apartment)
                         <option value="{{$apartment->id}}">{{$apartment->title}}</option>
@@ -208,7 +208,7 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="sponsorshipChoice">Scegli quanto sponsorizzare</label>
-                  <select id="sponsorshipChoice" class="form-control" onchange="valSpn()">
+                  <select id="sponsorshipChoice" class="form-control form-control-lg" onchange="valSpn()">
                     <option selected>Scegli un'opzione</option>
                     @foreach ($sponsorships as $sponsorship)
                         <option value="{{$sponsorship->id}}">{{$sponsorship->name}} ( {{$sponsorship->hours}} ore - {{$sponsorship->amount}} €)</option>
@@ -221,7 +221,7 @@
                   <div id="dropin-container"></div>
                 </div>
               </form>
-              <button type="submit" id="submit-button" class="btn btn-primary">Paga ora</button>
+              <button type="submit" id="submit-button" class="btn btn-success ml-4">Paga ora</button>
             </div>
           </div>
       </main>

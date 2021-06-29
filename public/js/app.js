@@ -78740,7 +78740,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
         _c("h4", [
           _vm._v("Seleziona un appartamento per i messaggi specifici")
         ]),
