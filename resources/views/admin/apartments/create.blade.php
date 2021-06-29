@@ -1,15 +1,17 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-12">
+<div class="container-fluid apartment-form-container">
+    <div class="row">
+        <div class="col-12 col-sm-8">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Inserisci un nuovo appartamento</h1>
-                <a href="{{ route('apartments.index') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> Torna ai tuoi appartamenti
-                </a>
             </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <a href="{{ route('apartments.index') }}" class="btn btn-sm btn-outline-primary mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><line x1="20" y1="12" x2="4" y2="12"></line><polyline points="10 18 4 12 10 6"></polyline></svg> o Torna Indietro
+            </a>
         </div>
     </div>
     {{-- ROW FORM--------- --}}
@@ -153,11 +155,14 @@
                 </div>
 
 
+                <div class="row">
+
+                </div>
             {{-- PROVA PIU' INPUT IMMAGINI --}}
                 <label>Immagini:</label>
                 <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
-                <div class="row" id="add_more">
-                    <div class= "col-2">
+                <div class="row img-input-row" id="add_more">
+                    <div class= "col-12 col-sm-3">
                         <img id="img1" src="https://www.maniboo.it/wp-content/uploads/2019/11/no-image.jpg" />
                         <input class='form-control-file' type="file" name="image1" id="img_input1">
                         <input type="text" name="img_description1" placeholder="Descrizione">
@@ -171,7 +176,7 @@
                 <input type="hidden" name="n_img" id="n_img" value= "1">
 
 
-                <p>Visibile:</p>
+                <p>Rendi Visibile:</p>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="visible" id="1" class="form-control @error('visible') is-invalid @enderror" value="1"  checked required>
                     <label class="form-check-label" for="1">
@@ -190,7 +195,7 @@
             
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success mt-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Crea
                     </button>
                 </div>
@@ -198,16 +203,6 @@
         </div>
     </div>
 </div>
-
-<style type="text/css">
-
-    img{
-        width: 100px;
-        height: auto;
-        display: block;
-    }
-
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
