@@ -185,30 +185,53 @@ class ApartmentController extends Controller
                 $image->delete();
             }
         }
-
         $j = $data['n_img_now'];
         $k = $data['n_img'];
-        // dd($j, $k);
+        $images = Image::where('apartment_id', $apartment->id)->get();
+        $path_images = [];
+        foreach ($images as $image) {
+            array_push($path_images, $image->img_path);
+            if($data['is_cover']==$image->id){
+                $image->is_cover = 1;
+                
+            } else {
+                $image->is_cover = 0;
+                
+            }
+            if($image->img_description != $data['img_description'.$image->id]){
+                $image->img_description = $data['img_description'.$image->id];
+            }
+            $image->update();
+        }
+        
+        
+        $y = 1;
         $k++;
         for($i=$k; $i<= $j; $i++) {
                 if (!empty($data['image'.$i])) {
                     // salviamo l'img inserita nel form nella cartella storage/app/public/images
-                    $path = 'apt' .$apartment->id .'_photo' .$k .'.';
+                    $path = 'apt' .$apartment->id .'_photo' .$y .'.';
                     $extension = $data['image'.$i]->extension();
                     $name = $path .$extension;
-                    $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
-                    // creiamo una nuova istanza della classe images
-                    $new_image = New Image;
-                    // Compiliamo i dati della colonne immagine e apartment_id
-                    $new_image->img_path = $data['image'.$i];
-                    $new_image->img_description = $data['img_description'.$i];
-                    $new_image->apartment_id = $apartment->id;
-                    if ($data['is_cover'] == 'image'.$i) {
-                        $new_image->is_cover = 1;
-                    }
-                    // Salviamo l'immagine nel database
-                    $new_image->save();
-                    $k++;
+                    if(!in_array('apartment_images/' .$name, $path_images)){
+                        $data['image'.$i] = $data['image'.$i]->storeAs('apartment_images', $name, 'public');
+                        // creiamo una nuova istanza della classe images
+                        $new_image = New Image;
+                        // Compiliamo i dati della colonne immagine e apartment_id
+                        $new_image->img_path = $data['image'.$i];
+                        $new_image->img_description = $data['img_description'.$i];
+                        $new_image->apartment_id = $apartment->id;
+                        if ($data['is_cover'] == 'image'.$i) {
+                            $new_image->is_cover = 1;
+                        }
+                        // Salviamo l'immagine nel database
+                        $new_image->save();
+                        $y++;
+                }
+                else {
+                    $i--;
+                    $y++;
+                }
             }
         }
 
