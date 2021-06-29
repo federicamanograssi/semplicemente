@@ -34,7 +34,7 @@ class HomeController extends Controller
     *   Dato l'id di un appartamento, questo metodo
     *   restituisce l'oggetto che lo rappresenta
     */
-    public function show($id)
+    public function show($id , $messageSent=false)
     {
         // Trova appartamento il cui ID corrisponde a quello richiesto
 
@@ -111,7 +111,8 @@ class HomeController extends Controller
         $apartment['services']  = $services;
 
         $data = [
-            'apartment' => $apartment
+            'apartment' => $apartment ,
+            'messageSent' => $messageSent
         ];
 
         //crea nuova visualizzazione dell'appartamento

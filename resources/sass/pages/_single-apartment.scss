@@ -292,3 +292,44 @@ hr {
         margin-bottom: $spacing-standard;
     }
 }
+
+.msgSent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(255,255,255,.5);
+    z-index: 999;
+
+    &__inner-box{
+        position: absolute;
+        // height: $height-section-huge;
+        width: 100%;
+        max-width: 50rem;
+        background-color: $white;
+        border-radius: $border-radius-standard;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+        @include shadow-enhanced;
+        // z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: $spacing-more;
+        text-align: center;
+    }
+    &__title {
+        margin-bottom: $spacing-more;
+        color: $color-primary;
+    }
+    &__text {
+        margin-bottom: $spacing-more;
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+    &__button{
+
+    }
+}

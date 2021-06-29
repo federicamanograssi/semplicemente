@@ -62,7 +62,7 @@ class MessageController extends Controller
 
         // AGGIUNGERE MESSAGGIO SUCCESSO INVIO E SVUOTARE FORM senza far fare redirect
 
-        return redirect()->route('apartments.show',$data['apartment_id']);
+        return redirect()->route('guest_show_apartment' , [ 'id' => $data['apartment_id'] , 'messageSent' => true] );
     }
 
     /**

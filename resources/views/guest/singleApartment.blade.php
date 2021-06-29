@@ -13,7 +13,34 @@
     
 @endsection
 
-{{-- @dump($apartment) --}}
+    @php
+
+    if(isset($_GET['messageSent']) )        
+        $messageSent=true;
+     else $messageSent=false;
+    
+    @endphp
+
+@if ($messageSent)
+
+    <aside class="msgSent">
+        <div class="msgSent__inner-box">
+            <h2 class="msgSent__title">Messaggio inviato</h2>
+            <p class="msgSent__text">Il tuo messaggio è stato correttamente inoltrato a <span class="color-primary">{{ $apartment['host']['name']}}</span>. Riceverai una risposta al più presto.</p>
+            <button id="msgSent__button" class="msgSent__button btn btn--primary-light">Ok</button>
+        </div>
+    </aside>
+
+@endif
+
+<script>
+    document.querySelector('.msgSent__button').addEventListener("click", function(){
+        document.querySelector('.msgSent').classList.add('hidden');
+        });
+</script>
+
+
+
 
 @section('main')
                     
@@ -33,7 +60,6 @@
             {{-- slider immagini appartamento --}}
 
         </img-slider>
-
 
         <div class="container">
             <div class="form-container">
@@ -195,7 +221,7 @@
 
                             {{-- TESTO MESSAGGIO----------- --}}
                             <div class="form-group">
-                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario"></textarea>
+                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario" required minlength="50"></textarea>
                                 @error('message_text')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -291,7 +317,7 @@
 
 
     </div>
-    
+
     <back-to-top></back-to-top>
 
 @endsection

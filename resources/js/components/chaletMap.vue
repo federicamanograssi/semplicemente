@@ -275,7 +275,6 @@
                 line-height: 2.5rem;
             }
         }
-
-
     }
+    .leaflet-bottom.leaflet-right {z-index: 700;}
 </style>
