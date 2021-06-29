@@ -3,6 +3,7 @@
 <div class="container-fluid">
     <div class="row">
 
+        <h1>Ciao {{Auth::user()->name}}</h1>
         {{-- CARD STAT : APPARTAMENTI---- --}}
         <div class="col-lg-3 col-md-6">
             <div class="card card-stats">

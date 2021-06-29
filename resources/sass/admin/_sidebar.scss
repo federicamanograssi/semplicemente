@@ -1,8 +1,5 @@
-.nav_layout {
-
-    background-color: #385744;
+nav .sidebar-sticky {
     color:#ffefd5;
-    height: 100vh;
 
     a {
         color:inherit;
@@ -17,7 +14,7 @@
         height: 70px;
     }
 
-    .sidebar-sticky li{
+    & li{
         padding-top:15px;
         padding-bottom:15px;
 

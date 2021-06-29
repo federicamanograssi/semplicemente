@@ -1,6 +1,6 @@
-// SCROLLBAR--------------------
-@media (min-width: 768px) {
-    
+// MEDIA QUERY DA TABLET IN SU
+ @media (min-width: 768px){
+  // SCROLLBAR--------------------
     /* width */
     ::-webkit-scrollbar {
         width: .8rem;
@@ -25,51 +25,69 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #5a5034; 
       }
+  // FINE SCROLLBAR----------------
 }
+
+
 
 //   MAIN-------------------
-.admin {
+
+#general-container{
+  height: 100vh;
+  overflow: hidden;
+
+  main {
     background-color: #ffefd5;
     // background-color: #d8af7f;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 50px);
+    margin-top:50px;
     color:#5a5034;
 
-    
-    
-    .row {
-        padding-top:15px;
-        padding-bottom:15px;
+    @media (min-width: 768px){
+      margin-top: 0;
     }
-    .card {
-        background-color: #d8af7f;
-        // background-color: #ffefd5;
-        color: #5a5034
-    }
-    
-    .svg {
-        color: inherit;
-    }
-    table{
-      margin-top: 10px;
-      background-color: #d8ae7fad;
-      border-radius: .25rem;
-      width: 100%;
-      border-radius: 5px;
-      overflow-x: auto;
-      /* overflow-y: auto; */
-
-      thead{
-        background-color: #d8af7f;
-        // background-color: rgba(0,0,0,.03);
-        font-size: 1.7rem;
-      }
-      th,td{
-          padding:10px 20px;
-      }
-      @media (max-width: 768px){
-          table{
-              display: block;
-          }
-      }
-    }
+  }
 }
+
+.navbar{
+  height: 50px;
+}
+.bg-green{
+  background-color: #385744;
+  color:#ffefd5;
+}
+    
+    
+//     .row {
+//         padding-top:15px;
+//         padding-bottom:15px;
+//     }
+//     .card {
+//         background-color: #d8af7f;
+//         color: #5a5034
+//     }
+    
+//     .svg {
+//         color: inherit;
+//     }
+//     table{
+//       margin-top: 10px;
+//       background-color: #d8ae7fad;
+//       border-radius: .25rem;
+//       width: 100%;
+//       border-radius: 5px;
+//       overflow-x: auto;
+
+//       thead{
+//         background-color: #d8af7f;
+//         font-size: 1.7rem;
+//       }
+//       th,td{
+//           padding:10px 20px;
+//       }
+//       @media (max-width: 768px){
+//           table{
+//               display: block;
+//           }
+//       }
+//     }

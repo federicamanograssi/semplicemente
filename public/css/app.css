@@ -845,77 +845,81 @@ div[class$=-form] {
   }
 }
 
-.admin {
+#general-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+#general-container main {
   background-color: #ffefd5;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 50px);
+  margin-top: 50px;
   color: #5a5034;
 }
 
-.admin .row {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-.admin .card {
-  background-color: #d8af7f;
-  color: #5a5034;
-}
-
-.admin .svg {
-  color: inherit;
-}
-
-.admin table {
-  margin-top: 10px;
-  background-color: #d8ae7fad;
-  border-radius: 0.25rem;
-  width: 100%;
-  border-radius: 5px;
-  overflow-x: auto;
-  /* overflow-y: auto; */
-}
-
-.admin table thead {
-  background-color: #d8af7f;
-  font-size: 1.7rem;
-}
-
-.admin table th,
-.admin table td {
-  padding: 10px 20px;
-}
-
-@media (max-width: 768px) {
-  .admin table table {
-    display: block;
+@media (min-width: 768px) {
+  #general-container main {
+    margin-top: 0;
   }
 }
 
-.nav_layout {
-  background-color: #385744;
-  color: #ffefd5;
-  height: 100vh;
+.navbar {
+  height: 50px;
 }
 
-.nav_layout a {
+.bg-green {
+  background-color: #385744;
+  color: #ffefd5;
+}
+
+nav .sidebar-sticky {
+  color: #ffefd5;
+}
+
+nav .sidebar-sticky a {
   color: inherit;
   text-decoration: none;
 }
 
-.nav_layout a:hover {
+nav .sidebar-sticky a:hover {
   color: #d8af7f;
 }
 
-.nav_layout .nav_header {
+nav .sidebar-sticky .nav_header {
   height: 70px;
 }
 
-.nav_layout .sidebar-sticky li {
+nav .sidebar-sticky li {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-.nav_layout .sidebar-sticky li svg {
+nav .sidebar-sticky li svg {
   margin-right: 10px;
+}
+
+.navbar {
+  height: 50px;
+  color: #ffefd5;
+}
+
+.navbar.navbar-dark .navbar-toggler {
+  color: #ffefd5;
+  border-color: #ffefd5;
+}
+
+#navbarToggleExternalContent {
+  color: #ffefd5;
+}
+
+#navbarToggleExternalContent a {
+  color: inherit;
+  text-decoration: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#navbarToggleExternalContent a:hover {
+  color: #d8af7f;
 }
 
