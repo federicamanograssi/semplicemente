@@ -217,6 +217,14 @@ h3 {
   color: white;
 }
 
+.form__input::-moz-selection {
+  color: #105310;
+}
+
+.form__input::selection {
+  color: #105310;
+}
+
 .header {
   height: 7rem;
   background-color: rgba(255, 255, 255, 0.8);

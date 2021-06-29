@@ -21,27 +21,6 @@
     
     @endphp
 
-@if ($messageSent)
-
-    <aside class="msgSent">
-        <div class="msgSent__inner-box">
-            <h2 class="msgSent__title">Messaggio inviato</h2>
-            <p class="msgSent__text">Il tuo messaggio è stato correttamente inoltrato a <span class="color-primary">{{ $apartment['host']['name']}}</span>. Riceverai una risposta al più presto.</p>
-            <button id="msgSent__button" class="msgSent__button btn btn--primary-light">Ok</button>
-        </div>
-    </aside>
-
-@endif
-
-<script>
-    document.querySelector('.msgSent__button').addEventListener("click", function(){
-        document.querySelector('.msgSent').classList.add('hidden');
-        });
-</script>
-
-
-
-
 @section('main')
                     
     <main class="standard-padding">
@@ -287,7 +266,7 @@
                 </section>
 
                 <section class="section-price">
-                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}} &euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
+                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}}&euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
                 </section>
 
                 <section class="redirect-btn">
@@ -321,3 +300,21 @@
     <back-to-top></back-to-top>
 
 @endsection
+
+@if ($messageSent)
+
+    <aside class="msgSent">
+        <div class="msgSent__inner-box">
+            <h2 class="msgSent__title">Messaggio inviato</h2>
+            <p class="msgSent__text">Il tuo messaggio è stato correttamente inoltrato a <span class="color-primary">{{ $apartment['host']['name']}}</span>. Riceverai una risposta al più presto.</p>
+            <button id="msgSent__button" class="msgSent__button btn btn--primary-light">Ok</button>
+        </div>
+    </aside>
+
+    <script>
+        document.querySelector('.msgSent__button').addEventListener("click", function(){
+            document.querySelector('.msgSent').classList.add('hidden');
+            });
+    </script>
+    
+@endif

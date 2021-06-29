@@ -27,6 +27,9 @@
             color: $white;
         }
         
+        &::selection {
+            color: $color-primary;
+        }
     }
     
 
