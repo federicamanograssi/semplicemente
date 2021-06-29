@@ -38,8 +38,8 @@
         </nav>
     
         <div class="container-fluid h-100">
-            {{-- SIDEBAR---------- --}}
-            <div class="row">
+          <div class="row">
+              {{-- SIDEBAR---------- --}}
                 {{-- rendere la sidebar responsive --}}
               <nav class="col-md-2 d-md-block">
                 <div class="sidebar-sticky">
@@ -103,7 +103,7 @@
               </nav>
 
               {{-- MAIN CONTAINER -------------- --}}
-              <main id="app" role="main" class="admin col-md-10 ml-sm-auto col-lg-10 px-4 py-4">
+              <main id="app" role="main" class="admin col-md-10 ml-sm-auto col-lg-10 px-4 py-4 overflow-auto">
                   @yield('content')
               </main>
             </div>

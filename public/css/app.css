@@ -814,6 +814,37 @@ div[class$=-form] {
   width: 50%;
 }
 
+@media (min-width: 768px) {
+  /* width */
+
+  ::-webkit-scrollbar {
+    width: 0.8rem;
+    height: 80%;
+  }
+
+  /* Track */
+
+  ::-webkit-scrollbar-track {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background: #d8ae7f98;
+  }
+
+  /* Handle */
+
+  ::-webkit-scrollbar-thumb {
+    background: #d8af7f;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5a5034;
+  }
+}
+
 .admin {
   background-color: #ffefd5;
   height: calc(100vh - 70px);
@@ -837,6 +868,7 @@ div[class$=-form] {
 .nav_layout {
   background-color: #385744;
   color: #ffefd5;
+  height: 100vh;
 }
 
 .nav_layout a {

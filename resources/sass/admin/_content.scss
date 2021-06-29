@@ -1,20 +1,51 @@
+// SCROLLBAR--------------------
+@media (min-width: 768px) {
+    
+    /* width */
+    ::-webkit-scrollbar {
+        width: .8rem;
+        height: 80%;
+      }
+      
+      /* Track */
+      ::-webkit-scrollbar-track {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px; 
+        background: #d8ae7f98;
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #d8af7f;
+        border-radius: 5px; 
+      }
+      
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #5a5034; 
+      }
+}
+
+//   MAIN-------------------
 .admin {
     background-color: #ffefd5;
     // background-color: #d8af7f;
     height: calc(100vh - 70px);
     color:#5a5034;
 
-
+    
+    
     .row {
         padding-top:15px;
         padding-bottom:15px;
     }
     .card {
-    background-color: #d8af7f;
-    // background-color: #ffefd5;
-    color: #5a5034
+        background-color: #d8af7f;
+        // background-color: #ffefd5;
+        color: #5a5034
     }
-
+    
     .svg {
         color: inherit;
     }
