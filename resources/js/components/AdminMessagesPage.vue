@@ -20,10 +20,10 @@
                 <!-- titoli colonne -->
                 <thead class="table-light">
                     <tr role="row">
-                        <th tabindex="0" rowspan="1" colspan="1">Apt Id</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Contatto</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Testo del messaggio</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Data</th>
+                        <th class="align-middle" tabindex="0" rowspan="1" colspan="1">Apt Id</th>
+                        <th class="align-middle" tabindex="0" rowspan="1" colspan="1">Contatto</th>
+                        <th class="align-middle" tabindex="0" rowspan="1" colspan="1">Testo del messaggio</th>
+                        <th class="align-middle" tabindex="0" rowspan="1" colspan="1">Data</th>
                     </tr>
                 </thead>
 
