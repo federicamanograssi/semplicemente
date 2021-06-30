@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard-no-js')
 
 @section('content')
 <div class="container-fluid apartment-form-container">
