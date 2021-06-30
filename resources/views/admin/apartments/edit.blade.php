@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.dashboard-no-js')
 
 @section('content')
 <div class="container-fluid apartment-form-container">
@@ -187,7 +187,7 @@
                             </div>
                             {{-- elimina img --}}
                             <input type="hidden" id="id_img" value="{{ $images[$i]->id }}">
-                            <button type="button" class="btn btn-danger btn-smremove-img-btn ">Cancella</button>
+                            <button type="button" class="btn btn-danger btn-sm remove-img-btn ">Cancella</button>
                                 {{-- <a href="{{ route('remove.images', ['id' => $images[$i]->id]) }}"><button type="button" class="btn-danger">Delete</a> --}}
                     
                         </div>
