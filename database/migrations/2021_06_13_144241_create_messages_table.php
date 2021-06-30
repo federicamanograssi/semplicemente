@@ -18,7 +18,9 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('apartment_id');
             $table->string('email_sender',50);
             $table->text('message_text',500);
+            $table->dateTime('date');
             $table->timestamps();
+           
         });
     }
 
