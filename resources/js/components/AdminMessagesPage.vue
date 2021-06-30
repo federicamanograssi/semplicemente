@@ -32,10 +32,10 @@
                     
                     <!-- riga appartamento -->
                     <tr role="row" v-for="message in this.messagesPerApt" :key="message.id">
-                        <td class="text-left">{{message.apartment_id}}</td>
-                        <td class="text-left">{{message.email_sender}}</td>
-                        <td class="text-left">{{message.message_text}}</td>
-                        <td class="text-left">{{message.created_at}}</td>
+                        <td class="text-left align-middle">{{message.apartment_id}}</td>
+                        <td class="text-left align-middle">{{message.email_sender}}</td>
+                        <td class="text-left align-middle">{{message.message_text}}</td>
+                        <td class="text-left align-middle">{{message.created_at}}</td>
                     </tr>
 
                     <!-- @endforeach -->
