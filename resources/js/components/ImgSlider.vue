@@ -14,7 +14,7 @@
 
                     <div class="images">
                         
-                        <img :src="'../storage/' + photos[counter]['img_path']" class="img_slider" alt="">
+                        <img :src="'/storage/' + photos[counter]['img_path']" class="img_slider" alt="">
 
                         <div class="nav">                            
                             <div 
@@ -23,7 +23,7 @@
                                  class="img_preview" 
                                  @click="circleClick(index)">
 
-                                <img :src="'../storage/' + photo['img_path']" alt="">
+                                <img :src="'/storage/' + photo['img_path']" alt="">
 
                             </div>
                         </div>
