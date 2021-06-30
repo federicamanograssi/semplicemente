@@ -15,7 +15,7 @@
                 </select>
             </div>
 
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive-sm">
 
                 <!-- titoli colonne -->
                 <thead class="table-light">

@@ -78795,7 +78795,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("table", { staticClass: "table table-striped" }, [
+      _c("table", { staticClass: "table table-striped table-responsive-sm" }, [
         _vm._m(1),
         _vm._v(" "),
         _c(
