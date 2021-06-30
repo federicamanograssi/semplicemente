@@ -74,6 +74,7 @@ class ApartmentController extends Controller
         $new_apartment->user_id = Auth::id();
         $new_apartment->latitude = $lat;
         $new_apartment->longitude = $lon;
+        $new_apartment->rating = 1;
         $new_apartment->fill($data);
         
         $new_apartment->save();
