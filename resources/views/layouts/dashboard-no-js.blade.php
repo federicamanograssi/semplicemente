@@ -33,7 +33,7 @@
           <ul class="navbar-nav px-3">
               
             <li class="nav-item text-nowrap">
-              <a class="nav-link" href="{{ route('logout') }}"
+              <a class="nav-link" style="position:absolute;top: 0;right: 1rem;margin-top: 12px;" href="{{ route('logout') }}"
                  onclick="event.preventDefault();
                  document.getElementById('logout-form').submit();">
                   Logout
@@ -184,7 +184,6 @@
       <main id="app" role="main" class="admin col-md-10 ml-sm-auto col-lg-10 px-4 py-4 overflow-auto">
         @yield('content')
       </main>
-
 
     </div>
   </div>
