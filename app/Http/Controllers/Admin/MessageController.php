@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Message;
 use Illuminate\Support\Facades\DB;
 use App\Apartment;
+use Carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -60,6 +61,7 @@ class MessageController extends Controller
         $data = $request->all();
         $newMessage = new Message();
         $newMessage->apartment_id = $data['apartment_id'];
+        $newMessage->date = Carbon::now();
         $newMessage->fill($data);
         $newMessage->save();
 

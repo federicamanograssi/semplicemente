@@ -78815,7 +78815,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "text-left" }, [
-                _vm._v(_vm._s(message.created_at))
+                _vm._v(_vm._s(message.date))
               ])
             ])
           }),
@@ -94750,8 +94750,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\feder\OneDrive\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Matteo\Desktop\boolean\Final Project\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Matteo\Desktop\boolean\Final Project\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
