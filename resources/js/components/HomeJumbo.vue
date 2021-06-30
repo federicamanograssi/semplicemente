@@ -102,6 +102,7 @@
 
         @include responsive(phone) {
             font-size: 7rem;
+            line-height: 9rem;
             letter-spacing: 7px;
         }
 
