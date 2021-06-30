@@ -78803,25 +78803,20 @@ var render = function() {
           "tbody",
           _vm._l(this.messagesPerApt, function(message) {
             return _c("tr", { key: message.id, attrs: { role: "row" } }, [
-              _c("td", { staticClass: "text-left align-middle" }, [
+              _c("td", { staticClass: "text-left" }, [
                 _vm._v(_vm._s(message.apartment_id))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "text-left align-middle" }, [
+              _c("td", { staticClass: "text-left" }, [
                 _vm._v(_vm._s(message.email_sender))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "text-left align-middle" }, [
+              _c("td", { staticClass: "text-left" }, [
                 _vm._v(_vm._s(message.message_text))
               ]),
               _vm._v(" "),
-<<<<<<< HEAD
               _c("td", { staticClass: "text-left" }, [
                 _vm._v(_vm._s(message.date))
-=======
-              _c("td", { staticClass: "text-left align-middle" }, [
-                _vm._v(_vm._s(message.created_at))
->>>>>>> grafica_messages
               ])
             ])
           }),
@@ -80489,7 +80484,7 @@ var render = function() {
           _c("img", {
             staticClass: "img_slider",
             attrs: {
-              src: "../storage/" + _vm.photos[_vm.counter]["img_path"],
+              src: "/storage/" + _vm.photos[_vm.counter]["img_path"],
               alt: ""
             }
           }),
@@ -80512,7 +80507,7 @@ var render = function() {
                 },
                 [
                   _c("img", {
-                    attrs: { src: "../storage/" + photo["img_path"], alt: "" }
+                    attrs: { src: "/storage/" + photo["img_path"], alt: "" }
                   })
                 ]
               )
@@ -94816,13 +94811,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! C:\Users\Matteo\Desktop\boolean\Final Project\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Matteo\Desktop\boolean\Final Project\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\uutente\Desktop\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> grafica_messages
+__webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\D\progetto-finale-boolean\semplicemente\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

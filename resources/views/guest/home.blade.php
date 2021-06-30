@@ -1,6 +1,6 @@
 @extends('layouts/guest')
 
-@section('title' , 'ChaletBnB')
+@section('title' , 'Sciallé | Prenota il tuo Chalet... con Tranquillità!')
 
 @section('main')
     <main>

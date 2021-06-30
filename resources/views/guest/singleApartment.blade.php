@@ -1,5 +1,6 @@
 @extends('layouts.guest')
-@section('title', 'Single-Apartment | ChaletBnB')
+
+@section('title', 'Dettagli Appartamento | Sciallé')
 
 @section('headPush')
 
