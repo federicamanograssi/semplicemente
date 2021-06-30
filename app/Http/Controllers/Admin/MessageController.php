@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Message;
 use Illuminate\Support\Facades\DB;
 use App\Apartment;
+use Carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -16,14 +17,17 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_apt)
     {
-
-        $data = [
+            $data = [
             // FILTRARE SOLO QUELLI DELL'UTENTE
             'messages' => Message::whereHas('apartment', function($query){
                 $query->where('user_id', Auth::id());
-            })->get()
+            })->get(),
+            'apartments' => Apartment::where('user_id', Auth::id())
+            ->select('title','id')
+            ->get(),
+            'id_apt' => $id_apt
         ];
 
 
@@ -57,55 +61,13 @@ class MessageController extends Controller
         $data = $request->all();
         $newMessage = new Message();
         $newMessage->apartment_id = $data['apartment_id'];
+        $newMessage->date = Carbon::now();
         $newMessage->fill($data);
         $newMessage->save();
 
         // AGGIUNGERE MESSAGGIO SUCCESSO INVIO E SVUOTARE FORM senza far fare redirect
 
-        return redirect()->route('apartments.show',$data['apartment_id']);
+        return redirect()->route('guest_show_apartment',$data['apartment_id']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

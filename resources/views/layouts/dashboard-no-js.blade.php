@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 </head>
 <body>
   
@@ -184,6 +184,7 @@
       <main id="app" role="main" class="admin col-md-10 ml-sm-auto col-lg-10 px-4 py-4 overflow-auto">
         @yield('content')
       </main>
+
 
     </div>
   </div>

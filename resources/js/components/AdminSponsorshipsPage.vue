@@ -1,35 +1,75 @@
 <template>
 
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-12">
-                <h2>Le tue sponsorizzazioni</h2>
-                <thead class="table-light">
-                    <tr role="row">
-                        <th tabindex="0" rowspan="1" colspan="1">Appartamento</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Status</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Data fine</th>
-                        <th tabindex="0" rowspan="1" colspan="1">Prezzo</th>
-                    </tr>
-                </thead>
+                <h1 class="tab-title">Metti in evidenza un appartamento</h1>
+                <a href="/admin/payment" class="btn btn-our-btn">Metti in evidenza</a>
 
-                <tbody>
-                    <tr role="row" v-for="sponsored_apartment in sponsored_apartments" :key="sponsored_apartment.id">
-                        <td class="text-left">{{sponsored_apartment.id}}</td>
-                        <!-- <td class="text-right">attivo/non attivo</td>
-                        <td class="text-right">{{sponsored_apartment.end_date}}</td>
-                        <td class="text-right">{{sponsored_apartment.amount}}</td> -->
-                    </tr>
-                </tbody>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <h2>Metti in evidenza un appartamento</h2>
-                <button><a href="/admin/payment">vai al pagamento</a></button>
+                <h2>Le tue sponsorizzazioni</h2>
+                <p>Qui puoi visualizzare tutte le tue sponsorizzazioni </p>
 
+                <table class="table table-borderless">
+                    <thead>
+                        <tr role="row">
+                            <!-- per cell -->
+                            <th scope="col" class="text-left d-block d-sm-none">Apt</th>
+
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Appartamento</th>
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Inizio</th>
+                            <th scope="col" class="text-left">Termine</th>
+                            <!-- <th scope="col">Attivo</th> -->
+                            <th scope="col" class="text-left">Spesa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="sponsored_apartment in sponsored_apartments" :key="sponsored_apartment.id">
+                            <td class="text-left">{{sponsored_apartment.id}}</td>
+                            <td class="text-left d-none d-sm-table-cell">{{sponsored_apartment.start_date}}</td>
+                            <td class="text-left">{{sponsored_apartment.end_date}}</td>
+                            <!-- <td class="text-left">SI/NO</td> -->
+                            <td class="text-left">{{sponsored_apartment.amount}} €</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <h2>Le tue transazioni</h2>
+                <p>Qui puoi visualizzare tutte le tue transazioni</p>
+
+                <table class="table table-borderless">
+                    <thead>
+                        <tr role="row">
+                            <!-- per cell -->
+                            <th scope="col" class="text-left d-block d-sm-none">Apt</th>
+
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Appartamento</th>
+                            <th scope="col" class="text-left d-none d-sm-table-cell">Data</th>
+                            <th scope="col" class="text-left">Status</th>
+                            <th scope="col" class="text-left">Importo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="sponsored_apartment in sponsored_apartments" :key="sponsored_apartment.id">
+                            <td class="text-left">{{sponsored_apartment.id}}</td>
+                            <td class="text-left d-none d-sm-table-cell">{{sponsored_apartment.start_date}}</td>
+                            <td class="text-left" v-if="(sponsored_apartment.status==1)">Success</td>
+                            <td class="text-left" v-else>Failed</td>
+                            <td class="text-left">{{sponsored_apartment.amount}} €</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
             </div>
         </div>
 
@@ -63,4 +103,24 @@
     }
 
 </script>
+<style scoped>
+    /* table{
+        background-color: #d8af7f;
+        border-radius: .25rem;
+        width: 100%;
+        overflow-x: auto;
+    }
+    thead{
+        background-color: rgba(0,0,0,.03);
+        font-size: 1.7rem;
+    }
+    th,td{
+        padding:10px 20px;
+    }
+    @media (max-width: 768px){
+        table{
+            display: block;
+        }
+    } */
+</style>
 
