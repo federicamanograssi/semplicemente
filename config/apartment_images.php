@@ -696,7 +696,7 @@
             'apartment_id' => 16,
             'img_path' => "apartment_images/apt16_photo1.jpg",
             'img_description' => "immagine copertina",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 16,
@@ -732,7 +732,7 @@
             'apartment_id' => 17,
             'img_path' => "apartment_images/apt17_photo1.jpg",
             'img_description' => "immagine copertina",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 17,
@@ -774,7 +774,7 @@
             'apartment_id' => 18,
             'img_path' => "apartment_images/apt18_photo1.jpg",
             'img_description' => "",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 18,
@@ -804,7 +804,7 @@
             'apartment_id' => 19,
             'img_path' => "apartment_images/apt19_photo1.jpg",
             'img_description' => "immagine copertina",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 19,
@@ -840,7 +840,7 @@
             'apartment_id' => 20,
             'img_path' => "apartment_images/apt20_photo1.jpg",
             'img_description' => "immagine copertina",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 20,
@@ -882,7 +882,7 @@
             'apartment_id' => 21,
             'img_path' => "apartment_images/apt21_photo1.jpg",
             'img_description' => "immagine copertina",
-            'is_cover' => 0
+            'is_cover' => 1
         ],
         [
             'apartment_id' => 21,
