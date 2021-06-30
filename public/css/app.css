@@ -850,6 +850,10 @@ div[class$=-form] {
   overflow: hidden;
 }
 
+#general-container #logo-header {
+  max-height: 50px;
+}
+
 #general-container main {
   background-color: #ffefd5;
   height: calc(100vh - 50px);

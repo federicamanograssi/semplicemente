@@ -35,6 +35,9 @@
 #general-container{
   height: 100vh;
   overflow: hidden;
+  #logo-header{
+    max-height: 50px;
+  }
 
   main {
     background-color: #ffefd5;
