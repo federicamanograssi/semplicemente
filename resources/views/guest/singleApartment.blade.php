@@ -10,9 +10,16 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
+    
 @endsection
 
-{{-- @dump($apartment) --}}
+    @php
+
+    if(isset($_GET['messageSent']) )        
+        $messageSent=true;
+     else $messageSent=false;
+    
+    @endphp
 
 @section('main')
                     
@@ -32,7 +39,6 @@
             {{-- slider immagini appartamento --}}
 
         </img-slider>
-
 
         <div class="container">
             <div class="form-container">
@@ -64,6 +70,8 @@
                                 @else 
                                     {{$apartment['bathroom_n']}} Bagni
                                 @endif
+                                &#183   
+                                {{$apartment['dimensions']}}m<sup>2</sup>
                             </p>
 
                         </div>
@@ -164,6 +172,9 @@
 
                 </div>
 
+
+
+
                 <div class="right-container">
                     <div id="form-anchor" class="contact-form">
 
@@ -175,8 +186,13 @@
                             <p> <i class="fas fa-star"></i> 5.0 &#183 Rome , Italy</p>
 
                             {{-- MAIL---------- --}}
+                            @php
+                                use Illuminate\Support\Facades\Auth;
+                                $isLoggedIn = Auth::check() ? true : false;
+                            @endphp
+
                             <div class="form-group">
-                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{ old('email_sender') }}" required>
+                                <input type="email" name="email_sender" class="form__input" placeholder="Inserisci email" value="{{$isLoggedIn ? Auth::user()->email : null }}" required>
                                 @error('email_sender')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -184,7 +200,7 @@
 
                             {{-- TESTO MESSAGGIO----------- --}}
                             <div class="form-group">
-                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario"></textarea>
+                                <textarea class="form__input" name="message_text" id="message_text" name="message_text" placeholder="Scrivi un messaggio per il proprietario" required minlength="50"></textarea>
                                 @error('message_text')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -214,7 +230,7 @@
 
                     <p>{{$apartment['address']}}</p>
                     <p>
-                        <span><strong>Lat:</strong>{{$apartment['latitude']}}</span> <span><strong>Lon:</strong>{{$apartment['longitude']}}</span>
+                        <span><strong class="color-primary">Lat:</strong>{{$apartment['latitude']}}</span> <span><strong class="color-primary">Lon:</strong>{{$apartment['longitude']}}</span>
                     </p>
 
                 </div>
@@ -228,7 +244,9 @@
             </single-chalet-map>
 
             </section>
-
+            
+            <hr>
+            
             {{-- Piccola Sezione Host             --}}
 
             <section class="hosted-by">
@@ -248,7 +266,7 @@
                 </section>
 
                 <section class="section-price">
-                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}} &euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
+                    <p>Tanti Chalet simili a <span class="color-primary">{{$apartment['title']}}</span> sono già al completo sul nostro sito. Non farti sfuggire questa occasione e prenota subito a soli <span class="color-primary">{{$apartment['price_per_night']}}&euro;</span> a notte, senza commissioni e con cancellazione gratuita*!</p>
                 </section>
 
                 <section class="redirect-btn">
@@ -262,80 +280,41 @@
             </section>
 
 
+        <hr>
 
-            {{-- Slider di apt sponsorizzati (da integrare se c'è tempo) --}}
+            {{-- Slider di apt sponsorizzati --}}
 
-        <section class="footer-top standard-padding">
-            <div class="container">
-                <div class="sponsored-gallery">
+        <section class="sponsored-apt-section">
+            
+            <h3 class="heading--primary">Altri chalet in evidenza</h3>
 
-                    <sponsored-slider></sponsored-slider>
-                    <div class="sponsored-slider-phone">
-                        <div class="slider-phone-cards">
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 1
-                                    </div>
-                                </div>
-                            </div>
+            <p>Non sei del tutto sicuro? Da' un'occhiata anche a questi chalet, selezionati fra le migliori opzioni oggi esistenti in Italia!</p>
 
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 2
-                                    </div>
-                                </div>
-                            </div>
+                <sponsored-slider></sponsored-slider>
 
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 3
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="slider-phone-card">
-                                <div class="slider-phone-img">
-                                    <img src="https://st.hzcdn.com/simgs/pictures/facades-de-maisons/chalet-montagne-impuls-architectures-img~1fa14b10048ae580_4-9910-1-424b58c.jpg" alt="#">
-                                </div>
-                                <div class="slider-phone-description">
-                                    <div class="slider-rating">
-                                        <span><i><i class="fas fa-star"></i></i>5</span>
-                                    </div>
-                                    <div class="slider-title">
-                                        Chalet Sponsorizzato 4
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                        </div>                        
-                    </div>
-                </div>
-            </div>   
         </section>
 
 
     </div>
 
+    <back-to-top></back-to-top>
+
 @endsection
+
+@if ($messageSent)
+
+    <aside class="msgSent">
+        <div class="msgSent__inner-box">
+            <h2 class="msgSent__title">Messaggio inviato</h2>
+            <p class="msgSent__text">Il tuo messaggio è stato correttamente inoltrato a <span class="color-primary">{{ $apartment['host']['name']}}</span>. Riceverai una risposta al più presto.</p>
+            <button id="msgSent__button" class="msgSent__button btn btn--primary-light">Ok</button>
+        </div>
+    </aside>
+
+    <script>
+        document.querySelector('.msgSent__button').addEventListener("click", function(){
+            document.querySelector('.msgSent').classList.add('hidden');
+            });
+    </script>
+    
+@endif

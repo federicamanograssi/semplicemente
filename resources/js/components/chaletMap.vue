@@ -147,7 +147,7 @@
                 
                 this.apartments.forEach(apt => {                    
                     let newMarker = L.marker([apt.lat, apt.lon] , {icon : this.markerIcon});
-                    newMarker.bindPopup('<div class="chalet-popup'+ (apt.isSponsored ? ' chalet-popup--sponsored' : '') +'"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">'+ apt.price +'&euro;</span><a class="chalet-popup__link" href="/single/'+apt.id+'">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
+                    newMarker.bindPopup('<div class="chalet-popup'+ (apt.is_sponsored ? ' chalet-popup--sponsored' : '') +'"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">'+ apt.price +'&euro;</span><a class="chalet-popup__link" href="/single/'+apt.id+'">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
                     this.markers.push(newMarker);
                     newMarker.addTo(this.mymap);
                 });
@@ -275,7 +275,6 @@
                 line-height: 2.5rem;
             }
         }
-
-
     }
+    .leaflet-bottom.leaflet-right {z-index: 700;}
 </style>

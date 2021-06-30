@@ -1,6 +1,6 @@
 <template>
     <a :href="'single/'+id" class="single-apartment"
-        :class="isSponsored ? 'single-apartment--sponsored' : null">
+        :class="is_sponsored ? 'single-apartment--sponsored' : null">
 
         <div class="sponsored-box">
             
@@ -21,7 +21,7 @@
             <h3 class="single-apartment__name">{{name}}</h3>
             
             <p class="single-apartment__description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                {{excerpt}}
             </p>
 
             <div class="single-apartment__services">
@@ -45,7 +45,7 @@
         mounted() {
             this.dist = Math.round(this.dist * 100) / 100;
         },
-        props : ['name' , 'imgSrc' , 'rating' , 'id' , 'price' , 'beds' , 'isSponsored' , 'dist'] ,
+        props : ['name' , 'imgSrc' , 'rating' , 'id' , 'price' , 'beds' , 'is_sponsored' , 'dist' , 'excerpt'] ,
     }
 </script>
 

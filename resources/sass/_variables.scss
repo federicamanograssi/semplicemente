@@ -77,14 +77,13 @@ $animation-time-very-slow : 1.2s;
 @mixin responsive($breakpoint) {
 
     @if $breakpoint == phone {
-        @media (max-width: 35.5em) {    // 600px
+        @media (max-width: 37.5em) {    // 600px
             @content
         };
     }
 
     @if $breakpoint == tablet {
-        @media (max-width: 64em) {    // 1024px            
-        // @media (max-width: 56.25em) {    // 900px
+        @media (max-width: 64em) {    // 1024px
             @content
         };
     }

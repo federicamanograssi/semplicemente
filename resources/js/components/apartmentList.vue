@@ -48,8 +48,9 @@
             :id="apartment.id"
             :price="apartment.price"
             :beds="apartment.beds"
-            :isSponsored="apartment.isSponsored"
+            :is_sponsored="apartment.is_sponsored"
             :dist="apartment.dist"
+            :excerpt="apartment.excerpt"
             >
 
             <!-- Apartment Card Component -->
@@ -64,7 +65,6 @@
         mounted() {
 
             this.loadSponsored();
-            this.setOutputArray();
         },
         props : [
             'apartments' ,  // Array di appartamenti da mostrare
@@ -86,14 +86,16 @@
             }
         },
         methods : {
+            
             //  Metodo che stabilisce se visualizzare apt Sponsorizzati in caso di assenza risultati
-
             setOutputArray(){
                 if(this.apartments.length > 0) this.outputApt = this.apartments;
                 else this.outputApt = this.sponsoredApt;
             },
 
+            // Metodo che effettua una chiamata per ottenere lista di apt sponsorizzati
             loadSponsored(){
+                console.log("Sto richiedendo la lista di apt sponsorizzati");
                 const self = this;
                 axios
                     .get('http://127.0.0.1:8000/api/getSponsoredApt' , {
@@ -104,7 +106,6 @@
                     .then((response)=>{
                         self.sponsoredApt = response.data.results;
                         self.setOutputArray();
-
                 });
             }
         }

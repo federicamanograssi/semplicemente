@@ -33,7 +33,7 @@
 
     .back-to-top {
         position: fixed;
-        z-index: 4;
+        z-index: 850;
         bottom: $spacing-standard;
         right: $spacing-standard;
         background-color: $color-primary-light;
@@ -71,8 +71,11 @@
 
         &__icon {
             font-size: 1.5em;
-            position: relative;
-            top: 3px;   //fixes vertical align
+            // position: relative;
+            // top: 3px;
+            width: 100%;
+            height: 100%;
+            line-height: 5rem;
         }
     }
 </style>

@@ -15,3 +15,8 @@ body {
     box-sizing: border-box;
     background-color: rgba($color-primary , .05);
 }
+
+::selection {
+    background-color: $color-primary-light;
+    color: $white;
+}

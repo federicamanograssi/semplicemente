@@ -3178,13 +3178,7 @@ __webpack_require__.r(__webpack_exports__);
 
             if (found == false) continue mainFor; // se anche un solo servizio richiesto non era presente l'appartamento è scartato
           }
-        } // *****************************************************************
-        // Assegna casualmente una sponsorizzazione ad un apparamento su 3
-        // (Soluzione temporanea prima di ottenere l'informazione dal server)
-
-
-        var rNum = Math.floor(Math.random() * 3) + 1;
-        rNum === 3 ? apt.isSponsored = true : apt.isSponsored = false; // *****************************************************************
+        }
 
         this.filteredApartments.push(apt); // Se l'appartamento soddisfa tutti i filtri lo pusho nell'array degli apt filtrati            
       } // main for
@@ -3199,14 +3193,14 @@ __webpack_require__.r(__webpack_exports__);
             id = _ref.id,
             name = _ref.name,
             price = _ref.price,
-            isSponsored = _ref.isSponsored;
+            is_sponsored = _ref.is_sponsored;
         return {
           lat: lat,
           lon: lon,
           id: id,
           name: name,
           price: price,
-          isSponsored: isSponsored
+          is_sponsored: is_sponsored
         };
       }); //  array ottimizzato per visualizzazione card apt
 
@@ -3217,8 +3211,9 @@ __webpack_require__.r(__webpack_exports__);
             dist = _ref2.dist,
             beds = _ref2.beds,
             rating = _ref2.rating,
-            isSponsored = _ref2.isSponsored,
-            cover_img = _ref2.cover_img;
+            is_sponsored = _ref2.is_sponsored,
+            cover_img = _ref2.cover_img,
+            excerpt = _ref2.excerpt;
         return {
           id: id,
           name: name,
@@ -3226,8 +3221,9 @@ __webpack_require__.r(__webpack_exports__);
           dist: dist,
           beds: beds,
           rating: rating,
-          isSponsored: isSponsored,
-          cover_img: cover_img
+          is_sponsored: is_sponsored,
+          cover_img: cover_img,
+          excerpt: excerpt
         };
       });
     },
@@ -3259,12 +3255,12 @@ __webpack_require__.r(__webpack_exports__);
       // Ricreo l'array filteredApartments inserrendo ai primi posti gli apt sponsorizzati
 
       for (var _i2 = 0; _i2 < sortedApt.length; _i2++) {
-        if (sortedApt[_i2].isSponsored) this.filteredApartments.push(sortedApt[_i2]);
+        if (sortedApt[_i2].is_sponsored) this.filteredApartments.push(sortedApt[_i2]);
       } // Dopo gli apt sponsorizzati inserisco quelli rimanenti
 
 
       for (var _i3 = 0; _i3 < sortedApt.length; _i3++) {
-        if (!sortedApt[_i3].isSponsored) this.filteredApartments.push(sortedApt[_i3]);
+        if (!sortedApt[_i3].is_sponsored) this.filteredApartments.push(sortedApt[_i3]);
       }
     }
   }
@@ -3314,6 +3310,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -3590,13 +3588,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    if (screen.width <= 600) this.itemsShown = 1;else if (screen.width <= 1024) this.itemsShown = 2;else this.itemsShown = 3;
+    this.shownItems = [];
+
+    for (var i = 0; i < this.itemsShown; i++) {
+      this.shownItems.push(i);
+    }
+
     self = this; // alias
 
     axios.get('http://127.0.0.1:8000/api/getSponsoredApt', {
@@ -3604,39 +3604,38 @@ __webpack_require__.r(__webpack_exports__);
         nOfItems: 6
       }
     }).then(function (response) {
-      self.apartments = response.data.results; // Salva l'array degli apt ottenuti nella variabile apartments                        
+      self.apartments = response.data.results; // Salva l'array degli apt ottenuti nella variabile apartments
+
+      self.dataIsReady = true;
     });
   },
   data: function data() {
     return {
-      active: "active",
-      counter: 0,
-      page: 1,
-      apartments: null
+      apartments: null,
+      itemsShown: null,
+      shownItems: null,
+      dataIsReady: null
     };
   },
   methods: {
-    prevImage: function prevImage() {
-      this.counter = 0;
-
-      if (this.page == 2) {
-        this.page--;
+    showPreviousItem: function showPreviousItem() {
+      // mostra elemento precedente
+      for (var i = 0; i < this.shownItems.length; i++) {
+        var current = this.shownItems[i];
+        current == 0 ? current = this.apartments.length - 1 : --current;
+        this.shownItems.splice(i, 1, current);
+        console.log("Sto cambiando shownitems");
       }
-
-      console.log(this.page);
     },
-    nextImage: function nextImage() {
-      this.counter = 4;
-
-      if (this.page == 1) {
-        this.page++;
+    showNextItem: function showNextItem() {
+      // mostra elemento successivo
+      for (var i = 0; i < this.shownItems.length; i++) {
+        var current = this.shownItems[i];
+        current == this.apartments.length - 1 ? current = 0 : ++current;
+        this.shownItems.splice(i, 1, current);
+        console.log("Sto cambiando shownitems");
       }
-
-      console.log(this.page);
     }
-  },
-  circleClick: function circleClick(index) {
-    this.counter = index;
   }
 });
 
@@ -3697,7 +3696,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.dist = Math.round(this.dist * 100) / 100;
   },
-  props: ['name', 'imgSrc', 'rating', 'id', 'price', 'beds', 'isSponsored', 'dist']
+  props: ['name', 'imgSrc', 'rating', 'id', 'price', 'beds', 'is_sponsored', 'dist', 'excerpt']
 });
 
 /***/ }),
@@ -3772,10 +3771,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.loadSponsored();
-    this.setOutputArray();
   },
   props: ['apartments', // Array di appartamenti da mostrare
   'mapIsShown', // Booleano che indica se la mappa è visibile
@@ -3803,7 +3802,9 @@ __webpack_require__.r(__webpack_exports__);
     setOutputArray: function setOutputArray() {
       if (this.apartments.length > 0) this.outputApt = this.apartments;else this.outputApt = this.sponsoredApt;
     },
+    // Metodo che effettua una chiamata per ottenere lista di apt sponsorizzati
     loadSponsored: function loadSponsored() {
+      console.log("Sto richiedendo la lista di apt sponsorizzati");
       var self = this;
       axios.get('http://127.0.0.1:8000/api/getSponsoredApt', {
         params: {
@@ -4004,7 +4005,7 @@ __webpack_require__.r(__webpack_exports__);
         var newMarker = L.marker([apt.lat, apt.lon], {
           icon: _this.markerIcon
         });
-        newMarker.bindPopup('<div class="chalet-popup' + (apt.isSponsored ? ' chalet-popup--sponsored' : '') + '"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">' + apt.price + '&euro;</span><a class="chalet-popup__link" href="/single/' + apt.id + '">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
+        newMarker.bindPopup('<div class="chalet-popup' + (apt.is_sponsored ? ' chalet-popup--sponsored' : '') + '"><img class="chalet-popup__image" src="storage/apartment_images/apt7_photo1.jpg" alt=""><h4 class="chalet-popup__name">' + apt.name + '</h4><span class="chalet-popup__price">' + apt.price + '&euro;</span><a class="chalet-popup__link" href="/single/' + apt.id + '">Dettagli <i class="fas fa-long-arrow-alt-right"></i></a></div>');
 
         _this.markers.push(newMarker);
 
@@ -24812,7 +24813,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n  padding: 2rem;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56], .jumbotron__bg-img[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 3rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__title[data-v-8ee49e56] {\n    font-size: 7rem;\n    letter-spacing: 7px;\n}\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n@media (max-width: 35.5em) {\n.jumbotron__text[data-v-8ee49e56] {\n    margin-bottom: 3rem;\n    font-size: 3rem;\n}\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n@media (max-width: 35.5em) {\n.jumbotron__input[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n    margin-bottom: 2rem;\n}\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.2);\n  border-radius: 15px;\n}\n@media (max-width: 35.5em) {\n.jumbotron__form[data-v-8ee49e56] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    height: 100%;\n    padding: 5rem;\n}\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 25%;\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n.jumbotron__search-button[data-v-8ee49e56]::hover {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n}\n@media (max-width: 35.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n}\n}", ""]);
+exports.push([module.i, ".jumbotron[data-v-8ee49e56] {\n  margin-top: -7rem;\n  height: 100vh;\n  width: 100%;\n  background-color: rgba(16, 83, 16, 0.25);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: white;\n  text-align: center;\n  position: relative;\n  padding: 2rem;\n}\n@media (max-width: 64em) {\n.jumbotron[data-v-8ee49e56] {\n    margin-top: 0;\n    height: calc(100vh - 7rem);\n}\n}\n.jumbotron__bg-video[data-v-8ee49e56], .jumbotron__bg-img[data-v-8ee49e56] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  z-index: -5;\n}\n.jumbotron__search-box[data-v-8ee49e56] {\n  position: relative;\n  top: 7rem;\n}\n@media (max-width: 64em) {\n.jumbotron__search-box[data-v-8ee49e56] {\n    top: 0;\n}\n}\n.jumbotron__title[data-v-8ee49e56] {\n  font-size: 5rem;\n  letter-spacing: 5px;\n  margin-bottom: 3rem;\n}\n@media (max-width: 37.5em) {\n.jumbotron__title[data-v-8ee49e56] {\n    font-size: 7rem;\n    line-height: 9rem;\n    letter-spacing: 7px;\n}\n}\n.jumbotron__text[data-v-8ee49e56] {\n  font-size: 2rem;\n  text-align: center;\n  letter-spacing: 3.5px;\n  margin-bottom: 2rem;\n}\n@media (max-width: 37.5em) {\n.jumbotron__text[data-v-8ee49e56] {\n    margin-bottom: 3rem;\n    font-size: 3rem;\n}\n}\n.jumbotron__input[data-v-8ee49e56] {\n  height: 4rem;\n  width: 70%;\n  padding-left: 1rem;\n  border-radius: 5px;\n  margin-right: 1rem;\n  border: 1px solid #348534;\n}\n.jumbotron__input[data-v-8ee49e56]:hover, .jumbotron__input[data-v-8ee49e56]:active, .jumbotron__input[data-v-8ee49e56]:focus, .jumbotron__input[data-v-8ee49e56]:focus-visible {\n  outline: none;\n}\n.jumbotron__input[data-v-8ee49e56]:focus {\n  box-shadow: 0 0 2rem rgba(255, 255, 255, 0.5);\n  border-color: white;\n}\n@media (max-width: 37.5em) {\n.jumbotron__input[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n    margin-bottom: 2rem;\n}\n}\n.jumbotron__form[data-v-8ee49e56] {\n  padding: 3rem;\n  background-color: rgba(255, 255, 255, 0.2);\n  border-radius: 15px;\n}\n@media (max-width: 37.5em) {\n.jumbotron__form[data-v-8ee49e56] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-evenly;\n    height: 100%;\n    padding: 5rem;\n}\n}\n.jumbotron__search-button[data-v-8ee49e56] {\n  width: 25%;\n}\n@media (max-width: 37.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n.jumbotron__search-button[data-v-8ee49e56]::hover {\n    background-color: #348534;\n    color: white;\n    border: 1px solid white;\n}\n}\n@media (max-width: 37.5em) {\n.jumbotron__search-button[data-v-8ee49e56] {\n    display: block;\n    margin: auto;\n    width: 100%;\n}\n}", ""]);
 
 // exports
 
@@ -24831,7 +24832,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  height: 100%;\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: white;\n  top: calc( 50rem / 2);\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 8rem;\n  opacity: 0.75;\n  cursor: pointer;\n}\n@media (max-width: 35.5em) {\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .prev[data-v-2e3eb2ae] {\n  left: 2rem;\n  right: auto;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 2rem;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n  cursor: pointer;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  border: 2px solid transparent;\n  transition: border-color 0.25s;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border-color: white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
+exports.push([module.i, ".container[data-v-2e3eb2ae] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n.container .slider-wrapper[data-v-2e3eb2ae] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .images[data-v-2e3eb2ae] {\n  text-align: center;\n}\n.container .slider-wrapper .images img.active[data-v-2e3eb2ae] {\n  display: inline-block;\n}\n.container .slider-wrapper .images .img_slider[data-v-2e3eb2ae] {\n  width: 100%;\n  height: 50rem;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n  position: absolute;\n  color: white;\n  top: calc( 50rem / 2);\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 8rem;\n  opacity: 0.75;\n  cursor: pointer;\n}\n@media (max-width: 37.5em) {\n.container .prev[data-v-2e3eb2ae],\n.container .next[data-v-2e3eb2ae] {\n    display: none;\n}\n}\n.container .prev[data-v-2e3eb2ae] {\n  left: 2rem;\n  right: auto;\n}\n.container .next[data-v-2e3eb2ae] {\n  left: auto;\n  right: 2rem;\n}\n.container .nav[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n}\n.container .img_preview[data-v-2e3eb2ae] {\n  padding: 0.5rem;\n  display: inline-block;\n  width: 10rem;\n  height: 10rem;\n  cursor: pointer;\n}\n.container .img_preview img[data-v-2e3eb2ae] {\n  width: 100%;\n  border-radius: 5px;\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  border: 2px solid transparent;\n  transition: border-color 0.25s;\n}\n.container .img_preview.active img[data-v-2e3eb2ae] {\n  border-color: white;\n}\n.container .slider-wrapper.none[data-v-2e3eb2ae] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -24850,7 +24851,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".container[data-v-676696df] {\n  max-width: 160rem;\n  margin: 0 auto;\n}\n@media (max-width: 35.5em) {\n.container[data-v-676696df] {\n    display: none;\n}\n}\n.container .slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.container .slider-wrapper .pages[data-v-676696df] {\n  float: right;\n}\n.container .slider-wrapper .cards[data-v-676696df] {\n  width: 100%;\n  display: flex;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards[data-v-676696df] {\n    display: block;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df] {\n  cursor: pointer;\n  width: 25%;\n  height: 20rem;\n  padding: 2rem;\n  position: relative;\n}\n@media (max-width: 35.5em) {\n.container .slider-wrapper .cards .card[data-v-676696df] {\n    width: 100%;\n    height: 20rem;\n    margin-bottom: 3rem;\n}\n}\n.container .slider-wrapper .cards .card[data-v-676696df]:link, .container .slider-wrapper .cards .card[data-v-676696df]:visited, .container .slider-wrapper .cards .card[data-v-676696df]:active, .container .slider-wrapper .cards .card[data-v-676696df]:hover {\n  color: #105310;\n  text-decoration: none;\n}\n.container .slider-wrapper .cards .card__data[data-v-676696df] {\n  position: absolute;\n  height: 7rem;\n  bottom: 0;\n  width: calc(100% - 2 * 2rem);\n  left: 2rem;\n  background-color: white;\n}\n.container .slider-wrapper .cards .card__img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.container .slider-wrapper .cards .card__img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.container .prev[data-v-676696df],\n.container .next[data-v-676696df] {\n  position: absolute;\n  color: #565a5c;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  font-size: 4rem;\n  cursor: pointer;\n}\n.container .next[data-v-676696df] {\n  left: auto;\n  right: 0;\n}", ""]);
+exports.push([module.i, ".slider-wrapper[data-v-676696df] {\n  position: relative;\n  margin: auto;\n  width: 100%;\n}\n.cards[data-v-676696df] {\n  width: calc(100% - (2 * 5rem));\n  margin: auto;\n  display: flex;\n}\n.card[data-v-676696df] {\n  padding: 2rem;\n  border-radius: 5px;\n  display: block;\n  flex: 0 0 calc((100% - 2 * 2rem) / 3);\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n@media (max-width: 64em) {\n.card[data-v-676696df] {\n    flex: 0 0 calc((100% - 2rem) / 2);\n}\n}\n@media (max-width: 37.5em) {\n.card[data-v-676696df] {\n    flex: 0 0 100%;\n}\n}\n.card[data-v-676696df]:link, .card[data-v-676696df]:visited, .card[data-v-676696df]:active, .card[data-v-676696df]:hover {\n  color: #105310;\n  text-decoration: none;\n}\n.card[data-v-676696df]:not(:last-child) {\n  margin-right: 2rem;\n}\n.card__data[data-v-676696df] {\n  line-height: 3.5rem;\n  padding-top: 2rem;\n  background-color: rgba(255, 255, 255, 0.5);\n}\n.card__title[data-v-676696df] {\n  font-size: 2.5rem;\n  margin-bottom: 0;\n}\n.card__img[data-v-676696df] {\n  height: 100%;\n  width: 100%;\n  height: 20rem;\n}\n.card__img img[data-v-676696df] {\n  border-radius: 5px;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n.prev[data-v-676696df],\n.next[data-v-676696df] {\n  position: absolute;\n  color: #105310;\n  top: 50%;\n  transform: translateY(-50%) scaleY(1.5);\n  font-size: 6rem;\n  cursor: pointer;\n  width: 5rem;\n}\n.prev i[data-v-676696df],\n.next i[data-v-676696df] {\n  padding: 0;\n}\n@media (max-width: 64em) {\n.prev[data-v-676696df],\n.next[data-v-676696df] {\n    font-size: 5rem;\n}\n}\n.next[data-v-676696df] {\n  left: auto;\n  right: 0;\n  text-align: right;\n}\n.prev[data-v-676696df] {\n  left: 0;\n  right: auto;\n  text-align: left;\n}", ""]);
 
 // exports
 
@@ -24907,7 +24908,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  z-index: 4;\n  bottom: 2rem;\n  right: 2rem;\n  background-color: #348534;\n  text-align: center;\n  border-radius: 5px;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.back-to-top__link[data-v-93d4de10] {\n  display: block;\n  width: 5rem;\n  height: 5rem;\n  line-height: 5rem;\n  transition: all 0.25s;\n}\n.back-to-top__link[data-v-93d4de10]:link, .back-to-top__link[data-v-93d4de10]:hover, .back-to-top__link[data-v-93d4de10]:active, .back-to-top__link[data-v-93d4de10]:visited {\n  color: white;\n  text-decoration: none;\n}\n.back-to-top[data-v-93d4de10]:hover {\n  background-color: white;\n}\n.back-to-top:hover .back-to-top__link[data-v-93d4de10] {\n  color: #348534;\n}\n.back-to-top__icon[data-v-93d4de10] {\n  font-size: 1.5em;\n  position: relative;\n  top: 3px;\n}", ""]);
+exports.push([module.i, ".back-to-top[data-v-93d4de10] {\n  position: fixed;\n  z-index: 850;\n  bottom: 2rem;\n  right: 2rem;\n  background-color: #348534;\n  text-align: center;\n  border-radius: 5px;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.back-to-top__link[data-v-93d4de10] {\n  display: block;\n  width: 5rem;\n  height: 5rem;\n  line-height: 5rem;\n  transition: all 0.25s;\n}\n.back-to-top__link[data-v-93d4de10]:link, .back-to-top__link[data-v-93d4de10]:hover, .back-to-top__link[data-v-93d4de10]:active, .back-to-top__link[data-v-93d4de10]:visited {\n  color: white;\n  text-decoration: none;\n}\n.back-to-top[data-v-93d4de10]:hover {\n  background-color: white;\n}\n.back-to-top:hover .back-to-top__link[data-v-93d4de10] {\n  color: #348534;\n}\n.back-to-top__icon[data-v-93d4de10] {\n  font-size: 1.5em;\n  width: 100%;\n  height: 100%;\n  line-height: 5rem;\n}", ""]);
 
 // exports
 
@@ -24926,7 +24927,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 2 * 2rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.chalet-map {\n  position: absolute;\n  z-index: 2;\n  right: 2rem;\n  top: 9rem;\n  width: calc(50% - 2 * 2rem);\n  height: calc(100vh - 2 * 7rem - 2 * 2rem);\n}\n@media (max-width: 64em) {\n.chalet-map {\n    top: auto;\n    right: auto;\n    height: 20rem;\n    width: 100%;\n}\n}\n.chalet-map__button-container {\n  display: none;\n}\n@media (max-width: 64em) {\n.chalet-map__button-container {\n    display: block;\n}\n}\n.chalet-map__button {\n  position: fixed;\n  bottom: 20rem;\n  right: 3rem;\n  height: 7rem;\n  line-height: 7rem;\n  width: 7rem;\n  transform: translateY(50%);\n  z-index: 500;\n  background-color: white;\n  text-align: center;\n  border-radius: 50%;\n  font-size: 3rem;\n  border: 1px solid #348534;\n  transition: background 0.25s, opacity 1.2s;\n  color: #348534;\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n  cursor: pointer;\n}\n.chalet-popup {\n  width: auto;\n  max-height: 7rem;\n  width: 21rem;\n}\n.chalet-popup::after {\n  content: \"\";\n  clear: both;\n  display: table;\n}\n.chalet-popup__image {\n  float: left;\n  width: 5rem;\n  height: 5rem;\n  margin-right: 1rem;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  border-radius: 5px;\n}\n.chalet-popup__name {\n  float: left;\n  width: 15rem;\n  height: 3.3333333333rem;\n  line-height: 1.6666666667rem;\n  color: #105310;\n  clear: right;\n  font-size: 120%;\n  font-weight: bold;\n}\n.chalet-popup__price {\n  float: left;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link {\n  float: right;\n  height: 1.6666666667rem;\n}\n.chalet-popup__link:link, .chalet-popup__link:active, .chalet-popup__link:visited, .chalet-popup__link:focus {\n  color: #f39a34;\n  text-decoration: none;\n}\n.chalet-popup__link:hover {\n  color: #b6660b;\n  text-decoration: underline;\n}\n.chalet-popup--sponsored {\n  position: relative;\n}\n.chalet-popup--sponsored::before {\n  content: \"\\F164\";\n  position: absolute;\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 900;\n  color: #f39a34;\n  top: 0.5rem;\n  left: 0;\n  border: 1px solid #f39a34;\n  transform: translate(-50%, -50%);\n  height: 2.5rem;\n  width: 2.5rem;\n  background-color: white;\n  border-radius: 50%;\n  text-align: center;\n  line-height: 2.5rem;\n}\n.leaflet-bottom.leaflet-right {\n  z-index: 700;\n}", ""]);
 
 // exports
 
@@ -24945,7 +24946,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  margin-bottom: -2rem;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.6s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 64em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 35.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 64em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 35.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.6s;\n  border-radius: 5px;\n}\n@media (max-width: 64em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.6s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 64em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
+exports.push([module.i, ".locations-list {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex-wrap: wrap;\n  margin-bottom: -2rem;\n}\n.single-location {\n  flex: 0 0 calc( (100% - ( ( 3rem ) * 3 ) ) / 4);\n  height: 20rem;\n  margin-bottom: 2rem;\n  border-radius: 5px;\n  overflow: hidden;\n  text-align: center;\n  transition: all 0.6s;\n}\n@media (max-width: 75em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) * 2 ) / 3);\n}\n}\n@media (max-width: 64em) {\n.single-location {\n    flex: 0 0 calc( (100% - ( 3rem ) ) / 2);\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n@media (max-width: 37.5em) {\n.single-location {\n    flex: 0 0 100%;\n}\n}\n.single-location:nth-child(9) {\n  display: none;\n}\n@media (max-width: 75em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n@media (max-width: 64em) {\n.single-location:nth-child(9) {\n    display: none;\n}\n}\n@media (max-width: 37.5em) {\n.single-location:nth-child(9) {\n    display: block;\n}\n}\n.single-location:link, .single-location:visited, .single-location:active, .single-location:hover {\n  color: inherit;\n  text-decoration: none;\n}\n.single-location:hover {\n  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n.single-location:hover .single-location__name {\n  transform: translateY(0);\n  color: #348534;\n}\n.single-location:hover .single-location__img {\n  filter: grayscale(0);\n  border-radius: 0;\n}\n.single-location__img-container {\n  height: 15rem;\n  overflow: hidden;\n}\n.single-location__img {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  -o-object-position: center;\n     object-position: center;\n  filter: grayscale(80%) brightness(80%);\n  transition: all 0.6s;\n  border-radius: 5px;\n}\n@media (max-width: 64em) {\n.single-location__img {\n    filter: none;\n}\n}\n.single-location__name {\n  color: white;\n  position: relative;\n  z-index: 3;\n  width: 100%;\n  margin: 0;\n  transition: all 0.6s;\n  line-height: 5rem;\n  font-size: 2.2rem;\n  letter-spacing: 1px;\n  transform: translateY(calc( -1 * ( 10rem ) ));\n}\n@media (max-width: 64em) {\n.single-location__name {\n    transform: none;\n    color: #348534;\n    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);\n}\n}\n.single-location__bottom-bar {\n  height: 5rem;\n}", ""]);
 
 // exports
 
@@ -80524,46 +80525,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "sponsored_slider" }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "slider-wrapper" }, [
+  return _vm.dataIsReady
+    ? _c("div", { staticClass: "slider-wrapper" }, [
+        _c(
+          "div",
+          { staticClass: "prev", on: { click: _vm.showPreviousItem } },
+          [_c("i", { staticClass: "fas fa-angle-left" })]
+        ),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "cards" },
-          _vm._l(_vm.apartments, function(apt, index) {
+          _vm._l(_vm.shownItems, function(item, index) {
             return _c(
               "a",
               {
                 key: index,
                 staticClass: "card",
-                attrs: { href: "/single/" + apt["id"] }
+                attrs: {
+                  href: "/single/" + _vm.apartments[_vm.shownItems[index]]["id"]
+                }
               },
               [
                 _c("div", { staticClass: "card__img" }, [
                   _c("img", {
                     staticClass: "img_slider",
-                    attrs: { src: "../storage/" + apt["cover_img"], alt: "" }
+                    attrs: {
+                      src:
+                        "../storage/" +
+                        _vm.apartments[_vm.shownItems[index]]["cover_img"],
+                      alt: ""
+                    }
                   })
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card__data" }, [
-                  _c("h4", { staticClass: "card__title" }, [
-                    _vm._v(_vm._s(apt["name"]))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "card__rating" }, [
-                    _vm._v(_vm._s(apt["rating"]) + " "),
-                    _c("i", { staticClass: "fas fa-star" })
-                  ])
-                ])
+                _c(
+                  "div",
+                  { staticClass: "card__data" },
+                  [
+                    _c("h4", { staticClass: "card__title" }, [
+                      _vm._v(
+                        _vm._s(_vm.apartments[_vm.shownItems[index]]["name"])
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(
+                      Math.ceil(
+                        _vm.apartments[_vm.shownItems[index]]["rating"]
+                      ),
+                      function(star, index) {
+                        return _c("i", {
+                          key: "fullStar" + index,
+                          staticClass: "fas fa-star"
+                        })
+                      }
+                    ),
+                    _vm._l(
+                      5 -
+                        Math.ceil(
+                          _vm.apartments[_vm.shownItems[index]]["rating"]
+                        ),
+                      function(star, index) {
+                        return _c("i", {
+                          key: "emptyStar" + index,
+                          staticClass: "far fa-star"
+                        })
+                      }
+                    )
+                  ],
+                  2
+                )
               ]
             )
           }),
           0
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "next", on: { click: _vm.showNextItem } }, [
+          _c("i", { staticClass: "fas fa-angle-right" })
+        ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -80591,7 +80633,7 @@ var render = function() {
     "a",
     {
       staticClass: "single-apartment",
-      class: _vm.isSponsored ? "single-apartment--sponsored" : null,
+      class: _vm.is_sponsored ? "single-apartment--sponsored" : null,
       attrs: { href: "single/" + _vm.id }
     },
     [
@@ -80610,9 +80652,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "single-apartment__description" }, [
-          _vm._v(
-            "\n            Lorem ipsum dolor sit amet consectetur adipisicing elit.\n        "
-          )
+          _vm._v("\n            " + _vm._s(_vm.excerpt) + "\n        ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "single-apartment__services" }, [
@@ -80774,8 +80814,9 @@ var render = function() {
             id: apartment.id,
             price: apartment.price,
             beds: apartment.beds,
-            isSponsored: apartment.isSponsored,
-            dist: apartment.dist
+            is_sponsored: apartment.is_sponsored,
+            dist: apartment.dist,
+            excerpt: apartment.excerpt
           }
         })
       })

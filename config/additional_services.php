@@ -33,7 +33,7 @@
         [
             'service_name' => "Asciugatrice",
             'service_info' => "Disponibilità di asciugatrice privata o in spazio pubblico",
-            'service_icon' => ""
+            'service_icon' => "check-circle"
 
         ],
         [
@@ -81,13 +81,13 @@
         [
             'service_name' => "Ferro da stiro",
             'service_info' => "",
-            'service_icon' => ""
+            'service_icon' => "check-circle"
 
         ],
         [
             'service_name' => "Asciugacapelli",
             'service_info' => "",
-            'service_icon' => ""
+            'service_icon' => "check-circle"
 
         ],
         [

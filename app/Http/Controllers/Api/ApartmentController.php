@@ -130,6 +130,7 @@ class ApartmentController extends Controller
         $currentDate = date("Y-m-d H:i:s");
         
         //  Cerca tutte le sponsorizzazioni attive
+        
         $sponsorships = DB::table('apartment_sponsorship')
         ->select('apartment_id')
         ->where('status' , 1)
@@ -149,9 +150,11 @@ class ApartmentController extends Controller
         //  Dall'array di Id degli apt sponsorizzati ricava le effettive informazioni relative all'apt
         foreach ($sponsoredAptIDS as $aptID) {
             $apt =  DB::table('apartments')
-            ->select('id' , 'price_per_night' , 'beds_n' , 'rating' , 'title')
+            ->select('id' , 'price_per_night' , 'beds_n' , 'rating' , 'title' , 'description')
             ->where('id',$aptID)
             ->first();
+
+            $excerpt = substr($apt->description , 0 ,80) . '...';
 
             $cover_img = $this->getAptCoverImg($aptID);
      
@@ -164,7 +167,8 @@ class ApartmentController extends Controller
                 'beds' => $apt->beds_n , 
                 'rating' => $apt->rating ,
                 'cover_img' => $cover_img ,
-                'isSponsored' => true
+                'is_sponsored' => true,
+                'excerpt'   => $excerpt
              );
 
             array_push($sponsoredAptAll , $filteredApt);
@@ -236,6 +240,9 @@ class ApartmentController extends Controller
                 // Controllo Eventuale Sponsorizzazione Attiva
                 $is_sponsored = $this->checkSponsorship($apartment['id']);
 
+                // Genera una descrizione breve
+                $excerpt = substr($apartment['description'] , 0 ,80) . '...';
+
                 // Crea array con i dati necessari per stampa e filtri    
                 $newChalet = array(
                     'id' => $apartment['id'] ,
@@ -243,6 +250,7 @@ class ApartmentController extends Controller
                     'lat'  => $apartment['latitude'] ,
                     'lon'  => $apartment['longitude'] ,
                     'dist' => $dist ,
+                    'excerpt' => $excerpt,
                     'cover_img' => $cover_img,
                     'rooms' => $apartment['rooms_n'],
                     'beds' => $apartment['beds_n'],

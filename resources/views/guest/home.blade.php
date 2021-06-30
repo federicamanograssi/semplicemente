@@ -12,10 +12,12 @@
             <h2 class="home-section__heading heading--primary">
                 Le nostre scelte Top
             </h2>
+
             <apartments-list 
                 class="apartments-list--responsive"
                 :apartments="[]">
             </apartments-list>
+            
         </section>
         
         <section class="home-section featured-locations">

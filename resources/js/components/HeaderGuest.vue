@@ -8,7 +8,9 @@
 
                     <!-- Logo -->
                     <div class="header__logo-container">
-                        <img class="header__logo" :src="logoSrc" alt="logo">
+                        
+                            <img class="header__logo" :src="logoSrc" alt="logo">
+                        
                     </div>
                     
                     <!-- Toggle Menu -->
