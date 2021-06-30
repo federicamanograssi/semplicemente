@@ -268,9 +268,18 @@ h3 {
   height: 100%;
 }
 
+.header__logo-container a {
+  display: block;
+  max-width: 10rem;
+}
+
 .header__logo {
   display: block;
   max-height: 100%;
+  padding: 0.5rem;
+  background-image: linear-gradient(to bottom right, rgba(52, 133, 52, 0.9), rgba(16, 83, 16, 0.9));
+  border-radius: 5px;
+  transform: scale(1.1);
 }
 
 .header__toggle-button {
