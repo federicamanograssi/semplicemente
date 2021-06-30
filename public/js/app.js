@@ -78840,21 +78840,41 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "table-light" }, [
       _c("tr", { attrs: { role: "row" } }, [
-        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-          _vm._v("Apt Id")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "align-middle",
+            attrs: { tabindex: "0", rowspan: "1", colspan: "1" }
+          },
+          [_vm._v("Apt Id")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-          _vm._v("Contatto")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "align-middle",
+            attrs: { tabindex: "0", rowspan: "1", colspan: "1" }
+          },
+          [_vm._v("Contatto")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-          _vm._v("Testo del messaggio")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "align-middle",
+            attrs: { tabindex: "0", rowspan: "1", colspan: "1" }
+          },
+          [_vm._v("Testo del messaggio")]
+        ),
         _vm._v(" "),
-        _c("th", { attrs: { tabindex: "0", rowspan: "1", colspan: "1" } }, [
-          _vm._v("Data")
-        ])
+        _c(
+          "th",
+          {
+            staticClass: "align-middle",
+            attrs: { tabindex: "0", rowspan: "1", colspan: "1" }
+          },
+          [_vm._v("Data")]
+        )
       ])
     ])
   }
