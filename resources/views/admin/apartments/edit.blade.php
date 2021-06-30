@@ -48,7 +48,7 @@
                 {{-- INDIRIZZO-------- --}}
                 <div class="form-group">
                     <label>Indirizzo</label>
-                    <input type="text" name="address" class="form-control form-control-lg @error('address') is-invalid @enderror" placeholder="Inserisci l'indirizzo" value="{{ old('address', $apartment->address) }}" required>
+                    <input type="text" name="address" class="form-control form-control-lg @error('address') is-invalid @enderror" placeholder="Inserisci l'indirizzo" value="{{ old('address', $apartment->address) }}" required readonly>
                     @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
